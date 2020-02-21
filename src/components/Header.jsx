@@ -4,12 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div id="map-header">
+    <header id="map-header">
       <h1>Atlas Header</h1>
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
-    </div>
+    </header>
   );
 };
 
