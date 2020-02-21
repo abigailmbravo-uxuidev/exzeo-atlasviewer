@@ -1,0 +1,13 @@
+{
+  "firstName": "Jacopo",
+  "lastName": "Belbo",
+  "email": "elamison@exzeo.com",
+  "dataSets": [
+    {
+      "created_at": "2020-02-15T21:26:17Z",
+      "updated_at": "2020-02-19T21:26:17Z",
+      "_id": "claim1",
+      "name": "Test Claims",
+    }
+  ]
+}

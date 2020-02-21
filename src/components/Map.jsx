@@ -13,9 +13,23 @@ const Map = () => {
       const mapbox = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [0, 0],
-        zoom: 5
+        center: [-81.5158, 27.6648],
+        zoom: 7,
+        pitch: 35,
+        bearing: 0
       });
+
+      mapbox.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+      mapbox.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        }),
+        'bottom-right'
+      );
 
       mapbox.on('load', () => {
         setMap(mapbox);
