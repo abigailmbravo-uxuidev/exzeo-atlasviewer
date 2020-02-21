@@ -2,6 +2,11 @@ $container-size: 768px;
 $bg: #fff;
 $text: #000;
 $primary-yellow: #f9f929;
+$navy: rgba(34, 29, 64, 1);
+$gray: rgba(217, 157, 0, 1);
+$green: rgba(139, 197, 63, 1);
+$red: rgba(255, 55, 67, 1);
+$orange: rgba(198, 193, 14, 1);
 
 *, *::after, *::before {
   box-sizing: border-box;
@@ -15,6 +20,35 @@ body {
   background: $bg;
 
   font-family: 'Lato', sans-serif;
+}
+#logo {
+  display: flex;
+
+  width: 200px;
+}
+.orange {
+  fill: $orange;
+}
+.green {
+  fill: $green;
+}
+.navy {
+  fill: $navy;
+}
+.red {
+  fill:$red;
+}
+.atlas {
+  font-family:Lato-Black, Lato;
+  font-size:68px;
+  font-weight:800;
+}
+.viewer{
+  letter-spacing:0em;
+
+  font-family:Lato-Italic, Lato;
+  font-weight:400;
+  font-style:italic;
 }
 
 .container {
@@ -72,8 +106,8 @@ nav {
   bottom: 37px;
   left: 10px;
   a {
-    width: 31px;
-    height: 31px;
+    display: flex;
+
     padding: 8px;
 
     text-decoration: none;
