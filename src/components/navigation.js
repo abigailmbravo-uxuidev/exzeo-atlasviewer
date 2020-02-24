@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-import Feeds from './Feeds';
-import Header from './Header';
+import Feeds from './feeds';
+import Header from './header';
 
 const Navigation = () => {
   return (

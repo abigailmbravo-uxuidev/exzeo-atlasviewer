@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Header from './Header';
-import Feeds from './Feeds';
-import Navigation from './Navigation';
-import Map from './Map';
+import Header from './header';
+import Feeds from './feeds';
+import Navigation from './navigation';
+import Map from './map';
 
 const Canvas = () => {
   return (
