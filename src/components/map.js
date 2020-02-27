@@ -5,6 +5,7 @@ import { useMap } from '../context/map-context';
 import { defaultConfig, addControls } from './map.utils.js';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const Map = () => {
   const { setMap } = useMap();
