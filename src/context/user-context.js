@@ -1,5 +1,6 @@
 import React from 'react';
 import user from '../../test-data/user.json';
+
 const UserContext = React.createContext();
 
 function UserProvider(props) {

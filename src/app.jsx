@@ -6,7 +6,7 @@ import AuthenticatedApp from './authenticated-app';
 import UnauthenticatedApp from './components/landing';
 
 const App = () => {
-  const user = useUser()
+  const user = useUser();
   
   return (
     <React.Suspense fallback={<Spinner />}>

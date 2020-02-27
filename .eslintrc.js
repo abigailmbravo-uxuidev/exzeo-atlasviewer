@@ -15,14 +15,14 @@ module.exports = {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly"
   },
-  parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: "module"
   },
   rules: {
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": 0
   },
   settings: {
     react: {

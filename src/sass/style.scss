@@ -127,3 +127,11 @@ nav {
     }
   }
 }
+#settings {
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  bottom: 300px;
+  opacity: .65;
+  background: #fff;
+}
