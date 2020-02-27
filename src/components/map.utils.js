@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 export const mapStyles = [
   'mapbox://styles/mapbox/streets-v11',
@@ -33,4 +34,11 @@ export const addControls = mapbox => {
     }),
     'bottom-right'
   );
+  const geocoder = new MapboxGeocoder({
+    accessToken: process.env.MAPBOX_KEY,
+    country: 'us',
+    bbox: [-87.63, 24.4, -79.97, 31.0],
+    state: 'fl'
+  });
+  mapbox.addControl(geocoder);
 };
