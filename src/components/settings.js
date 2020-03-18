@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FileProcessor from './file-processor';
+import Uploader from './uploader';
 import { useUser } from '../context/user-context';
 import { useMap } from '../context/map-context';
 
@@ -10,6 +10,12 @@ const Settings = () => {
   return (
     <div id="settings">
       <h1>Settings</h1>
+      <div>
+        <h2>Feeds</h2>
+      </div>
+      <div>
+        <Uploader />
+      </div>
     </div>
   );
 };

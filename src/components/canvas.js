@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/user-context';
-import { MapProvider } from '../context/map-context';
-
-import Library from './library';
-import View from './view';
+import { LayerProvider } from '../context/layer-context';
+import Header from './header';
+import Feeds from './feeds';
+import Uploader from './uploader';
 import Map from './map';
 
 const Canvas = () => {
@@ -14,13 +14,20 @@ const Canvas = () => {
   const toggleSettings = () => setShowSettings(!showSettings);
 
   return (
-    <MapProvider>
-      <Library />
-      <View />
+    <LayerProvider>
       <div id="map-canvas">
+        <nav>
+          {showSettings && <Uploader />}
+          <Feeds />
+          <button type="button" onClick={toggleSettings}>
+            Settings
+          </button>
+          <Link to="/">Home</Link>
+          <Header />
+        </nav>
         <Map />
       </div>
-    </MapProvider>
+    </LayerProvider>
   );
 };
 

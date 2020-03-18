@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Papa from 'papaparse';
-import { toggleLayer, useMap } from '../context/map-context';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { useLayerDispatch } from '../context/layer-context';
 
-const FileProcessor = () => {
+const Uploader = () => {
   const [file, setFile] = useState();
-  const [result, setResult] = useState();
-  const { map } = useMap();
+  const [headers, setHeaders] = useState(null);
+  const [layerData, setLayerData] = useState();
+  const [geoJson, setGeoJson] = useState();
+  const dispatch = useLayerDispatch();
 
   const handleFile = e => {
     setFile(e.target.files[0]);
@@ -31,20 +35,30 @@ const FileProcessor = () => {
       }
     };
 
+    if (!headers) setHeaders(row.meta.fields);
     geoFile.features.push(feature);
   };
 
-  const addToMap = (results, file) => {
-    //console.log(file.size);
-    //
-    //check for errors
-    //console.log(results.errors);
+  const addLayer = async (results, file) => {
+    if (results.errors.length > 0) console.log('error: ', results.errors);
 
-    toggleLayer(map, geoFile, file.name);
+    const uuid = uuidv4();
+    const layer = {
+      id: uuid,
+      name: file.name,
+      size: file.size,
+      active: true,
+      headers
+    };
+
+    const res = await axios
+      .post(`{process.env.API_URL}/upload`, file)
+      .catch(err => console.log(err));
+
+    return dispatch({ type: 'add', layer });
   };
 
   const processFile = e => {
-    e.preventDefault();
     if (!file) return;
 
     Papa.parse(file, {
@@ -52,7 +66,7 @@ const FileProcessor = () => {
       dynamicTyping: true,
       skipEmptyLines: 'greedy',
       step: csvTojson,
-      complete: addToMap,
+      complete: addLayer,
       error: err => console.log(err)
     });
   };
@@ -60,8 +74,8 @@ const FileProcessor = () => {
   return (
     <React.Fragment>
       <form>
-        <input id="feed" type="file" onChange={handleFile} />
-        <button thype="button" onClick={processFile}>
+        <input id="feed" type="file" accept="text/csv" onChange={handleFile} />
+        <button type="button" onClick={processFile}>
           Process
         </button>
       </form>
@@ -69,4 +83,4 @@ const FileProcessor = () => {
   );
 };
 
-export default FileProcessor;
+export default Uploader;

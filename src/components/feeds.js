@@ -1,19 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useUser } from '../context/user-context';
+import { useLayerState } from '../context/layer-context';
 
 const Feeds = () => {
-  const user = useUser();
+  const layers = useLayerState();
   return (
     <React.Fragment>
       <header>
         <h4>Data Feeds</h4>
       </header>
       <ul>
-        {user &&
-          user.dataSets.map((dataSet, index) => (
-            <li key={dataSet._id}>{dataSet.name}</li>
-          ))}
+        {layers &&
+          layers.map((layer, index) => <li key={layer.id}>{layer.name}</li>)}
       </ul>
     </React.Fragment>
   );

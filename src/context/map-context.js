@@ -23,12 +23,12 @@ const addSource = (map, data, id) => {
 const toggleLayer = (map, data, id) => {
   addSource(map, data, id);
   map.addLayer({
-    id: `$name-layer`,
+    id: `${id}-layer`,
     type: 'circle',
     source: id,
     paint: {
       'circle-radius': 7,
-      'circle-color': '#3887be'
+      'circle-color': ['get', 'status_color']
     }
   });
 };

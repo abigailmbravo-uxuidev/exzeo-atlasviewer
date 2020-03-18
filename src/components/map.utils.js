@@ -35,10 +35,12 @@ export const addControls = mapbox => {
     'bottom-right'
   );
   const geocoder = new MapboxGeocoder({
+    mapboxgl,
     accessToken: process.env.MAPBOX_KEY,
     country: 'us',
     bbox: [-87.63, 24.4, -79.97, 31.0],
-    state: 'fl'
+    state: 'fl',
+    marker: true
   });
   mapbox.addControl(geocoder);
 };
