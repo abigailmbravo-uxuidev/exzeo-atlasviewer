@@ -113,6 +113,12 @@ html {
 
         background-color: rgba($blue-gray, .8);
 
+        label {
+          text-transform: uppercase;
+
+          font-size: .75rem;
+        }
+
         header {
           h2, h3, h4, h5 {
             text-transform: uppercase ;

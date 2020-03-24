@@ -11,6 +11,10 @@ const Library = () => {
 
   return (
     <div id="library">
+      <div className="section search">
+        <label>Filter By Name Or Meta Data</label>
+        <input />
+      </div>
       <div className="section feeds">
         <Feeds />
         <FileProcessor />

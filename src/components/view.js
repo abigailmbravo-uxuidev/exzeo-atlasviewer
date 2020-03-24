@@ -7,6 +7,7 @@ const View = () => {
 
   return (
     <div id="view">
+      <div className="section logo"></div>
       <div className="section view">
         <header>
           <h4>Current View</h4>
