@@ -106,14 +106,10 @@ html {
       width: 100vw;
       height: 100vh;
 
-      #library {
+      #library, #view {
         position: fixed;
-        z-index: 2;
-        top: 0;
-        left: 0;
 
-        width: 18rem;
-        height: 100vh;
+        padding: .5rem 1rem;
 
         background-color: rgba($blue-gray, .8);
 
@@ -123,8 +119,27 @@ html {
           }
         }
       }
-      #view {
 
+      #library {
+        z-index: 3;
+        top: 0;
+        left: 0;
+
+        width: 16rem;
+        height: 100vh;
+
+        border-right: 2px solid $green;
+        
+      }
+      #view {
+        z-index: 2;
+        top: 0;
+        left: 16rem;
+
+        width: 14rem;
+        height: 100vh;
+
+        border-right: 2px solid $navy;
       }
       #map-canvas {
         position: relative;
