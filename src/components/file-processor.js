@@ -58,14 +58,14 @@ const FileProcessor = () => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <form>
         <input id="feed" type="file" onChange={handleFile} />
         <button thype="button" onClick={processFile}>
           Process
         </button>
       </form>
-    </div>
+    </React.Fragment>
   );
 };
 

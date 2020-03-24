@@ -1,29 +1,28 @@
 
-@import url('https://fonts.googleapis.com/css?family=Lato:400,400i,900&display=swap');
-
-$container-size: 768px;
-$bg: #fff;
-$text: #000;
-$primary-yellow: #f9f929;
+//app fonts
+//----------------------------------------------------------
+@import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700|Oswald:700&display=swap');
+//font-family: 'Lato', sans-serif;
+//font-weight: 400 or 900;
+//font-style: italic;
+//font-family: 'Oswald', sans-serif;
+//font-weight: 900;
+//----------------------------------------------------------
+//app color palette
+$white: rgba(256, 256, 256, 1);
 $navy: rgba(34, 29, 64, 1);
-$gray: rgba(217, 157, 0, 1);
+$gray: rgb(220, 220, 220);
 $green: rgba(139, 197, 63, 1);
 $red: rgba(255, 55, 67, 1);
 $orange: rgba(198, 193, 14, 1);
-
+$blue-gray: mix($navy, $white, 15%);
+//----------------------------------------------------------
+//border-box sizing reset
 *, *::after, *::before {
   box-sizing: border-box;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-
-  color: $text;
-  background: $bg;
-
-  font-family: 'Lato', sans-serif;
-}
+//----------------------------------------------------------
+//logo
 #logo {
   display: flex;
 
@@ -53,75 +52,100 @@ body {
   font-weight:400;
   font-style:italic;
 }
+//----------------------------------------------------------
+//fontography
 
-.container {
-  max-width: $container-size;
-  margin: 0 auto;
 
-  text-align: center;
+html {
+  font-size: 16px;
+  body {
+    color: $navy;
 
-  h1 {
-    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    line-height: 1.4;
 
-    font-size: 36px;
+    h1, h2, h3, h4 {
+      margin: 0;
+
+      color: $navy;
+
+      font-family: 'Oswald', sans-serif;
+      font-weight: 900;
+    }
+
+    h2 {
+      font-size: 2.5rem
+    }
+    h3 {
+      font-size: 2rem
+    }
+    h4 {
+      font-size: 1.625rem
+    }
+    h5 {
+      font-size: 1.25rem
+    }
   }
-
-  span {
-    margin-left: 10px;
-
-    color: $primary-yellow;
-
-    font-size: 36px;
-  }
 }
-
-#map-header {
-  width: 100%;
-}
-
-#feeds {
-  width: 100%;
-
-  opacity: .65;
-  background-color: #fff;
-}
-
-body {
-  width: 100vw;
-  height: 100vh;
-  #app {
-    display: flex;
-
+//----------------------------------------------------------
+//structure
+html {
+  
+  body {
     width: 100vw;
     height: 100vh;
-    #map-canvas {
-      position: relative;
+    margin: 0;
+    padding: 0;
 
-      flex-grow: 1;
-      flex-shrink: 1;
-      nav {
-        flex-grow: 1;
-      flex-shrink: 1;
-      }
-      #map {
-        position: absolute;
+    background: $white;
+
+    #app {
+      display: block;
+
+      width: 100vw;
+      height: 100vh;
+
+      #library {
+        position: fixed;
+        z-index: 2;
         top: 0;
-        right: 0;
-        bottom: 0;
         left: 0;
+
+        width: 18rem;
+        height: 100vh;
+
+        background-color: rgba($blue-gray, .8);
+
+        header {
+          h2, h3, h4, h5 {
+            text-transform: uppercase ;
+          }
+        }
+      }
+      #view {
+
+      }
+      #map-canvas {
+        position: relative;
+        z-index: 1;
+
+        width: 100vw;
+        height: 100vh;
+        
+        #map {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+        }
       }
     }
   }
 }
+//----------------------------------------------------------
 
-
-#map {
-  //position: absolute;
-  //top: 0;
-
-  //width: 100%;
-  //height: 100%;
-}
 #map-header button {
   position: fixed;
   left: 100px;
@@ -133,10 +157,7 @@ body {
   border: 1px solid red;;
 }
 nav {
-  //position: absolute;
-  //z-index: 100;
-  //bottom: 37px;
-  //left: 10px;
+
   a {
     display: flex;
 
@@ -155,7 +176,4 @@ nav {
       background: #eee;
     }
   }
-}
-#settings {
-
 }

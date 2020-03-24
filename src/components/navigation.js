@@ -2,17 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-import Feeds from './feeds';
-import Header from './header';
+import Library from './library';
 
 const Navigation = () => {
-  return (
-    <nav>
-      <Feeds />
-      <Link to="/">Home</Link>
-      <Header />
-    </nav>
-  );
+  return <nav id="navigation" className="navigation"></nav>;
 };
 
 export default Navigation;
