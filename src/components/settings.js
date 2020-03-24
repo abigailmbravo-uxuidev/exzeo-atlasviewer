@@ -10,18 +10,6 @@ const Settings = () => {
   return (
     <div id="settings">
       <h1>Settings</h1>
-      <div>
-        <h2>Feeds</h2>
-        <ul>
-          {user &&
-            user.dataSets.map((dataSet, index) => (
-              <li key={dataSet._id}>{dataSet.name}</li>
-            ))}
-        </ul>
-      </div>
-      <div>
-        <FileProcessor />
-      </div>
     </div>
   );
 };
