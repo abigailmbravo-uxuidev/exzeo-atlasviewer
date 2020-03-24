@@ -12,8 +12,8 @@ const Library = () => {
   return (
     <div id="library">
       <div className="section search">
-        <label>Filter By Name Or Meta Data</label>
-        <input />
+        <label htmlFor="search">Filter By Name Or Meta Data</label>
+        <input type="input" name="search" id="search" />
       </div>
       <div className="section feeds">
         <Feeds />
