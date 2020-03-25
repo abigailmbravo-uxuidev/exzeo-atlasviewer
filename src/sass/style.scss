@@ -14,7 +14,7 @@ $navy: rgba(34, 29, 64, 1);
 $gray: rgb(220, 220, 220);
 $green: rgba(139, 197, 63, 1);
 $red: rgba(255, 55, 67, 1);
-$orange: rgba(198, 193, 14, 1);
+$orange: rgba(242, 143, 32, 1);
 $blue-gray: mix($navy, $white, 15%);
 //----------------------------------------------------------
 //border-box sizing reset
@@ -24,9 +24,9 @@ $blue-gray: mix($navy, $white, 15%);
 //----------------------------------------------------------
 //logo
 #logo {
-  display: flex;
+  display: block;
 
-  width: 200px;
+  width: 100%;
 }
 .orange {
   fill: $orange;
@@ -175,10 +175,12 @@ html {
   &.library-tab {
     left: 16rem;
     z-index: 11;
+    background: $green;
   }
   &.view-tab {
     left: 30rem;
     z-index: 10;
+    background: $navy;
   }
 }
 
