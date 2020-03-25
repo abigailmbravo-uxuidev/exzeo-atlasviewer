@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLayerState } from '../context/layer-context';
 
 const Feeds = () => {

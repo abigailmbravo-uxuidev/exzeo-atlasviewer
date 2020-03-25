@@ -15,7 +15,7 @@ $gray: rgb(220, 220, 220);
 $green: rgba(139, 197, 63, 1);
 $red: rgba(255, 55, 67, 1);
 $orange: rgba(242, 143, 32, 1);
-$blue-gray: mix($navy, $white, 15%);
+$blue-gray: mix($navy, $white, 8%);
 //----------------------------------------------------------
 //border-box sizing reset
 *, *::after, *::before {
@@ -166,12 +166,13 @@ html {
 #library, #view {
   position: fixed;
 
-  background-color: rgba($blue-gray, .8);
+  background-color: rgba($blue-gray, .9);
 
   label {
     text-transform: uppercase;
 
     font-size: .75rem;
+    margin-bottom: .25rem;
   }
 
   header {

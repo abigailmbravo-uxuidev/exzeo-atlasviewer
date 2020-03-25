@@ -7,12 +7,12 @@ import UnauthenticatedApp from './components/landing';
 
 const App = () => {
   const user = useUser();
-  
+
   return (
     <React.Suspense fallback={<Spinner />}>
       {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </React.Suspense>
-  )
+  );
 };
 
 export default App;
