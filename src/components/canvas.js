@@ -7,6 +7,8 @@ import Header from './header';
 import Feeds from './feeds';
 import Uploader from './uploader';
 import Map from './map';
+import Library from './library';
+import View from './view';
 
 const Canvas = () => {
   const [showSettings, setShowSettings] = useState(false);
@@ -15,16 +17,9 @@ const Canvas = () => {
 
   return (
     <LayerProvider>
+      <Library />
+      <View />
       <div id="map-canvas">
-        <nav>
-          {showSettings && <Uploader />}
-          <Feeds />
-          <button type="button" onClick={toggleSettings}>
-            Settings
-          </button>
-          <Link to="/">Home</Link>
-          <Header />
-        </nav>
         <Map />
       </div>
     </LayerProvider>
