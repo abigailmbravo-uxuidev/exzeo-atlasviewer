@@ -15,11 +15,13 @@ const Library = () => {
           <label htmlFor="search">Filter By Name Or Meta Data</label>
           <input type="input" name="search" id="search" />
         </div>
-        <div className="section feeds">
-          <Feeds />
-        </div>
-        <div className="section shapes">
-          <Shapes />
+        <div className="scroll">
+          <div className="section feeds">
+            <Feeds />
+          </div>
+          <div className="section shapes">
+            <Shapes />
+          </div>
         </div>
       </div>
       <div className="panel-tab library-tab">

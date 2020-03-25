@@ -120,6 +120,44 @@ html {
           left: 0;
         }
       }
+
+      #library, #view {
+        display: flex;
+        flex-direction: column;
+
+        .scroll {
+          flex-grow: 1;
+          flex-shrink: 1;
+          display: flex;
+          flex-direction: column;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        .section {
+          border-bottom: $white .5rem solid;
+          padding: .25rem 1rem;
+          flex-shrink: 0;
+          flex-grow: 0;
+
+          &:last-of-type {
+            border-bottom-width: 0;
+          }
+          &.search {
+            height: 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          &.logo {
+            height: 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
     }
   }
 }
@@ -127,8 +165,6 @@ html {
 //----------------------------------------------------------
 #library, #view {
   position: fixed;
-
-  padding: .5rem 1rem;
 
   background-color: rgba($blue-gray, .8);
 

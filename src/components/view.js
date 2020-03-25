@@ -13,13 +13,15 @@ const View = () => {
         <div className="section logo">
           <Logo />
         </div>
-        <div className="section view">
-          <header>
-            <h4>Current View</h4>
-          </header>
-          <ul>
-            <li>view layer loop here</li>
-          </ul>
+        <div className="scroll">
+          <div className="section view">
+            <header>
+              <h4>Current View</h4>
+            </header>
+            <ul>
+              <li>view layer loop here</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div className="panel-tab view-tab">
