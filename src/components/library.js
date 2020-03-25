@@ -10,19 +10,24 @@ const Library = () => {
   const user = useUser();
 
   return (
-    <div id="library">
-      <div className="section search">
-        <label htmlFor="search">Filter By Name Or Meta Data</label>
-        <input type="input" name="search" id="search" />
+    <React.Fragment>
+      <div id="library">
+        <div className="section search">
+          <label htmlFor="search">Filter By Name Or Meta Data</label>
+          <input type="input" name="search" id="search" />
+        </div>
+        <div className="section feeds">
+          <Feeds />
+          <FileProcessor />
+        </div>
+        <div className="section shapes">
+          <Shapes />
+        </div>
       </div>
-      <div className="section feeds">
-        <Feeds />
-        <FileProcessor />
+      <div className="panel-tab library-tab">
+        <button>X</button>
       </div>
-      <div className="section shapes">
-        <Shapes />
-      </div>
-    </div>
+    </React.Fragment>
   );
 };
 

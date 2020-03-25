@@ -106,47 +106,7 @@ html {
       width: 100vw;
       height: 100vh;
 
-      #library, #view {
-        position: fixed;
-
-        padding: .5rem 1rem;
-
-        background-color: rgba($blue-gray, .8);
-
-        label {
-          text-transform: uppercase;
-
-          font-size: .75rem;
-        }
-
-        header {
-          h2, h3, h4, h5 {
-            text-transform: uppercase ;
-          }
-        }
-      }
-
-      #library {
-        z-index: 3;
-        top: 0;
-        left: 0;
-
-        width: 16rem;
-        height: 100vh;
-
-        border-right: 2px solid $green;
-        
-      }
-      #view {
-        z-index: 2;
-        top: 0;
-        left: 16rem;
-
-        width: 14rem;
-        height: 100vh;
-
-        border-right: 2px solid $navy;
-      }
+      
       #map-canvas {
         position: relative;
         z-index: 1;
@@ -165,7 +125,88 @@ html {
     }
   }
 }
+//panel styles
 //----------------------------------------------------------
+#library, #view {
+  position: fixed;
+
+  padding: .5rem 1rem;
+
+  background-color: rgba($blue-gray, .8);
+
+  label {
+    text-transform: uppercase;
+
+    font-size: .75rem;
+  }
+
+  header {
+    h2, h3, h4, h5 {
+      text-transform: uppercase ;
+    }
+  }
+}
+
+#library {
+  z-index: 3;
+  top: 0;
+  left: 0;
+
+  width: 16rem;
+  height: 100vh;
+
+  border-right: 2px solid $green;
+  
+}
+#view {
+  z-index: 2;
+  top: 0;
+  left: 16rem;
+
+  width: 14rem;
+  height: 100vh;
+
+  border-right: 2px solid $navy;
+}
+
+.panel-tab {
+  position: absolute;
+
+  &.library-tab {
+    left: 16rem;
+    z-index: 11;
+  }
+  &.view-tab {
+    left: 30rem;
+    z-index: 10;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #map-header button {
   position: fixed;

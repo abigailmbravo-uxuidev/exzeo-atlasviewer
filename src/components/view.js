@@ -6,17 +6,22 @@ const View = () => {
   const user = useUser();
 
   return (
-    <div id="view">
-      <div className="section logo"></div>
-      <div className="section view">
-        <header>
-          <h4>Current View</h4>
-        </header>
-        <ul>
-          <li>view layer loop here</li>
-        </ul>
+    <React.Fragment>
+      <div id="view">
+        <div className="section logo"></div>
+        <div className="section view">
+          <header>
+            <h4>Current View</h4>
+          </header>
+          <ul>
+            <li>view layer loop here</li>
+          </ul>
+        </div>
       </div>
-    </div>
+      <div className="panel-tab view-tab">
+        <button>X</button>
+      </div>
+    </React.Fragment>
   );
 };
 
