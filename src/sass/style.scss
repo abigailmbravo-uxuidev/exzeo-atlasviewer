@@ -54,8 +54,6 @@ $blue-gray: mix($navy, $white, 15%);
 }
 //----------------------------------------------------------
 //fontography
-
-
 html {
   font-size: 16px;
   body {
@@ -183,7 +181,22 @@ html {
     background: $navy;
   }
 }
-
+//input
+//----------------------------------------------------------
+input {
+  width: 100%;
+  border: 0;
+  color: #111;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.375);
+  margin: 0;
+  height: 2.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 6px;
+}
 
 
 
