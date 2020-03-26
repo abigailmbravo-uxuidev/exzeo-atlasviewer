@@ -30,7 +30,9 @@ const View = () => {
         </div>
       </div>
       <div className="panel-tab view-tab">
-        <button>X</button>
+        <button>
+          <FontAwesomeIcon icon={faImage} />
+        </button>
       </div>
     </React.Fragment>
   );

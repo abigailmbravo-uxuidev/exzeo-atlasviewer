@@ -4,6 +4,8 @@ import Feeds from './feeds';
 import Shapes from './layers';
 import { useUser } from '../context/user-context';
 import { useMap } from '../context/map-context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 
 const Library = () => {
   const user = useUser();
@@ -12,8 +14,13 @@ const Library = () => {
     <React.Fragment>
       <div id="library">
         <div className="section search">
-          <label htmlFor="search">Filter By Name Or Meta Data</label>
-          <input type="input" name="search" id="search" />
+          <label htmlFor="search">Filter</label>
+          <input
+            placeholder="Type To Filter By Name Or Meta Data"
+            type="input"
+            name="search"
+            id="search"
+          />
         </div>
         <div className="scroll">
           <div className="section feeds">
@@ -25,7 +32,9 @@ const Library = () => {
         </div>
       </div>
       <div className="panel-tab library-tab">
-        <button>X</button>
+        <button>
+          <FontAwesomeIcon icon={faList} />
+        </button>
       </div>
     </React.Fragment>
   );
