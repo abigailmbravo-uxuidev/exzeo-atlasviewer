@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Feeds from './feeds';
-import Shapes from './shapes';
+import Shapes from './layers';
 import { useUser } from '../context/user-context';
 import { useMap } from '../context/map-context';
 
