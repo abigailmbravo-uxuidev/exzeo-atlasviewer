@@ -19,6 +19,7 @@ $blue-gray: mix($navy, $white, 8%);
 $black: rgba(0, 0, 0, 1);
 $navy-hover: mix(rgb(74, 63, 141), $navy, 75%);
 $green-hover: mix(rgb(206, 200, 108), $green, 40%);
+$base-gray: rgba(51, 51, 51, 1);
 //----------------------------------------------------------
 //border-box sizing reset
 *, *::after, *::before {
@@ -43,24 +44,14 @@ $green-hover: mix(rgb(206, 200, 108), $green, 40%);
 .red {
   fill:$red;
 }
-.atlas {
-  font-family:Lato-Black, Lato;
-  font-size:68px;
-  font-weight:900;
-}
-.viewer{
-  letter-spacing:0em;
-
-  font-family:Lato-Italic, Lato;
-  font-weight:400;
-  font-style:italic;
-}
 //----------------------------------------------------------
 //fontography
 html {
   font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  color: $base-gray;
   body {
-    color: $navy;
+    color: $base-gray;
 
     font-family: 'Lato', sans-serif;
     font-weight: 400;
@@ -151,6 +142,10 @@ html {
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            input {
+              height: 1.75rem;
+            }
           }
           &.logo {
             height: 5.25rem;
@@ -169,7 +164,7 @@ html {
 #library, #view {
   position: fixed;
 
-  background-color: rgba($blue-gray, .9);
+  background-color: rgba($blue-gray, .93);
 
   label {
     text-transform: uppercase;
@@ -306,7 +301,19 @@ input {
   overflow: hidden;
   padding: 6px;
 }
-
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  input {
+    padding-right: 1.5rem;
+  }
+  svg {
+    position: absolute;
+    right: .375rem;
+    font-size: .75rem;
+  }
+}
 
 
 
