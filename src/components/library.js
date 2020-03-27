@@ -11,27 +11,25 @@ const Library = () => {
   const user = useUser();
 
   return (
-    <React.Fragment>
-      <div id="library">
-        <div className="section search">
-          <label htmlFor="search">Filter</label>
-          <span className="input-icon-wrapper">
-            <input
-              placeholder="Type to filter list by name or tag"
-              type="input"
-              name="search"
-              id="search"
-            />
-            <FontAwesomeIcon icon={faFilter} />
-          </span>
+    <div id="library">
+      <div className="section search">
+        <label htmlFor="search">Filter</label>
+        <span className="input-icon-wrapper">
+          <input
+            placeholder="Type to filter list by name or tag"
+            type="input"
+            name="search"
+            id="search"
+          />
+          <FontAwesomeIcon icon={faFilter} />
+        </span>
+      </div>
+      <div className="scroll">
+        <div className="section feeds">
+          <Feeds />
         </div>
-        <div className="scroll">
-          <div className="section feeds">
-            <Feeds />
-          </div>
-          <div className="section shapes">
-            <Shapes />
-          </div>
+        <div className="section shapes">
+          <Shapes />
         </div>
       </div>
       <div className="panel-tab library-tab">
@@ -39,7 +37,7 @@ const Library = () => {
           <FontAwesomeIcon icon={faList} />
         </button>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

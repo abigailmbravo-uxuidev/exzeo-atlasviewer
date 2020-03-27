@@ -10,23 +10,21 @@ const View = () => {
   const user = useUser();
 
   return (
-    <React.Fragment>
-      <div id="view">
-        <div className="section logo">
-          <Logo />
-        </div>
-        <div className="scroll">
-          <div className="section view">
-            <header>
-              <h4>
-                <FontAwesomeIcon icon={faImage} />
-                &nbsp;Current View
-              </h4>
-            </header>
-            <ul>
-              <li>view layer loop here</li>
-            </ul>
-          </div>
+    <div id="view">
+      <div className="section logo">
+        <Logo />
+      </div>
+      <div className="scroll">
+        <div className="section view">
+          <header>
+            <h4>
+              <FontAwesomeIcon icon={faImage} />
+              &nbsp;Current View
+            </h4>
+          </header>
+          <ul>
+            <li>view layer loop here</li>
+          </ul>
         </div>
       </div>
       <div className="panel-tab view-tab">
@@ -34,7 +32,7 @@ const View = () => {
           <FontAwesomeIcon icon={faImage} />
         </button>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
