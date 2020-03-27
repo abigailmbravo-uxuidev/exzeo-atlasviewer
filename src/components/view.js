@@ -10,7 +10,7 @@ const View = () => {
   const user = useUser();
 
   return (
-    <div id="view">
+    <div id="view" className="open">
       <div className="section logo">
         <Logo />
       </div>

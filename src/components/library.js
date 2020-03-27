@@ -11,7 +11,7 @@ const Library = () => {
   const user = useUser();
 
   return (
-    <div id="library">
+    <div id="library" className="open">
       <div className="section search">
         <label htmlFor="search">Filter</label>
         <span className="input-icon-wrapper">
