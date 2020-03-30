@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Feeds from './feeds';
 import Shapes from './layers';
@@ -9,9 +9,10 @@ import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const Library = () => {
   const user = useUser();
+  const [libraryActive, setLibraryState] = useState(true);
 
   return (
-    <div id="library" className="open">
+    <div id="library" className={`panel ${libraryActive ? 'open' : 'closed'}`}>
       <div className="section search">
         <label htmlFor="search">Filter</label>
         <span className="input-icon-wrapper">
@@ -33,7 +34,7 @@ const Library = () => {
         </div>
       </div>
       <div className="panel-tab library-tab">
-        <button>
+        <button onClick={() => setLibraryState(!libraryActive)}>
           <FontAwesomeIcon icon={faList} />
         </button>
       </div>

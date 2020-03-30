@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,9 +8,10 @@ import Logo from './logo';
 
 const View = () => {
   const user = useUser();
+  const [viewActive, setViewState] = useState(true);
 
   return (
-    <div id="view" className="open">
+    <div id="view" className={`panel ${viewActive ? 'open' : 'closed'}`}>
       <div className="section logo">
         <Logo />
       </div>
@@ -28,7 +29,7 @@ const View = () => {
         </div>
       </div>
       <div className="panel-tab view-tab">
-        <button>
+        <button onClick={() => setViewState(!viewActive)}>
           <FontAwesomeIcon icon={faImage} />
         </button>
       </div>
