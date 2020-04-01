@@ -2,18 +2,33 @@
   "firstName": "Jacopo",
   "lastName": "Belbo",
   "email": "elamison@exzeo.com",
-  "dataSets": [
-    {
-      "created_at": "2020-02-15T21:26:17Z",
-      "updated_at": "2020-02-19T21:26:17Z",
-      "id": "claim1",
-      "name": "Test Claims",
-    },
-    {
-      "created_at": "2020-02-15T21:26:17Z",
-      "updated_at": "2020-02-19T21:26:17Z",
-      "id": "claim2",
-      "name": "Test Claims 2",
-    }
-  ]
+  "layers": {
+    "datasets": [
+      {
+        "created_at": "2020-02-15T21:26:17Z",
+        "updated_at": "2020-02-19T21:26:17Z",
+        "id": "claim1",
+        "name": "Test Claims",
+      },
+      {
+        "created_at": "2020-02-15T21:26:17Z",
+        "updated_at": "2020-02-19T21:26:17Z",
+        "id": "claim2",
+        "name": "Test Claims 2",
+      }
+    ],
+    "overlays": [],
+    "basemaps": [
+      { "url": "mapbox://styles/mapbox/streets-v11", "name": "Streets"},
+      { "url": "mapbox://styles/mapbox/outdoors-v11", "name": "outdoors-v11"},
+      { "url": "mapbox://styles/mapbox/light-v10", "name": "Light"},
+      { "url": "mapbox://styles/mapbox/dark-v10", "name": "Dark"},
+      { "url": "mapbox://styles/mapbox/satellite-v9", "name": "Satellite"},
+      { "url": "mapbox://styles/mapbox/satellite-streets-v11", "name": "Streets"},
+      { "url": "mapbox://styles/mapbox/navigation-preview-day-v4", "name": "Preview Day"},
+      { "url": "mapbox://styles/mapbox/navigation-preview-night-v4", "name": "Preview Night"},
+      { "url": "mapbox://styles/mapbox/navigation-guidance-day-v4", "name": "Guidance Day"},
+      { "url": "mapbox://styles/mapbox/navigation-guidance-night-v4", "name": "Guidance Night"}
+    ]
+  }
 }

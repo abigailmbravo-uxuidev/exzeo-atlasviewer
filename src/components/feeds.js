@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { useLayerState } from '../context/layer-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
 
 const Feeds = () => {
-  const layers = useLayerState();
+  const { datasets } = useLayerState();
   return (
     <React.Fragment>
       <header>
@@ -15,8 +14,8 @@ const Feeds = () => {
         </h4>
       </header>
       <ul>
-        {layers &&
-          layers.map((layer, index) => <li key={layer.id}>{layer.name}</li>)}
+        {datasets &&
+          datasets.map((layer, index) => <li key={layer.id}>{layer.name}</li>)}
       </ul>
     </React.Fragment>
   );

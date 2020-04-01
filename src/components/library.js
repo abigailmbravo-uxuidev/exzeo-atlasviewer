@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import Feeds from './feeds';
 import Shapes from './layers';
-import { useUser } from '../context/user-context';
-import { useMap } from '../context/map-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const Library = () => {
-  const user = useUser();
   const [libraryActive, setLibraryState] = useState(true);
 
   return (

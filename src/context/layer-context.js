@@ -28,8 +28,8 @@ const layerReducer = (layers, action) => {
 };
 
 const LayerProvider = ({ children }) => {
-  const { dataSets } = useUser();
-  const [state, dispatch] = useReducer(layerReducer, dataSets);
+  const { layers } = useUser();
+  const [state, dispatch] = useReducer(layerReducer, layers);
 
   return (
     <LayerStateContext.Provider value={state}>
