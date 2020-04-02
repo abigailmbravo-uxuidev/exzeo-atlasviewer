@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
-const Layers = () => {
+const Overlays = () => {
   return (
     <React.Fragment>
       <header>
@@ -18,4 +18,4 @@ const Layers = () => {
   );
 };
 
-export default Layers;
+export default Overlays;
