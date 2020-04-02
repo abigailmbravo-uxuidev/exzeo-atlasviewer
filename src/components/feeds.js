@@ -32,7 +32,7 @@ const Feeds = ({ filter }) => {
               </div>
               <div>
                 <span>Author</span>
-                {layer.created_at}
+                {layer.owner.name}
               </div>
             </li>
           ))}
