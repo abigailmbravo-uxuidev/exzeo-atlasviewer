@@ -72,14 +72,14 @@ const Uploader = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className="modal">
       <form>
         <input id="feed" type="file" accept="text/csv" onChange={handleFile} />
         <button type="button" onClick={processFile}>
           Process
         </button>
       </form>
-    </React.Fragment>
+    </div>
   );
 };
 

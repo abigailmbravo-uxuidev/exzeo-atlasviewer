@@ -355,12 +355,6 @@ input {
   }
 }
 
-
-
-
-
-
-
 /*
 //button styles
 a {
@@ -382,3 +376,75 @@ a {
   }
 }
 */
+
+.modal {
+  position: absolute;
+  z-index: 99999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  background: rgba($blue-gray, 0.75);
+
+  &.gradient-bg {
+    background: radial-gradient(
+      ellipse at center,
+      rgba($blue-gray, 0.75) 0%,
+      rgba($blue-gray, 0.9) 100%
+    );
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  }
+
+  &.modal-alert {
+    .card {
+      max-width: 24rem;
+    }
+  }
+
+  &.modal-sm,
+  &.modal-md,
+  &.modal-lg,
+  &.modal-xl,
+  &.modal-alert,
+
+  &.modal-sm {
+    .card {
+      width: 30%;
+      max-width: 26rem;
+    }
+  }
+
+  &.modal-md {
+    .card {
+      width: 50%;
+      max-width: 40rem;
+    }
+  }
+
+  &.modal-lg {
+    .card {
+      width: 80%;
+      max-width: 60rem;
+    }
+  }
+
+  &.modal-xl {
+    .card {
+      width: 80%;
+      max-width: 80rem;
+    }
+  }
+
+  &.modal-lg {
+    .card {
+      width: 60%;
+      max-width: 60rem;
+    }
+  }
+}
