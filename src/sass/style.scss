@@ -47,9 +47,10 @@ $base-gray: rgba(51, 51, 51, 1);
 //----------------------------------------------------------
 //fontography
 html {
-  font-size: 16px;
-  font-family: 'Lato', sans-serif;
   color: $base-gray;
+
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
   body {
     color: $base-gray;
 
@@ -118,44 +119,51 @@ html {
       #library, #view {
         display: flex;
         flex-direction: column;
+
         transition: all .3s ease-out;
 
         .scroll {
-          flex-grow: 1;
-          flex-shrink: 1;
           display: flex;
-          flex-direction: column;
           overflow-x: hidden;
           overflow-y: auto;
+          flex-direction: column;
+          flex-grow: 1;
+          flex-shrink: 1;
+
           transition: all .2s ease-out;
         }
 
         .section {
-          border-bottom: $white .5rem solid;
-          padding: .5rem 1rem;
-          flex-shrink: 0;
           flex-grow: 0;
+          flex-shrink: 0;
+
+          padding: .5rem 1rem;
+
           transition: all .2s ease-out;
+
+          border-bottom: $white .5rem solid;
 
           &:last-of-type {
             border-bottom-width: 0;
           }
           &.search {
-            height: 5.25rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            height: 5.25rem;
 
             input {
               height: 1.75rem;
             }
           }
           &.logo {
-            height: 5.25rem;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            flex-direction: column;
             justify-content: center;
+
+            height: 5.25rem;
           }
         }
       }
@@ -171,20 +179,24 @@ html {
   box-shadow: 0px 0px 8px 0px rgba($black, .25);
 
   label {
+    margin-bottom: .25rem;
+
     text-transform: uppercase;
 
     font-size: .75rem;
-    margin-bottom: .25rem;
   }
 
   header {
     h2, h3, h4, h5 {
-      text-transform: uppercase ;
       display: flex;
-      line-height: 1;
       align-items: center;
       justify-content: flex-start;
+
       margin: .5rem 0;
+
+      text-transform: uppercase ;
+
+      line-height: 1;
 
       svg {
         font-size: 1.25rem;
@@ -252,48 +264,62 @@ html {
 
 .panel-tab {
   position: absolute;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 0;
+
   border-radius: 0 .25rem .25rem 0;
   box-shadow: 2px 0px 4px 0px rgba($black, .25);
   
   &:before {
-    content: '';
-    display: block;
     position: absolute;
+    left: 0;
+
+    display: block;
+
     width: .25rem;
     height: 4rem;
-    left: 0;
+
+    content: '';
+
     border-radius: 0 .5rem .5rem 0;
   }
 
   button {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    color: $white;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 1.25rem;
     height: 2rem;
-    width: 1.25rem
+    padding: 0;
+
+    cursor: pointer;
+
+    color: $white;
+    border: none;
+    background-color: transparent;
   }
 
 
   &.library-tab {
-    left: 16rem;
     z-index: 11;
-    background: $green;
     top: 4rem;
+    left: 16rem;
+
     transition: all .2s ease-out;
 
+    background: $green;
+
     &:before {
-      background-color: $green;
       z-index: 10;
+
       transition: all .2s ease-out;
+
+      background-color: $green;
     }
 
     &:hover {
@@ -304,16 +330,20 @@ html {
     }
   }
   &.view-tab {
-    left: 14rem;
-    top: 1rem;
     z-index: 10;
-    background: $navy;
+    top: 1rem;
+    left: 14rem;
+
     transition: all .2s ease-out;
 
+    background: $navy;
+
     &:before {
-      background-color: $navy;
       z-index: 9;
+
       transition: all .2s ease-out;
+
+      background-color: $navy;
     }
 
     &:hover {
@@ -327,21 +357,25 @@ html {
 //input
 //----------------------------------------------------------
 input {
+  overflow: hidden;
+
   width: 100%;
-  border: 0;
+  height: 2.25rem;
+  margin: 0;
+  padding: 6px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
   color: #111;
+  border: 0;
   border-radius: 4px;
   background: #fff;
   box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.375);
-  margin: 0;
-  height: 2.25rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  padding: 6px;
 }
 .input-icon-wrapper {
   position: relative;
+
   display: flex;
   align-items: center;
   input {
@@ -350,8 +384,10 @@ input {
   svg {
     position: absolute;
     right: .375rem;
-    font-size: .75rem;
+
     color: mix($white, $base-gray, 30%);
+
+    font-size: .75rem;
   }
 }
 
@@ -445,6 +481,43 @@ a {
     .card {
       width: 60%;
       max-width: 60rem;
+    }
+  }
+}
+
+.panel-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  li {
+    h3 {
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    dl {
+      display: flex;
+
+      margin: 0;
+
+      span {
+        margin-right: .5rem;
+
+        &.date {
+          width: 25%;
+        }
+        dt {
+          font-size: .5rem;
+          font-weight: 900;
+        }
+        dd {
+          margin: 0;
+
+          font-size: .625rem; 
+        }
+      }
     }
   }
 }

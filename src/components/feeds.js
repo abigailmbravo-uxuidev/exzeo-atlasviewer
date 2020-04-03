@@ -17,23 +17,25 @@ const Feeds = ({ filter }) => {
           &nbsp;Data Feed
         </h4>
       </header>
-      <ul>
+      <ul className="panel-list">
         {filteredDatasets &&
           filteredDatasets.map((layer, index) => (
             <li key={layer.id}>
-              <div>{layer.name}</div>
-              <div>
-                <span>Created</span>
-                {layer.created_at}
-              </div>
-              <div>
-                <span>Updated</span>
-                {layer.updated_at}
-              </div>
-              <div>
-                <span>Author</span>
-                {layer.owner.name}
-              </div>
+              <h3>{layer.name}</h3>
+              <dl>
+                <span className="date">
+                  <dt>Created</dt>
+                  <dd>{layer.created_at}</dd>
+                </span>
+                <span className="date">
+                  <dt>Updated</dt>
+                  <dd>{layer.updated_at}</dd>
+                </span>
+                <span>
+                  <dt>Author</dt>
+                  <dd>{layer.owner.name}</dd>
+                </span>
+              </dl>
             </li>
           ))}
       </ul>
