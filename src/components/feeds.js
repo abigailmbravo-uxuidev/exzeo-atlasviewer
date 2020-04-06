@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLayerState } from '../context/layer-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import { faNetworkWired, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Feeds = ({ filter }) => {
   const { datasets } = useLayerState();
@@ -18,10 +18,17 @@ const Feeds = ({ filter }) => {
         </h4>
       </header>
       <ul className="panel-list">
+        <div className="notification shared-feed"></div>
         {filteredDatasets &&
           filteredDatasets.map((layer, index) => (
             <li key={layer.id}>
-              <h3>{layer.name}</h3>
+              <h5>
+                {/*icon should only show if feed is shared, should have new class until notification associated with it is dismissed*/}
+                <span className="icon shared new">
+                  <FontAwesomeIcon icon={faShareAlt} />
+                </span>
+                {layer.name}
+              </h5>
               <dl>
                 <span className="date">
                   <dt>Created</dt>
