@@ -27,7 +27,12 @@ const Feeds = ({ filter }) => {
                 <span className="icon shared new">
                   <FontAwesomeIcon icon={faShareAlt} />
                 </span>
-                {layer.name}
+                <span>
+                  {/*friendly name and pipe only shows if added by user*/}
+                  <strong>[FRIENDLY NAME]</strong>&nbsp;|&nbsp;
+                  {/*end friendly name*/}
+                  {layer.name}
+                </span>
               </h5>
               <dl>
                 <span className="date">
