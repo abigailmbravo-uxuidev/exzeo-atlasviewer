@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLayerState } from '../context/layer-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,6 +12,7 @@ const Feeds = ({ filter }) => {
   const filteredDatasets = datasets.filter(ds => {
     return ds.name.toLowerCase().includes(filter);
   });
+  const [menuActive, setMenuState] = useState(true);
 
   return (
     <React.Fragment>
@@ -37,9 +38,22 @@ const Feeds = ({ filter }) => {
                   {/*end friendly name*/}
                   {layer.name}
                 </span>
-                <a href="#" className="menu">
+                <button
+                  onClick={() => setMenuState(!menuActive)}
+                  className="menu-btn"
+                >
                   <FontAwesomeIcon icon={faEllipsisV} />
-                </a>
+                </button>
+                <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
+                  <ul>
+                    <li className="menu-icon"></li>
+                    <li>Info</li>
+                    <li>Export</li>
+                    <li>Upload</li>
+                    <li>Share</li>
+                    <li>Delete</li>
+                  </ul>
+                </div>
               </h5>
               <dl>
                 <span className="date">

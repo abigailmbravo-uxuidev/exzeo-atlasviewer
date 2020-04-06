@@ -494,6 +494,8 @@ a {
   li {
     
     h1, h2, h3, h4, h5, p {
+      position: relative;
+
       display: flex;
       align-items: center;
 
@@ -510,10 +512,10 @@ a {
         &.shared {
           display: flex;
           align-items: center;
+          justify-content: center;
 
           width: 1rem;
           height: 1rem;
-          padding: .25rem;
 
           color: $white;
           border: 1px solid $white;
@@ -521,7 +523,7 @@ a {
           background-color: mix($base-gray, $white, 70%);
           box-shadow: 0px 0px 8px 0px rgba($black, .125);
 
-          font-size: 50%;
+          font-size: 54%;
         }
       }
       .file-name {
@@ -529,10 +531,62 @@ a {
         flex-shrink: 1;
       }
       .menu {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: -.5rem;
+
+        display: absolute;
+        visibility: hidden;
+
+        width: auto;
+        height: auto;
+
+        transition: all .2s ease-out;
+
+        opacity: 0;
+        border-radius: .25rem;
+        background-color: rgba($white, .9);
+        box-shadow: 0px 0px 8px 0px rgba($black, .25);
+
+        ul {
+          padding: .25rem 0;
+
+          list-style: none;
+
+          li {
+            display: flex;
+
+            padding: .25rem .5rem;
+          }
+        }
+        
+
+        &.open {
+          visibility: visible;
+
+          opacity: 1;
+        }
+      }
+      .menu-btn {
+        z-index: 2;
+
         flex-grow: 0;
         flex-shrink: 0;
 
-        color: $base-gray;
+        padding: 0;
+        padding-left: .25rem;
+
+        cursor: pointer;
+        transition: all .2s ease-out;
+
+        color: mix($base-gray, $white, 70%);
+        border: none;
+        background-color: transparent;
+
+        &:hover {
+          color: $base-gray;
+        }
       }
     }
     h5 {
