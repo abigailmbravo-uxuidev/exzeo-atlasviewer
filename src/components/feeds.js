@@ -1,7 +1,11 @@
 import React from 'react';
 import { useLayerState } from '../context/layer-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faNetworkWired,
+  faShareAlt,
+  faEllipsisV
+} from '@fortawesome/free-solid-svg-icons';
 
 const Feeds = ({ filter }) => {
   const { datasets } = useLayerState();
@@ -27,12 +31,15 @@ const Feeds = ({ filter }) => {
                 <span className="icon shared new">
                   <FontAwesomeIcon icon={faShareAlt} />
                 </span>
-                <span>
+                <span className="file-name">
                   {/*friendly name and pipe only shows if added by user*/}
                   <strong>[FRIENDLY NAME]</strong>&nbsp;|&nbsp;
                   {/*end friendly name*/}
                   {layer.name}
                 </span>
+                <a href="#" className="menu">
+                  <FontAwesomeIcon icon={faEllipsisV} />
+                </a>
               </h5>
               <dl>
                 <span className="date">
