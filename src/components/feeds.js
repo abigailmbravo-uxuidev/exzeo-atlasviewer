@@ -47,11 +47,36 @@ const Feeds = ({ filter }) => {
                 <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
                   <ul>
                     <li className="menu-icon"></li>
-                    <li>Info</li>
-                    <li>Export</li>
-                    <li>Upload</li>
-                    <li>Share</li>
-                    <li>Delete</li>
+                    <li>
+                      <button>
+                        <FontAwesomeIcon icon={faShareAlt} />
+                        &nbsp;Info
+                      </button>
+                    </li>
+                    <li>
+                      <button>
+                        <FontAwesomeIcon icon={faShareAlt} />
+                        &nbsp;Export
+                      </button>
+                    </li>
+                    <li>
+                      <button>
+                        <FontAwesomeIcon icon={faShareAlt} />
+                        &nbsp;Upload
+                      </button>
+                    </li>
+                    <li>
+                      <button>
+                        <FontAwesomeIcon icon={faShareAlt} />
+                        &nbsp;Share
+                      </button>
+                    </li>
+                    <li>
+                      <button>
+                        <FontAwesomeIcon icon={faShareAlt} />
+                        &nbsp;Delete
+                      </button>
+                    </li>
                   </ul>
                 </div>
               </h5>

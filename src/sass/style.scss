@@ -557,7 +557,21 @@ a {
           li {
             display: flex;
 
-            padding: .25rem .5rem;
+            min-height: 1rem;
+            
+
+            button {
+              display: flex;
+
+              width: 100%;
+              padding: .25rem .5rem;
+
+              border: none;
+              
+              &:hover {
+                background-color: #a3e5ff;
+              }
+            }
           }
         }
         
