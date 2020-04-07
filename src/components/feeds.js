@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
   faShareAlt,
-  faEllipsisV
+  faEllipsisV,
+  faInfoCircle,
+  faFileExport,
+  faFileUpload,
+  faShareAltSquare,
+  faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 const Feeds = ({ filter }) => {
@@ -49,31 +54,31 @@ const Feeds = ({ filter }) => {
                     <li className="menu-icon"></li>
                     <li>
                       <button>
-                        <FontAwesomeIcon icon={faShareAlt} />
+                        <FontAwesomeIcon icon={faInfoCircle} />
                         &nbsp;Info
                       </button>
                     </li>
                     <li>
                       <button>
-                        <FontAwesomeIcon icon={faShareAlt} />
+                        <FontAwesomeIcon icon={faFileExport} />
                         &nbsp;Export
                       </button>
                     </li>
                     <li>
                       <button>
-                        <FontAwesomeIcon icon={faShareAlt} />
+                        <FontAwesomeIcon icon={faFileUpload} />
                         &nbsp;Upload
                       </button>
                     </li>
                     <li>
                       <button>
-                        <FontAwesomeIcon icon={faShareAlt} />
+                        <FontAwesomeIcon icon={faShareAltSquare} />
                         &nbsp;Share
                       </button>
                     </li>
                     <li>
                       <button>
-                        <FontAwesomeIcon icon={faShareAlt} />
+                        <FontAwesomeIcon icon={faTrashAlt} />
                         &nbsp;Delete
                       </button>
                     </li>

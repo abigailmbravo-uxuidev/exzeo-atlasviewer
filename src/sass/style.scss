@@ -561,6 +561,7 @@ a {
 
             button {
               display: flex;
+              align-items: center;
 
               width: 100%;
               padding: .25rem .5rem;
@@ -569,6 +570,8 @@ a {
               transition: all .2s ease-out;
 
               border: none;
+
+              font-size: .75rem;
               
               &:hover {
                 background-color: #a3e5ff;
