@@ -533,10 +533,9 @@ a {
       .menu {
         position: absolute;
         z-index: 1;
-        top: 0;
+        top: calc(50% - .75rem);
         right: -.5rem;
 
-        display: absolute;
         visibility: hidden;
 
         width: auto;
@@ -565,6 +564,9 @@ a {
 
               width: 100%;
               padding: .25rem .5rem;
+
+              cursor: pointer;
+              transition: all .2s ease-out;
 
               border: none;
               
