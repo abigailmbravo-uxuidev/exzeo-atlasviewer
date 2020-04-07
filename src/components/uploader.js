@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Papa from 'papaparse';
 import axios from 'axios';
@@ -12,8 +12,11 @@ const Uploader = () => {
   const [geoJson, setGeoJson] = useState();
   const dispatch = useLayerDispatch();
 
-  const handleFile = e => {
-    setFile(e.target.files[0]);
+  useEffect(() => {
+    console.log(file);
+  }, [file]);
+  const handleFile = ({ target: { files } }) => {
+    setFile(files[0]);
   };
 
   const geoFile = {
@@ -58,6 +61,10 @@ const Uploader = () => {
     return dispatch({ type: 'add', layer });
   };
 
+  const showDetails = (results, file) => {
+    if (results.errors.length > 0) console.log('error: ', results.errors);
+  };
+
   const processFile = e => {
     if (!file) return;
 
@@ -75,8 +82,8 @@ const Uploader = () => {
     <div className="modal">
       <form>
         <input id="feed" type="file" accept="text/csv" onChange={handleFile} />
-        <button type="button" onClick={processFile}>
-          Process
+        <button type="button" onClick={console.log}>
+          Upload
         </button>
       </form>
     </div>
