@@ -23,7 +23,7 @@ const View = () => {
               &nbsp;Current View
             </h4>
           </header>
-          <ul>
+          <ul className="panel-list">
             <li>view layer loop here</li>
           </ul>
         </div>

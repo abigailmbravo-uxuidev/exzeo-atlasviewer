@@ -11,7 +11,7 @@ const Overlays = () => {
           &nbsp;Overlay Layers
         </h4>
       </header>
-      <ul>
+      <ul className="panel-list">
         <li>shape layer loop here</li>
       </ul>
     </React.Fragment>

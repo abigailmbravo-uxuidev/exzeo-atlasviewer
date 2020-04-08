@@ -210,7 +210,7 @@ html {
   top: 0;
   left: 0;
 
-  width: 16rem;
+  width: 18rem;
   height: 100vh;
 
   border-right: 2px solid $green;
@@ -219,24 +219,24 @@ html {
     left: 0;
   }
   &.closed {
-    left: -16rem;
+    left: -18rem;
   }
 }
 #view {
   z-index: 2;
   top: 0;
-  left: 16rem;
+  left: 18rem;
 
-  width: 14rem;
+  width: 16rem;
   height: 100vh;
 
   border-right: 2px solid $navy;
 
   &.open {
-    left: 16rem;
+    left: 18rem;
   }
   &.closed {
-    left: -14rem;
+    left: -16rem;
   }
 }
 #library {
@@ -308,7 +308,7 @@ html {
   &.library-tab {
     z-index: 11;
     top: 4rem;
-    left: 16rem;
+    left: 18rem;
 
     transition: all .2s ease-out;
 
@@ -332,7 +332,7 @@ html {
   &.view-tab {
     z-index: 10;
     top: 1.25rem;
-    left: 14rem;
+    left: 16rem;
 
     transition: all .2s ease-out;
 
@@ -485,6 +485,9 @@ a {
   }
 }
 
+
+//panel lists
+//----------------------------------------------------------
 .panel-list {
   margin: 0;
   padding: 0;
@@ -492,7 +495,35 @@ a {
   list-style: none;
 
   li {
-    
+    display: flex;
+
+    margin-bottom: .75rem;
+
+    span {
+      &.wrapper {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-wrap: wrap;
+
+        &.checkbox-wrapper {
+          flex-grow: 0;
+          flex-shrink: 0;
+
+          width: 1.5rem;
+
+          input[type='checkbox'] {
+            width: 1rem;
+            height: 1rem;
+            padding: 0;
+
+            border: none;
+            background: transparent;
+            box-shadow: 0px 0px 8px 0px rgba($black, 0);
+          }
+        }
+      }
+    }
     h1, h2, h3, h4, h5, p {
       position: relative;
 
@@ -557,6 +588,7 @@ a {
             display: flex;
 
             min-height: 1rem;
+            margin: 0;
             
 
             button {
@@ -609,7 +641,7 @@ a {
       }
     }
     h5 {
-      margin: .75rem 0 .25rem;
+      margin: 0 0 .25rem;
 
       font-family: 'Lato', sans-serif;
       font-size: .875rem;
