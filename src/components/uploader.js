@@ -6,15 +6,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { useLayerDispatch } from '../context/layer-context';
 
 const Uploader = () => {
-  const [file, setFile] = useState();
+  const [file, setFile] = useState({});
   const [headers, setHeaders] = useState(null);
   const [layerData, setLayerData] = useState();
   const [geoJson, setGeoJson] = useState();
   const dispatch = useLayerDispatch();
 
-  useEffect(() => {
-    console.log(file);
-  }, [file]);
   const handleFile = ({ target: { files } }) => {
     setFile(files[0]);
   };
@@ -61,8 +58,9 @@ const Uploader = () => {
     return dispatch({ type: 'add', layer });
   };
 
-  const showDetails = (results, file) => {
-    if (results.errors.length > 0) console.log('error: ', results.errors);
+  const handleUpload = e => {
+    e.preventDefault();
+    console.log('data: ', e.target.feed.value);
   };
 
   const processFile = e => {
@@ -80,11 +78,21 @@ const Uploader = () => {
 
   return (
     <div className="modal">
-      <form>
-        <input id="feed" type="file" accept="text/csv" onChange={handleFile} />
-        <button type="button" onClick={console.log}>
-          Upload
-        </button>
+      <form onSubmit={handleUpload}>
+        <input
+          id="feed"
+          name="feed"
+          type="file"
+          accept="text/csv"
+          onChange={handleFile}
+        />
+        <input
+          type="text"
+          id="feed-name"
+          name="feed-name"
+          defaultValue={file.name}
+        />
+        <button>Upload</button>
       </form>
     </div>
   );
