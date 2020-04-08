@@ -1,11 +1,11 @@
 {
   "name": "atlas-web",
   "version": "1.0.0",
-  "description": "Atlas Viewr",
-  "main": "index.js",
+  "description": "Atlas Viewer",
+  "main": "./src/index.html",
   "scripts": {
     "start": "parcel ./src/index.html --open",
-    "build": "parcel build index.html",
+    "build": "parcel build ./src/index.html",
     "test": "jest --config ./jest.config.json",
     "lint": "./node_modules/.bin/eslint src --ext .jsx --ext .js"
   },
