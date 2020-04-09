@@ -11,13 +11,17 @@
 //02_generic 
 
 //03_layout
-@import '03_layout/structure';
+@import '03_layout/_layout_structure';
 
 //04_elements 
 
 //05_pages 
 
 //06_components 
+@import '06_components/_components_buttons';
+@import '06_components/components_inputs';
+@import '06_components/components_modals';
+@import '06_components/components_panels';
 
 //07_theme 
 
