@@ -60,8 +60,21 @@ const Uploader = () => {
   };
 
   const handleUpload = async data => {
-    const url = `${process.env.API_URL}/api/upload`;
-    const res = await axios.post(url, { data });
+    const url = `${process.env.API_URL}/upload`;
+    const formData = new FormData();
+    formData.append('data.filename', data.feedname);
+    formData.append('file', file);
+
+    const reqOptions = {
+      url,
+      method: 'POST',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+    const res = await axios(reqOptions).catch(err => console.log(err));
+    console.log(res);
   };
 
   const processFile = e => {
@@ -91,12 +104,12 @@ const Uploader = () => {
         <input
           type="text"
           id="feed-name"
-          name="feed-name"
+          name="feedname"
           ref={register({ required: true })}
           defaultValue={file.name}
         />
         {errors.lastname && 'Feed Name is required.'}
-        <button type="submit" enabled={formState.dirty}>
+        <button type="submit" enabled={String(formState.dirty)}>
           Upload
         </button>
       </form>
