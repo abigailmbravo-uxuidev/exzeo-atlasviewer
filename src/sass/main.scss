@@ -1,17 +1,20 @@
-//00_global
-@import '00_global/_global';
+/*IMPORT ALL SCSS PARTIALS*/
 
-//01_settings_fonts
+//00_global_fonts
 @import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700|Oswald:700&display=swap');
 
+//00_global
+@import '00_global/global_colors';
+@import '00_global/global_fonts';
+@import '00_global/global_global';
+
 //01_settings 
-@import '01_setting/_settings_color';
-@import '01_setting/_settings_font';
 
 //02_generic 
+@import '02_generic/generic_reset';
 
 //03_layout
-@import '03_layout/_layout_structure';
+@import '03_layout/layout_structure';
 
 //04_elements 
 
@@ -19,7 +22,7 @@
 @import '05_pages/pages_landingpage';
 
 //06_components 
-@import '06_components/_components_buttons';
+@import '06_components/components_buttons';
 @import '06_components/components_inputs';
 @import '06_components/components_modals';
 @import '06_components/components_panels';

@@ -6,6 +6,28 @@
 //font-family: 'Oswald', sans-serif;
 //font-weight: 900;
 
+//font definitions
+$sans: Roboto, 'Roboto', Arial, sans-serif !default;
+$serif: Roboto Slab, 'Roboto Slab', serif !default;
+$monospace: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
+$icon: FontAwesome !default;
+$base: $sans !default;
+
+//font sizes
+$fontSizeRoot: 16px !default;
+
+$bold: 700;
+$normal: 400;
+
+$fontSizeBody: 1rem !default; //16px
+$fontSizeLabel: 0.875rem !default; //14px
+$fontSizeBase: 1rem !default; //16px
+$fontSizeSubheader--small: 1.125rem !default; //18px
+$fontSizeSubheader: 1.25rem !default; //20px
+$fontSizeHeader--small: 1.5rem !default; //24px
+$fontSizeHeader: 2rem !default; //32px
+
+
 //fontography
 html {
     color: $base-gray;
