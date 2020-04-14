@@ -7,7 +7,7 @@ import { faAtlas } from '@fortawesome/free-solid-svg-icons';
 const Landing = () => {
   return (
     <div className="landingPage">
-      <h3>This is the landing page for Atlas</h3>
+      <h3>This is the landing page for Atlas -- TEST</h3>
       <p>
         The map is <Link to="/map">here</Link>
       </p>
