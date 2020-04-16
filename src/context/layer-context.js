@@ -5,20 +5,20 @@ import { MapProvider, useMap } from './map-context';
 const LayerStateContext = createContext();
 const LayerDispatchContext = createContext();
 
-const layerReducer = (layers, action) => {
+const layerReducer = (feeds, action) => {
   switch (action.type) {
     case 'add': {
-      return [...layers, action.layer];
+      return [...feeds, action.layer];
     }
     case 'toggle': {
-      return layers.filter(li => li.id !== action.id);
+      return feeds.filter(li => li.id !== action.id);
     }
     case 'update': {
-      return listItems.map(li => {
-        if (li.id === action.listItem.id) {
+      return feeds.map(feed => {
+        if (feed.id === action.feeds.id) {
           return {};
         }
-        return li;
+        return feed;
       });
     }
     default: {
@@ -28,8 +28,8 @@ const layerReducer = (layers, action) => {
 };
 
 const LayerProvider = ({ children }) => {
-  const { layers } = useUser();
-  const [state, dispatch] = useReducer(layerReducer, layers);
+  const { feeds } = useUser();
+  const [state, dispatch] = useReducer(layerReducer, feeds);
 
   return (
     <LayerStateContext.Provider value={state}>

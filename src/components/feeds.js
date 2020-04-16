@@ -13,8 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Feeds = ({ filter }) => {
-  const { datasets } = useLayerState();
-  const filteredDatasets = datasets.filter(ds => {
+  const feeds = useLayerState();
+  const filteredDatasets = feeds.filter(ds => {
     return ds.name.toLowerCase().includes(filter);
   });
   const [menuActive, setMenuState] = useState(true);
@@ -31,7 +31,7 @@ const Feeds = ({ filter }) => {
         <div className="notification shared-feed"></div>
         {filteredDatasets &&
           filteredDatasets.map((layer, index) => (
-            <li key={layer.id}>
+            <li key={layer._id}>
               <span className="checkbox-wrapper wrapper">
                 <input type="checkbox" />
               </span>

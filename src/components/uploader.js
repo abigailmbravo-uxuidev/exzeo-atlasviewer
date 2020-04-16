@@ -62,7 +62,7 @@ const Uploader = () => {
   const handleUpload = async data => {
     const url = `${process.env.API_URL}/upload`;
     const formData = new FormData();
-    formData.append('data.filename', data.feedname);
+    formData.append('data.feedname', data.feedname);
     formData.append('file', file);
 
     const reqOptions = {
@@ -74,7 +74,8 @@ const Uploader = () => {
       }
     };
     const res = await axios(reqOptions).catch(err => console.log(err));
-    console.log(res);
+    const layer = res.data.data;
+    return dispatch({ type: 'add', layer });
   };
 
   const processFile = e => {
