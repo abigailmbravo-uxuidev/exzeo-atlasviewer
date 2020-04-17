@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 const Uploader = ({ dispatch, setUploaderState }) => {
   const { register, handleSubmit, errors, formState } = useForm();
