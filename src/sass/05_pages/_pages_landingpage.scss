@@ -1,5 +1,35 @@
 //landing page styling 
 
-.landingPage {
-    background-color: red;
+#app[role='main'] {
+    display: flex;
+    .landingPage {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 0;
+        justify-content: center;
+        h3 {
+            margin: 24px;
+
+            font-size: 48px;
+        }
+        p {
+            font-size: 16px;
+            a {
+                align-self: center;
+                flex-grow: 1;
+                flex-shrink: 1;
+                justify-content: center;
+
+                padding: 16px;
+
+                color: $white;
+                background: $navy;
+
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
+    }
 }
