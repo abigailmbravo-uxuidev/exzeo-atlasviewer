@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLayerState } from '../context/layer-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -12,8 +11,7 @@ import {
   faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-const Feeds = ({ filter }) => {
-  const feeds = useLayerState();
+const Feeds = ({ feeds, dispatch, filter }) => {
   const filteredDatasets = feeds.filter(ds => {
     return ds.name.toLowerCase().includes(filter);
   });

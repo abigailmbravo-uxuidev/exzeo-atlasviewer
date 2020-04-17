@@ -3,15 +3,13 @@ import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { useLayerDispatch } from '../context/layer-context';
 
-const Uploader = () => {
+const Uploader = ({ dispatch, setUploaderState }) => {
   const { register, handleSubmit, errors, formState } = useForm();
   const [file, setFile] = useState({});
   const [headers, setHeaders] = useState(null);
   const [layerData, setLayerData] = useState();
   const [geoJson, setGeoJson] = useState();
-  const dispatch = useLayerDispatch();
 
   const handleFile = ({ target: { files } }) => {
     setFile(files[0]);
@@ -40,25 +38,6 @@ const Uploader = () => {
     geoFile.features.push(feature);
   };
 
-  const addLayer = async (results, file) => {
-    if (results.errors.length > 0) console.log('error: ', results.errors);
-
-    const uuid = uuidv4();
-    const layer = {
-      id: uuid,
-      name: file.name,
-      size: file.size,
-      active: true,
-      headers
-    };
-
-    const res = await axios
-      .post(`{process.env.API_URL}/upload`, file)
-      .catch(err => console.log(err));
-
-    return dispatch({ type: 'add', layer });
-  };
-
   const handleUpload = async data => {
     const url = `${process.env.API_URL}/upload`;
     const formData = new FormData();
@@ -75,7 +54,9 @@ const Uploader = () => {
     };
     const res = await axios(reqOptions).catch(err => console.log(err));
     const layer = res.data.data;
-    return dispatch({ type: 'add', layer });
+
+    dispatch({ type: 'add', layer });
+    setUploaderState(false);
   };
 
   const processFile = e => {
@@ -110,6 +91,9 @@ const Uploader = () => {
           defaultValue={file.name}
         />
         {errors.lastname && 'Feed Name is required.'}
+        <button type="button" onClick={() => setUploaderState(false)}>
+          Cancel
+        </button>
         <button type="submit" enabled={String(formState.dirty)}>
           Upload
         </button>

@@ -2,14 +2,15 @@
   "firstName": "Jacopo",
   "lastName": "Belbo",
   "email": "elamison@exzeo.com",
-  "feeds": [
+  "layers": [
     {
       "created_at": "2020-02-15T21:26:17Z",
       "updated_at": "2020-02-19T21:26:17Z",
       "_id": "claim1",
       "name": "Test Claims",
       "url": "http://localhost/claim1",
-      "owner": { "id": "ownerid", "name": "Test Owner"}
+      "owner": { "id": "ownerid", "name": "Test Owner"},
+      "type": "feed"
     },
     {
       "created_at": "2020-02-15T21:26:17Z",
@@ -17,7 +18,8 @@
       "_id": "claim2",
       "name": "Policies",
       "url": "http://localhost/claim2",
-      "owner": { "id": "ownerid", "name": "Test Owner"}
+      "owner": { "id": "ownerid", "name": "Test Owner"},
+      "type": "feed"
     }
   ]
 }

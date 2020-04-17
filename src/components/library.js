@@ -5,15 +5,19 @@ import Uploader from './uploader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 
-const Library = () => {
+const Library = ({ layers, dispatch }) => {
   const [libraryActive, setLibraryState] = useState(true);
   const [uploaderState, setUploaderState] = useState(false);
   const [filter, setFilter] = useState('');
+
   const handleFilter = ({ target: { value } }) => setFilter(value);
+  const feeds = layers.filter(layer => layer.type === 'feed');
 
   return (
     <Fragment>
-      {uploaderState && <Uploader />}
+      {uploaderState && (
+        <Uploader dispatch={dispatch} setUploaderState={setUploaderState} />
+      )}
       <div
         id="library"
         className={`panel ${libraryActive ? 'open' : 'closed'}`}
@@ -39,7 +43,7 @@ const Library = () => {
         </div>
         <div className="scroll">
           <div className="section feeds">
-            <Feeds filter={filter} />
+            <Feeds feeds={feeds} dispatch={dispatch} filter={filter} />
           </div>
           <div className="section shapes">
             <Overlays filter={filter} />

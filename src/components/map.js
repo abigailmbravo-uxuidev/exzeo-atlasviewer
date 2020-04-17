@@ -1,13 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
-import { useLayerState } from '../context/layer-context';
 import { defaultConfig, addControls } from './map.utils.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const Map = () => {
-  const layers = useLayerState();
+  const [layers] = [];
   const [map, setMap] = useState();
   const mapContainer = useRef(null);
 
