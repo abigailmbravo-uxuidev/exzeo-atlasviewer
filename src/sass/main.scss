@@ -4,28 +4,28 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700|Oswald:700&display=swap');
 
 //00_global
-@import '00_global/global_colors';
-@import '00_global/global_fonts';
-@import '00_global/global_global';
+@import '00_global/globalColors';
+@import '00_global/globalFonts';
+@import '00_global/globalGlobal';
 
 //01_settings 
 
 //02_generic 
-@import '02_generic/generic_reset';
+@import '02_generic/genericReset';
 
 //03_layout
-@import '03_layout/layout_structure';
+@import '03_layout/layoutStructure';
 
 //04_elements 
 
 //05_pages 
-@import '05_pages/pages_landingpage';
+@import '05_pages/pagesLandingpage';
 
 //06_components 
-@import '06_components/components_buttons';
-@import '06_components/components_inputs';
-@import '06_components/components_modals';
-@import '06_components/components_panels';
+@import '06_components/componentsButtons';
+@import '06_components/componentsInputs';
+@import '06_components/componentsModals';
+@import '06_components/componentsPanels';
 
 //07_theme 
 
