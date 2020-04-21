@@ -85,3 +85,46 @@ html {
       }
     }
   }
+
+  #library {
+    &.closed {
+      ~#view {
+        &.open {
+            ~#map-canvas {
+                .mapboxgl-ctrl-bottom-left  {
+                    left: 16rem !important;
+                }
+            }
+        }
+      }
+    }
+  }
+  #library {
+    &.open {
+      ~#view {
+        &.open {
+            ~#map-canvas {
+                .mapboxgl-ctrl-bottom-left  {
+                    left: 34rem !important;
+                }
+            }
+        }
+      }
+    }
+  }
+  #library {
+    &.open {
+      ~#view {
+        &.closed {
+            ~#map-canvas {
+                .mapboxgl-ctrl-bottom-left  {
+                    left: 18rem !important;
+                }
+            }
+        }
+      }
+    }
+  }
+.mapboxgl-ctrl-bottom-left {
+    transition: all .3s ease-out;
+}

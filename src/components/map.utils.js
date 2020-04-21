@@ -42,5 +42,5 @@ export const addControls = mapbox => {
     state: 'fl',
     marker: true
   });
-  mapbox.addControl(geocoder);
+  mapbox.addControl(geocoder, 'bottom-left');
 };
