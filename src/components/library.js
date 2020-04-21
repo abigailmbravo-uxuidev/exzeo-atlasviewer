@@ -24,22 +24,18 @@ const Library = ({ layers, dispatch }) => {
       >
         <div className="section search">
           <label htmlFor="search">Filter</label>
-          <span className="input-icon-wrapper">
-            <input
-              placeholder="Type to filter list by name or tag"
-              type="input"
-              name="search"
-              id="search"
-              onChange={handleFilter}
-            />
-            <FontAwesomeIcon icon={faFilter} />
-          </span>
-          <button
-            type="button"
-            onClick={() => setUploaderState(!uploaderState)}
-          >
-            Upload
-          </button>
+          <div className="searchBar">
+            <span className="input-icon-wrapper">
+              <input
+                placeholder="Type to filter list by name or tag"
+                type="input"
+                name="search"
+                id="search"
+                onChange={handleFilter}
+              />
+              <FontAwesomeIcon icon={faFilter} />
+            </span>
+          </div>
         </div>
         <div className="scroll">
           <div className="section feeds">
