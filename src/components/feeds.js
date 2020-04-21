@@ -96,10 +96,6 @@ const Feeds = ({ feeds, dispatch, filter }) => {
                     <dt>Updated</dt>
                     <dd>{layer.updated_at}</dd>
                   </span>
-                  <span>
-                    <dt>Author</dt>
-                    <dd>{layer.owner.name}</dd>
-                  </span>
                 </dl>
               </span>
             </li>

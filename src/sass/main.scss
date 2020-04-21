@@ -90,4 +90,49 @@
             
        } 
     }
+
+    .panel {
+        &.open {
+            .scroll {
+                .section {
+                    &.view {
+
+                        
+                    }
+
+                    &.feeds {
+                     .panel-list {
+                        li {
+                            .feed-detail-wrapper {
+                                dl {
+                                    .date { 
+                                        display: flex;
+                                        flex-direction: column;
+                                        flex-grow: 1;
+                                        flex-shrink: 1;
+                                        dt {
+                                            padding-bottom: 4px;
+
+                                            font-size: 12px;
+                                        }
+                                        dd {
+                                            font-size: 12px;
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                     }   
+                    }
+                }
+
+            }
+            .section {
+                &.logo {
+                    margin: 0px 8px 0px 8px;
+                }
+            }
+        }
+    }
 }
