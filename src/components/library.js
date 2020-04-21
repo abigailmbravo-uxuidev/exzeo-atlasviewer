@@ -23,7 +23,9 @@ const Library = ({ layers, dispatch }) => {
         className={`panel ${libraryActive ? 'open' : 'closed'}`}
       >
         <div className="section search">
-          <label htmlFor="search">Filter</label>
+          <label htmlFor="search">
+            FILTER FEEDS AND LAYERS BY NAME OR META DATA
+          </label>
           <div className="searchBar">
             <span className="input-icon-wrapper">
               <input
