@@ -24,9 +24,14 @@ const Feeds = ({ feeds, dispatch, filter }) => {
           <FontAwesomeIcon icon={faNetworkWired} />
           &nbsp;Data Feed
         </h4>
-        <button type="button" onClick={() => setUploaderState(!uploaderState)}>
+        <div className="feedBtns">
+          <select>
+          <option>Test Sort</option>
+        </select>
+        <button className="uploadBtn" type="button" onClick={() => setUploaderState(!uploaderState)}>
           Upload
         </button>
+        </div>
       </header>
       <ul className="panel-list">
         <div className="notification shared-feed"></div>

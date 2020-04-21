@@ -93,8 +93,16 @@
 
     .panel {
         &.open {
+            .section {
+                    //logo
+                    &.logo {
+                        height: 3.25rem;
+                        margin: 0px 8px 0px 8px;
+                    }
+            }
             .scroll {
                 .section {
+
                     &.view {
 
                         
@@ -133,6 +141,13 @@
                 &.search {
                     display: flex;
 
+                    label {
+                        color: $navy;
+
+                        font-size: 10px;
+                        font-weight: bold;
+                    }
+
                     .searchBar {
                         display: flex;
                         flex-direction: row;
@@ -146,12 +161,12 @@
                             flex-shrink: 1;
     
                             #search {
-                                padding: 4px 8px 4px 8px;
+                                padding: 4px 24px 4px 8px;
 
                                 box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.375);
 
-                                font-size: 16px;
-    
+                                font-size: 14px;
+
                             } 
 
                             .fa-filter {
@@ -211,8 +226,40 @@
                 }
                 //logo
                 &.logo {
+                    height: 3.25rem;
                     margin: 0px 8px 0px 8px;
                 }
+            }
+        }
+    }
+}
+
+.section {
+    header {
+        display: flex;  align-items: center; flex-wrap: wrap;
+        justify-content: space-between;
+        h4 {
+            width: 100%
+        }
+
+        .feedBtns {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            flex-grow: 1;
+            flex-shrink: 1;
+            justify-content: space-between;
+
+            padding-bottom: 16px;
+            select {
+                width: 100%;
+                height: 2rem;
+                margin-right: 16px;
+                
+            }
+
+            .uploadBtn {
+                margin: 0 !important;
             }
         }
     }
