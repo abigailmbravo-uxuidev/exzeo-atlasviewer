@@ -1,0 +1,37 @@
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+    background-color: transparent !important;
+ .mapboxgl-ctrl-attrib-inner {
+    display: flex;
+
+    background-color: transparent;
+  a {
+      background-color: transparent;
+      box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  }   
+ }
+}
+.mapboxgl-ctrl-bottom-left {
+    .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+        width: auto;
+        min-width: 36px;
+        max-width: 100%;
+
+        transition: all .2s ease-out;
+        input {
+            width: 0;
+            padding: 6px 6px 6px 30px;
+
+            transition: all .2s ease-out;
+            &:focus {
+                width: 300px;
+            }
+        };
+
+        &:hover {
+            input {
+                width: 300px;
+            }
+        }
+    }
+}

@@ -26,7 +26,7 @@
 @import '06_components/componentsInputs';
 @import '06_components/componentsModals';
 @import '06_components/componentsPanels';
-
+@import '06_components/componentsMapboxControls';
 //07_theme 
 
 //08_overwrites
@@ -216,17 +216,4 @@
             }
         }
     }
-}
-
-.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
-    background-color: transparent !important;
- .mapboxgl-ctrl-attrib-inner {
-    display: flex;
-
-    background-color: transparent;
-  a {
-      background-color: transparent;
-      box-shadow: 0 0 0 0 rgba(0,0,0,0);
-  }   
- }
 }
