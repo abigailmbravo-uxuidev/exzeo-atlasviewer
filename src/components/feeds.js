@@ -26,11 +26,15 @@ const Feeds = ({ feeds, dispatch, filter }) => {
         </h4>
         <div className="feedBtns">
           <select>
-          <option>Test Sort</option>
-        </select>
-        <button className="uploadBtn" type="button" onClick={() => setUploaderState(!uploaderState)}>
-          Upload
-        </button>
+            <option>Test Sort</option>
+          </select>
+          <button
+            className="uploadBtn"
+            type="button"
+            onClick={() => setUploaderState(!uploaderState)}
+          >
+            Upload
+          </button>
         </div>
       </header>
       <ul className="panel-list">
@@ -103,6 +107,10 @@ const Feeds = ({ feeds, dispatch, filter }) => {
                   <span className="date">
                     <dt>Updated</dt>
                     <dd>{layer.updated_at}</dd>
+                  </span>
+                  <span className="author">
+                    <dt>Author</dt>
+                    <dd>{layer.owner.name}</dd>
                   </span>
                 </dl>
               </span>

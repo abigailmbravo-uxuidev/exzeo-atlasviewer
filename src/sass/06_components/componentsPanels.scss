@@ -362,8 +362,13 @@
         dd {
           margin: 0;
 
-          font-size: .625rem;  line-height: 1;
+          font-size: .75rem;  line-height: 1;
           }
+          dt {
+            padding-bottom: 4px;
+
+            font-size: .75rem;
+        }
       }
     }
   }
