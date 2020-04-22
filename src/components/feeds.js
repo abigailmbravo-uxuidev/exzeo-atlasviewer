@@ -24,6 +24,8 @@ const Feeds = ({ feeds, dispatch, filter }) => {
           <FontAwesomeIcon icon={faNetworkWired} />
           &nbsp;Data Feed
         </h4>
+      </header>
+      <div className="pane open">
         <div className="feedBtns">
           <select>
             <option>Test Sort</option>
@@ -36,87 +38,89 @@ const Feeds = ({ feeds, dispatch, filter }) => {
             Upload
           </button>
         </div>
-      </header>
-      <ul className="panel-list">
-        <div className="notification shared-feed"></div>
-        {filteredDatasets &&
-          filteredDatasets.map((layer, index) => (
-            <li key={layer._id}>
-              <span className="checkbox-wrapper wrapper">
-                <input type="checkbox" />
-              </span>
-              <span className="feed-detail-wrapper wrapper">
-                <h5>
-                  {/*icon should only show if feed is shared, should have new class until notification associated with it is dismissed*/}
-                  <span className="icon shared new">
-                    <FontAwesomeIcon icon={faShareAlt} />
-                  </span>
-                  <span className="file-name">
-                    {/*friendly name and pipe only shows if added by user*/}
-                    <strong>[FRIENDLY NAME]</strong>&nbsp;|&nbsp;
-                    {/*end friendly name*/}
-                    {layer.name}
-                  </span>
-                  <button
-                    onClick={() => setMenuState(!menuActive)}
-                    className="menu-btn"
-                  >
-                    <FontAwesomeIcon icon={faEllipsisV} />
-                  </button>
-                  <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
-                    <ul>
-                      <li className="menu-icon"></li>
-                      <li>
-                        <button>
-                          <FontAwesomeIcon icon={faInfoCircle} />
-                          &nbsp;Info
-                        </button>
-                      </li>
-                      <li>
-                        <button>
-                          <FontAwesomeIcon icon={faFileExport} />
-                          &nbsp;Export
-                        </button>
-                      </li>
-                      <li>
-                        <button>
-                          <FontAwesomeIcon icon={faFileUpload} />
-                          &nbsp;Upload
-                        </button>
-                      </li>
-                      <li>
-                        <button>
-                          <FontAwesomeIcon icon={faShareAltSquare} />
-                          &nbsp;Share
-                        </button>
-                      </li>
-                      <li>
-                        <button>
-                          <FontAwesomeIcon icon={faTrashAlt} />
-                          &nbsp;Delete
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </h5>
-                <dl>
-                  <span className="date">
-                    <dt>Created</dt>
-                    <dd>{layer.created_at}</dd>
-                  </span>
-                  <span className="date">
-                    <dt>Updated</dt>
-                    <dd>{layer.updated_at}</dd>
-                  </span>
-                  <span className="author">
-                    <dt>Author</dt>
-                    <dd>{layer.owner.name}</dd>
-                  </span>
-                </dl>
-              </span>
-            </li>
-          ))}
-      </ul>
+        <ul className="panel-list">
+          <div className="notification shared-feed"></div>
+          {filteredDatasets &&
+            filteredDatasets.map((layer, index) => (
+              <li key={layer._id}>
+                <span className="checkbox-wrapper wrapper">
+                  <input type="checkbox" />
+                </span>
+                <span className="feed-detail-wrapper wrapper">
+                  <h5>
+                    {/*icon should only show if feed is shared, should have new class until notification associated with it is dismissed*/}
+                    <span className="icon shared new">
+                      <FontAwesomeIcon icon={faShareAlt} />
+                    </span>
+                    <span className="file-name">
+                      {/*friendly name and pipe only shows if added by user*/}
+                      <strong>[FRIENDLY NAME]</strong>&nbsp;|&nbsp;
+                      {/*end friendly name*/}
+                      {layer.name}
+                    </span>
+                    <button
+                      onClick={() => setMenuState(!menuActive)}
+                      className="menu-btn"
+                    >
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                    </button>
+                    <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
+                      <ul>
+                        <li className="menu-icon"></li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            &nbsp;Info
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faFileExport} />
+                            &nbsp;Export
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faFileUpload} />
+                            &nbsp;Upload
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faShareAltSquare} />
+                            &nbsp;Share
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                            &nbsp;Delete
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </h5>
+                  <dl>
+                    <span className="date">
+                      <dt>Created</dt>
+                      <dd>{layer.created_at}</dd>
+                    </span>
+                    <span className="date">
+                      <dt>Updated</dt>
+                      <dd>{layer.updated_at}</dd>
+                    </span>
+                    {/* only show author if feed is shared */}
+                    <span className="author">
+                      <dt>Author</dt>
+                      <dd>{layer.owner.name}</dd>
+                    </span>
+                    {/* end only show author if feed is shared */}
+                  </dl>
+                </span>
+              </li>
+            ))}
+        </ul>
+      </div>
     </React.Fragment>
   );
 };
