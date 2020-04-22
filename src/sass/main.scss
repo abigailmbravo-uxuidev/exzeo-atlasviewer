@@ -95,36 +95,6 @@
         &.open {
 
             .section {
-                //search bar 
-                &.search {
-                    display: flex;
-
-                    label {
-                        color: $navy;
-
-                        font-size: 10px;
-                        font-weight: bold;
-                    }
-
-                    .searchBar {
-                        display: flex;
-                        flex-direction: row;
-                        flex-grow: 1;
-                        flex-shrink: 1;
-                        justify-content: space-between;
-
-                        .input-icon-wrapper {
-                            display: flex;
-                            flex-grow: 1;
-                            flex-shrink: 1;
-    
-
-                            .fa-filter {
-                                color: $navy;
-                            }
-                        }
-                    }
-                }
                 
                 //feeds 
                 &.feeds {
