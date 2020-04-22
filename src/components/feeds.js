@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLayerState } from '../context/layer-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -11,8 +12,9 @@ import {
   faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-const Feeds = ({ feeds, dispatch, filter }) => {
-  const filteredDatasets = feeds.filter(ds => {
+const Feeds = ({ filter }) => {
+  const layers = useLayerState();
+  const filteredDatasets = layers.filter(ds => {
     return ds.name.toLowerCase().includes(filter);
   });
   const [menuActive, setMenuState] = useState(true);

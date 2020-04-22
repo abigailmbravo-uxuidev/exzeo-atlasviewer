@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
+import { useLayerDispatch } from '../context/layer-context';
 
-const Uploader = ({ dispatch, setUploaderState }) => {
+const Uploader = ({ setUploaderState }) => {
+  const dispatch = useLayerDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
   const [file, setFile] = useState({});
   const [headers, setHeaders] = useState(null);

@@ -10,17 +10,6 @@ const layerReducer = (feeds, action) => {
     case 'add': {
       return [...feeds, action.layer];
     }
-    case 'toggle': {
-      return feeds.filter(li => li.id !== action.id);
-    }
-    case 'update': {
-      return feeds.map(feed => {
-        if (feed.id === action.feeds.id) {
-          return {};
-        }
-        return feed;
-      });
-    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -28,8 +17,8 @@ const layerReducer = (feeds, action) => {
 };
 
 const LayerProvider = ({ children }) => {
-  const { feeds } = useUser();
-  const [state, dispatch] = useReducer(layerReducer, feeds);
+  const { layers } = useUser();
+  const [state, dispatch] = useReducer(layerReducer, layers);
 
   return (
     <LayerStateContext.Provider value={state}>
@@ -43,7 +32,7 @@ const LayerProvider = ({ children }) => {
 const useLayerDispatch = () => {
   const context = React.useContext(LayerDispatchContext);
   if (context === undefined) {
-    throw new Error(`useLayerDispatch must be used within a LayerProvider`);
+    //throw new Error(`useLayerDispatch must be used within a LayerProvider`);
   }
   return context;
 };
@@ -51,7 +40,7 @@ const useLayerDispatch = () => {
 const useLayerState = () => {
   const context = useContext(LayerStateContext);
   if (context === undefined) {
-    throw new Error(`useLayerState must be used within a LayerProvider`);
+    //throw new Error(`useLayerState must be used within a LayerProvider`);
   }
   return context;
 };
