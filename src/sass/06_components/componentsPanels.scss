@@ -352,17 +352,21 @@
         margin-right: .5rem;
 
         &.date {
-          width: 25%;
+          flex-grow: 1;
+          flex-shrink: 1;
+
+          min-width: 25%;
         }
         dt {
-          font-size: .5rem;
+          font-size: .75rem;
           font-weight: 900;
           line-height: 1;
         }
         dd {
           margin: 0;
 
-          font-size: .75rem;  line-height: 1;
+          font-size: .75rem;
+          line-height: 1;
           }
           dt {
             padding-bottom: 4px;

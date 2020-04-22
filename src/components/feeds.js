@@ -29,7 +29,7 @@ const Feeds = ({ feeds, dispatch, filter }) => {
             <option>Test Sort</option>
           </select>
           <button
-            className="uploadBtn"
+            className="uploadBtn actionBtn"
             type="button"
             onClick={() => setUploaderState(!uploaderState)}
           >

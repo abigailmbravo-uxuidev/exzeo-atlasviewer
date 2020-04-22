@@ -35,55 +35,6 @@
 
 //landing page styling 
 
-#app[role='main'] {
-
-
-    .panel {
-        &.open {
-
-            .section {
-                
-                //feeds 
-                &.feeds {
-
-                    .panel-list {
-                        li {
-                            .feed-detail-wrapper {
-                                &.wrapper {
-                                    .menu-btn {
-                                        margin: 0;
-                                        padding: 0;
-
-                                        color: $navy;
-                                        background: none;
-                                    }
-                                }
-                                dl {
-                                    .date { 
-                                        display: flex;
-                                        flex-direction: column;
-                                        flex-grow: 1;
-                                        flex-shrink: 1;
-                                        dt {
-                                            padding-bottom: 4px;
-
-                                            font-size: 12px;
-                                        }
-                                        dd {
-                                            font-size: 12px;
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                        }
-                     }  
-                }
-            }
-        }
-    }
-}
-
 .section {
     header {
         display: flex;  align-items: center; flex-wrap: wrap;
