@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useLayerState } from '../context/layer-context';
+import React, { Fragment, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -11,8 +10,11 @@ import {
   faShareAltSquare,
   faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
+import { useLayerState } from '../context/layer-context';
+import Uploader from './uploader';
 
 const Feeds = ({ filter }) => {
+  const [uploaderState, setUploaderState] = useState(false);
   const layers = useLayerState();
   const filteredDatasets = layers.filter(ds => {
     return ds.name.toLowerCase().includes(filter);
@@ -20,7 +22,8 @@ const Feeds = ({ filter }) => {
   const [menuActive, setMenuState] = useState(true);
 
   return (
-    <React.Fragment>
+    <Fragment>
+      {uploaderState && <Uploader setUploaderState={setUploaderState} />}
       <header>
         <h4>
           <FontAwesomeIcon icon={faNetworkWired} />
@@ -123,7 +126,7 @@ const Feeds = ({ filter }) => {
             ))}
         </ul>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
