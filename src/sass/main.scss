@@ -45,19 +45,7 @@
                 
                 //feeds 
                 &.feeds {
-                    button {
-                        display: flex;
 
-                        margin: 16px;
-                        padding: 8px 24px;
-
-                        color: white;
-                        border-radius: 6px;
-                        background: $green;
-
-                        font-size: 16px;
-                        font-weight: bold;
-                    }
                     .panel-list {
                         li {
                             .feed-detail-wrapper {
@@ -90,11 +78,6 @@
                             }
                         }
                      }  
-                }
-                //logo
-                &.logo {
-                    height: 3.25rem;
-                    margin: 0px 8px 0px 8px;
                 }
             }
         }
