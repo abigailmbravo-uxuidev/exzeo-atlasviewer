@@ -19,13 +19,34 @@ a {
 }
 .actionBtn {
   display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
 
+  width: auto;
   padding: 8px 16px;
 
   color: white;
   border-radius: 6px;
   background: $green;
 
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
+}
+
+.feedBtns {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
+  padding-bottom: 16px;
+  select {
+      flex-grow: 1;
+  flex-shrink: 1;
+
+      height: 2rem;
+      margin-right: .5rem;
+      
+  }
 }

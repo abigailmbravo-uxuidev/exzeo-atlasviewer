@@ -43,25 +43,6 @@
             width: 100%
         }
 
-        .feedBtns {
-            display: flex;
-            align-items: center;
-            flex-direction: row;
-            flex-grow: 1;
-            flex-shrink: 1;
-            justify-content: space-between;
-
-            padding-bottom: 16px;
-            select {
-                width: 100%;
-                height: 2rem;
-                margin-right: 16px;
-                
-            }
-
-            .uploadBtn {
-                margin: 0 !important;
-            }
-        }
+        
     }
 }

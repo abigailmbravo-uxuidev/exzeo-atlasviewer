@@ -357,6 +357,10 @@
 
           min-width: 25%;
         }
+        &.author {
+          flex-grow: 1;
+          flex-shrink: 1;
+        }
         dt {
           font-size: .75rem;
           font-weight: 900;
