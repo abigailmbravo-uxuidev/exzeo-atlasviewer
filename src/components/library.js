@@ -5,6 +5,8 @@ import Feeds from './feeds';
 import Overlays from './overlays';
 import { useLayerDispatch } from '../context/layer-context';
 
+import Icon from './icon';
+
 const Library = () => {
   const [libraryActive, setLibraryState] = useState(true);
   const [filter, setFilter] = useState('');
@@ -14,20 +16,23 @@ const Library = () => {
   return (
     <div id="library" className={`panel ${libraryActive ? 'open' : 'closed'}`}>
       <div className="section search">
-        <label htmlFor="search">
-          FILTER FEEDS AND LAYERS BY NAME OR META DATA
-        </label>
-        <div className="searchBar">
-          <span className="input-icon-wrapper">
-            <input
-              placeholder="Type to filter list by name or tag"
-              type="input"
-              name="search"
-              id="search"
-              onChange={handleFilter}
-            />
-            <FontAwesomeIcon icon={faFilter} />
-          </span>
+        <div className="icon">
+          <Icon />
+        </div>
+        <div className="search-wrapper">
+          <label htmlFor="search">Filter feeds &amp; Layers</label>
+          <div className="searchBar">
+            <span className="input-icon-wrapper">
+              <input
+                placeholder="Type to filter by name or tag"
+                type="input"
+                name="search"
+                id="search"
+                onChange={handleFilter}
+              />
+              <FontAwesomeIcon icon={faFilter} />
+            </span>
+          </div>
         </div>
       </div>
       <div className="scroll">

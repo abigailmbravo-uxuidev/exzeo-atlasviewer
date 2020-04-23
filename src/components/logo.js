@@ -2,7 +2,7 @@ import React from 'react';
 
 const Logo = () => {
   return (
-    <svg id="logo" data-name="Layer 1" viewBox="0 0 565.01 100">
+    <svg id="logo" viewBox="0 0 565.01 100">
       <path
         className="orange"
         d="M49.39,35.22,74.72,9.89a50.06,50.06,0,0,0-45.84,4.82Z"

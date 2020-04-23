@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 
 import Logo from './logo';
+import Icon from './icon';
 
 const View = () => {
   const user = useUser();
@@ -30,7 +31,7 @@ const View = () => {
       </div>
       <div className="panel-tab view-tab">
         <button onClick={() => setViewState(!viewActive)}>
-          <FontAwesomeIcon icon={faImage} />
+          <Icon />
         </button>
       </div>
     </div>

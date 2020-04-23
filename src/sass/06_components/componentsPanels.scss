@@ -179,6 +179,16 @@
           background-color: $navy-hover;
         }
       }
+
+      svg {
+        display: block;
+
+        width: 64%;
+
+        .orange, .green, .navy, .red {
+          fill: $white;
+        }
+      }
     }
   }
 
