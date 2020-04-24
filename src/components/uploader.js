@@ -74,7 +74,7 @@ const Uploader = ({ setUploaderState }) => {
   };
 
   return (
-    <div className="modal">
+    <div className="modal .fade-in">
       <form onSubmit={handleSubmit(handleUpload)}>
         <input
           id="feed"

@@ -32,3 +32,15 @@
 //08_overwrites
 
 //----------------------------
+
+.fade-in {
+  animation: fadeIn ease 10s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
