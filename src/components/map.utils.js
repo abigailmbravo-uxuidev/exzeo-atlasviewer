@@ -44,3 +44,24 @@ export const addControls = mapbox => {
   });
   mapbox.addControl(geocoder, 'bottom-left');
 };
+
+export const addLayer = (map, layer) => {
+  const { _id, url } = layer;
+  const source = `${process.env.API_URL}/geojson/${_id}`;
+
+  map.addSource(_id, {
+    type: 'geojson',
+    data: source,
+    buffer: 32
+  });
+
+  map.addLayer({
+    id: `${_id}-layer`,
+    type: 'circle',
+    source: _id,
+    paint: {
+      'circle-radius': 7,
+      'circle-color': ['get', 'status_color']
+    }
+  });
+};

@@ -2,31 +2,10 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useLayerState } from '../context/layer-context';
-import { defaultConfig, addControls } from './map.utils.js';
+import { defaultConfig, addControls, addLayer } from './map.utils.js';
+import { usePrevious } from '../utils/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import { usePrevious } from '../utils/utils';
-
-const addLayer = (map, layer) => {
-  const { _id, url } = layer;
-  const source = `${process.env.API_URL}/geojson/${_id}`;
-
-  map.addSource(_id, {
-    type: 'geojson',
-    data: source,
-    buffer: 32
-  });
-
-  map.addLayer({
-    id: `${_id}-layer`,
-    type: 'circle',
-    source: _id,
-    paint: {
-      'circle-radius': 7,
-      'circle-color': ['get', 'status_color']
-    }
-  });
-};
 
 const Map = () => {
   const layers = useLayerState();
@@ -57,11 +36,19 @@ const Map = () => {
     if (layers.length > previousLayers.length) {
       addLayer(map, layers[layers.length - 1]);
     } else if (previousLayers.length > layers.length) {
-      console.log('delete');
+      // delete layer
     } else {
-      console.log('toogle');
-    };
-  }, [previousLayers, layers]);
+      // toggle layer
+    }
+  }, [previousLayers, layers, map]);
+
+  if (map) {
+    // handle clicks on features
+    map.on('click', e => {
+      const features = map.queryRenderedFeatures(e.point);
+      console.log(features);
+    });
+  }
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;
 };
