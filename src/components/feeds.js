@@ -21,6 +21,7 @@ const Feeds = ({ filter }) => {
     return ds.name.toLowerCase().includes(filter);
   });
 
+  /* Need the setState variable to be set to the dynamic height of the accordion and not auto */
   const [menuActive, setMenuState] = useState(true);
   const [paneActive, setPaneState] = useState(true);
   const [setHeight, setHeightState] = useState('auto');

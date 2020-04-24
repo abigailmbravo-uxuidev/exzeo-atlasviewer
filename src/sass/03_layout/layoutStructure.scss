@@ -64,31 +64,34 @@ html {
             &.search {
               display: flex;
               justify-content: center;
+
               height: 3.25rem;
               .icon {
-                width: 1.5rem;
-                margin-right: 8px;
                 display: flex;
                 align-items: flex-end;
 
+                width: 1.5rem;
+                margin-right: 8px;
+
                 svg {
                   display: block;
+
                   width: 100%;
                   padding: 6px 0;
                 }
               }
               .search-wrapper {
-                flex-grow: 1;
-                flex-shrink: 1;
                 display: flex;
                 flex-direction: column;
+                flex-grow: 1;
+                flex-shrink: 1;
 
                 label {
                   color: $navy;
 
                   font-size: .75rem;
-                  line-height: 1;
                   font-weight: bold;
+                  line-height: 1;
                 }
                 .searchBar {
                   display: flex;
@@ -132,12 +135,15 @@ html {
                 flex-shrink: 1;
               }
               button {
-                background: transparent;
                 flex-grow: 0;
                 flex-shrink: 0;
-                border: none;
-                font-size: 1.25rem;
+
                 transition: all .3s ease-out;
+
+                border: none;
+                background: transparent;
+
+                font-size: 1.25rem;
 
                 &.closed {
                   transform: rotate(-90deg);
@@ -191,4 +197,22 @@ html {
   }
 .mapboxgl-ctrl-bottom-left {
     transition: all .3s ease-out;
+}
+
+.panel {
+  .section { 
+
+    .pane {
+        overflow: hidden;
+
+        transition: all 1s ease-out;
+
+      &.open {
+        //attributes if needed when pane open
+      }
+      &.closed {
+
+      }
+    }
+  }
 }
