@@ -32,3 +32,20 @@
 //08_overwrites
 
 //----------------------------
+
+
+.panel {
+    .section { 
+  
+      .pane {
+          transition: all 1s ease-out;
+  
+        &.open {
+          //attributes if needed when pane open
+        }
+        &.closed {
+  
+        }
+      }
+    }
+  }

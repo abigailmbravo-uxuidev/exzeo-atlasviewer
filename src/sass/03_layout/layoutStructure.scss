@@ -123,6 +123,27 @@ html {
 
               height: 3.25rem;
             }
+            header {
+              display: flex;
+              align-items: center;
+
+              h1, h2, h3, h4 {
+                flex-grow: 1;
+                flex-shrink: 1;
+              }
+              button {
+                background: transparent;
+                flex-grow: 0;
+                flex-shrink: 0;
+                border: none;
+                font-size: 1.25rem;
+                transition: all .3s ease-out;
+
+                &.closed {
+                  transform: rotate(-90deg);
+                }
+              }
+            }
           }
         }
       }

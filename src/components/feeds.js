@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -8,7 +8,8 @@ import {
   faFileExport,
   faFileUpload,
   faShareAltSquare,
-  faTrashAlt
+  faTrashAlt,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { useLayerState } from '../context/layer-context';
 import Uploader from './uploader';
@@ -19,7 +20,19 @@ const Feeds = ({ filter }) => {
   const filteredDatasets = layers.filter(ds => {
     return ds.name.toLowerCase().includes(filter);
   });
+
   const [menuActive, setMenuState] = useState(true);
+  const [paneActive, setPaneState] = useState(true);
+  const [setHeight, setHeightState] = useState('auto');
+  const content = useRef(null);
+
+  function toggleAccordion() {
+    setPaneState(paneActive === true ? false : true);
+    setHeightState(
+      paneActive === true ? '0px' : `${content.current.scrollHeight}px`
+    );
+    console.log(content.current.scrollHeight);
+  }
 
   return (
     <Fragment>
@@ -29,8 +42,18 @@ const Feeds = ({ filter }) => {
           <FontAwesomeIcon icon={faNetworkWired} />
           &nbsp;Data Feed
         </h4>
+        <button
+          className={`paneToggle ${!paneActive ? 'closed' : 'open'}`}
+          onClick={toggleAccordion}
+        >
+          <FontAwesomeIcon icon={faChevronDown} />
+        </button>
       </header>
-      <div className="pane open">
+      <div
+        className={`pane ${!paneActive ? 'closed' : 'open'}`}
+        ref={content}
+        style={{ maxHeight: `${setHeight}` }}
+      >
         <div className="feedBtns">
           <select>
             <option>Test Sort</option>
@@ -57,12 +80,7 @@ const Feeds = ({ filter }) => {
                     <span className="icon shared new">
                       <FontAwesomeIcon icon={faShareAlt} />
                     </span>
-                    <span className="file-name">
-                      {/*friendly name and pipe only shows if added by user*/}
-                      <strong>[FRIENDLY NAME]</strong>&nbsp;|&nbsp;
-                      {/*end friendly name*/}
-                      {layer.name}
-                    </span>
+                    <span className="file-name">{layer.name}</span>
                     <button
                       onClick={() => setMenuState(!menuActive)}
                       className="menu-btn"
