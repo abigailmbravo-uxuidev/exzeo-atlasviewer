@@ -56,9 +56,12 @@ export const addLayer = (map, layer) => {
   });
 
   map.addLayer({
-    id: `${_id}-layer`,
+    id: `${_id}`,
     type: 'circle',
     source: _id,
+    layout: {
+      visibility: 'visible'
+    },
     paint: {
       'circle-radius': 7,
       'circle-color': ['get', 'status_color']

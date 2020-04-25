@@ -1,14 +1,21 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { useUser } from './user-context';
-import { MapProvider, useMap } from './map-context';
 
 const LayerStateContext = createContext();
 const LayerDispatchContext = createContext();
 
-const layerReducer = (feeds, action) => {
+const layerReducer = (layers, action) => {
   switch (action.type) {
     case 'add': {
-      return [...feeds, action.layer];
+      return [...layers, action.layer];
+    }
+    case 'update': {
+      return layers.map(l => {
+        if (l._id === action.layer._id) {
+          return { ...l, ...action.layer };
+        }
+        return l;
+      });
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

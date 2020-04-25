@@ -11,7 +11,7 @@ const Map = () => {
   const layers = useLayerState();
   const [map, setMap] = useState();
   const mapContainer = useRef(null);
-  const previousLayers = usePrevious(layers);
+  const prevLayers = usePrevious(layers);
 
   useLayoutEffect(() => {
     const initializeMap = (setMap, mapContainer) => {
@@ -32,21 +32,32 @@ const Map = () => {
   }, [setMap]);
 
   useEffect(() => {
-    if (!layers || !previousLayers) return;
-    if (layers.length > previousLayers.length) {
+    if (!layers || !prevLayers) return;
+    if (layers.length > prevLayers.length) {
+      // Add layer
       addLayer(map, layers[layers.length - 1]);
-    } else if (previousLayers.length > layers.length) {
-      // delete layer
+    } else if (prevLayers.length > layers.length) {
+      // Delete layer
     } else {
-      // toggle layer
+      // Toggle layer
+      layers.map(layer => {
+        if (layer.active !== prevLayers.active) {
+          if (!map.getLayer(layer._id)) {
+            return addLayer(map, layer);
+          }
+
+          const visibility = map.getLayoutProperty(layer._id, 'visibility');
+          const newVisibility = layer.active ? 'visible' : 'none';
+          map.setLayoutProperty(layer._id, 'visibility', newVisibility);
+        }
+      });
     }
-  }, [previousLayers, layers, map]);
+  }, [prevLayers, layers, map]);
 
   if (map) {
     // handle clicks on features
     map.on('click', e => {
       const features = map.queryRenderedFeatures(e.point);
-      console.log(features);
     });
   }
 

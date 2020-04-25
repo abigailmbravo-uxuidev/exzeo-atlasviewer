@@ -11,7 +11,7 @@ import {
   faTrashAlt,
   faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
-import { useLayerState } from '../context/layer-context';
+import { useLayerState, useLayerDispatch } from '../context/layer-context';
 import Uploader from './uploader';
 
 const Feeds = ({ filter }) => {
@@ -25,15 +25,19 @@ const Feeds = ({ filter }) => {
   const [menuActive, setMenuState] = useState(true);
   const [paneActive, setPaneState] = useState(true);
   const [setHeight, setHeightState] = useState('auto');
+  const dispatch = useLayerDispatch();
   const content = useRef(null);
 
-  function toggleAccordion() {
+  const toggleAccordion = () => {
     setPaneState(paneActive === true ? false : true);
     setHeightState(
       paneActive === true ? '0px' : `${content.current.scrollHeight}px`
     );
     console.log(content.current.scrollHeight);
-  }
+  };
+  const toggleLayer = (layer, active) => {
+    dispatch({ type: 'update', layer: { ...layer, active } });
+  };
 
   return (
     <Fragment>
@@ -73,7 +77,10 @@ const Feeds = ({ filter }) => {
             filteredDatasets.map((layer, index) => (
               <li key={layer._id}>
                 <span className="checkbox-wrapper wrapper">
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onClick={e => toggleLayer(layer, e.target.checked)}
+                  />
                 </span>
                 <span className="feed-detail-wrapper wrapper">
                   <h5>
