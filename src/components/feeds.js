@@ -17,15 +17,14 @@ import Uploader from './uploader';
 const Feeds = ({ filter }) => {
   const [uploaderState, setUploaderState] = useState(false);
   const layers = useLayerState();
-  const filteredDatasets = layers.filter(ds => {
-    return ds.name.toLowerCase().includes(filter);
-  });
-
   const [menuActive, setMenuActive] = useState(true);
   const [paneActive, setPaneActive] = useState(true);
   const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useLayerDispatch();
   const content = useRef(null);
+  const filteredDatasets = layers.filter(ds => {
+    return ds.name.toLowerCase().includes(filter);
+  });
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
