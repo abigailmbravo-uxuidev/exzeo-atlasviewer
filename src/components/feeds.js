@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -21,23 +21,26 @@ const Feeds = ({ filter }) => {
     return ds.name.toLowerCase().includes(filter);
   });
 
-  /* Need the setState variable to be set to the dynamic height of the accordion and not auto */
-  const [menuActive, setMenuState] = useState(true);
-  const [paneActive, setPaneState] = useState(true);
-  const [setHeight, setHeightState] = useState('auto');
+  const [menuActive, setMenuActive] = useState(true);
+  const [paneActive, setPaneActive] = useState(true);
+  const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useLayerDispatch();
   const content = useRef(null);
 
   const toggleAccordion = () => {
-    setPaneState(paneActive === true ? false : true);
-    setHeightState(
+    setPaneActive(paneActive ? false : true);
+    setPaneHeightState(
       paneActive === true ? '0px' : `${content.current.scrollHeight}px`
     );
-    console.log(content.current.scrollHeight);
   };
+
   const toggleLayer = (layer, active) => {
     dispatch({ type: 'update', layer: { ...layer, active } });
   };
+
+  useEffect(() => {
+    setPaneHeightState(content.current.scrollHeight);
+  }, []);
 
   return (
     <Fragment>
@@ -57,7 +60,7 @@ const Feeds = ({ filter }) => {
       <div
         className={`pane ${!paneActive ? 'closed' : 'open'}`}
         ref={content}
-        style={{ maxHeight: `${setHeight}` }}
+        style={{ maxHeight: `${paneHeight}` }}
       >
         <div className="feedBtns">
           <select>
@@ -90,7 +93,7 @@ const Feeds = ({ filter }) => {
                     </span>
                     <span className="file-name">{layer.name}</span>
                     <button
-                      onClick={() => setMenuState(!menuActive)}
+                      onClick={() => setMenuActive(!menuActive)}
                       className="menu-btn"
                     >
                       <FontAwesomeIcon icon={faEllipsisV} />
