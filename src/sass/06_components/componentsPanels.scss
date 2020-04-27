@@ -212,7 +212,7 @@
         flex-shrink: 1;
         flex-wrap: wrap;
 
-        &.checkbox-wrapper {
+        &.checkbox-wrapper, &.eyeball-wrapper {
           flex-grow: 0;
           flex-shrink: 0;
 

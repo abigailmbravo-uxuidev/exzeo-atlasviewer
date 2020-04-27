@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import Logo from './logo';
 import Icon from './icon';
@@ -26,11 +26,8 @@ const View = () => {
           </header>
           <ul className="panel-list">
             <li>
-              <span className="checkbox-wrapper wrapper">
-                <input
-                  type="checkbox"
-                  onClick={e => toggleLayer(layer, e.target.checked)}
-                />
+              <span className="eyeball-wrapper wrapper">
+                <FontAwesomeIcon icon={faEye} />
               </span>
               <span className="feed-detail-wrapper wrapper">
                 <h5>
