@@ -12,7 +12,19 @@ const Overlays = () => {
         </h4>
       </header>
       <ul className="panel-list">
-        <li>shape layer loop here</li>
+        <li>
+          <span className="checkbox-wrapper wrapper">
+            <input
+              type="checkbox"
+              onClick={e => toggleLayer(layer, e.target.checked)}
+            />
+          </span>
+          <span className="feed-detail-wrapper wrapper">
+            <h5>
+              <span className="overlay-name">Overlay Name</span>
+            </h5>
+          </span>
+        </li>
       </ul>
     </React.Fragment>
   );
