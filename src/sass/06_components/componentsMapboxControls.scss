@@ -28,6 +28,11 @@
         max-width: 100%;
 
         transition: all .2s ease-out;
+
+        svg {
+            fill: rgb(51,51,51);
+            stroke: rgb(51,51,51);
+        }
         input {
             width: 0;
             padding: 6px 6px 6px 30px;
