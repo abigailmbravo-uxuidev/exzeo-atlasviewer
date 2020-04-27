@@ -25,7 +25,19 @@ const View = () => {
             </h4>
           </header>
           <ul className="panel-list">
-            <li>view layer loop here</li>
+            <li>
+              <span className="checkbox-wrapper wrapper">
+                <input
+                  type="checkbox"
+                  onClick={e => toggleLayer(layer, e.target.checked)}
+                />
+              </span>
+              <span className="feed-detail-wrapper wrapper">
+                <h5>
+                  <span className="overlay-name">View Name</span>
+                </h5>
+              </span>
+            </li>
           </ul>
         </div>
       </div>
