@@ -17,7 +17,6 @@ import Uploader from './uploader';
 const Feeds = ({ filter }) => {
   const [uploaderState, setUploaderState] = useState(false);
   const layers = useLayerState();
-  const [menuActive, setMenuActive] = useState(true);
   const [paneActive, setPaneActive] = useState(true);
   const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useLayerDispatch();
@@ -97,6 +96,45 @@ const Feeds = ({ filter }) => {
                       <FontAwesomeIcon icon={faShareAlt} />
                     </span>
                     <span className="file-name">{layer.name}</span>
+                    <span className="menuIcon">
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                    </span>
+                    <div className="menu">
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                      <ul>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            &nbsp;Info
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faFileExport} />
+                            &nbsp;Export
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faFileUpload} />
+                            &nbsp;Upload
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faShareAltSquare} />
+                            &nbsp;Share
+                          </button>
+                        </li>
+                        <li>
+                          <button>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                            &nbsp;Delete
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    {/* 
                     <button
                       onClick={() => setMenuActive(!menuActive)}
                       className="menu-btn"
@@ -104,6 +142,7 @@ const Feeds = ({ filter }) => {
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </button>
                     <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
+                      <FontAwesomeIcon icon={faEllipsisV} />
                       <ul>
                         <li className="menu-icon"></li>
                         <li>
@@ -137,7 +176,7 @@ const Feeds = ({ filter }) => {
                           </button>
                         </li>
                       </ul>
-                    </div>
+                    </div>*/}
                   </h5>
                   <dl>
                     <span className="date">

@@ -33,6 +33,7 @@
   }
   
   #library {
+    position: relative;
     z-index: 3;
     top: 0;
     left: 0;
@@ -231,8 +232,6 @@
       }
     }
     h1, h2, h3, h4, h5, p {
-      position: relative;
-
       display: flex;
       align-items: center;
 
@@ -267,23 +266,42 @@
         flex-grow: 1;
         flex-shrink: 1;
       }
+      .menuIcon {
+
+        &:hover {
+          ~.menu {
+            display: flex;
+
+            opacity: 1;
+          }
+        }
+      }
       .menu {
         position: absolute;
         z-index: 1;
-        top: calc(50% - .75rem);
-        right: -.5rem;
+        right: -2.75rem;
 
-        visibility: hidden;
+        display: none;
+        flex-direction: column;
 
         width: auto;
         height: auto;
-
-        transition: all .2s ease-out;
+        margin-top: 56px;
 
         opacity: 0;
         border-radius: .25rem;
         background-color: rgba($white, .9);
         box-shadow: 0px 0px 8px 0px rgba($black, .25);
+
+        svg {
+          
+        }
+
+        &:hover {
+          display: flex;
+
+          opacity: 1;
+        }
 
         ul {
           padding: .25rem 0;
@@ -316,13 +334,6 @@
               }
             }
           }
-        }
-        
-
-        &.open {
-          visibility: visible;
-
-          opacity: 1;
         }
       }
       .menu-btn {
