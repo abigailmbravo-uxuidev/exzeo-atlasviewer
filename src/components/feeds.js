@@ -63,7 +63,13 @@ const Feeds = ({ filter }) => {
       >
         <div className="feedBtns">
           <select>
-            <option>Test Sort</option>
+            <option>Name | A - Z</option>
+            <option>Name | Z - A</option>
+            <option>Author | A - Z</option>
+            <option>Author | Z - A</option>
+            <option>Created Date</option>
+            <option>Updated Date</option>
+            <option>Mapped Feeds</option>
           </select>
           <button
             className="uploadBtn actionBtn"
