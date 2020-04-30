@@ -1,0 +1,218 @@
+//structure
+html {
+  
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      
+  
+      #app {
+        display: block;
+
+        width: 100vw;
+        height: 100vh;
+  
+        
+        #map-canvas {
+          position: relative;
+          z-index: 1;
+
+          width: 100vw;
+          height: 100vh;
+          
+          #map {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+          }
+        }
+  
+        #library, #view {
+          display: flex;
+          flex-direction: column;
+
+          transition: all .3s ease-out;
+  
+          .scroll {
+            display: flex;
+            overflow-x: hidden;
+            overflow-y: auto;
+            flex-direction: column;
+            flex-grow: 1;
+            flex-shrink: 1;
+
+            transition: all .2s ease-out;
+          }
+  
+          .section {
+            flex-grow: 0;
+            flex-shrink: 0;
+
+            padding: .5rem 1rem;
+
+            transition: all .2s ease-out;
+
+            border-bottom: $white .5rem solid;
+  
+            &:last-of-type {
+              border-bottom-width: 0;
+            }
+            &.search {
+              display: flex;
+              justify-content: center;
+
+              height: 4.5rem;
+              .icon {
+                display: flex;
+                align-items: flex-end;
+
+                width: 1.5rem;
+                margin-right: 8px;
+
+                svg {
+                  display: block;
+
+                  width: 100%;
+                  padding: 6px 0;
+                }
+              }
+              .search-wrapper {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                flex-shrink: 1;
+
+                label {
+                  color: $navy;
+
+                  font-size: .75rem;
+                  font-weight: bold;
+                  line-height: 1;
+                }
+                .searchBar {
+                  display: flex;
+                  flex-direction: row;
+                  flex-grow: 1;
+                  flex-shrink: 1;
+                  justify-content: space-between;
+
+                  .input-icon-wrapper {
+                    display: flex;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    
+                    input {
+                      height: 1.75rem;
+                      padding: 4px 24px 4px 8px;
+
+                      font-size: .875rem;
+                    }
+                    .fa-filter {
+                        color: $navy;
+                    }
+                  }
+                }
+              }
+            }
+            &.logo {
+              display: flex;
+              align-items: center;
+              flex-direction: column;
+              justify-content: center;
+
+              height: 4.5rem;
+            }
+            header {
+              display: flex;
+              align-items: center;
+
+              h1, h2, h3, h4 {
+                flex-grow: 1;
+                flex-shrink: 1;
+              }
+              button {
+                flex-grow: 0;
+                flex-shrink: 0;
+
+                transition: all .3s ease-out;
+
+                border: none;
+                background: transparent;
+
+                font-size: 1.25rem;
+
+                &.closed {
+                  transform: rotate(-90deg);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #library {
+    &.closed {
+      ~#view {
+        &.open {
+            ~#map-canvas {
+                .mapboxgl-ctrl-bottom-left  {
+                    left: 16rem !important;
+                }
+            }
+        }
+      }
+    }
+  }
+  #library {
+    &.open {
+      ~#view {
+        &.open {
+            ~#map-canvas {
+                .mapboxgl-ctrl-bottom-left  {
+                    left: 34rem !important;
+                }
+            }
+        }
+      }
+    }
+  }
+  #library {
+    &.open {
+      ~#view {
+        &.closed {
+            ~#map-canvas {
+                .mapboxgl-ctrl-bottom-left  {
+                    left: 18rem !important;
+                }
+            }
+        }
+      }
+    }
+  }
+.mapboxgl-ctrl-bottom-left {
+    transition: all .3s ease-out;
+}
+
+.panel {
+  .section { 
+
+    .pane {
+        overflow: hidden;
+
+        transition: all 1s ease-out;
+
+      &.open {
+        //attributes if needed when pane open
+      }
+      &.closed {
+
+      }
+    }
+  }
+}

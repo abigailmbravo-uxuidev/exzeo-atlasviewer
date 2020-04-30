@@ -1,0 +1,47 @@
+/*IMPORT ALL SCSS PARTIALS*/
+
+//00_global_fonts
+@import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700|Oswald:700&display=swap');
+
+//00_global
+@import '00_global/globalColors';
+@import '00_global/globalFonts';
+@import '00_global/globalGlobal';
+@import '00_global/globalSettings';
+
+//01_settings 
+
+//02_generic 
+//@import '02_generic/genericReset';
+
+//03_layout
+@import '03_layout/layoutStructure';
+
+//04_elements 
+
+//05_pages 
+@import '05_pages/pagesLandingpage';
+
+//06_components 
+@import '06_components/componentsButtons';
+@import '06_components/componentsInputs';
+@import '06_components/componentsModals';
+@import '06_components/componentsPanels';
+@import '06_components/componentsMapboxControls';
+//07_theme 
+
+//08_overwrites
+
+//----------------------------
+
+.fade-in {
+  animation: fadeIn ease 10s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}

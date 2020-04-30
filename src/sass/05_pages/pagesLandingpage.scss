@@ -1,0 +1,58 @@
+//landing page styling 
+
+#app[role='main'] {
+    display: flex;
+    .landingPage {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 0;
+        justify-content: center;
+
+        background-image: url('../img/atlas_BG.jpg');
+       div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        padding:32px 64px 32px;
+
+        border-radius: 8px;
+        background: rgba(white, .9);
+
+            .fa-atlas {
+               color: $navy;
+
+               font-size: 32px;
+            }
+            h3 {
+                margin: 24px;
+                margin-top: 0;
+
+                font-size: 3rem;
+            }
+            p {
+                width: 50%;
+                margin-top: 0;
+
+                font-size: 1rem;
+                a {
+                    align-self: center;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    justify-content: center;
+
+                    padding: 16px;
+
+                    color: $white;
+                    background: $navy;
+
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+            }
+            
+       } 
+    }
+}
