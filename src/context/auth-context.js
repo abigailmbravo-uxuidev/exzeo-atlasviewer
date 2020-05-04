@@ -1,28 +1,42 @@
 import React, { useState, useEffect, useContext } from 'react';
-import createAuth0Client from '@auth0/auth0-spa-js';
+import createAuthClient from '@auth0/auth0-spa-js';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
-export const Auth0Context = React.createContext();
-export const useAuth0 = () => useContext(Auth0Context);
+export const AuthContext = React.createContext();
+export const useAuth = () => useContext(AuthContext);
 
-export const Auth0Provider = ({
+export const AuthProvider = ({
   children,
   onRedirectCallback = DEFAULT_REDIRECT_CALLBACK,
   ...initOptions
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [user, setUser] = useState();
-  const [auth0Client, setAuth0] = useState();
+  const [auth0Client, setAuth] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
 
+  const fetchUserMeta = async user => {
+    const url = `${process.env.API_URL}/user`;
+
+    const reqOptions = {
+      url,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+    const res = await axios(reqOptions).catch(err => console.log(err));
+    const userMeta = res.data.data;
+  };
   useEffect(() => {
-    const initAuth0 = async () => {
-      const auth0FromHook = await createAuth0Client(initOptions);
-      setAuth0(auth0FromHook);
+    const initAuth = async () => {
+      const auth0FromHook = await createAuthClient(initOptions);
+      setAuth(auth0FromHook);
 
       if (
         window.location.search.includes('code=') &&
@@ -43,7 +57,7 @@ export const Auth0Provider = ({
 
       setLoading(false);
     };
-    initAuth0();
+    initAuth();
     // eslint-disable-next-line
   }, []);
 
@@ -51,8 +65,9 @@ export const Auth0Provider = ({
     setPopupOpen(true);
     try {
       await auth0Client.loginWithPopup(params);
+      const token = await auth0Client.getTokenSilently();
+      axios.defaults.headers.common.authorization = token;
     } catch (error) {
-      console.error(error);
     } finally {
       setPopupOpen(false);
     }
@@ -71,7 +86,7 @@ export const Auth0Provider = ({
   };
 
   return (
-    <Auth0Context.Provider
+    <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
@@ -87,11 +102,11 @@ export const Auth0Provider = ({
       }}
     >
       {children}
-    </Auth0Context.Provider>
+    </AuthContext.Provider>
   );
 };
 
-Auth0Provider.propTypes = {
+AuthProvider.propTypes = {
   children: PropTypes.object,
   onRedirectCallback: PropTypes.func
 };
