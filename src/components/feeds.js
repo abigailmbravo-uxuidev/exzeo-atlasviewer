@@ -21,10 +21,11 @@ const Feeds = ({ filter }) => {
   const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useLayerDispatch();
   const content = useRef(null);
-  const filteredDatasets = layers.filter(ds => {
-    return ds.name.toLowerCase().includes(filter);
-  });
-
+  const filteredDatasets =
+    layers && layers.length
+      ? layers.filter(ds => ds.name.toLowerCase().includes(filter))
+      : [];
+console.log(filteredDatasets)
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
     setPaneHeightState(
@@ -33,7 +34,7 @@ const Feeds = ({ filter }) => {
   };
 
   const toggleLayer = (layer, active) => {
-    dispatch({ type: 'update', layer: { ...layer, active } });
+    dispatch({ type: 'update', data: { ...layer, active } });
   };
 
   useEffect(() => {
@@ -86,6 +87,7 @@ const Feeds = ({ filter }) => {
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
+                    checked={layer.active}
                     onClick={e => toggleLayer(layer, e.target.checked)}
                   />
                 </span>

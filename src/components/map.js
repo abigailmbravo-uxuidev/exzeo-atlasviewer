@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
+import { useUser } from '../context/user-context';
 import { useLayerState } from '../context/layer-context';
 import { defaultConfig, addControls, addLayer } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
@@ -9,9 +10,11 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const Map = () => {
   const layers = useLayerState();
+  const user = useUser();
   const [map, setMap] = useState();
   const mapContainer = useRef(null);
   const prevLayers = usePrevious(layers);
+  const userId = user.user_id;
 
   useLayoutEffect(() => {
     const initializeMap = (setMap, mapContainer) => {
@@ -35,7 +38,7 @@ const Map = () => {
     if (!layers || !prevLayers) return;
     if (layers.length > prevLayers.length) {
       // Add layer
-      addLayer(map, layers[layers.length - 1]);
+      addLayer(map, userId, layers[layers.length - 1]);
     } else if (prevLayers.length > layers.length) {
       // Delete layer
     } else {
@@ -43,7 +46,7 @@ const Map = () => {
       layers.map(layer => {
         if (layer.active !== prevLayers.active) {
           if (!map.getLayer(layer._id)) {
-            return addLayer(map, layer);
+            return addLayer(map, userId, layer);
           }
 
           const visibility = map.getLayoutProperty(layer._id, 'visibility');
@@ -52,7 +55,7 @@ const Map = () => {
         }
       });
     }
-  }, [prevLayers, layers, map]);
+  }, [prevLayers, layers, userId, map]);
 
   if (map) {
     // handle clicks on features

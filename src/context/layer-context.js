@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { useUser } from './user-context';
 
 const LayerStateContext = createContext();
@@ -6,13 +6,16 @@ const LayerDispatchContext = createContext();
 
 const layerReducer = (layers, action) => {
   switch (action.type) {
+    case 'initial': {
+      return action.data;
+    }
     case 'add': {
-      return [...layers, action.layer];
+      return [...layers, action.data];
     }
     case 'update': {
       return layers.map(l => {
-        if (l._id === action.layer._id) {
-          return { ...l, ...action.layer };
+        if (l._id === action.data._id) {
+          return { ...l, ...action.data };
         }
         return l;
       });
@@ -25,7 +28,13 @@ const layerReducer = (layers, action) => {
 
 const LayerProvider = ({ children }) => {
   const { layers } = useUser();
-  const [state, dispatch] = useReducer(layerReducer, layers);
+  const [state, dispatch] = useReducer(layerReducer);
+
+  useEffect(() => {
+    if (layers && layers.length > 0) {
+      dispatch({ type: 'initial', data: layers });
+    }
+  }, [layers]);
 
   return (
     <LayerStateContext.Provider value={state}>

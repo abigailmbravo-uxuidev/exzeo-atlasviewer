@@ -3,10 +3,12 @@ import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
 import { useLayerDispatch } from '../context/layer-context';
+import { useUser } from '../context/user-context';
 
 const Uploader = ({ setUploaderState }) => {
   const dispatch = useLayerDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
+  const user = useUser();
   const [file, setFile] = useState({});
   const [headers, setHeaders] = useState(null);
   const [layerData, setLayerData] = useState();
@@ -41,8 +43,15 @@ const Uploader = ({ setUploaderState }) => {
 
   const handleUpload = async data => {
     const url = `${process.env.API_URL}/upload`;
+    const userData = {
+      userId: user.user_id,
+      first_name: user.first_name,
+      last_name: user.last_name
+    };
+
     const formData = new FormData();
-    formData.append('data.feedname', data.feedname);
+    formData.append('name', data.feedname);
+    formData.append('userData', JSON.stringify(userData));
     formData.append('file', file);
 
     const reqOptions = {
@@ -56,7 +65,7 @@ const Uploader = ({ setUploaderState }) => {
     const res = await axios(reqOptions).catch(err => console.log(err));
     const layer = res.data.data;
 
-    dispatch({ type: 'add', layer });
+    dispatch({ type: 'add', data: layer });
     setUploaderState(false);
   };
 

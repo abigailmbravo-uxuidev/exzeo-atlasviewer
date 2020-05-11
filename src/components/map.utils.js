@@ -45,9 +45,9 @@ export const addControls = mapbox => {
   mapbox.addControl(geocoder, 'bottom-left');
 };
 
-export const addLayer = (map, layer) => {
+export const addLayer = (map, userId, layer) => {
   const { _id, url } = layer;
-  const source = `${process.env.API_URL}/geojson/${_id}`;
+  const source = `${process.env.API_URL}/geojson/${userId}/${_id}`;
 
   map.addSource(_id, {
     type: 'geojson',
