@@ -25,7 +25,7 @@ const Feeds = ({ filter }) => {
     layers && layers.length
       ? layers.filter(ds => ds.name.toLowerCase().includes(filter))
       : [];
-console.log(filteredDatasets)
+
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
     setPaneHeightState(
