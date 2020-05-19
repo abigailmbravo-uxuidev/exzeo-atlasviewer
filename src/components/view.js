@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faEye, faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
 import Icon from './icon';
 import { mapStyles } from './map.utils';
@@ -39,18 +39,21 @@ const View = ({ setBasemap }) => {
               </span>
             </li>
           </ul>
-          <select onChange={handleBasemap}>
-            {mapStyles &&
-              mapStyles.map((style, index) => {
-                const elements = style.split('/');
-                const key = elements[elements.length - 1];
-                return (
-                  <option key={index} value={index}>
-                    {key}
-                  </option>
-                );
-              })}
-          </select>
+          <div className="base-map-wrapper">
+            <span><FontAwesomeIcon icon={faGlobeAmericas} /></span>
+            <select onChange={handleBasemap}>
+              {mapStyles &&
+                mapStyles.map((style, index) => {
+                  const elements = style.split('/');
+                  const key = elements[elements.length - 1];
+                  return (
+                    <option key={index} value={index}>
+                      {key}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
         </div>
       </div>
       <div className="panel-tab view-tab">

@@ -22,6 +22,26 @@ input {
    box-shadow: 0 0 0 0 rgba(0,0,0,0);
   }
 }
+select {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  width: 100%;
+  height: 2rem;
+
+  color: $navy;
+  border: none;
+  background: $white;
+  box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
+
+  font-size: 14px;
+  font-weight: 500;
+  
+  
+  option {
+  }
+  
+}
 .input-icon-wrapper {
   position: relative;
 
