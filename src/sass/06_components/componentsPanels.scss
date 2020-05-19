@@ -40,8 +40,6 @@
   width: 18rem;
   height: 100vh;
 
-  border-right: 2px solid $green;
-
   &.open {
     left: 0;
   }
@@ -58,8 +56,6 @@
   width: 16rem;
   height: 100vh;
 
-  border-right: 2px solid $navy;
-
   .panel-list {
     li {
       padding-bottom: .75rem;
@@ -75,15 +71,17 @@
     left: -16rem;
   }
 
+  .icon-wrapper {
+    width: 1.5rem;
+
+    color: mix($white, $navy, 40%);
+
+    font-size: .75rem;
+  }
+
   .base-map-wrapper {
     display: flex;
     align-items: center;
-
-    span {
-      width: 1.5rem;
-
-      color: $base-gray;
-    }
   }
 }
 #library {

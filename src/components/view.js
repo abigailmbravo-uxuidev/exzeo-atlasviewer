@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faEye, faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faEye, faGlobeAmericas, faNetworkWired } from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
 import Icon from './icon';
 import { mapStyles } from './map.utils';
@@ -29,6 +29,9 @@ const View = ({ setBasemap }) => {
           </header>
           <ul className="panel-list">
             <li>
+              <span className="icon-wrapper">
+                <FontAwesomeIcon icon={faNetworkWired} />
+              </span>
               <span className="eyeball-wrapper wrapper">
                 <FontAwesomeIcon icon={faEye} />
               </span>
@@ -40,7 +43,7 @@ const View = ({ setBasemap }) => {
             </li>
           </ul>
           <div className="base-map-wrapper">
-            <span><FontAwesomeIcon icon={faGlobeAmericas} /></span>
+            <span className="icon-wrapper"><FontAwesomeIcon icon={faGlobeAmericas} /></span>
             <select onChange={handleBasemap}>
               {mapStyles &&
                 mapStyles.map((style, index) => {
