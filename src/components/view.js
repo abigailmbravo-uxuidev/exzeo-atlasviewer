@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faEye, faGlobeAmericas, faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faEye, faGlobeAmericas, faNetworkWired, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
 import Icon from './icon';
 import { mapStyles } from './map.utils';
@@ -27,7 +27,9 @@ const View = ({ setBasemap }) => {
               &nbsp;Current View
             </h4>
           </header>
+          {/* start of active feeds loop */}
           <ul className="panel-list">
+            {/* feed start */}
             <li>
               <span className="icon-wrapper">
                 <FontAwesomeIcon icon={faNetworkWired} />
@@ -37,11 +39,32 @@ const View = ({ setBasemap }) => {
               </span>
               <span className="feed-detail-wrapper wrapper">
                 <h5>
-                  <span className="overlay-name">View Name</span>
+                  <span className="overlay-name">[ Feed Name ]</span>
                 </h5>
               </span>
             </li>
+            {/* feed end */}
           </ul>
+          {/* end of active feeds loop */}
+          {/* start of active layers loop */}
+          <ul className="panel-list">
+            {/* layer start */}
+            <li>
+              <span className="icon-wrapper">
+                <FontAwesomeIcon icon={faLayerGroup} />
+              </span>
+              <span className="eyeball-wrapper wrapper">
+                <FontAwesomeIcon icon={faEye} />
+              </span>
+              <span className="feed-detail-wrapper wrapper">
+                <h5>
+                  <span className="overlay-name">[ Layer Name ]</span>
+                </h5>
+              </span>
+            </li>
+            {/* layer end */}
+          </ul>
+          {/* end of active layers loop */}
           <div className="base-map-wrapper">
             <span className="icon-wrapper"><FontAwesomeIcon icon={faGlobeAmericas} /></span>
             <select onChange={handleBasemap}>
