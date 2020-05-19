@@ -45,8 +45,7 @@ const Uploader = ({ setUploaderState }) => {
     const url = `${process.env.API_URL}/upload`;
     const userData = {
       userId: user.user_id,
-      first_name: user.first_name,
-      last_name: user.last_name
+      name: `${user.first_name} ${user.last_name}`
     };
 
     const formData = new FormData();

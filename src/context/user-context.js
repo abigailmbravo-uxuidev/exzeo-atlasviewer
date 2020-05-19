@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAuth } from './auth-context';
-import userData from '../../test-data/user.json';
 
 const UserContext = React.createContext();
 

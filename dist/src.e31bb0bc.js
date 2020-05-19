@@ -38939,6 +38939,7 @@ const AuthProvider = ({
         const user = await auth0FromHook.getUser();
         _axios.default.defaults.headers.common.authorization = `Bearer ${token}`;
         const userData = await fetchUserData(user.sub);
+        userData.token = token;
         setUser(userData);
       }
 
@@ -38970,36 +38971,7 @@ AuthProvider.propTypes = {
 const useAuth = () => (0, _react.useContext)(AuthContext);
 
 exports.useAuth = useAuth;
-},{"react":"../node_modules/react/index.js","@auth0/auth0-spa-js":"../node_modules/@auth0/auth0-spa-js/dist/auth0-spa-js.production.esm.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js"}],"../test-data/user.json":[function(require,module,exports) {
-module.exports = {
-  "firstName": "Jacopo",
-  "lastName": "Belbo",
-  "email": "elamison@exzeo.com",
-  "layers": [{
-    "created_at": "2020-02-15T21:26:17Z",
-    "updated_at": "2020-02-19T21:26:17Z",
-    "_id": "5ea050d566adef057b030a53",
-    "name": "Test Claims",
-    "url": "http://localhost/claim1",
-    "owner": {
-      "id": "ownerid",
-      "name": "Test Owner"
-    },
-    "type": "feed"
-  }, {
-    "created_at": "2020-02-15T21:26:17Z",
-    "updated_at": "2020-02-19T21:26:17Z",
-    "_id": "claim2",
-    "name": "Policies",
-    "url": "http://localhost/claim2",
-    "owner": {
-      "id": "ownerid",
-      "name": "Test Owner"
-    },
-    "type": "feed"
-  }]
-};
-},{}],"context/user-context.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@auth0/auth0-spa-js":"../node_modules/@auth0/auth0-spa-js/dist/auth0-spa-js.production.esm.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js"}],"context/user-context.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39011,8 +38983,6 @@ exports.useUser = useUser;
 var _react = _interopRequireDefault(require("react"));
 
 var _authContext = require("./auth-context");
-
-var _user = _interopRequireDefault(require("../../test-data/user.json"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39045,7 +39015,7 @@ function useUser() {
 
   return context;
 }
-},{"react":"../node_modules/react/index.js","./auth-context":"context/auth-context.js","../../test-data/user.json":"../test-data/user.json"}],"context/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./auth-context":"context/auth-context.js"}],"context/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39072,7 +39042,7 @@ function AppProviders({
       domain: "atlas-viewer.auth0.com",
       audience: "atlas-api",
       client_id: "Uv6hcKLG7pr0lTVYU64DHkLr1CpG3B3C",
-      redirect_uri: `${"http://localhost:1234"}/map`
+      redirect_uri: `${"http://localhost:8082"}/map`
     },
     /*#__PURE__*/
     _react.default.createElement(_userContext.UserProvider, null, children))
@@ -79260,7 +79230,7 @@ const mapStyles = ['mapbox://styles/mapbox/streets-v11', 'mapbox://styles/mapbox
 exports.mapStyles = mapStyles;
 const defaultConfig = {
   accessToken: "pk.eyJ1IjoiZXh6ZW8iLCJhIjoidHFyZi01VSJ9.p8Dy3U9rVv7XkE2VNGUB8g",
-  style: mapStyles[8],
+  style: mapStyles[0],
   center: [-81.5158, 27.6648],
   zoom: 7,
   pitch: 35,
@@ -79447,18 +79417,33 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const Map = () => {
+const Map = ({
+  basemap
+}) => {
   const layers = (0, _layerContext.useLayerState)();
   const user = (0, _userContext.useUser)();
   const [map, setMap] = (0, _react.useState)();
   const mapContainer = (0, _react.useRef)(null);
   const prevLayers = (0, _utils.usePrevious)(layers);
   const userId = user.user_id;
+  const {
+    token
+  } = user;
   (0, _react.useLayoutEffect)(() => {
     const initializeMap = (setMap, mapContainer) => {
       const mapbox = new _mapboxGl.default.Map({
         container: mapContainer.current,
-        ..._mapUtils.defaultConfig
+        ..._mapUtils.defaultConfig,
+        transformRequest: (url, resourceType) => {
+          if (resourceType === 'Source') {
+            return {
+              url,
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            };
+          }
+        }
       });
       (0, _mapUtils.addControls)(mapbox);
       mapbox.on('load', () => {
@@ -79468,7 +79453,7 @@ const Map = () => {
     };
 
     initializeMap(setMap, mapContainer);
-  }, [setMap]);
+  }, [setMap, token]);
   (0, _react.useEffect)(() => {
     if (!layers || !prevLayers) return;
 
@@ -79491,6 +79476,11 @@ const Map = () => {
       });
     }
   }, [prevLayers, layers, userId, map]);
+  (0, _react.useEffect)(() => {
+    if (!map || !basemap) return;
+    console.log('base:', basemap);
+    map.setStyle(basemap);
+  }, [basemap, map]);
 
   if (map) {
     // handle clicks on features
@@ -81773,8 +81763,7 @@ const Uploader = ({
     const url = `${"http://localhost:8787/api"}/upload`;
     const userData = {
       userId: user.user_id,
-      first_name: user.first_name,
-      last_name: user.last_name
+      name: `${user.first_name} ${user.last_name}`
     };
     const formData = new FormData();
     formData.append('name', data.feedname);
@@ -82459,15 +82448,24 @@ var _logo = _interopRequireDefault(require("./logo"));
 
 var _icon = _interopRequireDefault(require("./icon"));
 
+var _map = require("./map.utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const View = () => {
+const View = ({
+  setBasemap
+}) => {
   const user = (0, _userContext.useUser)();
   const [viewActive, setViewState] = (0, _react.useState)(true);
+
+  const handleBasemap = e => {
+    setBasemap(_map.mapStyles[e.target.value]);
+  };
+
   return (
     /*#__PURE__*/
     _react.default.createElement("div", {
@@ -82519,7 +82517,21 @@ const View = () => {
     /*#__PURE__*/
     _react.default.createElement("span", {
       className: "overlay-name"
-    }, "View Name"))))))),
+    }, "View Name"))))),
+    /*#__PURE__*/
+    _react.default.createElement("select", {
+      onChange: handleBasemap
+    }, _map.mapStyles && _map.mapStyles.map((style, index) => {
+      const elements = style.split('/');
+      const key = elements[elements.length - 1];
+      return (
+        /*#__PURE__*/
+        _react.default.createElement("option", {
+          key: index,
+          value: index
+        }, key)
+      );
+    })))),
     /*#__PURE__*/
     _react.default.createElement("div", {
       className: "panel-tab view-tab"
@@ -82535,7 +82547,7 @@ const View = () => {
 
 var _default = View;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","../context/user-context":"context/user-context.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","./logo":"components/logo.js","./icon":"components/icon.js"}],"components/canvas.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","../context/user-context":"context/user-context.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","./logo":"components/logo.js","./icon":"components/icon.js","./map.utils":"components/map.utils.js"}],"components/canvas.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -82560,19 +82572,24 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Canvas = () => {
+  const [basemap, setBasemap] = (0, _react.useState)('');
   return (
     /*#__PURE__*/
     _react.default.createElement(_layerContext.LayerProvider, null,
     /*#__PURE__*/
     _react.default.createElement(_library.default, null),
     /*#__PURE__*/
-    _react.default.createElement(_view.default, null),
+    _react.default.createElement(_view.default, {
+      setBasemap: setBasemap
+    }),
     /*#__PURE__*/
     _react.default.createElement("div", {
       id: "map-canvas"
     },
     /*#__PURE__*/
-    _react.default.createElement(_map.default, null)))
+    _react.default.createElement(_map.default, {
+      basemap: basemap
+    })))
   );
 };
 
@@ -82680,7 +82697,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54047" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55592" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

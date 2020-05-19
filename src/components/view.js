@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faEye } from '@fortawesome/free-solid-svg-icons';
-
 import Logo from './logo';
 import Icon from './icon';
+import { mapStyles } from './map.utils';
 
-const View = () => {
+const View = ({ setBasemap }) => {
   const user = useUser();
   const [viewActive, setViewState] = useState(true);
 
+  const handleBasemap = e => {
+    setBasemap(mapStyles[e.target.value]);
+  };
   return (
     <div id="view" className={`panel ${viewActive ? 'open' : 'closed'}`}>
       <div className="section logo">
@@ -36,6 +39,18 @@ const View = () => {
               </span>
             </li>
           </ul>
+          <select onChange={handleBasemap}>
+            {mapStyles &&
+              mapStyles.map((style, index) => {
+                const elements = style.split('/');
+                const key = elements[elements.length - 1];
+                return (
+                  <option key={index} value={index}>
+                    {key}
+                  </option>
+                );
+              })}
+          </select>
         </div>
       </div>
       <div className="panel-tab view-tab">

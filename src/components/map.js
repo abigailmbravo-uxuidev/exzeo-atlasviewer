@@ -8,19 +8,28 @@ import { usePrevious } from '../utils/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = () => {
+const Map = ({ basemap }) => {
   const layers = useLayerState();
   const user = useUser();
   const [map, setMap] = useState();
   const mapContainer = useRef(null);
   const prevLayers = usePrevious(layers);
   const userId = user.user_id;
+  const { token } = user;
 
   useLayoutEffect(() => {
     const initializeMap = (setMap, mapContainer) => {
       const mapbox = new mapboxgl.Map({
         container: mapContainer.current,
-        ...defaultConfig
+        ...defaultConfig,
+        transformRequest: (url, resourceType) => {
+          if (resourceType === 'Source') {
+            return {
+              url,
+              headers: { Authorization: `Bearer ${token}` }
+            };
+          }
+        }
       });
 
       addControls(mapbox);
@@ -32,7 +41,7 @@ const Map = () => {
     };
 
     initializeMap(setMap, mapContainer);
-  }, [setMap]);
+  }, [setMap, token]);
 
   useEffect(() => {
     if (!layers || !prevLayers) return;
@@ -56,6 +65,12 @@ const Map = () => {
       });
     }
   }, [prevLayers, layers, userId, map]);
+
+  useEffect(() => {
+    if (!map || !basemap) return;
+    console.log('base:', basemap);
+    map.setStyle(basemap);
+  }, [basemap, map]);
 
   if (map) {
     // handle clicks on features

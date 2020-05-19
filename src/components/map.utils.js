@@ -16,7 +16,7 @@ export const mapStyles = [
 
 export const defaultConfig = {
   accessToken: process.env.MAPBOX_KEY,
-  style: mapStyles[8],
+  style: mapStyles[0],
   center: [-81.5158, 27.6648],
   zoom: 7,
   pitch: 35,

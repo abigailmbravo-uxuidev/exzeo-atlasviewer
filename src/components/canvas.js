@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import Map from './map';
@@ -9,16 +9,21 @@ import { useAuth } from '../context/auth-context';
 
 const Canvas = () => {
   const { logout } = useAuth();
-  
+  const [basemap, setBasemap] = useState('');
   return (
     <LayerProvider>
       <Library />
-      <View />
-      <button title="Log Out" className="logoutBtn" type="button" onClick={() => logout()}>
+      <View setBasemap={setBasemap} />
+      <button
+        title="Log Out"
+        className="logoutBtn"
+        type="button"
+        onClick={() => logout()}
+      >
         <FontAwesomeIcon icon={faSignOutAlt} />
       </button>
       <div id="map-canvas">
-        <Map />
+        <Map basemap={basemap} />
       </div>
     </LayerProvider>
   );
