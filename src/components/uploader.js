@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
@@ -83,7 +85,14 @@ const Uploader = ({ setUploaderState }) => {
 
   return (
     <div className="modal .fade-in">
-      <form onSubmit={handleSubmit(handleUpload)}>
+      <form className="card" onSubmit={handleSubmit(handleUpload)}>
+        <header>
+        <h4>
+          <FontAwesomeIcon icon={faNetworkWired} />
+          &nbsp;Data Feed Upload
+        </h4>
+        </header>
+        <div className="body">
         <input
           id="feed"
           name="feed"
@@ -100,12 +109,15 @@ const Uploader = ({ setUploaderState }) => {
           defaultValue={file.name}
         />
         {errors.lastname && 'Feed Name is required.'}
+        </div>
+        <footer>
         <button type="button" onClick={() => setUploaderState(false)}>
           Cancel
         </button>
         <button type="submit" enabled={String(formState.dirty)}>
           Upload
         </button>
+        </footer>
       </form>
     </div>
   );

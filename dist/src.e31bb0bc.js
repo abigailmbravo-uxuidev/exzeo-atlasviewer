@@ -81698,6 +81698,10 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
 var _reactHookForm = require("react-hook-form");
 
 var _papaparse = _interopRequireDefault(require("papaparse"));
@@ -81806,7 +81810,20 @@ const Uploader = ({
     },
     /*#__PURE__*/
     _react.default.createElement("form", {
+      className: "card",
       onSubmit: handleSubmit(handleUpload)
+    },
+    /*#__PURE__*/
+    _react.default.createElement("header", null,
+    /*#__PURE__*/
+    _react.default.createElement("h4", null,
+    /*#__PURE__*/
+    _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+      icon: _freeSolidSvgIcons.faNetworkWired
+    }), "\xA0Data Feed Upload")),
+    /*#__PURE__*/
+    _react.default.createElement("div", {
+      className: "body"
     },
     /*#__PURE__*/
     _react.default.createElement("input", {
@@ -81826,7 +81843,9 @@ const Uploader = ({
         required: true
       }),
       defaultValue: file.name
-    }), errors.lastname && 'Feed Name is required.',
+    }), errors.lastname && 'Feed Name is required.'),
+    /*#__PURE__*/
+    _react.default.createElement("footer", null,
     /*#__PURE__*/
     _react.default.createElement("button", {
       type: "button",
@@ -81836,13 +81855,13 @@ const Uploader = ({
     _react.default.createElement("button", {
       type: "submit",
       enabled: String(formState.dirty)
-    }, "Upload")))
+    }, "Upload"))))
   );
 };
 
 var _default = Uploader;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-hook-form":"../node_modules/react-hook-form/dist/react-hook-form.es.js","papaparse":"../node_modules/papaparse/papaparse.min.js","axios":"../node_modules/axios/index.js","../context/layer-context":"context/layer-context.js","../context/user-context":"context/user-context.js"}],"components/feeds.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","react-hook-form":"../node_modules/react-hook-form/dist/react-hook-form.es.js","papaparse":"../node_modules/papaparse/papaparse.min.js","axios":"../node_modules/axios/index.js","../context/layer-context":"context/layer-context.js","../context/user-context":"context/user-context.js"}],"components/feeds.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -82203,8 +82222,6 @@ var _feeds = _interopRequireDefault(require("./feeds"));
 
 var _overlays = _interopRequireDefault(require("./overlays"));
 
-var _authContext = require("../context/auth-context");
-
 var _icon = _interopRequireDefault(require("./icon"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -82223,20 +82240,12 @@ const Library = () => {
     }
   }) => setFilter(value);
 
-  const {
-    logout
-  } = (0, _authContext.useAuth)();
   return (
     /*#__PURE__*/
     _react.default.createElement("div", {
       id: "library",
       className: `panel ${libraryActive ? 'open' : 'closed'}`
     },
-    /*#__PURE__*/
-    _react.default.createElement("button", {
-      type: "button",
-      onClick: () => logout()
-    }, "Logout"),
     /*#__PURE__*/
     _react.default.createElement("div", {
       className: "section search"
@@ -82312,7 +82321,7 @@ const Library = () => {
 
 var _default = Library;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","./feeds":"components/feeds.js","./overlays":"components/overlays.js","../context/auth-context":"context/auth-context.js","./icon":"components/icon.js"}],"components/logo.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","./feeds":"components/feeds.js","./overlays":"components/overlays.js","./icon":"components/icon.js"}],"components/logo.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -82557,6 +82566,10 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
 var _map = _interopRequireDefault(require("./map"));
 
 var _library = _interopRequireDefault(require("./library"));
@@ -82565,6 +82578,8 @@ var _view = _interopRequireDefault(require("./view"));
 
 var _layerContext = require("../context/layer-context");
 
+var _authContext = require("../context/auth-context");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -82572,6 +82587,9 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Canvas = () => {
+  const {
+    logout
+  } = (0, _authContext.useAuth)();
   const [basemap, setBasemap] = (0, _react.useState)('');
   return (
     /*#__PURE__*/
@@ -82582,6 +82600,17 @@ const Canvas = () => {
     _react.default.createElement(_view.default, {
       setBasemap: setBasemap
     }),
+    /*#__PURE__*/
+    _react.default.createElement("button", {
+      title: "Log Out",
+      className: "logoutBtn",
+      type: "button",
+      onClick: () => logout()
+    },
+    /*#__PURE__*/
+    _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+      icon: _freeSolidSvgIcons.faSignOutAlt
+    })),
     /*#__PURE__*/
     _react.default.createElement("div", {
       id: "map-canvas"
@@ -82595,7 +82624,7 @@ const Canvas = () => {
 
 var _default = Canvas;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./map":"components/map.js","./library":"components/library.js","./view":"components/view.js","../context/layer-context":"context/layer-context.js"}],"app.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","./map":"components/map.js","./library":"components/library.js","./view":"components/view.js","../context/layer-context":"context/layer-context.js","../context/auth-context":"context/auth-context.js"}],"app.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -82697,7 +82726,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55592" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53822" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -300,6 +300,22 @@ a:hover {
   font-size: 14px;
   font-weight: 500;
 }
+.logoutBtn {
+  position: fixed;
+  z-index: 2;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.logoutBtn:hover {
+  background: #eee;
+}
+
 input {
   overflow: hidden;
   width: 100%;
@@ -313,6 +329,10 @@ input {
   border-radius: 4px;
   background: #fff;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.375);
+}
+input[type=file] {
+  background: transparent;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .input-icon-wrapper {
@@ -332,7 +352,7 @@ input {
 
 .modal {
   position: fixed;
-  z-index: 1000;
+  z-index: 100;
   top: 0;
   right: 0;
   bottom: 0;
@@ -347,8 +367,23 @@ input {
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  width: 80%;
-  padding: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  max-width: 80%;
+}
+.modal form.card {
+  border-radius: 4px;
+  background-color: rgba(237, 237, 240, 0.93);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.5);
+}
+.modal form.card header {
+  padding: 0.5rem 1rem;
+}
+.modal form.card .body {
+  padding: 0.5rem 1rem;
+}
+.modal form.card footer {
+  padding: 0.5rem 1rem 1rem;
 }
 
 #library, #view {
