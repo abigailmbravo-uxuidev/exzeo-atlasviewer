@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import Map from './map';
 import Library from './library';
 import View from './view';
@@ -12,8 +14,8 @@ const Canvas = () => {
     <LayerProvider>
       <Library />
       <View />
-      <button className="logoutBtn" type="button" onClick={() => logout()}>
-        Logout
+      <button title="Log Out" className="logoutBtn" type="button" onClick={() => logout()}>
+        <FontAwesomeIcon icon={faSignOutAlt} />
       </button>
       <div id="map-canvas">
         <Map />
