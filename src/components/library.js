@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 import Feeds from './feeds';
 import Overlays from './overlays';
-import { useAuth } from '../context/auth-context';
 
 import Icon from './icon';
 
@@ -11,13 +10,9 @@ const Library = () => {
   const [libraryActive, setLibraryState] = useState(true);
   const [filter, setFilter] = useState('');
   const handleFilter = ({ target: { value } }) => setFilter(value);
-  const { logout } = useAuth();
 
   return (
     <div id="library" className={`panel ${libraryActive ? 'open' : 'closed'}`}>
-      <button type="button" onClick={() => logout()}>
-        Logout
-      </button>
       <div className="section search">
         <div className="icon">
           <Icon />
