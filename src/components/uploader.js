@@ -111,12 +111,12 @@ const Uploader = ({ setUploaderState }) => {
         {errors.lastname && 'Feed Name is required.'}
         </div>
         <footer>
-        <button type="button" onClick={() => setUploaderState(false)}>
-          Cancel
-        </button>
-        <button type="submit" enabled={String(formState.dirty)}>
-          Upload
-        </button>
+          <button className="secondaryBtn" type="button" onClick={() => setUploaderState(false)}>
+            Cancel
+          </button>
+          <button className="actionBtn" type="submit" enabled={String(formState.dirty)}>
+            Upload
+          </button>
         </footer>
       </form>
     </div>
