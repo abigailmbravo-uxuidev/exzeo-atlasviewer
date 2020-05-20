@@ -53,7 +53,7 @@
   top: 0;
   left: 18rem;
 
-  width: 16rem;
+  width: 18rem;
   height: 100vh;
 
   .panel-list {
@@ -68,7 +68,7 @@
     left: 18rem;
   }
   &.closed {
-    left: -16rem;
+    left: -18rem;
   }
   
   .eyeball-wrapper {
@@ -137,7 +137,7 @@
   &.open {
     ~#view {
       &.closed {
-        left: 2rem;
+        left: 0;
 
         .section {
           opacity: 0;
@@ -217,7 +217,7 @@
   &.view-tab {
     z-index: 10;
     top: 1rem;
-    left: 16rem;
+    left: 18rem;
 
     transition: all .2s ease-out;
 

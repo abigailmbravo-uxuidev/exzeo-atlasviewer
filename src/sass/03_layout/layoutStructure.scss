@@ -125,6 +125,7 @@ html {
               justify-content: center;
 
               height: 4.5rem;
+              padding: .75rem;
             }
             header {
               display: flex;
@@ -170,7 +171,7 @@ html {
         &.open {
             ~#map-canvas {
                 .mapboxgl-ctrl-bottom-left  {
-                    left: 16rem !important;
+                    left: 18rem !important;
                 }
             }
         }
@@ -183,7 +184,7 @@ html {
         &.open {
             ~#map-canvas {
                 .mapboxgl-ctrl-bottom-left  {
-                    left: 34rem !important;
+                    left: 36rem !important;
                 }
             }
         }
