@@ -70,13 +70,45 @@
   &.closed {
     left: -16rem;
   }
+  
+  .eyeball-wrapper {
+    cursor: pointer;
+    transition: all .2s ease;
+
+    color: mix($white, $navy, 25%);
+
+    &:hover {
+      color: $navy;
+    }
+  }
 
   .icon-wrapper {
+    flex-grow: 0;
+    flex-shrink: 0;
+
     width: 1.5rem;
 
-    color: mix($white, $navy, 40%);
+    color: mix($white, $navy, 50%);
 
     font-size: .75rem;
+  }
+
+  .icon-popOut {
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin-left: 4px;
+
+    cursor: pointer;
+    transition: all .2s ease;
+
+    color: mix($white, $navy, 25%);
+
+    line-height: 1;
+
+    &:hover {
+      color: $navy;
+    }
   }
 
   .base-map-wrapper {

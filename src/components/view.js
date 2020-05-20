@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faEye, faGlobeAmericas, faNetworkWired, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import {
+  faImage,
+  faEye,
+  faGlobeAmericas,
+  faNetworkWired,
+  faLayerGroup,
+  faExternalLinkSquareAlt
+} from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
 import Icon from './icon';
 import { mapStyles } from './map.utils';
@@ -42,6 +49,9 @@ const View = ({ setBasemap }) => {
                   <span className="overlay-name">[ Feed Name ]</span>
                 </h5>
               </span>
+              <span className="icon-popOut">
+                <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
+              </span>
             </li>
             {/* feed end */}
           </ul>
@@ -66,7 +76,9 @@ const View = ({ setBasemap }) => {
           </ul>
           {/* end of active layers loop */}
           <div className="base-map-wrapper">
-            <span className="icon-wrapper"><FontAwesomeIcon icon={faGlobeAmericas} /></span>
+            <span className="icon-wrapper">
+              <FontAwesomeIcon icon={faGlobeAmericas} />
+            </span>
             <select onChange={handleBasemap}>
               {mapStyles &&
                 mapStyles.map((style, index) => {
