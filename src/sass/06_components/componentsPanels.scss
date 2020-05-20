@@ -60,7 +60,7 @@
     li {
       padding-bottom: .75rem;
 
-      border-bottom: 1px solid $navy;
+      border-bottom: 1px solid rgba($navy, .2);
     }
   }
 
@@ -82,6 +82,10 @@
   .base-map-wrapper {
     display: flex;
     align-items: center;
+
+    padding-bottom: .75rem;
+
+    border-bottom: 1px solid rgba($navy, .2);
   }
 }
 #library {
@@ -157,20 +161,20 @@
 
     transition: all .2s ease-out;
 
-    background: $green;
+    background: mix(rgb(115, 163, 51), $green, 50%);
 
     &:before {
       z-index: 10;
 
       transition: all .2s ease-out;
 
-      background-color: $green;
+      background-color: mix(rgb(115, 163, 51), $green, 50%);;
     }
 
     &:hover {
-      background-color: $green-hover;
+      background-color: $green;
       &:before {
-        background-color: $green-hover;
+        background-color: $green;
       }
     }
   }

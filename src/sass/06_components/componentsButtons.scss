@@ -30,14 +30,14 @@ a {
 
   color: $white;
   border-radius: 6px;
-  background: $green;
+  background: mix(rgb(115, 163, 51), $green, 50%);
 
   font-size: .875rem;
   font-weight: normal;
   line-height: 1;
 
   &:hover {
-    background-color: $green-hover;
+    background-color: $green;
   }
 }
 
@@ -62,7 +62,7 @@ a {
   line-height: 1;
 
   &:hover {
-    background-color: $gray-hover;
+    background-color: $white;
   }
 }
 

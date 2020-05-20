@@ -7,7 +7,5 @@ $red: rgba(255, 55, 67, 1);
 $orange: rgba(242, 143, 32, 1);
 $blue-gray: mix($navy, $white, 8%);
 $black: rgba(0, 0, 0, 1);
-$navy-hover: mix(rgb(74, 63, 141), $navy, 75%);
-$green-hover: mix(rgb(206, 200, 108), $green, 40%);
-$gray-hover: mix(rgb(0,0,0), $gray, 1%);
+$navy-hover: mix($white, $navy, 15%);
 $base-gray: rgba(51, 51, 51, 1);
