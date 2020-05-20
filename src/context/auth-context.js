@@ -68,7 +68,7 @@ const AuthProvider = ({
         user,
         loading,
         loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
-        logout: (...p) => auth0Client.logout(...p)
+        logout: () => auth0Client.logout({ redirectTo: process.env.URL })
       }}
     >
       {children}
