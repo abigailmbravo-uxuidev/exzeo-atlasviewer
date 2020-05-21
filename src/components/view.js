@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faImage,
   faEye,
+  faSlashEye,
   faGlobeAmericas,
   faNetworkWired,
   faLayerGroup,
-  faExternalLinkSquareAlt
+  faExternalLinkSquareAlt,
+  faCircle
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
 import Icon from './icon';
@@ -45,6 +47,7 @@ const View = ({ setBasemap }) => {
             <li>
               <span className="eyeball-wrapper wrapper">
                 <FontAwesomeIcon icon={faEye} />
+                {/* toggle eye icon={faSlashEye} */}
               </span>
               <span className="feed-detail-wrapper wrapper">
                 <h5>
@@ -54,6 +57,53 @@ const View = ({ setBasemap }) => {
               <span className="icon-popOut">
                 <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
               </span>
+              {/* if details/statuses exist show loop and total --------------------------------------- */}
+              {/* start of feed detail loop --------------------------------------- */}
+              <ul className="detail-list">
+                <li>
+                  <span className="eyeball-wrapper wrapper">
+                    <FontAwesomeIcon icon={faEye} />
+                    {/* toggle eye icon={faSlashEye} */}
+                  </span>
+                  <span
+                    className="icon-wrapper wrapper"
+                    style={{ color: 'red' }}
+                  >
+                    <FontAwesomeIcon icon={faCircle} />
+                    {/* maps to icon and color from feed */}
+                  </span>
+                  <span className="feed-detail-wrapper wrapper">
+                    <h6>
+                      <span className="detail-name">[ Detail Name ]</span>
+                    </h6>
+                  </span>
+                  <span className="detail-count">[ 1,000,000 ]</span>
+                </li>
+
+                <li>
+                  <span className="eyeball-wrapper wrapper">
+                    <FontAwesomeIcon icon={faEye} />
+                    {/* toggle eye icon={faSlashEye} */}
+                  </span>
+                  <span
+                    className="icon-wrapper wrapper"
+                    style={{ color: 'blue' }}
+                  >
+                    <FontAwesomeIcon icon={faCircle} />
+                    {/* maps to icon and color from feed */}
+                  </span>
+                  <span className="feed-detail-wrapper wrapper">
+                    <h6>
+                      <span className="detail-name">[ Detail Name ]</span>
+                    </h6>
+                  </span>
+                  <span className="detail-count">[ 1,000,000 ]</span>
+                </li>
+              </ul>
+              <div className="total-count">
+                <span>Total:&nbsp;</span>[ 2,000,000 ]
+              </div>
+              {/* end of feed detail loop */}
             </li>
             {/* feed end */}
           </ul>
@@ -65,6 +115,7 @@ const View = ({ setBasemap }) => {
             <li>
               <span className="eyeball-wrapper wrapper">
                 <FontAwesomeIcon icon={faEye} />
+                {/* toggle eye icon={faSlashEye} */}
               </span>
               <span className="feed-detail-wrapper wrapper">
                 <h5>
