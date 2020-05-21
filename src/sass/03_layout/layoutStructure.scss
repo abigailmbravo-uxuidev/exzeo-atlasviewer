@@ -150,6 +150,14 @@ html {
                 }
               }
             }
+
+            label {
+              color: $navy;
+
+              font-size: .75rem;
+              font-weight: bold;
+              line-height: 1;
+            }
           }
         }
       }

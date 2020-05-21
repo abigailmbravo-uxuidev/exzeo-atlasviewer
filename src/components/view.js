@@ -35,12 +35,10 @@ const View = ({ setBasemap }) => {
             </h4>
           </header>
           {/* start of active feeds loop */}
+          <label htmlFor="feeds">Feeds</label>
           <ul className="panel-list">
             {/* feed start */}
             <li>
-              <span className="icon-wrapper">
-                <FontAwesomeIcon icon={faNetworkWired} />
-              </span>
               <span className="eyeball-wrapper wrapper">
                 <FontAwesomeIcon icon={faEye} />
               </span>
@@ -57,12 +55,10 @@ const View = ({ setBasemap }) => {
           </ul>
           {/* end of active feeds loop */}
           {/* start of active layers loop */}
+          <label htmlFor="layer">Layers</label>
           <ul className="panel-list">
             {/* layer start */}
             <li>
-              <span className="icon-wrapper">
-                <FontAwesomeIcon icon={faLayerGroup} />
-              </span>
               <span className="eyeball-wrapper wrapper">
                 <FontAwesomeIcon icon={faEye} />
               </span>
@@ -75,10 +71,8 @@ const View = ({ setBasemap }) => {
             {/* layer end */}
           </ul>
           {/* end of active layers loop */}
+          <label htmlFor="baseMap">Base Map</label>
           <div className="base-map-wrapper">
-            <span className="icon-wrapper">
-              <FontAwesomeIcon icon={faGlobeAmericas} />
-            </span>
             <select onChange={handleBasemap}>
               {mapStyles &&
                 mapStyles.map((style, index) => {
@@ -104,3 +98,5 @@ const View = ({ setBasemap }) => {
 };
 
 export default View;
+
+//ABBY THIS IS WHAT YOU NEED

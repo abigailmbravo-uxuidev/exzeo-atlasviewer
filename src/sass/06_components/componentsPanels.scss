@@ -118,6 +118,10 @@
     padding-bottom: .75rem;
 
     border-bottom: 1px solid rgba($navy, .2);
+
+    select {
+      margin: 8px 0;
+    }
   }
 }
 #library {
@@ -249,7 +253,7 @@
 //panel lists
 //----------------------------------------------------------
 .panel-list {
-margin: 0;
+margin: 8px 0 0 0;
 padding: 0;
 
 list-style: none;
