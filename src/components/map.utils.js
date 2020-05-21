@@ -2,21 +2,16 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 export const mapStyles = [
-  'mapbox://styles/mapbox/streets-v11',
-  'mapbox://styles/mapbox/outdoors-v11',
-  'mapbox://styles/mapbox/light-v10',
-  'mapbox://styles/mapbox/dark-v10',
-  'mapbox://styles/mapbox/satellite-v9',
-  'mapbox://styles/mapbox/satellite-streets-v11',
-  'mapbox://styles/mapbox/navigation-preview-day-v4',
-  'mapbox://styles/mapbox/navigation-preview-night-v4',
-  'mapbox://styles/mapbox/navigation-guidance-day-v4',
-  'mapbox://styles/mapbox/navigation-guidance-night-v4'
+  { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v11' },
+  { label: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v11' },
+  { label: 'Light', value: 'mapbox://styles/mapbox/light-v10' },
+  { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v10' },
+  { label: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9' }
 ];
 
 export const defaultConfig = {
   accessToken: process.env.MAPBOX_KEY,
-  style: mapStyles[0],
+  style: mapStyles[0].value,
   center: [-81.5158, 27.6648],
   zoom: 7,
   pitch: 35,

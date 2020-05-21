@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useUser } from '../context/user-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,10 @@ import { mapStyles } from './map.utils';
 const View = ({ setBasemap }) => {
   const user = useUser();
   const [viewActive, setViewState] = useState(true);
+
+  useEffect(() => {
+    setViewState(false);
+  }, []);
 
   const handleBasemap = e => {
     setBasemap(mapStyles[e.target.value]);
@@ -75,15 +79,11 @@ const View = ({ setBasemap }) => {
           <div className="base-map-wrapper">
             <select onChange={handleBasemap}>
               {mapStyles &&
-                mapStyles.map((style, index) => {
-                  const elements = style.split('/');
-                  const key = elements[elements.length - 1];
-                  return (
-                    <option key={index} value={index}>
-                      {key}
-                    </option>
-                  );
-                })}
+                mapStyles.map(style => (
+                  <option key={style.label} value={style.value}>
+                    {style.label}
+                  </option>
+                ))}
             </select>
           </div>
         </div>

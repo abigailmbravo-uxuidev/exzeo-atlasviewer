@@ -68,7 +68,6 @@ const Map = ({ basemap }) => {
 
   useEffect(() => {
     if (!map || !basemap) return;
-    console.log('base:', basemap);
     map.setStyle(basemap);
   }, [basemap, map]);
 
