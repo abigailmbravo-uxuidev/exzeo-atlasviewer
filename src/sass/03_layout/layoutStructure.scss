@@ -86,13 +86,6 @@ html {
                 flex-grow: 1;
                 flex-shrink: 1;
 
-                label {
-                  color: $navy;
-
-                  font-size: .75rem;
-                  font-weight: bold;
-                  line-height: 1;
-                }
                 .searchBar {
                   display: flex;
                   flex-direction: row;
@@ -150,14 +143,6 @@ html {
                   transform: rotate(-90deg);
                 }
               }
-            }
-
-            label {
-              color: $navy;
-
-              font-size: .75rem;
-              font-weight: bold;
-              line-height: 1;
             }
           }
         }

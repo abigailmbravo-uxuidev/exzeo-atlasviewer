@@ -87,34 +87,46 @@ const Uploader = ({ setUploaderState }) => {
     <div className="modal .fade-in">
       <form className="card" onSubmit={handleSubmit(handleUpload)}>
         <header>
-        <h4>
-          <FontAwesomeIcon icon={faNetworkWired} />
-          &nbsp;Data Feed Upload
-        </h4>
+          <h4>
+            <FontAwesomeIcon icon={faNetworkWired} />
+            &nbsp;Data Feed Upload
+          </h4>
         </header>
         <div className="body">
-        <input
-          id="feed"
-          name="feed"
-          type="file"
-          accept="text/csv"
-          ref={register}
-          onChange={handleFile}
-        />
-        <input
-          type="text"
-          id="feed-name"
-          name="feedname"
-          ref={register({ required: true })}
-          defaultValue={file.name}
-        />
-        {errors.lastname && 'Feed Name is required.'}
+          <label htmlFor="feed" className="file-upload-label">
+            Choose File
+          </label>
+          <input
+            id="feed"
+            name="feed"
+            type="file"
+            accept="text/csv"
+            ref={register}
+            onChange={handleFile}
+          />
+          <input
+            type="text"
+            id="feed-name"
+            name="feedname"
+            ref={register({ required: true })}
+            defaultValue={file.name}
+            disabled="disabled"
+          />
+          {errors.lastname && 'Feed Name is required.'}
         </div>
         <footer>
-          <button className="secondaryBtn" type="button" onClick={() => setUploaderState(false)}>
+          <button
+            className="secondaryBtn"
+            type="button"
+            onClick={() => setUploaderState(false)}
+          >
             Cancel
           </button>
-          <button className="actionBtn" type="submit" enabled={String(formState.dirty)}>
+          <button
+            className="actionBtn"
+            type="submit"
+            enabled={String(formState.dirty)}
+          >
             Upload
           </button>
         </footer>

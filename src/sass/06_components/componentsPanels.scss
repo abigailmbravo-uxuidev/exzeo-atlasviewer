@@ -5,21 +5,13 @@
   background-color: rgba($blue-gray, .93);
   box-shadow: 0px 0px 8px 0px rgba($black, .25);
 
-  label {
-    margin-bottom: .25rem;
-
-    text-transform: uppercase;
-
-    font-size: .75rem;
-  }
-
   header {
     h2, h3, h4, h5 {
       display: flex;
       align-items: center;
       justify-content: flex-start;
 
-      margin: .5rem 0;
+      margin: .5rem 0 1rem;
 
       text-transform: uppercase ;
 
@@ -64,7 +56,7 @@
 
       .detail-list {
         width: 100%;
-        padding-left: 1.875rem;
+        padding-left: .5rem;
     
         li {
           display: flex;
@@ -144,7 +136,7 @@
   }
 
   .feed-detail-wrapper {
-    max-width: calc(100% - 4.5rem);
+    max-width: calc(100% - 3rem);
     h5 {
       span {
         overflow: hidden;
@@ -315,7 +307,7 @@
 //panel lists
 //----------------------------------------------------------
 .panel-list {
-margin: 8px 0 0 0;
+margin: 0;
 padding: 0;
 
 list-style: none;
