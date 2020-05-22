@@ -15,6 +15,7 @@ import {
 import Logo from './logo';
 import Icon from './icon';
 import { mapStyles } from './map.utils';
+import ReactTooltip from 'react-tooltip';
 
 const View = ({ setBasemap }) => {
   const user = useUser();
@@ -51,7 +52,13 @@ const View = ({ setBasemap }) => {
               </span>
               <span className="feed-detail-wrapper wrapper">
                 <h5>
-                  <span className="overlay-name">[ Feed Name ]</span>
+                  <span
+                    className="overlay-name"
+                    data-tip
+                    data-for="registerTip"
+                  >
+                    [ Feed Name ]
+                  </span>
                 </h5>
               </span>
               <span className="icon-popOut">
@@ -144,6 +151,32 @@ const View = ({ setBasemap }) => {
           <Icon />
         </button>
       </div>
+
+      <ReactTooltip
+        className="panel-tooltip"
+        id="registerTip"
+        place="right"
+        effect="solid"
+        type="light"
+        delayHide={500}
+        backgroundColor="#fff"
+      >
+        <h5>[ Feed Name ]</h5>
+        <dl>
+          <span>
+            <dt>Created</dt>
+            <dd>[ Created ]</dd>
+          </span>
+          <span>
+            <dt>Updated</dt>
+            <dd>[ Updated ]</dd>
+          </span>
+          <span>
+            <dt>Author</dt>
+            <dd>[ Author ]</dd>
+          </span>
+        </dl>
+      </ReactTooltip>
     </div>
   );
 };
