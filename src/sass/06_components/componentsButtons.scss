@@ -66,6 +66,40 @@ a {
   }
 }
 
+.iconBtn {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: center;
+
+  width: auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+
+  cursor: pointer;
+  transition: all .2s ease-out;
+
+  color: rgba($base-gray, .5);
+  border: none;
+  border-radius: 50%;
+  background-color: rgba($white, 0);
+
+  font-size: 1rem;
+
+  &.closeBtn {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+  }
+
+  &:hover {
+    color: rgba($base-gray, 1);
+    background-color: rgba($white, .5);
+  }
+}
+
 .feedBtns {
   display: flex;
   align-items: center;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import { faNetworkWired, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
@@ -91,6 +91,13 @@ const Uploader = ({ setUploaderState }) => {
             <FontAwesomeIcon icon={faNetworkWired} />
             &nbsp;Data Feed Upload
           </h4>
+          <button
+            className="iconBtn closeBtn"
+            type="button"
+            onClick={() => setUploaderState(false)}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
         </header>
         <div className="body">
           <label htmlFor="feed" className="file-upload-label">
