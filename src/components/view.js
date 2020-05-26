@@ -156,7 +156,7 @@ const View = ({ setBasemap }) => {
         className="panel-tooltip"
         id="registerTip"
         place="right"
-        effect="solid"
+        effect="float"
         type="light"
         delayHide={500}
         backgroundColor="#fff"

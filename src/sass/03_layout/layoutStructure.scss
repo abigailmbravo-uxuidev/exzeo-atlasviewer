@@ -207,6 +207,9 @@ body {
   }
 }
 .overlay-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
   border-bottom: 1px $green dotted;
 }
 .__react_component_tooltip.show {
@@ -215,16 +218,6 @@ body {
   opacity: 1 !important;
   box-shadow: 0px 1px 4px 0px rgba($black, .2);
 
-  &:after {
-    left: -10px !important;
-
-    margin-top: -10px !important;
-
-    border-top-width: 10px !important;
-    border-right-width: 10px !important;
-    border-bottom-width: 10px !important;
-
-  }
   h5 {
     margin: 0 0 .25rem;
 
