@@ -25,6 +25,7 @@ const Canvas = () => {
       <div id="map-canvas">
         <Map basemap={basemap} />
       </div>
+      <div className="feed-popOut">test</div>
     </LayerProvider>
   );
 };

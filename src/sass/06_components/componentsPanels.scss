@@ -50,9 +50,14 @@
 
   .panel-list {
     li {
+      padding-top: .25rem;
       padding-bottom: .75rem;
 
-      border-bottom: 1px solid rgba($navy, .2);
+      border-bottom: 1px dotted rgba($navy, .2);
+
+      &:last-of-type {
+        border-bottom: 1px solid rgba($navy, .3);
+      }
 
       .detail-list {
         width: 100%;
@@ -64,7 +69,8 @@
           flex-wrap: nowrap;
 
           margin-bottom: 0;
-          padding-bottom: 0;
+          padding-top: .125rem;
+          padding-bottom: .125rem;
 
           border-bottom-width: 0;
 
@@ -171,7 +177,7 @@
 
     padding-bottom: .75rem;
 
-    border-bottom: 1px solid rgba($navy, .2);
+    border-bottom: 1px solid rgba($navy, .3);
 
     select {
       margin: 8px 0;
