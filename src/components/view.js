@@ -55,7 +55,7 @@ const View = ({ setBasemap }) => {
                   <span
                     className="overlay-name"
                     data-tip
-                    data-for="registerTip"
+                    data-for="feedTooltip"
                   >
                     [ Feed Name ]
                   </span>
@@ -126,7 +126,13 @@ const View = ({ setBasemap }) => {
               </span>
               <span className="feed-detail-wrapper wrapper">
                 <h5>
-                  <span className="overlay-name">[ Layer Name ]</span>
+                  <span
+                    className="overlay-name"
+                    data-tip
+                    data-for="layerTooltip"
+                  >
+                    [ Layer Name ]
+                  </span>
                 </h5>
               </span>
             </li>
@@ -154,7 +160,7 @@ const View = ({ setBasemap }) => {
 
       <ReactTooltip
         className="panel-tooltip"
-        id="registerTip"
+        id="feedTooltip"
         place="right"
         effect="float"
         type="light"
@@ -176,6 +182,17 @@ const View = ({ setBasemap }) => {
             <dd>[ Author ]</dd>
           </span>
         </dl>
+      </ReactTooltip>
+      <ReactTooltip
+        className="tooltip"
+        id="layerTooltip"
+        place="right"
+        effect="float"
+        type="light"
+        delayHide={500}
+        backgroundColor="#fff"
+      >
+        <h5>[ Layer Name ]</h5>
       </ReactTooltip>
     </div>
   );
