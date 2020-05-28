@@ -85,16 +85,6 @@ const Canvas = () => {
                   <th>head</th>
                   <th>head</th>
                   <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
-                  <th>head</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,18 +101,8 @@ const Canvas = () => {
                       <FontAwesomeIcon icon={faCircle} />
                       {/* maps to icon and color from feed */}
                     </span>
-                    head
+                    Aggregate 1
                   </th>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>
@@ -151,18 +131,8 @@ const Canvas = () => {
                       <FontAwesomeIcon icon={faCircle} />
                       {/* maps to icon and color from feed */}
                     </span>
-                    head
+                    Aggregate 2
                   </th>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>
@@ -191,18 +161,8 @@ const Canvas = () => {
                       <FontAwesomeIcon icon={faCircle} />
                       {/* maps to icon and color from feed */}
                     </span>
-                    head
+                    Aggregate 3
                   </th>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>
@@ -231,7 +191,7 @@ const Canvas = () => {
                       <FontAwesomeIcon icon={faCircle} />
                       {/* maps to icon and color from feed */}
                     </span>
-                    head
+                    Aggregate 4
                   </th>
                   <td>body</td>
                   <td>body</td>
@@ -241,6 +201,13 @@ const Canvas = () => {
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                </tr>
+                <tr className="total-count">
+                  <th>totals:</th>
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>

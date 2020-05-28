@@ -102,10 +102,11 @@
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
+    //max-width: calc(100vw - 46rem);
 
     padding: .25rem;
     .eyeball-wrapper {
-      margin-right: .25rem;
+      padding: .25rem;
 
       font-size: 1.25rem;
     }
@@ -114,50 +115,107 @@
 
       overflow: auto;
 
-      max-width: calc(100vw - 46rem);
+      width: 100%;
       max-height: 50vh;
 
       table {
         position: relative;
 
+        width: 100%;
+
         border-collapse: collapse;
 
-        td,
-        th {
-          padding: 0.25em;
+        tr {
+          background-color: mix($white, $navy, 91);
 
-          white-space: nowrap;
-        }
-
-        thead th {
-          position: sticky;
-          top: 0;
-
-          color: $navy;
-          background: $white;
-        }
-
-        thead th:first-child {
-          z-index: 1;
-          left: 0;
-        }
-
-        tbody th {
-          position: sticky;
-          left: 0;
-
-          text-align: left;
-
-          border-right: 1px solid #CCC;
-          background: #FFF;
-
-          .eyeball-wrapper {
-            margin-right: .5rem;
-
-            font-size: 1rem;
+          &:nth-of-type(odd) {
+            background-color: mix($white, $navy, 95);
           }
-          .icon-wrapper {
-            margin-right: .25rem;
+
+          td,
+          th {
+            padding: 0.25em;
+
+            text-align: right;
+            white-space: nowrap;
+          }
+        }
+
+        
+
+        thead {
+          tr {
+            
+            th {
+              position: sticky;
+              z-index: 10;
+              top: 0;
+
+              color: $navy;
+              border-collapse: collapse;
+              background: $white;
+
+              font-size: .875rem;
+
+              &:first-child {
+                z-index: 1;
+                z-index: 15;
+                left: 0;
+
+                text-align: left;
+
+                border-right: 1px dotted rgba($navy, .2);
+                background: $white;
+                box-shadow: 2px 0px 1px 0px rgba($black, .125);
+
+                font-size: 1.125rem;
+              }
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            th {
+              position: sticky;
+              z-index: 1;
+              left: 0;
+
+              margin: 0;
+
+              text-align: left;
+
+              color: $navy;
+              border-right: 1px dotted rgba($navy, .2);
+              background-color: mix($white, $navy, 91);
+              box-shadow: 2px 0px 1px 0px rgba($black, .125);
+
+              
+
+              .eyeball-wrapper {
+                margin-right: .5rem;
+
+                font-size: 1rem;
+              }
+              .icon-wrapper {
+                margin-right: .25rem;
+              }
+            }
+            &:nth-of-type(odd) {
+              th {
+                background-color: mix($white, $navy, 95);
+              }
+            }
+            &.total-count {
+              background-color: $white;
+              th {
+                text-align: right;
+
+                background-color: $white;
+
+                font-size: .875rem;
+              }
+            }
           }
         }
       }
