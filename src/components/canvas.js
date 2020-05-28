@@ -205,11 +205,11 @@ const Canvas = () => {
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
                 </tr>
                 <tr className="total-count">
                   <th>totals:</th>
-                  <td>body</td>
-                  <td>body</td>
                   <td>body</td>
                   <td>body</td>
                   <td>body</td>
