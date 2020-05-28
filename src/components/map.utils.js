@@ -3,7 +3,10 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 export const mapStyles = [
   { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v11' },
-  { label: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v11' },
+  {
+    label: 'Terrain',
+    value: 'mapbox://styles/exzeo/cjs4qu4kg0x4k1fqtknrij0sm'
+  },
   { label: 'Light', value: 'mapbox://styles/mapbox/light-v10' },
   { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v10' },
   { label: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9' }
@@ -41,8 +44,33 @@ export const addControls = mapbox => {
 };
 
 export const addLayer = (map, userId, layer) => {
+  const { _id, source_type, source_layer, type, url } = layer;
+
+  map.addSource(_id, {
+    type: source_type,
+    url
+  });
+
+  map.addLayer({
+    id: `${_id}-layer`,
+    type,
+    source: _id,
+    'source-layer': source_layer,
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+      visibility: 'visible'
+    },
+    paint: {
+      'line-color': '#ff69b4',
+      'line-width': 3
+    }
+  });
+};
+
+export const addDataset = (map, userId, layer) => {
   const { _id, url } = layer;
-  const source = `${process.env.API_URL}/geojson/${userId}/${_id}`;
+  const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
 
   map.addSource(_id, {
     type: 'geojson',
@@ -51,7 +79,7 @@ export const addLayer = (map, userId, layer) => {
   });
 
   map.addLayer({
-    id: `${_id}`,
+    id: `${_id}-dataset`,
     type: 'circle',
     source: _id,
     layout: {

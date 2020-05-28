@@ -4,16 +4,16 @@ import { faNetworkWired, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
-import { useLayerDispatch } from '../context/layer-context';
+import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
 const Uploader = ({ setUploaderState }) => {
-  const dispatch = useLayerDispatch();
+  const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
   const user = useUser();
   const [file, setFile] = useState({});
   const [headers, setHeaders] = useState(null);
-  const [layerData, setLayerData] = useState();
+  const [feedData, setLayerData] = useState();
   const [geoJson, setGeoJson] = useState();
 
   const handleFile = ({ target: { files } }) => {
@@ -44,7 +44,7 @@ const Uploader = ({ setUploaderState }) => {
   };
 
   const handleUpload = async data => {
-    const url = `${process.env.API_URL}/upload`;
+    const url = `${process.env.API_URL}/api/upload`;
     const userData = {
       userId: user.user_id,
       name: `${user.first_name} ${user.last_name}`
@@ -64,9 +64,9 @@ const Uploader = ({ setUploaderState }) => {
       }
     };
     const res = await axios(reqOptions).catch(err => console.log(err));
-    const layer = res.data.data;
+    const feed = res.data.data;
 
-    dispatch({ type: 'add', data: layer });
+    dispatch({ type: 'add', data: feed });
     setUploaderState(false);
   };
 

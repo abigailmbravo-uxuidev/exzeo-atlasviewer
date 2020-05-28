@@ -2,18 +2,23 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useUser } from '../context/user-context';
-import { useLayerState } from '../context/layer-context';
-import { defaultConfig, addControls, addLayer } from './map.utils.js';
+import { useFeedState } from '../context/feed-context';
+import {
+  defaultConfig,
+  addControls,
+  addDataset,
+  addLayer
+} from './map.utils.js';
 import { usePrevious } from '../utils/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = ({ basemap }) => {
-  const layers = useLayerState();
+const Map = ({ basemap, layerToggle }) => {
+  const feeds = useFeedState();
   const user = useUser();
-  const [map, setMap] = useState();
+  const [map, setMap] = useState({});
   const mapContainer = useRef(null);
-  const prevLayers = usePrevious(layers);
+  const prevFeeds = usePrevious(feeds);
   const userId = user.user_id;
   const { token } = user;
 
@@ -44,39 +49,46 @@ const Map = ({ basemap }) => {
   }, [setMap, token]);
 
   useEffect(() => {
-    if (!layers || !prevLayers) return;
-    if (layers.length > prevLayers.length) {
-      // Add layer
-      addLayer(map, userId, layers[layers.length - 1]);
-    } else if (prevLayers.length > layers.length) {
-      // Delete layer
+    if (!feeds || !prevFeeds) return;
+    if (feeds.length > prevFeeds.length) {
+      // Add feed
+      addDataset(map, userId, feeds[feeds.length - 1]);
+    } else if (prevFeeds.length > feeds.length) {
+      // Delete feed
     } else {
-      // Toggle layer
-      layers.map(layer => {
-        if (layer.active !== prevLayers.active) {
-          if (!map.getLayer(layer._id)) {
-            return addLayer(map, userId, layer);
+      // Toggle feed
+      feeds.map(feed => {
+        if (feed.active !== prevFeeds.active) {
+          if (!map.getLayer(feed._id)) {
+            return addDataset(map, userId, feed);
           }
 
-          const visibility = map.getLayoutProperty(layer._id, 'visibility');
-          const newVisibility = layer.active ? 'visible' : 'none';
-          map.setLayoutProperty(layer._id, 'visibility', newVisibility);
+          const visibility = map.getLayoutProperty(feed._id, 'visibility');
+          const newVisibility = feed.active ? 'visible' : 'none';
+          map.setLayoutProperty(feed._id, 'visibility', newVisibility);
         }
       });
     }
-  }, [prevLayers, layers, userId, map]);
+  }, [prevFeeds, feeds, userId, map]);
 
   useEffect(() => {
     if (!map || !basemap) return;
     map.setStyle(basemap);
   }, [basemap, map]);
 
-  if (map) {
-    // handle clicks on features
-    map.on('click', e => {
-      const features = map.queryRenderedFeatures(e.point);
-    });
-  }
+  useEffect(() => {
+    if (!map || !layerToggle) return;
+    const { show, layer } = layerToggle;
+
+    if (!map.getLayer(layer._id)) {
+      console.log(layerToggle)
+      return addLayer(map, userId, layer);
+    }
+
+    const visibility = map.getLayoutProperty(layer._id, 'visibility');
+    const newVisibility = show ? 'visible' : 'none';
+    map.setLayoutProperty(layer._id, 'visibility', newVisibility);
+  }, [layerToggle, map, userId]);
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;
 };

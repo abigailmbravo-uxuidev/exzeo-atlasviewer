@@ -11,26 +11,28 @@ import {
 import Map from './map';
 import Library from './library';
 import View from './view';
-import { LayerProvider } from '../context/layer-context';
+import { FeedProvider } from '../context/feed-context';
 import { useAuth } from '../context/auth-context';
 
 const Canvas = () => {
   const { logout } = useAuth();
   const [basemap, setBasemap] = useState('');
+  const [layerToggle, setLayerToggle] = useState(undefined);
+
   return (
-    <LayerProvider>
-      <Library />
+    <FeedProvider>
+      <Library setLayerToggle={setLayerToggle} />
       <View setBasemap={setBasemap} />
       <button
         title="Log Out"
         className="logoutBtn"
         type="button"
-        onClick={() => logout()}
+        onClick={() => logout({ returnTo: '/' })}
       >
         <FontAwesomeIcon icon={faSignOutAlt} />
       </button>
       <div id="map-canvas">
-        <Map basemap={basemap} />
+        <Map basemap={basemap} layerToggle={layerToggle} />
       </div>
       <div className="feed-popOut">
         <header>
@@ -261,7 +263,7 @@ const Canvas = () => {
           </div>
         </div>
       </div>
-    </LayerProvider>
+    </FeedProvider>
   );
 };
 

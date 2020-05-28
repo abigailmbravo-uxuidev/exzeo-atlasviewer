@@ -5,7 +5,7 @@ const UserContext = React.createContext();
 
 function UserProvider(props) {
   const { user, isAuthenticated } = useAuth();
-  const userProfile = user || { layers: [] };
+  const userProfile = user || { feeds: [] };
 
   return <UserContext.Provider value={userProfile} {...props} />;
 }

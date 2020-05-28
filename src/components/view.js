@@ -25,8 +25,8 @@ const View = ({ setBasemap }) => {
     setViewState(false);
   }, []);
 
-  const handleBasemap = e => {
-    setBasemap(mapStyles[e.target.value]);
+  const handleBasemap = ({ target: { value } }) => {
+    setBasemap(value);
   };
   return (
     <div id="view" className={`panel ${viewActive ? 'open' : 'closed'}`}>

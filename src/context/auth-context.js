@@ -22,7 +22,7 @@ const AuthProvider = ({
   useEffect(() => {
     const fetchUserData = async id => {
       const opts = {
-        url: `${process.env.API_URL}/userdata/${id}`,
+        url: `${process.env.API_URL}/api/userdata/${id}`,
         method: 'GET'
       };
       const res = await axios(opts).catch(err => console.log(err));

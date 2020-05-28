@@ -6,7 +6,7 @@ import Overlays from './overlays';
 
 import Icon from './icon';
 
-const Library = () => {
+const Library = ({ setLayerToggle }) => {
   const [libraryActive, setLibraryState] = useState(true);
   const [filter, setFilter] = useState('');
   const handleFilter = ({ target: { value } }) => setFilter(value);
@@ -38,7 +38,7 @@ const Library = () => {
           <Feeds filter={filter} />
         </div>
         <div className="section shapes">
-          <Overlays filter={filter} />
+          <Overlays filter={filter} setLayerToggle={setLayerToggle} />
         </div>
       </div>
       <div className="panel-tab library-tab">
