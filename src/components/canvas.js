@@ -36,27 +36,7 @@ const Canvas = () => {
       </div>
       <div className="feed-popOut">
         <header>
-          <span className="gripper">
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-            <FontAwesomeIcon icon={faEllipsisV} />
-          </span>
+          <span className="gripper">&nbsp;</span>
           <button className="iconBtn closeBtn" type="button">
             <FontAwesomeIcon icon={faTimes} />
           </button>

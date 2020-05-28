@@ -66,35 +66,48 @@
 
   header {
     display: flex;
+    align-items: center;
 
     width: 100%;
     height: 1.75rem;
-    padding: 0 .5rem 0 .5rem;
+    padding: 0 .25rem 0 .5rem;
+
+    transition: all .2s ease-out;
 
     background: mix($white, $navy, 97%);
+
+    &:hover {
+      background: mix($white, $navy, 93%);
+
+      span {
+        background:url(
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQUlEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8+PAhg4mJCVyMESQIU40hCZI4c+YMWAGyLhRjke2CsVEcgK4AryQA3tsWCM9oX6IAAAAASUVORK5CYII=
+   ) repeat;
+      }
+    }
 
     span {
       display: flex;
       align-items: center;
+      flex-grow: 1;
+      flex-shrink: 1;
 
       cursor: move;
-      transition: all .2s ease-out;
 
       color: mix($white, $navy, 75%);
+      background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAS0lEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8/fo1g5aWFlyMESQIU/3y5UsGHR0dhCRI4tq1a////fuHIoFiLLJdMDaKA9AV4JUEAB6pGQg6FVP6AAAAAElFTkSuQmCC) repeat;
 
       font-size: .875rem;
 
-      &:hover {
-        color: mix($white, $navy, 65%);
-      }
       &:active {
         cursor: grab;
       }
     }
 
     button.iconBtn.closeBtn {
-      top: .125rem;
-      right: .25rem;
+      position: relative;
+      top: auto;
+      right: auto;
     }
   }
 
