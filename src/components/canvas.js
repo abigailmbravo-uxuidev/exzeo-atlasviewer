@@ -13,6 +13,7 @@ import Library from './library';
 import View from './view';
 import { FeedProvider } from '../context/feed-context';
 import { useAuth } from '../context/auth-context';
+import ReactTooltip from 'react-tooltip';
 
 const Canvas = () => {
   const { logout } = useAuth();
@@ -50,7 +51,11 @@ const Canvas = () => {
             <table>
               <thead>
                 <tr>
-                  <th>[ Feed Name ]</th>
+                  <th>
+                    <span data-tip data-for="feedPopOverTooltip">
+                      [ Feed Name ]
+                    </span>
+                  </th>
                   <th>head</th>
                   <th>head</th>
                   <th>head</th>
@@ -210,6 +215,30 @@ const Canvas = () => {
           </div>
         </div>
       </div>
+      <ReactTooltip
+        className="panel-tooltip"
+        id="feedPopOverTooltip"
+        place="right"
+        effect="float"
+        type="light"
+        delayHide={500}
+        backgroundColor="#fff"
+      >
+        <dl>
+          <span>
+            <dt>Created</dt>
+            <dd>[ Created ]</dd>
+          </span>
+          <span>
+            <dt>Updated</dt>
+            <dd>[ Updated ]</dd>
+          </span>
+          <span>
+            <dt>Author</dt>
+            <dd>[ Author ]</dd>
+          </span>
+        </dl>
+      </ReactTooltip>
     </FeedProvider>
   );
 };
