@@ -29,6 +29,7 @@ a {
   transition: all .2s ease-out;
 
   color: $white;
+  border: 1px solid mix(rgb(115, 163, 51), $green, 50%);
   border-radius: 6px;
   background: mix(rgb(115, 163, 51), $green, 50%);
 

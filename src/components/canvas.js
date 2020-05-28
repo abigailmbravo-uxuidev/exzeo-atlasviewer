@@ -4,7 +4,9 @@ import {
   faSignOutAlt,
   faSlashEye,
   faEye,
-  faTimes
+  faTimes,
+  faEllipsisV,
+  faCircle
 } from '@fortawesome/free-solid-svg-icons';
 import Map from './map';
 import Library from './library';
@@ -32,7 +34,27 @@ const Canvas = () => {
       </div>
       <div className="feed-popOut">
         <header>
-          <span className="gripper">:::::::::::::::::::</span>
+          <span className="gripper">
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV} />
+          </span>
           <button className="iconBtn closeBtn" type="button">
             <FontAwesomeIcon icon={faTimes} />
           </button>
@@ -42,34 +64,201 @@ const Canvas = () => {
             <FontAwesomeIcon icon={faEye} />
             {/* toggle eye icon={faSlashEye} */}
           </span>
-
-          <table>
-            <tr>
-              <th colSpan="2">
-                <h5>[ Feed Name ]</h5>
-              </th>
-              <th>column 2</th>
-              <th>column 3</th>
-            </tr>
-            <tr>
-              <td className="toggle">
-                <FontAwesomeIcon icon={faEye} />
-                {/* toggle eye icon={faSlashEye} */}
-              </td>
-              <td>column 1</td>
-              <td>column 2</td>
-              <td>column 3</td>
-            </tr>
-            <tr>
-              <td className="toggle">
-                <FontAwesomeIcon icon={faEye} />
-                {/* toggle eye icon={faSlashEye} */}
-              </td>
-              <td>column 1</td>
-              <td>column 2</td>
-              <td>column 3</td>
-            </tr>
-          </table>
+          <div className="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>[ Feed Name ]</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>
+                    <span className="eyeball-wrapper wrapper">
+                      <FontAwesomeIcon icon={faEye} />
+                      {/* toggle eye icon={faSlashEye} */}
+                    </span>
+                    <span
+                      className="icon-wrapper wrapper"
+                      style={{ color: 'red' }}
+                    >
+                      <FontAwesomeIcon icon={faCircle} />
+                      {/* maps to icon and color from feed */}
+                    </span>
+                    head
+                  </th>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                </tr>
+                <tr>
+                  <th>
+                    <span className="eyeball-wrapper wrapper">
+                      <FontAwesomeIcon icon={faEye} />
+                      {/* toggle eye icon={faSlashEye} */}
+                    </span>
+                    <span
+                      className="icon-wrapper wrapper"
+                      style={{ color: 'blue' }}
+                    >
+                      <FontAwesomeIcon icon={faCircle} />
+                      {/* maps to icon and color from feed */}
+                    </span>
+                    head
+                  </th>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                </tr>
+                <tr>
+                  <th>
+                    <span className="eyeball-wrapper wrapper">
+                      <FontAwesomeIcon icon={faEye} />
+                      {/* toggle eye icon={faSlashEye} */}
+                    </span>
+                    <span
+                      className="icon-wrapper wrapper"
+                      style={{ color: 'green' }}
+                    >
+                      <FontAwesomeIcon icon={faCircle} />
+                      {/* maps to icon and color from feed */}
+                    </span>
+                    head
+                  </th>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                </tr>
+                <tr>
+                  <th>
+                    <span className="eyeball-wrapper wrapper">
+                      <FontAwesomeIcon icon={faEye} />
+                      {/* toggle eye icon={faSlashEye} */}
+                    </span>
+                    <span
+                      className="icon-wrapper wrapper"
+                      style={{ color: 'orange' }}
+                    >
+                      <FontAwesomeIcon icon={faCircle} />
+                      {/* maps to icon and color from feed */}
+                    </span>
+                    head
+                  </th>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </LayerProvider>
