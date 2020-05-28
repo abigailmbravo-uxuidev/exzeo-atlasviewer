@@ -5,7 +5,7 @@ import Landing from './components/landing';
 import Canvas from './components/canvas';
 
 const App = () => {
-  const { isAuthenticated, loading, loginWithRedirect } = useAuth();
+  const { isAuthenticated } = useAuth();
   return (
     <Router>
       <Routes>
