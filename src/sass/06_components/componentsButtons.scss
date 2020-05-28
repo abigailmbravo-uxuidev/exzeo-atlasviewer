@@ -120,12 +120,17 @@ a {
   top: .5rem;
   right: .5rem;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 2rem;
   height: 2rem;
 
   cursor: pointer;
   transition: all 0.3s ease-out;
 
+  border-color: transparent;
   border-radius: 4px;
 
   font-size: 1rem;
