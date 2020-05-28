@@ -63,6 +63,7 @@
 
   border-radius: 6px;
   background-color: white;
+  box-shadow: 0px 1px 4px 0px rgba($black, .25);
 
   header {
     display: flex;
@@ -80,9 +81,7 @@
       background: mix($white, $navy, 93%);
 
       span {
-        background:url(
-data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQUlEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8+PAhg4mJCVyMESQIU40hCZI4c+YMWAGyLhRjke2CsVEcgK4AryQA3tsWCM9oX6IAAAAASUVORK5CYII=
-   ) repeat;
+        background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQUlEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8+PAhg4mJCVyMESQIU40hCZI4c+YMWAGyLhRjke2CsVEcgK4AryQA3tsWCM9oX6IAAAAASUVORK5CYII=) repeat;
       }
     }
 
