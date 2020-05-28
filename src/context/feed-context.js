@@ -27,8 +27,8 @@ const feedReducer = (feeds, action) => {
 };
 
 const FeedProvider = ({ children }) => {
-  const { feeds } = useUser();
-  const [state, dispatch] = useReducer(feedReducer);
+  const { feeds = [] } = useUser();
+  const [state, dispatch] = useReducer(feedReducer, feeds);
 
   useEffect(() => {
     if (feeds && feeds.length > 0) {
