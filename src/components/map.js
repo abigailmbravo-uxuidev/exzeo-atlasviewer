@@ -58,14 +58,15 @@ const Map = ({ basemap, layerToggle }) => {
     } else {
       // Toggle feed
       feeds.map(feed => {
+        const { _id, active } = feed;
         if (feed.active !== prevFeeds.active) {
-          if (!map.getLayer(feed._id)) {
+          if (!map.getLayer(`${_id}-layer`)) {
             return addDataset(map, userId, feed);
           }
 
-          const visibility = map.getLayoutProperty(feed._id, 'visibility');
-          const newVisibility = feed.active ? 'visible' : 'none';
-          map.setLayoutProperty(feed._id, 'visibility', newVisibility);
+          const visibility = map.getLayoutProperty(_id, 'visibility');
+          const newVisibility = active ? 'visible' : 'none';
+          map.setLayoutProperty(_id, 'visibility', newVisibility);
         }
       });
     }
@@ -81,7 +82,6 @@ const Map = ({ basemap, layerToggle }) => {
     const { show, layer } = layerToggle;
 
     if (!map.getLayer(layer._id)) {
-      console.log(layerToggle)
       return addLayer(map, userId, layer);
     }
 
