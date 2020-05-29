@@ -35,8 +35,8 @@ const Canvas = () => {
       <div id="map-canvas">
         <Map basemap={basemap} layerToggle={layerToggle} />
       </div>
-      {/* start feed pop out data table */}
-      <div className="feed-popOut">
+      {/* start feed pop out data table ------------------------------------------------------- */}
+      <div className="feed-popOut" style={{ display: 'none' }}>
         <header>
           {/* Gripper is draggable point for data table */}
           <span className="gripper">&nbsp;</span>
