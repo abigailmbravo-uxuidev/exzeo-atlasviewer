@@ -165,7 +165,10 @@ const View = ({ setBasemap }) => {
         effect="float"
         type="light"
         delayHide={500}
+        delayShow={200}
         backgroundColor="#fff"
+        border={true}
+        borderColor="#ddd"
       >
         <h5>[ Feed Name ]</h5>
         <dl>
@@ -190,7 +193,10 @@ const View = ({ setBasemap }) => {
         effect="float"
         type="light"
         delayHide={500}
+        delayShow={200}
         backgroundColor="#fff"
+        border={true}
+        borderColor="#ddd"
       >
         <h5>[ Layer Name ]</h5>
       </ReactTooltip>
