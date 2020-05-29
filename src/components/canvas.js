@@ -35,47 +35,57 @@ const Canvas = () => {
       <div id="map-canvas">
         <Map basemap={basemap} layerToggle={layerToggle} />
       </div>
+      {/* start feed pop out data table */}
       <div className="feed-popOut">
         <header>
+          {/* Gripper is draggable point for data table */}
           <span className="gripper">&nbsp;</span>
+          {/* Button to close pop out data table */}
           <button className="iconBtn closeBtn" type="button">
             <FontAwesomeIcon icon={faTimes} />
           </button>
         </header>
         <div className="content">
+          {/* Element to toggle hide/show of all data points */}
           <span className="eyeball-wrapper wrapper">
             <FontAwesomeIcon icon={faEye} />
             {/* toggle eye icon={faSlashEye} */}
           </span>
           <div className="table-wrapper">
+            {/* Start of data table */}
             <table>
               <thead>
                 <tr>
                   <th>
+                    {/* Name of feed */}
                     <span data-tip data-for="feedPopOverTooltip">
                       [ Feed Name ]
                     </span>
                   </th>
+                  {/* Start loop of column titles */}
                   <th>head</th>
                   <th>head</th>
                   <th>head</th>
                   <th>head</th>
                   <th>head</th>
+                  {/* End loop of column titles */}
                 </tr>
               </thead>
               <tbody>
+                {/* Start loop of data rows */}
                 <tr>
                   <th>
+                    {/* Element to toggle hide/show of only this data points */}
                     <span className="eyeball-wrapper wrapper">
                       <FontAwesomeIcon icon={faEye} />
                       {/* toggle eye icon={faSlashEye} */}
                     </span>
+                    {/* icon from data should be added here - will need to figure this out */}
                     <span
                       className="icon-wrapper wrapper"
                       style={{ color: 'red' }}
                     >
                       <FontAwesomeIcon icon={faCircle} />
-                      {/* maps to icon and color from feed */}
                     </span>
                     Aggregate 1
                   </th>
@@ -96,7 +106,6 @@ const Canvas = () => {
                       style={{ color: 'blue' }}
                     >
                       <FontAwesomeIcon icon={faCircle} />
-                      {/* maps to icon and color from feed */}
                     </span>
                     Aggregate 2
                   </th>
@@ -117,7 +126,6 @@ const Canvas = () => {
                       style={{ color: 'green' }}
                     >
                       <FontAwesomeIcon icon={faCircle} />
-                      {/* maps to icon and color from feed */}
                     </span>
                     Aggregate 3
                   </th>
@@ -138,7 +146,6 @@ const Canvas = () => {
                       style={{ color: 'orange' }}
                     >
                       <FontAwesomeIcon icon={faCircle} />
-                      {/* maps to icon and color from feed */}
                     </span>
                     Aggregate 4
                   </th>
@@ -148,6 +155,8 @@ const Canvas = () => {
                   <td>body</td>
                   <td>body</td>
                 </tr>
+                {/* End loop of data rows */}
+                {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>totals:</th>
                   <td>body</td>
@@ -156,11 +165,13 @@ const Canvas = () => {
                   <td>body</td>
                   <td>body</td>
                 </tr>
+                {/* End total row */}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+      {/* end feed pop out data table */}
       <ReactTooltip
         className="panel-tooltip"
         id="feedPopOverTooltip"

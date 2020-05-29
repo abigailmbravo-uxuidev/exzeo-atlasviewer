@@ -27,10 +27,10 @@
 
       transition: all .2s ease-out;
 
-      background: mix($white, $navy, 97%);
+      background: $white;
   
       &:hover {
-        background: mix($white, $navy, 93%);
+        background: mix($white, $navy, 97%);
   
         span {
           background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQUlEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8+PAhg4mJCVyMESQIU40hCZI4c+YMWAGyLhRjke2CsVEcgK4AryQA3tsWCM9oX6IAAAAASUVORK5CYII=) repeat;
@@ -44,7 +44,7 @@
         flex-shrink: 1;
 
         height: .75rem;
-        margin: .25rem .5rem .25rem 0;
+        margin: .25rem .75rem .25rem 1.5rem;
 
         cursor: move;
 
@@ -73,7 +73,7 @@
       overflow-x: hidden;
       overflow-y: auto;
 
-      padding: 0 .25rem;
+      padding: 0 .75rem .25rem .25rem;
       .eyeball-wrapper {
         padding: .25rem;
 
