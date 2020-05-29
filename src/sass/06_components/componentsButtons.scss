@@ -19,6 +19,7 @@ a {
 }
 .actionBtn {
   display: flex;
+  align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
 
@@ -27,11 +28,13 @@ a {
 
   cursor: pointer;
   transition: all .2s ease-out;
+  text-transform: uppercase;
 
   color: $white;
   border: 1px solid mix(rgb(115, 163, 51), $green, 50%);
   border-radius: 6px;
   background: mix(rgb(115, 163, 51), $green, 50%);
+  box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
 
   font-size: .875rem;
   font-weight: normal;
@@ -42,8 +45,9 @@ a {
   }
 }
 
-.secondaryBtn {
+.secondaryActionBtn {
   display: flex;
+  align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
 
@@ -52,11 +56,45 @@ a {
 
   cursor: pointer;
   transition: all .2s ease-out;
+  text-transform: uppercase;
+
+  color: $white;
+  border: 1px solid $navy;
+  border-radius: 6px;
+  background: $navy;
+  box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
+
+  font-size: .875rem;
+  font-weight: normal;
+  line-height: 1;
+
+  &:hover {
+    background-color: mix($white, $navy, 20%);
+  }
+
+  ~.secondaryActionBtn {
+    margin-left: .5rem;
+  }
+}
+
+.secondaryBtn {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  width: auto;
+  padding: 8px 16px;
+
+  cursor: pointer;
+  transition: all .2s ease-out;
+  text-transform: uppercase;
 
   color: $base-gray;
   border: 1px solid $base-gray;
   border-radius: 6px;
   background: mix($white, $gray, 50%);
+  box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
 
   font-size: .875rem;
   font-weight: normal;
@@ -98,6 +136,15 @@ a {
   &:hover {
     color: rgba($base-gray, 1);
     background-color: rgba($white, .5);
+  }
+
+  &.dark {
+    color: $white;
+    background-color: rgba($black, 0);
+
+    &:hover {
+      background-color: rgba($black, .125);
+    }
   }
 }
 
@@ -164,4 +211,11 @@ a {
   &:hover {
     background-color: mix($white, $navy, 20%);
   }
+}
+
+.inputBtn {
+  z-index: 1;
+
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }

@@ -84,7 +84,7 @@ const Uploader = ({ setUploaderState }) => {
   };
 
   return (
-    <div className="modal .fade-in">
+    <div className="modal fade-in">
       <form className="card" onSubmit={handleSubmit(handleUpload)}>
         <header>
           <h4>

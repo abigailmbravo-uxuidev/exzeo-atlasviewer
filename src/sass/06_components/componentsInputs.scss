@@ -30,6 +30,13 @@ input {
      display: none;
    }
   }
+
+  &.withBtn {
+    z-index: 2;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 select {
   flex-grow: 1;

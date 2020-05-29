@@ -13,9 +13,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import Uploader from './uploader';
+import FeedManager from './feedManager';
 
 const Feeds = ({ filter }) => {
   const [uploaderState, setUploaderState] = useState(false);
+  const [feedManagerState, setFeedManagerState] = useState(false);
   const feeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
   const [paneHeight, setPaneHeightState] = useState();
@@ -40,6 +42,9 @@ const Feeds = ({ filter }) => {
   return (
     <Fragment>
       {uploaderState && <Uploader setUploaderState={setUploaderState} />}
+      {feedManagerState && (
+        <FeedManager setFeedManagerState={setFeedManagerState} />
+      )}
       <header>
         <h4>
           <FontAwesomeIcon icon={faNetworkWired} />
