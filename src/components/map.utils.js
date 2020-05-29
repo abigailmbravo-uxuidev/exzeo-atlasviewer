@@ -77,7 +77,7 @@ export const addDataset = (map, userId, layer) => {
     data: source,
     buffer: 32
   });
-
+console.log('layer = ', `${_id}-dataset`);
   map.addLayer({
     id: `${_id}-dataset`,
     type: 'circle',

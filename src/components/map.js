@@ -49,7 +49,7 @@ const Map = ({ basemap, layerToggle }) => {
   }, [setMap, token]);
 
   useEffect(() => {
-    if (!feeds || !prevFeeds) return;
+    if (!map.getLayer || !feeds || !prevFeeds) return;
     if (feeds.length > prevFeeds.length) {
       // Add feed
       addDataset(map, userId, feeds[feeds.length - 1]);
@@ -59,26 +59,28 @@ const Map = ({ basemap, layerToggle }) => {
       // Toggle feed
       feeds.map(feed => {
         const { _id, active } = feed;
+        const layerId = `${_id}-dataset`;
+        
         if (feed.active !== prevFeeds.active) {
-          if (!map.getLayer(`${_id}-layer`)) {
+          if (!map.getLayer(layerId)) {
             return addDataset(map, userId, feed);
           }
 
-          const visibility = map.getLayoutProperty(_id, 'visibility');
+          const visibility = map.getLayoutProperty(layerId, 'visibility');
           const newVisibility = active ? 'visible' : 'none';
-          map.setLayoutProperty(_id, 'visibility', newVisibility);
+          map.setLayoutProperty(layerId, 'visibility', newVisibility);
         }
       });
     }
   }, [prevFeeds, feeds, userId, map]);
 
   useEffect(() => {
-    if (!map || !basemap) return;
+    if (!map.getLayer || !basemap) return;
     map.setStyle(basemap);
   }, [basemap, map]);
 
   useEffect(() => {
-    if (!map || !layerToggle) return;
+    if (!map.getLayer || !layerToggle) return;
     const { show, layer } = layerToggle;
 
     if (!map.getLayer(layer._id)) {
