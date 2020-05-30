@@ -60,7 +60,7 @@ const Map = ({ basemap, layerToggle }) => {
       feeds.map(feed => {
         const { _id, active } = feed;
         const layerId = `${_id}-dataset`;
-        
+
         if (feed.active !== prevFeeds.active) {
           if (!map.getLayer(layerId)) {
             return addDataset(map, userId, feed);

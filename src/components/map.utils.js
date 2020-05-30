@@ -62,7 +62,7 @@ export const addLayer = (map, userId, layer) => {
       visibility: 'visible'
     },
     paint: {
-      'line-color': '#ff69b4',
+      'line-color': '#c0c0c0',
       'line-width': 3
     }
   });
@@ -77,7 +77,7 @@ export const addDataset = (map, userId, layer) => {
     data: source,
     buffer: 32
   });
-console.log('layer = ', `${_id}-dataset`);
+
   map.addLayer({
     id: `${_id}-dataset`,
     type: 'circle',
@@ -86,7 +86,7 @@ console.log('layer = ', `${_id}-dataset`);
       visibility: 'visible'
     },
     paint: {
-      'circle-radius': 7,
+      'circle-radius': 4,
       'circle-color': ['get', 'status_color']
     }
   });
