@@ -74,7 +74,36 @@ const Uploader = () => {
             Send Invite
           </button>
         </footer>
-        <div className="body"></div>
+        <div className="body">
+          <section>
+            <table>
+              <tr>
+                <th>User</th>
+                <th>Invited</th>
+                <th>Last Viewed</th>
+                <th>
+                  <input type="checkbox"></input>
+                </th>
+              </tr>
+              <tr>
+                <td>jane.doe@email.com</td>
+                <td>01/01/2021 06:00AM</td>
+                <td>01/01/2020 07:00AM</td>
+                <td>
+                  <input type="checkbox"></input>
+                </td>
+              </tr>
+              <tr>
+                <td>john.doe@email.com</td>
+                <td>01/01/2021 06:00AM</td>
+                <td>Never</td>
+                <td>
+                  <input type="checkbox"></input>
+                </td>
+              </tr>
+            </table>
+          </section>
+        </div>
       </form>
     </div>
   );

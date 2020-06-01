@@ -76,6 +76,17 @@
               margin-bottom: 0;
             }
           }
+          table {
+            width: 100%;
+
+            box-shadow: 0px 0px 8px 0px rgba($black, .5);
+
+            th, td {
+              padding: .5rem;
+
+              text-align: center;
+            }
+          }
         }
         footer {
           display: flex;
