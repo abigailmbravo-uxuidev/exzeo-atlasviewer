@@ -36,18 +36,34 @@ const Uploader = () => {
           </section>
           <section className="usersQueued">
             <div className="userQueue">
-              <label>Users Added</label>
-              {/* Start loop of queued users */}
+              <div className="label">Users Added</div>
+              {/* Start loop of queued users __________________________________________________________________ */}
               <span>
                 testemail@exzeo.com
                 <button className="iconBtn dark">
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </span>
+              {/* End loop of queued users __________________________________________________________________ */}
             </div>
           </section>
           <section className="emailMessage">
-            <label>Users Will Be Emailed The Following Message</label>
+            <div className="label">
+              Users Will Be Emailed The Following Message
+              <div className="checkbox-wrapper">
+                <label htmlFor="surpressEmail">Don't send email</label>
+                <input
+                  type="checkbox"
+                  id="surpressEmail"
+                  name="surpressEmail"
+                ></input>
+              </div>
+            </div>
+            <textarea rows="4">
+              Hello! GIS TEAM wants to share maps and data with you. Atlas
+              Viewer, a cloud-based mapping tool, makes the location-based data
+              in [FEED NAME] come to life!
+            </textarea>
           </section>
         </div>
         <footer>
