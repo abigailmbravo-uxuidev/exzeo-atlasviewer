@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNetworkWired, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
@@ -7,7 +8,7 @@ import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
-const Uploader = ({ setUploaderState }) => {
+const Uploader = ({ setUploaderState, setError }) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
   const user = useUser();
@@ -63,11 +64,17 @@ const Uploader = ({ setUploaderState }) => {
         'Content-Type': 'multipart/form-data'
       }
     };
-    const res = await axios(reqOptions).catch(err => console.log(err));
-    const feed = res.data.data;
 
-    dispatch({ type: 'add', data: feed });
-    setUploaderState(false);
+    try {
+      const res = await axios(reqOptions);
+      const feed = res.data.data;
+
+      dispatch({ type: 'add', data: feed });
+      setUploaderState(false);
+    } catch (err) {
+      setUploaderState(false);
+      return setError(err.message);
+    }
   };
 
   const processFile = e => {
@@ -140,6 +147,11 @@ const Uploader = ({ setUploaderState }) => {
       </form>
     </div>
   );
+};
+
+Uploader.propTypes = {
+  setUploaderState: PropTypes.func.isRequired,
+  setError: PropTypes.func
 };
 
 export default Uploader;

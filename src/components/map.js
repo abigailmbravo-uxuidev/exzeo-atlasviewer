@@ -13,12 +13,13 @@ import { usePrevious } from '../utils/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = ({ basemap, layerToggle }) => {
+const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
   const feeds = useFeedState();
   const user = useUser();
   const [map, setMap] = useState({});
   const mapContainer = useRef(null);
   const prevFeeds = usePrevious(feeds);
+  const [isLoading, setIsLoading] = useState(false);
   const userId = user.user_id;
   const { token } = user;
 
@@ -42,6 +43,16 @@ const Map = ({ basemap, layerToggle }) => {
       mapbox.on('load', () => {
         setMap(mapbox);
         mapbox.resize();
+      });
+
+      mapbox.on('data', data => {
+        //console.log(data)
+        if (data.isSourceLoaded) {
+          //console.log('done')
+          //setIsMapLoading(false);
+        } else {
+          //if (!isLoading) console.log('true');
+        }
       });
     };
 
@@ -82,14 +93,15 @@ const Map = ({ basemap, layerToggle }) => {
   useEffect(() => {
     if (!map.getLayer || !layerToggle) return;
     const { show, layer } = layerToggle;
+    const layerId = `${layer._id}-layer`
 
-    if (!map.getLayer(layer._id)) {
+    if (!map.getLayer(layerId)) {
       return addLayer(map, userId, layer);
     }
 
-    const visibility = map.getLayoutProperty(layer._id, 'visibility');
+    const visibility = map.getLayoutProperty(layerId, 'visibility');
     const newVisibility = show ? 'visible' : 'none';
-    map.setLayoutProperty(layer._id, 'visibility', newVisibility);
+    map.setLayoutProperty(layerId, 'visibility', newVisibility);
   }, [layerToggle, map, userId]);
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;

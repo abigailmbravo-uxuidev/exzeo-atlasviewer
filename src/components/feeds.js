@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -14,6 +15,7 @@ import {
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import Uploader from './uploader';
 import FeedManager from './feedManager';
+import Modal from './modal';
 
 const Feeds = ({ filter }) => {
   const [uploaderState, setUploaderState] = useState(false);
@@ -23,6 +25,7 @@ const Feeds = ({ filter }) => {
   const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useFeedDispatch();
   const content = useRef(null);
+  const [error, setError] = useState('');
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -41,7 +44,12 @@ const Feeds = ({ filter }) => {
 
   return (
     <Fragment>
-      {uploaderState && <Uploader setUploaderState={setUploaderState} />}
+      {uploaderState && (
+        <Uploader setUploaderState={setUploaderState} setError={setError} />
+      )}
+      {error.length > 0 && (
+        <Modal message={error} closeModal={() => setError('')} />
+      )}
       {feedManagerState && (
         <FeedManager setFeedManagerState={setFeedManagerState} />
       )}
@@ -204,6 +212,10 @@ const Feeds = ({ filter }) => {
       </div>
     </Fragment>
   );
+};
+
+Feeds.propTypes = {
+  filter: PropTypes.string
 };
 
 export default Feeds;

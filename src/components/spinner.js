@@ -1,8 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-const Spinner = () => {
-  return <div>Spinner</div>;
-};
+const Spinner = () => <div>Spinner...</div>;
 
 export default Spinner;
