@@ -11,6 +11,7 @@ import {
 import Map from './map';
 import Library from './library';
 import View from './view';
+import Spinner from './spinner';
 import { FeedProvider } from '../context/feed-context';
 import { useAuth } from '../context/auth-context';
 import ReactTooltip from 'react-tooltip';
@@ -19,10 +20,15 @@ const Canvas = () => {
   const { logout } = useAuth();
   const [basemap, setBasemap] = useState('');
   const [layerToggle, setLayerToggle] = useState(undefined);
+  const [isMapLoading, setIsMapLoading] = useState(true);
 
   return (
     <FeedProvider>
-      <Library setLayerToggle={setLayerToggle} />
+      {isMapLoading && <Spinner />}
+      <Library
+        setLayerToggle={setLayerToggle}
+        setIsMapLoading={setIsMapLoading}
+      />
       <View setBasemap={setBasemap} />
       <button
         title="Log Out"
@@ -33,7 +39,11 @@ const Canvas = () => {
         <FontAwesomeIcon icon={faSignOutAlt} />
       </button>
       <div id="map-canvas">
-        <Map basemap={basemap} layerToggle={layerToggle} />
+        <Map
+          basemap={basemap}
+          layerToggle={layerToggle}
+          setIsMapLoading={setIsMapLoading} 
+        />
       </div>
       {/* start feed pop out data table ------------------------------------------------------- */}
       <div className="feed-popOut" style={{ display: 'none' }}>

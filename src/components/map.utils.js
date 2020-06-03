@@ -45,8 +45,9 @@ export const addControls = mapbox => {
 
 export const addLayer = (map, userId, layer) => {
   const { _id, source_type, source_layer, type, url } = layer;
+  const sourceId = `${_id}-atlas`;
 
-  map.addSource(_id, {
+  map.addSource(sourceId, {
     type: source_type,
     url
   });
@@ -54,7 +55,7 @@ export const addLayer = (map, userId, layer) => {
   map.addLayer({
     id: `${_id}-layer`,
     type,
-    source: _id,
+    source: sourceId,
     'source-layer': source_layer,
     layout: {
       'line-join': 'round',
@@ -71,8 +72,9 @@ export const addLayer = (map, userId, layer) => {
 export const addDataset = (map, userId, layer) => {
   const { _id, url } = layer;
   const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
+  const sourceId = `${_id}-atlas`;
 
-  map.addSource(_id, {
+  map.addSource(sourceId, {
     type: 'geojson',
     data: source,
     buffer: 32
@@ -81,7 +83,7 @@ export const addDataset = (map, userId, layer) => {
   map.addLayer({
     id: `${_id}-dataset`,
     type: 'circle',
-    source: _id,
+    source: sourceId,
     layout: {
       visibility: 'visible'
     },

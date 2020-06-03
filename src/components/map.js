@@ -46,18 +46,14 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
       });
 
       mapbox.on('data', data => {
-        //console.log(data)
         if (data.isSourceLoaded) {
-          //console.log('done')
-          //setIsMapLoading(false);
-        } else {
-          //if (!isLoading) console.log('true');
+          setIsMapLoading(false);
         }
       });
     };
 
     initializeMap(setMap, mapContainer);
-  }, [setMap, token]);
+  }, [setMap, token, setIsMapLoading]);
 
   useEffect(() => {
     if (!map.getLayer || !feeds || !prevFeeds) return;

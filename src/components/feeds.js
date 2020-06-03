@@ -17,7 +17,7 @@ import Uploader from './uploader';
 import FeedManager from './feedManager';
 import Modal from './modal';
 
-const Feeds = ({ filter }) => {
+const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState(false);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const feeds = useFeedState();
@@ -35,6 +35,7 @@ const Feeds = ({ filter }) => {
   };
 
   const toggleFeed = (feed, active) => {
+    if (active) setIsMapLoading(true);
     dispatch({ type: 'update', data: { ...feed, active } });
   };
 
@@ -96,8 +97,9 @@ const Feeds = ({ filter }) => {
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
-                    checked={feed.active}
-                    onClick={e => toggleFeed(feed, e.target.checked)}
+                    checked={feed.active || false}
+                    value={feed._id}
+                    onChange={e => toggleFeed(feed, e.target.checked)}
                   />
                 </span>
                 <span className="feed-detail-wrapper wrapper">

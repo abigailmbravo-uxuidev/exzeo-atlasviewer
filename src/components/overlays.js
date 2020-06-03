@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '../context/user-context';
 
-const Overlays = ({ setLayerToggle }) => {
+const Overlays = ({ setLayerToggle, setIsMapLoading }) => {
   const { layers } = useUser();
 
   const toggleLayer = ({ target }) => {
+    if (target.checked) setIsMapLoading(true);
     const layer = layers.find(l => l._id === target.value);
     setLayerToggle({ show: target.checked, layer });
   };
@@ -22,11 +23,11 @@ const Overlays = ({ setLayerToggle }) => {
       <ul className="panel-list">
         {layers &&
           layers.map((layer, index) => (
-            <li key={index}>
+            <li key={layer._id}>
               <span className="checkbox-wrapper wrapper">
                 <input
                   type="checkbox"
-                  onClick={toggleLayer}
+                  onChange={toggleLayer}
                   value={layer._id}
                 />
               </span>
