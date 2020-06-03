@@ -14,7 +14,7 @@
 
     background-color: rgba($black, .8);
 
-    form {
+    .card {
       display: flex;
       overflow: hidden;
       flex-direction: column;
@@ -23,92 +23,91 @@
 
       max-width: 80%;
 
-      &.card {
-        border-radius: 4px;
-        background-color: rgba($blue-gray, .93);
-        box-shadow: 0px 0px 8px 0px rgba($black, .5);
-        > header {
-          position: relative;
+      border-radius: 4px;
+      background-color: rgba($blue-gray, .93);
+      box-shadow: 0px 0px 8px 0px rgba($black, .5);
+      
+      > header {
+        position: relative;
 
+        display: flex;
+        justify-content: space-between;
+
+        padding: .5rem 2.25rem .5rem 1rem;
+
+        h4 {
           display: flex;
-          justify-content: space-between;
+          overflow: hidden;
+          align-items: flex-end;
 
-          padding: .5rem 2.25rem .5rem 1rem;
+          margin: .5rem 0;
 
-          h4 {
-            display: flex;
-            overflow: hidden;
-            align-items: flex-end;
+          white-space: nowrap;
+          text-overflow: ellipsis;
 
-            margin: .5rem 0;
-
-            white-space: nowrap;
+          > span {
+            text-transform: none;
             text-overflow: ellipsis;
 
-            > span {
-              text-transform: none;
-              text-overflow: ellipsis;
-
-              font-family: 'Lato';
-              font-size: .875em;
-            }
-          }       
-        }
-        .body {
-          display: flex;
-          flex-wrap: wrap;
-
-          margin: 0 1rem;
-          padding: 1rem 0;
-
-          border-top: 1px solid rgba($navy, .1);
-          border-bottom: 1px solid rgba($navy, .1);
-
-          > section {
-            display: flex;
-            flex-grow: 0;
-            flex-shrink: 0;
-
-            width: 100%;
-            margin-bottom: 1rem;
-
-            &:last-of-type {
-              margin-bottom: 0;
-            }
+            font-family: 'Lato';
+            font-size: .875em;
           }
-          table {
-            overflow: hidden;
+        }       
+      }
+      .body {
+        display: flex;
+        flex-wrap: wrap;
 
-            width: 100%;
+        margin: 0 1rem;
+        padding: 1rem 0;
 
-            border-collapse: collapse;
-            border-radius: 6px;
-            background: $white;
-            box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
+        border-top: 1px solid rgba($navy, .1);
+        border-bottom: 1px solid rgba($navy, .1);
 
-            th, td {
-              padding: .5rem;
+        > section {
+          display: flex;
+          flex-grow: 0;
+          flex-shrink: 0;
 
-              text-align: left;
-            }
+          width: 100%;
+          margin-bottom: 1rem;
 
-            th {
-              background-color: rgba($base-gray, .2);
-            }
+          &:last-of-type {
+            margin-bottom: 0;
           }
         }
-        footer {
-          display: flex;
-          justify-content: flex-end;
+        table {
+          overflow: hidden;
 
-          padding: .75rem 1rem 1rem;
+          width: 100%;
 
-          button {
-            margin-right: .5rem;
+          border-collapse: collapse;
+          border-radius: 6px;
+          background: $white;
+          box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
 
-            &:last-of-type {
-              margin-right: 0;
-            }
+          th, td {
+            padding: .5rem;
+
+            text-align: left;
+          }
+
+          th {
+            background-color: rgba($base-gray, .2);
+          }
+        }
+      }
+      footer {
+        display: flex;
+        justify-content: flex-end;
+
+        padding: .75rem 1rem 1rem;
+
+        button {
+          margin-right: .5rem;
+
+          &:last-of-type {
+            margin-right: 0;
           }
         }
       }

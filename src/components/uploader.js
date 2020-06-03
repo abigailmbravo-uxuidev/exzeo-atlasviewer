@@ -120,13 +120,13 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             ref={register}
             onChange={handleFile}
           />
+          <label htmlFor="feed-name">Feed Name</label>
           <input
             type="text"
             id="feed-name"
             name="feedname"
             ref={register({ required: true })}
             defaultValue={file.name}
-            disabled="disabled"
           />
           {errors.lastname && 'Feed Name is required.'}
         </div>
