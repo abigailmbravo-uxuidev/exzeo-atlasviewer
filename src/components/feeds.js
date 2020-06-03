@@ -46,7 +46,11 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   return (
     <Fragment>
       {uploaderState && (
-        <Uploader setUploaderState={setUploaderState} setError={setError} />
+        <Uploader
+          setUploaderState={setUploaderState}
+          setError={setError}
+          setIsMapLoading={setIsMapLoading}
+        />
       )}
       {error.length > 0 && (
         <Modal message={error} closeModal={() => setError('')} />

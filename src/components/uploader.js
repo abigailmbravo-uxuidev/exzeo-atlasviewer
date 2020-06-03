@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
-const Uploader = ({ setUploaderState, setError }) => {
+const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
   const user = useUser();
@@ -65,6 +65,7 @@ const Uploader = ({ setUploaderState, setError }) => {
       }
     };
 
+    setIsMapLoading(true);
     try {
       const res = await axios(reqOptions);
       const feed = res.data.data;
@@ -72,6 +73,7 @@ const Uploader = ({ setUploaderState, setError }) => {
       dispatch({ type: 'add', data: feed });
       setUploaderState(false);
     } catch (err) {
+      setIsMapLoading(false);
       setUploaderState(false);
       return setError(err.message);
     }
@@ -151,7 +153,8 @@ const Uploader = ({ setUploaderState, setError }) => {
 
 Uploader.propTypes = {
   setUploaderState: PropTypes.func.isRequired,
-  setError: PropTypes.func
+  setError: PropTypes.func,
+  setIsMapLoading: PropTypes.func
 };
 
 export default Uploader;
