@@ -8,7 +8,7 @@ const App = () => {
   const { isAuthenticated } = useAuth();
   let { pathname } = useLocation();
 
-  if (pathname === '/map' && !isAuthenticated) return <Navigate to="/" />;
+  //if (pathname === '/map' && !isAuthenticated) return <Navigate to="/" />;
 
   return (
     <Routes>
