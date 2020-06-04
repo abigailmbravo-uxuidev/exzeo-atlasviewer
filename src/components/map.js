@@ -50,6 +50,12 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
           setIsMapLoading(false);
         }
       });
+
+      mapbox.on('click', e => {
+        const features = mapbox.queryRenderedFeatures(e.point);
+        const feature = features.filter(f => f.layer.id.includes('dataset'));
+        console.log(feature);
+      });
     };
 
     initializeMap(setMap, mapContainer);
