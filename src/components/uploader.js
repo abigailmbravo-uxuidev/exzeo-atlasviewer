@@ -13,35 +13,33 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const { register, handleSubmit, errors, formState } = useForm();
   const user = useUser();
   const [file, setFile] = useState({});
-  const [headers, setHeaders] = useState(null);
-  const [feedData, setLayerData] = useState();
-  const [geoJson, setGeoJson] = useState();
+  const [fileInfo, setFileInfo] = useState({});
+  const [csvHeaders, setHeaders] = useState();
+
+  const complete = (results, file) => {
+    // const { errors } = results;
+    // console.log(results);
+    setHeaders(results.meta.fields);
+    setFile(file);
+  };
 
   const handleFile = ({ target: { files } }) => {
-    setFile(files[0]);
+    const selectedFile = files[0];
+    if (!selectedFile) return;
+
+    Papa.parse(selectedFile, {
+      header: true,
+      preview: 1,
+      dynamicTyping: true,
+      skipEmptyLines: 'greedy',
+      complete: complete,
+      error: err => console.log(err)
+    });
   };
 
   const geoFile = {
     type: 'FeatureCollection',
     features: []
-  };
-
-  const csvTojson = (row, parser) => {
-    const lat = row.data.lat || row.data.latitude;
-    const lon = row.data.lon || row.data.long || row.data.longitude;
-    const feature = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [lon, lat]
-      },
-      properties: {
-        ...row.data
-      }
-    };
-
-    if (!headers) setHeaders(row.meta.fields);
-    geoFile.features.push(feature);
   };
 
   const handleUpload = async data => {
@@ -77,19 +75,6 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
       setUploaderState(false);
       return setError(err.message);
     }
-  };
-
-  const processFile = e => {
-    if (!file) return;
-
-    Papa.parse(file, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: 'greedy',
-      step: csvTojson,
-      complete: addLayer,
-      error: err => console.log(err)
-    });
   };
 
   return (

@@ -33,7 +33,7 @@ const Canvas = () => {
         title="Log Out"
         className="logoutBtn"
         type="button"
-        onClick={() => logout({ returnTo: '/' })}
+        onClick={logout}
       >
         <FontAwesomeIcon icon={faSignOutAlt} />
       </button>
@@ -41,7 +41,7 @@ const Canvas = () => {
         <Map
           basemap={basemap}
           layerToggle={layerToggle}
-          setIsMapLoading={setIsMapLoading} 
+          setIsMapLoading={setIsMapLoading}
         />
       </div>
       {/* start feed pop out data table ------------------------------------------------------- */}
