@@ -18,7 +18,6 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
 
   const complete = (results, file) => {
     // const { errors } = results;
-    // console.log(results);
     setHeaders(results.meta.fields);
     setFile(file);
   };
