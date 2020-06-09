@@ -1,37 +1,108 @@
 //input
 //----------------------------------------------------------
 input {
-    overflow: hidden;
+  overflow: hidden;
 
-    width: 100%;
-    height: 2.25rem;
-    margin: 0;
-    padding: 6px;
+  width: 100%;
+  height: 2.25rem;
+  margin: 0;
+  padding: 6px;
 
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
-    color: #111;
-    border: 0;
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.375);
+  color: #111;
+  border: 0;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.375);
+
+  &:disabled {
+    background: transparent;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
   }
-  .input-icon-wrapper {
-    position: relative;
 
-    display: flex;
-    align-items: center;
-    input {
-      padding-right: 1.5rem;
-    }
-    svg {
-      position: absolute;
-      right: .375rem;
+  &[type='file'] {
+   background: transparent;
+   box-shadow: 0 0 0 0 rgba(0,0,0,0);
 
-      color: mix($white, $base-gray, 30%);
-
-      font-size: .75rem;
-    }
+   &#feed {
+     display: none;
+   }
   }
-  
+
+  &.withBtn {
+    z-index: 2;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &[type='checkbox'] {
+    width: 1rem;
+    height: 1rem;
+
+    background: transparent;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  }
+}
+textarea {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  width: 100%;
+  margin: 0;
+  padding: 6px;
+
+  color: #111;
+  border: 0;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.375);
+
+  font-family: 'Lato';
+  font-size: .875em;
+}
+select {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  width: 100%;
+  height: 2rem;
+
+  color: $navy;
+  border: none;
+  background: $white;
+  box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.375);
+
+  font-size: .875rem;
+  font-weight: normal;
+}
+.input-icon-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  input {
+    padding-right: 1.5rem;
+  }
+  svg {
+    position: absolute;
+    right: .375rem;
+
+    color: mix($white, $base-gray, 30%);
+
+    font-size: .75rem;
+  }
+}
+label, .label {
+  width: 100%;
+  margin-bottom: .25rem;
+
+  text-transform: uppercase;
+
+  color: $navy;
+
+  font-size: .75rem;
+  font-weight: bold;
+  line-height: 1;
+}

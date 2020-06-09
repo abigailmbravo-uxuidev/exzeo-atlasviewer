@@ -7,18 +7,5 @@ $red: rgba(255, 55, 67, 1);
 $orange: rgba(242, 143, 32, 1);
 $blue-gray: mix($navy, $white, 8%);
 $black: rgba(0, 0, 0, 1);
-$navy-hover: mix(rgb(74, 63, 141), $navy, 75%);
-$green-hover: mix(rgb(206, 200, 108), $green, 40%);
+$navy-hover: mix($white, $navy, 15%);
 $base-gray: rgba(51, 51, 51, 1);
-
-//colors from consumer
-$black: rgba(0, 0, 0, 1);
-$white: rgba(255, 255, 255, 1);
-$extraLightGrey: rgba(247, 247, 247, 1);
-$lightGrey: rgba(170, 176, 187, 1);
-$darkGrey: rgba(112, 112, 112, 1);
-$blue: rgba(42, 157, 216, 1);
-$navy: rgba(29, 64, 78, 1);
-$green: rgba(121, 192, 67, 1);
-$red: rgba(186, 35, 35, 1);
-$backgroundColor: rgba(250, 251, 253, 1);

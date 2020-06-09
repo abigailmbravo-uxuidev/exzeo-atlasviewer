@@ -3,15 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 import Feeds from './feeds';
 import Overlays from './overlays';
-import { useLayerDispatch } from '../context/layer-context';
 
 import Icon from './icon';
 
-const Library = () => {
+const Library = ({ setLayerToggle, setIsMapLoading }) => {
   const [libraryActive, setLibraryState] = useState(true);
   const [filter, setFilter] = useState('');
   const handleFilter = ({ target: { value } }) => setFilter(value);
-  const dispatch = useLayerDispatch();
 
   return (
     <div id="library" className={`panel ${libraryActive ? 'open' : 'closed'}`}>
@@ -37,10 +35,14 @@ const Library = () => {
       </div>
       <div className="scroll">
         <div className="section feeds">
-          <Feeds filter={filter} />
+          <Feeds filter={filter} setIsMapLoading={setIsMapLoading} />
         </div>
         <div className="section shapes">
-          <Overlays filter={filter} />
+          <Overlays
+            filter={filter}
+            setLayerToggle={setLayerToggle}
+            setIsMapLoading={setIsMapLoading}
+          />
         </div>
       </div>
       <div className="panel-tab library-tab">

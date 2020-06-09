@@ -1,10 +1,13 @@
 import React from 'react';
-import user from '../../test-data/user.json';
+import { useAuth } from './auth-context';
 
 const UserContext = React.createContext();
 
 function UserProvider(props) {
-  return <UserContext.Provider value={user} {...props} />;
+  const { user, isAuthenticated } = useAuth();
+  const userProfile = user || { feeds: [] };
+
+  return <UserContext.Provider value={userProfile} {...props} />;
 }
 
 function useUser() {

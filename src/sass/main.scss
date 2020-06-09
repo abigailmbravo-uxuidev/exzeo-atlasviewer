@@ -28,6 +28,7 @@
 @import '06_components/componentsModals';
 @import '06_components/componentsPanels';
 @import '06_components/componentsMapboxControls';
+@import '06_components/componentsFeedPopOut';
 //07_theme 
 
 //08_overwrites
@@ -35,7 +36,7 @@
 //----------------------------
 
 .fade-in {
-  animation: fadeIn ease 10s;
+  animation: fadeIn ease .5s;
 }
 @keyframes fadeIn {
   0% {
@@ -43,5 +44,12 @@
   }
   100% {
     opacity:1;
+  }
+}
+
+.spinner {
+  svg {
+    width: 6rem;
+    height: 6rem;
   }
 }

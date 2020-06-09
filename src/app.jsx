@@ -1,17 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Spinner from './components/spinner';
-import { useUser } from './context/user-context';
-import AuthenticatedApp from './authenticated-app';
-import UnauthenticatedApp from './components/landing';
+import React, { useEffect } from 'react';
+import {
+  Navigate,
+  Redirect,
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
+import { useAuth } from './context/auth-context';
+import Landing from './components/landing';
+import Canvas from './components/canvas';
 
 const App = () => {
-  const user = useUser();
+  const { isAuthenticated } = useAuth();
+  let { pathname } = useLocation();
+
+  if (pathname === '/map' && isAuthenticated === false)
+    return <Navigate to="/" />;
 
   return (
-    <React.Suspense fallback={<Spinner />}>
-      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
-    </React.Suspense>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      {isAuthenticated && <Route path="/map" element={<Canvas />} />}
+    </Routes>
   );
 };
 

@@ -1,28 +1,37 @@
-import React, { useState, useEffect, useContext } from 'react';
-import createAuth0Client from '@auth0/auth0-spa-js';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import createAuthClient from '@auth0/auth0-spa-js';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
-export const Auth0Context = React.createContext();
-export const useAuth0 = () => useContext(Auth0Context);
+const AuthContext = createContext();
 
-export const Auth0Provider = ({
+const AuthProvider = ({
   children,
   onRedirectCallback = DEFAULT_REDIRECT_CALLBACK,
   ...initOptions
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [user, setUser] = useState();
-  const [auth0Client, setAuth0] = useState();
+  const [auth0Client, setAuth] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
-    const initAuth0 = async () => {
-      const auth0FromHook = await createAuth0Client(initOptions);
-      setAuth0(auth0FromHook);
+    const fetchUserData = async id => {
+      const opts = {
+        url: `${process.env.API_URL}/api/userdata/${id}`,
+        method: 'GET'
+      };
+      const res = await axios(opts).catch(err => console.log(err));
+      return res.data.data;
+    };
+
+    const initAuth = async () => {
+      const auth0FromHook = await createAuthClient(initOptions);
+      setAuth(auth0FromHook);
 
       if (
         window.location.search.includes('code=') &&
@@ -37,61 +46,41 @@ export const Auth0Provider = ({
       setIsAuthenticated(isAuthenticated);
 
       if (isAuthenticated) {
+        const token = await auth0FromHook.getTokenSilently();
         const user = await auth0FromHook.getUser();
-        setUser(user);
+        axios.defaults.headers.common.authorization = `Bearer ${token}`;
+
+        const userData = await fetchUserData(user.sub);
+        userData.token = token;
+        setUser(userData);
       }
 
       setLoading(false);
     };
-    initAuth0();
+    initAuth();
     // eslint-disable-next-line
   }, []);
 
-  const loginWithPopup = async (params = {}) => {
-    setPopupOpen(true);
-    try {
-      await auth0Client.loginWithPopup(params);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setPopupOpen(false);
-    }
-    const user = await auth0Client.getUser();
-    setUser(user);
-    setIsAuthenticated(true);
-  };
-
-  const handleRedirectCallback = async () => {
-    setLoading(true);
-    await auth0Client.handleRedirectCallback();
-    const user = await auth0Client.getUser();
-    setLoading(false);
-    setIsAuthenticated(true);
-    setUser(user);
-  };
-
   return (
-    <Auth0Context.Provider
+    <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
         loading,
-        popupOpen,
-        loginWithPopup,
-        handleRedirectCallback,
-        getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
         loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
-        getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
-        getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
-        logout: (...p) => auth0Client.logout(...p)
+        logout: () => auth0Client.logout({ returnTo: process.env.URL })
       }}
     >
       {children}
-    </Auth0Context.Provider>
+    </AuthContext.Provider>
   );
 };
 
-Auth0Provider.propTypes = {
+AuthProvider.propTypes = {
   children: PropTypes.object,
   onRedirectCallback: PropTypes.func
 };
+
+const useAuth = () => useContext(AuthContext);
+
+export { AuthProvider, useAuth };

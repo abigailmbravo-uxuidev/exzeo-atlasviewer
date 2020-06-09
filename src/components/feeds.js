@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -11,19 +12,20 @@ import {
   faTrashAlt,
   faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
-import { useLayerState, useLayerDispatch } from '../context/layer-context';
+import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import Uploader from './uploader';
+import FeedManager from './feedManager';
+import Modal from './modal';
 
-const Feeds = ({ filter }) => {
+const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState(false);
-  const layers = useLayerState();
+  const [feedManagerState, setFeedManagerState] = useState(false);
+  const feeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
   const [paneHeight, setPaneHeightState] = useState();
-  const dispatch = useLayerDispatch();
+  const dispatch = useFeedDispatch();
   const content = useRef(null);
-  const filteredDatasets = layers.filter(ds => {
-    return ds.name.toLowerCase().includes(filter);
-  });
+  const [error, setError] = useState('');
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -32,8 +34,9 @@ const Feeds = ({ filter }) => {
     );
   };
 
-  const toggleLayer = (layer, active) => {
-    dispatch({ type: 'update', layer: { ...layer, active } });
+  const toggleFeed = (feed, active) => {
+    if (active) setIsMapLoading(true);
+    dispatch({ type: 'update', data: { ...feed, active } });
   };
 
   useEffect(() => {
@@ -42,7 +45,19 @@ const Feeds = ({ filter }) => {
 
   return (
     <Fragment>
-      {uploaderState && <Uploader setUploaderState={setUploaderState} />}
+      {uploaderState && (
+        <Uploader
+          setUploaderState={setUploaderState}
+          setError={setError}
+          setIsMapLoading={setIsMapLoading}
+        />
+      )}
+      {error.length > 0 && (
+        <Modal message={error} closeModal={() => setError('')} />
+      )}
+      {feedManagerState && (
+        <FeedManager setFeedManagerState={setFeedManagerState} />
+      )}
       <header>
         <h4>
           <FontAwesomeIcon icon={faNetworkWired} />
@@ -79,14 +94,16 @@ const Feeds = ({ filter }) => {
           </button>
         </div>
         <ul className="panel-list">
-          <div className="notification shared-feed"></div>
-          {filteredDatasets &&
-            filteredDatasets.map((layer, index) => (
-              <li key={layer._id}>
+          <div className="notification shared-layer"></div>
+          {feeds &&
+            feeds.map((feed, index) => (
+              <li key={feed._id}>
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
-                    onClick={e => toggleLayer(layer, e.target.checked)}
+                    checked={feed.active || false}
+                    value={feed._id}
+                    onChange={e => toggleFeed(feed, e.target.checked)}
                   />
                 </span>
                 <span className="feed-detail-wrapper wrapper">
@@ -95,7 +112,7 @@ const Feeds = ({ filter }) => {
                     <span className="icon shared new">
                       <FontAwesomeIcon icon={faShareAlt} />
                     </span>
-                    <span className="file-name">{layer.name}</span>
+                    <span className="file-name">{feed.name}</span>
                     <span className="menuIcon">
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </span>
@@ -181,16 +198,16 @@ const Feeds = ({ filter }) => {
                   <dl>
                     <span className="date">
                       <dt>Created</dt>
-                      <dd>{layer.created_at}</dd>
+                      <dd>{feed.created_at}</dd>
                     </span>
                     <span className="date">
                       <dt>Updated</dt>
-                      <dd>{layer.updated_at}</dd>
+                      <dd>{feed.updated_at}</dd>
                     </span>
                     {/* only show author if feed is shared */}
                     <span className="author">
                       <dt>Author</dt>
-                      <dd>{layer.owner.name}</dd>
+                      <dd>{feed.owner.name}</dd>
                     </span>
                     {/* end only show author if feed is shared */}
                   </dl>
@@ -201,6 +218,10 @@ const Feeds = ({ filter }) => {
       </div>
     </Fragment>
   );
+};
+
+Feeds.propTypes = {
+  filter: PropTypes.string
 };
 
 export default Feeds;
