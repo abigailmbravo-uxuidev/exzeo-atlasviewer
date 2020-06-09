@@ -14,11 +14,23 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const user = useUser();
   const [file, setFile] = useState({});
   const [fileInfo, setFileInfo] = useState({});
-  const [csvHeaders, setHeaders] = useState();
+  let fileHeaders = [];
+  let statusNames = [];
+  const [statuses, setStatuses] = useState([]);
+
+  const step = row => {
+    const {
+      meta: { fields },
+      data: { status_name }
+    } = row;
+    if (fileHeaders.length < 1) fileHeaders = fields;
+    if (status_name && !statusNames.includes(status_name))
+      statusNames.push(status_name);
+  };
 
   const complete = (results, file) => {
     // const { errors } = results;
-    setHeaders(results.meta.fields);
+    setStatuses(statusNames);
     setFile(file);
   };
 
@@ -28,10 +40,10 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
 
     Papa.parse(selectedFile, {
       header: true,
-      preview: 1,
       dynamicTyping: true,
       skipEmptyLines: 'greedy',
-      complete: complete,
+      step,
+      complete,
       error: err => console.log(err)
     });
   };
@@ -114,6 +126,10 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
           />
           {errors.lastname && 'Feed Name is required.'}
         </div>
+        <ul>
+          {statuses &&
+            statuses.map(status => <li key={status}>{status}</li>)}
+        </ul>
         <footer>
           <button
             className="secondaryBtn"
