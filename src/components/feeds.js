@@ -199,11 +199,17 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                   <dl>
                     <span className="date">
                       <dt>Created</dt>
-                      <dd>{format(new Date(feed.created_at), 'MM-dd-yyyy')}</dd>
+                      <dd>
+                        {feed.created_at &&
+                          format(new Date(feed.created_at), 'MM-dd-yyyy')}
+                      </dd>
                     </span>
                     <span className="date">
                       <dt>Updated</dt>
-                      <dd>{format(new Date(feed.updated_at), 'MM-dd-yyyy')}</dd>
+                      <dd>
+                        {feed.updated_at &&
+                          format(new Date(feed.updated_at), 'MM-dd-yyyy')}
+                      </dd>
                     </span>
                     {/* only show author if feed is shared */}
                     <span className="author">
