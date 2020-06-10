@@ -64,6 +64,28 @@
         border-top: 1px solid rgba($navy, .1);
         border-bottom: 1px solid rgba($navy, .1);
 
+        .uploadWrapper {
+          display: flex;
+          flex-grow: 1;    flex-shrink: 1;
+
+          margin-bottom: 1rem;
+          }
+
+          .statusWrapper {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            flex-shrink: 1;
+
+            padding: 0;
+
+            list-style: none;
+
+            li {
+              margin-left: 1rem;
+            }
+            
+          }
         > section {
           display: flex;
           flex-grow: 0;

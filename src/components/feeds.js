@@ -90,7 +90,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             type="button"
             onClick={() => setUploaderState(!uploaderState)}
           >
-            Upload
+            Add
           </button>
         </div>
         <ul className="panel-list">

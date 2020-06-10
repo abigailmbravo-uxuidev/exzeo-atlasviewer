@@ -105,18 +105,30 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
           </button>
         </header>
         <div className="body">
-          <label htmlFor="feed" className="file-upload-label">
-            Choose File
-          </label>
-          <input
-            id="feed"
-            name="feed"
-            type="file"
-            accept="text/csv"
-            ref={register}
-            onChange={handleFile}
-          />
-          <label htmlFor="feed-name">Feed Name</label>
+          <label htmlFor="feed-name">File Name</label>
+          <div className="uploadWrapper">
+            <input
+              placeholder="File name will appear here"
+              type="text"
+              id="feed-name"
+              name="feedname"
+              disabled="disabled"
+              ref={register({ required: true })}
+              defaultValue={file.name}
+            />
+            <label htmlFor="feed" className="file-upload-label">
+              Choose File
+            </label>
+            <input
+              id="feed"
+              name="feed"
+              type="file"
+              accept="text/csv"
+              ref={register}
+              onChange={handleFile}
+            />
+          </div>
+          <label htmlFor="feed-name">Data Feed Name</label>
           <input
             type="text"
             id="feed-name"
@@ -125,11 +137,13 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             defaultValue={file.name}
           />
           {errors.lastname && 'Feed Name is required.'}
+          <ul id="status" className="statusWrapper">
+            <label htmlFor="status" className="statusLabal">
+              Status
+            </label>
+            {statuses && statuses.map(status => <li key={status}>{status}</li>)}
+          </ul>
         </div>
-        <ul>
-          {statuses &&
-            statuses.map(status => <li key={status}>{status}</li>)}
-        </ul>
         <footer>
           <button
             className="secondaryBtn"
@@ -143,7 +157,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             type="submit"
             enabled={String(formState.dirty)}
           >
-            Upload
+            Save and Map
           </button>
         </footer>
       </form>
