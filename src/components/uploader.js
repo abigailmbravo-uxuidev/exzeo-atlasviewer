@@ -117,7 +117,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
               defaultValue={file.name}
             />
             <label htmlFor="feed" className="file-upload-label">
-              Choose File
+              Browser File
             </label>
             <input
               id="feed"
@@ -133,6 +133,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             type="text"
             id="feed-name"
             name="feedname"
+            placeholder="Editable feed name"
             ref={register({ required: true })}
             defaultValue={file.name}
           />
