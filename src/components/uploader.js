@@ -105,13 +105,13 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
           </button>
         </header>
         <div className="body">
-          <label htmlFor="feed-name">File Name</label>
+          <label htmlFor="feed-name-placeholder">File Name</label>
           <div className="uploadWrapper">
             <input
               placeholder="File name will appear here"
               type="text"
-              id="feed-name"
-              name="feedname"
+              id="feed-name-placeholder"
+              name="feednameplaceholder"
               disabled="disabled"
               ref={register({ required: true })}
               defaultValue={file.name}
