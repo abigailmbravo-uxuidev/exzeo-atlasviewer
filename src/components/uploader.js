@@ -14,23 +14,22 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const user = useUser();
   const [file, setFile] = useState({});
   const [fileInfo, setFileInfo] = useState({});
-  let fileHeaders = [];
-  let statusNames = [];
+  let statusValues = [];
   const [statuses, setStatuses] = useState([]);
 
   const step = row => {
     const {
       meta: { fields },
-      data: { status_name }
+      data: { status_name, status_color }
     } = row;
-    if (fileHeaders.length < 1) fileHeaders = fields;
-    if (status_name && !statusNames.includes(status_name))
-      statusNames.push(status_name);
+    if (!statusValues.some(sv => sv.status_name === status_name))
+      statusValues.push({ status_name, status_color });
   };
 
   const complete = (results, file) => {
-    // const { errors } = results;
-    setStatuses(statusNames);
+    //const { errors } = results;
+    console.log(statusValues);
+    setStatuses(statusValues);
     setFile(file);
   };
 
@@ -142,7 +141,13 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             <label htmlFor="status" className="statusLabal">
               Status
             </label>
-            {statuses && statuses.map(status => <li key={status}>{status}</li>)}
+            {statuses &&
+              statuses.map(s => (
+                <li key={s.status_name}>
+                  {s.status_color}
+                  {s.status_name}
+                </li>
+              ))}
           </ul>
         </div>
         <footer>
