@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -198,11 +199,11 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                   <dl>
                     <span className="date">
                       <dt>Created</dt>
-                      <dd>{feed.created_at}</dd>
+                      <dd>{format(new Date(feed.created_at), 'MM-dd-yyyy')}</dd>
                     </span>
                     <span className="date">
                       <dt>Updated</dt>
-                      <dd>{feed.updated_at}</dd>
+                      <dd>{format(new Date(feed.updated_at), 'MM-dd-yyyy')}</dd>
                     </span>
                     {/* only show author if feed is shared */}
                     <span className="author">

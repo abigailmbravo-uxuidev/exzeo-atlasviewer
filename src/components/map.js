@@ -88,13 +88,14 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
 
   useEffect(() => {
     if (!map.getLayer || !basemap) return;
+
     map.setStyle(basemap);
   }, [basemap, map]);
 
   useEffect(() => {
     if (!map.getLayer || !layerToggle) return;
     const { show, layer } = layerToggle;
-    const layerId = `${layer._id}-layer`
+    const layerId = `${layer._id}-layer`;
 
     if (!map.getLayer(layerId)) {
       return addLayer(map, userId, layer);
