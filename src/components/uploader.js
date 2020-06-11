@@ -116,7 +116,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
               defaultValue={file.name}
             />
             <label htmlFor="feed" className="file-upload-label">
-              Browser File
+              Browse File
             </label>
             <input
               id="feed"
