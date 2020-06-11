@@ -41,6 +41,11 @@
         word-wrap: break-word;
       }
     }
+
+    dl {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
   }
 
   &.open {
