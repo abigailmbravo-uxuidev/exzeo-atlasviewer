@@ -22,6 +22,17 @@
       }
     }
   }
+
+  .feed-detail-wrapper {
+    max-width: calc(100% - 3rem);
+    h5 {
+      span {
+        overflow: hidden;
+
+        word-wrap: break-word;
+      }
+    }
+  }
 }
   
 #library {
@@ -139,17 +150,6 @@
     color: mix($white, $navy, 50%);
 
     font-size: .75rem;
-  }
-
-  .feed-detail-wrapper {
-    max-width: calc(100% - 3rem);
-    h5 {
-      span {
-        overflow: hidden;
-
-        word-wrap: break-word;
-      }
-    }
   }
 
   .icon-popOut {
