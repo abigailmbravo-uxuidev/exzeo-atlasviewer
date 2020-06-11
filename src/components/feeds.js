@@ -65,6 +65,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           &nbsp;Data Feed
         </h4>
         <button
+          className="uploadBtn actionBtn"
+          type="button"
+          onClick={() => setUploaderState(!uploaderState)}
+        >
+          Upload
+        </button>
+        <button
           className={`paneToggle ${!paneActive ? 'closed' : 'open'}`}
           onClick={toggleAccordion}
         >
@@ -86,13 +93,6 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option>Updated Date</option>
             <option>Mapped Feeds</option>
           </select>
-          <button
-            className="uploadBtn actionBtn"
-            type="button"
-            onClick={() => setUploaderState(!uploaderState)}
-          >
-            Upload
-          </button>
         </div>
         <ul className="panel-list">
           <div className="notification shared-layer"></div>
