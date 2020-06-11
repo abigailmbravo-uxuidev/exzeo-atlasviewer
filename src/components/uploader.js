@@ -28,7 +28,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
 
   const complete = (results, file) => {
     //const { errors } = results;
-    console.log(statusValues);
+
     setStatuses(statusValues);
     setFile(file);
   };
@@ -77,6 +77,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
     try {
       const res = await axios(reqOptions);
       const feed = res.data.data;
+      feed.active = true;
 
       dispatch({ type: 'add', data: feed });
       setUploaderState(false);

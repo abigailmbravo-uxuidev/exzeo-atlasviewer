@@ -23,6 +23,7 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
   const userId = user.user_id;
   const { token } = user;
 
+  // Load the map
   useLayoutEffect(() => {
     const initializeMap = (setMap, mapContainer) => {
       const mapbox = new mapboxgl.Map({
@@ -60,6 +61,7 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
     initializeMap(setMap, mapContainer);
   }, [setMap, token, setIsMapLoading]);
 
+  // Feeds
   useEffect(() => {
     if (!map.getLayer || !feeds || !prevFeeds) return;
     if (feeds.length > prevFeeds.length) {
@@ -86,12 +88,7 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
     }
   }, [prevFeeds, feeds, userId, map]);
 
-  useEffect(() => {
-    if (!map.getLayer || !basemap) return;
-
-    map.setStyle(basemap);
-  }, [basemap, map]);
-
+  // Layers
   useEffect(() => {
     if (!map.getLayer || !layerToggle) return;
     const { show, layer } = layerToggle;
@@ -105,6 +102,13 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
     const newVisibility = show ? 'visible' : 'none';
     map.setLayoutProperty(layerId, 'visibility', newVisibility);
   }, [layerToggle, map, userId]);
+
+  // Basemap
+  useEffect(() => {
+    if (!map.getLayer || !basemap) return;
+
+    map.setStyle(basemap);
+  }, [basemap, map]);
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;
 };
