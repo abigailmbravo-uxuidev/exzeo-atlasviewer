@@ -197,14 +197,14 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                     </div>*/}
                   </h5>
                   <dl>
-                    <span className="date">
+                    <span className="created-date">
                       <dt>Created</dt>
-                      <dd>
+                      <dd data-test={feed.created_at}>
                         {feed.created_at &&
                           format(new Date(feed.created_at), 'MM-dd-yyyy')}
                       </dd>
                     </span>
-                    <span className="date">
+                    <span className="updated-date">
                       <dt>Updated</dt>
                       <dd>
                         {feed.updated_at &&
