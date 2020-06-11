@@ -145,7 +145,9 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             {statuses &&
               statuses.map(s => (
                 <li key={s.status_name}>
-                  {s.status_color}
+                  <span style={{ color: s.status_color }}>
+                    {s.status_color}
+                  </span>
                   {s.status_name}
                 </li>
               ))}
