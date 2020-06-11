@@ -22,17 +22,6 @@
       }
     }
   }
-
-  .feed-detail-wrapper {
-    max-width: calc(100% - 3rem);
-    h5 {
-      span {
-        overflow: hidden;
-
-        word-wrap: break-word;
-      }
-    }
-  }
 }
   
 #library {
@@ -42,6 +31,17 @@
 
   width: 18rem;
   height: 100vh;
+
+  .feed-detail-wrapper {
+    max-width: calc(100% - 1.5rem);
+    h5 {
+      span {
+        overflow: hidden;
+
+        word-wrap: break-word;
+      }
+    }
+  }
 
   &.open {
     left: 0;
@@ -150,6 +150,17 @@
     color: mix($white, $navy, 50%);
 
     font-size: .75rem;
+  }
+
+  .feed-detail-wrapper {
+    max-width: calc(100% - 3rem);
+    h5 {
+      span {
+        overflow: hidden;
+
+        word-wrap: break-word;
+      }
+    }
   }
 
   .icon-popOut {
