@@ -82,7 +82,14 @@
             list-style: none;
 
             li {
-              margin-left: 1rem;
+              display: flex;
+              align-items: center;
+              .statusIcon {
+                margin-right: .75rem;
+
+                font-size: .75rem;
+
+              }
             }
             
           }

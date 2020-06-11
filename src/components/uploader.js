@@ -1,7 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faNetworkWired,
+  faTimes,
+  faCircle
+} from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
@@ -145,9 +149,11 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             {statuses &&
               statuses.map(s => (
                 <li key={s.status_name}>
-                  <span style={{ color: s.status_color }}>
-                    {s.status_color}
-                  </span>
+                  <FontAwesomeIcon
+                    className="statusIcon"
+                    icon={faCircle}
+                    style={{ color: s.status_color }}
+                  />
                   {s.status_name}
                 </li>
               ))}
