@@ -504,17 +504,30 @@ li {
     margin: 0;
 
     span {
+      display: block;
+      overflow: hidden;
+
       margin-right: .5rem;
 
       &.date {
+        display: block;
         flex-grow: 1;
         flex-shrink: 1;
 
-        min-width: 25%;
+        width: 65px;
       }
       &.author {
+        overflow: hidden;
         flex-grow: 1;
         flex-shrink: 1;
+
+        > dd {
+            display: block;
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
       }
       dt {
         font-size: .75rem;
