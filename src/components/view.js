@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faImage,
   faEye,
-  faSlashEye,
   faGlobeAmericas,
   faNetworkWired,
   faLayerGroup,
@@ -15,12 +14,14 @@ import {
 import Logo from './logo';
 import Icon from './icon';
 import { useFeedState } from '../context/feed-context';
+import { useLayers } from '../context/layer-context';
 import { mapStyles } from './map.utils';
 import ReactTooltip from 'react-tooltip';
 
 const View = ({ setBasemap }) => {
   const user = useUser();
   const feeds = useFeedState();
+  const layers = useLayers();
   const [viewActive, setViewState] = useState(true);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const View = ({ setBasemap }) => {
   };
 
   const activeFeeds = feeds.filter(feed => feed.active);
+  const activeLayers = layers.filter(layer => layer.active);
 
   return (
     <div id="view" className={`panel ${viewActive ? 'open' : 'closed'}`}>
@@ -108,23 +110,26 @@ const View = ({ setBasemap }) => {
           <label htmlFor="layer">Layers</label>
           <ul className="panel-list">
             {/* layer start */}
-            <li>
-              <span className="eyeball-wrapper wrapper">
-                <FontAwesomeIcon icon={faEye} />
-                {/* toggle eye icon={faSlashEye} */}
-              </span>
-              <span className="feed-detail-wrapper wrapper">
-                <h5>
-                  <span
-                    className="overlay-name"
-                    data-tip
-                    data-for="layerTooltip"
-                  >
-                    [ Layer Name ]
+            {activeLayers.length > 0 &&
+              activeLayers.map(layer => (
+                <li key={layer._id}>
+                  <span className="eyeball-wrapper wrapper">
+                    <FontAwesomeIcon icon={faEye} />
+                    {/* toggle eye icon={faSlashEye} */}
                   </span>
-                </h5>
-              </span>
-            </li>
+                  <span className="feed-detail-wrapper wrapper">
+                    <h5>
+                      <span
+                        className="overlay-name"
+                        data-tip
+                        data-for="layerTooltip"
+                      >
+                        {layer.name}
+                      </span>
+                    </h5>
+                  </span>
+                </li>
+              ))}
             {/* layer end */}
           </ul>
           {/* end of active layers loop */}
