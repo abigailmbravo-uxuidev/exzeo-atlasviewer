@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useUser } from '../context/user-context';
 import { useFeedState } from '../context/feed-context';
+import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
   addControls,
@@ -13,12 +14,14 @@ import { usePrevious } from '../utils/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
+const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
+  const layers = useLayers();
   const user = useUser();
   const [map, setMap] = useState({});
   const mapContainer = useRef(null);
   const prevFeeds = usePrevious(feeds);
+  const prevLayers = usePrevious(layers);
   const [isLoading, setIsLoading] = useState(false);
   const userId = user.user_id;
   const { token } = user;
@@ -90,18 +93,22 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
 
   // Layers
   useEffect(() => {
-    if (!map.getLayer || !layerToggle) return;
-    const { show, layer } = layerToggle;
-    const layerId = `${layer._id}-layer`;
+    if (!map.getLayer || !layers || !prevLayers) return;
+    layers.map(layer => {
+      const { _id, active } = layer;
+      const layerId = `${_id}-layer`;
 
-    if (!map.getLayer(layerId)) {
-      return addLayer(map, userId, layer);
-    }
+      if (layer.active !== prevLayers.active) {
+        if (!map.getLayer(layerId)) {
+          return addLayer(map, userId, layer);
+        }
 
-    const visibility = map.getLayoutProperty(layerId, 'visibility');
-    const newVisibility = show ? 'visible' : 'none';
-    map.setLayoutProperty(layerId, 'visibility', newVisibility);
-  }, [layerToggle, map, userId]);
+        const visibility = map.getLayoutProperty(layerId, 'visibility');
+        const newVisibility = active ? 'visible' : 'none';
+        map.setLayoutProperty(layerId, 'visibility', newVisibility);
+      }
+    });
+  }, [prevLayers, layers, userId, map]);
 
   // Basemap
   useEffect(() => {
