@@ -9,7 +9,11 @@ const Landing = () => {
   const { loading, loginWithRedirect } = useAuth();
 
   if (loading) {
-    return <div><Spinner /></div>;
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
