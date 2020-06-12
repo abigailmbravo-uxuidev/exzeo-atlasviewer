@@ -500,6 +500,7 @@ li {
   }
   dl {
     display: flex;
+    overflow: hidden;
 
     margin: 0;
 
@@ -511,10 +512,10 @@ li {
 
       &.date {
         display: block;
-        flex-grow: 1;
-        flex-shrink: 1;
+        flex-grow: 0;
+        flex-shrink: 0;
 
-        width: 65px;
+        min-width: 4.0625rem;
       }
       &.author {
         overflow: hidden;
