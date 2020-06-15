@@ -74,7 +74,8 @@ const View = ({ setBasemap }) => {
                   </span>
                   {/* if details/statuses exist show loop and total --------------------------------------- */}
                   <ul className="detail-list">
-                    {feed.statuses.length > 0 &&
+                    {feed.statuses &&
+                      feed.statuses.length > 0 &&
                       feed.statuses.map((status, index) => (
                         <li key={index}>
                           <span className="eyeball-wrapper wrapper">
