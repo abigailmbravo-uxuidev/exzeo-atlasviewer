@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
 import Icon from './icon';
-import { useFeedState } from '../context/feed-context';
+import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
 import { mapStyles } from './map.utils';
 import ReactTooltip from 'react-tooltip';
@@ -21,6 +21,7 @@ import ReactTooltip from 'react-tooltip';
 const View = ({ setBasemap }) => {
   const user = useUser();
   const feeds = useFeedState();
+  const dispatch = useFeedDispatch();
   const layers = useLayers();
   const [viewActive, setViewState] = useState(true);
 
@@ -30,6 +31,23 @@ const View = ({ setBasemap }) => {
 
   const handleBasemap = ({ target: { value } }) => {
     setBasemap(value);
+  };
+
+  const removeFeed = (feed, active) => {
+    dispatch({ type: 'update', data: { ...feed, active: false } });
+  };
+
+  const toggleStatus = (feed, status) => {
+    const statusFilter = feed.filter || [];
+    const active = statusFilter.includes(status);
+    const newFilter = active
+      ? statusFilter.filter(s => s !== status)
+      : [...(feed.filter || []), status];
+
+    dispatch({
+      type: 'update',
+      data: { ...feed, filter: newFilter }
+    });
   };
 
   const activeFeeds = feeds.filter(feed => feed.active);
@@ -55,7 +73,10 @@ const View = ({ setBasemap }) => {
               activeFeeds.map(feed => (
                 <li key={feed._id}>
                   <span className="eyeball-wrapper wrapper">
-                    <FontAwesomeIcon icon={faEye} />
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      onClick={() => removeFeed(feed)}
+                    />
                     {/* toggle eye icon={faSlashEye} */}
                   </span>
                   <span className="feed-detail-wrapper wrapper">
@@ -79,7 +100,10 @@ const View = ({ setBasemap }) => {
                       feed.statuses.map((status, index) => (
                         <li key={index}>
                           <span className="eyeball-wrapper wrapper">
-                            <FontAwesomeIcon icon={faEye} />
+                            <FontAwesomeIcon
+                              icon={faEye}
+                              onClick={() => toggleStatus(feed, status.name)}
+                            />
                             {/* toggle eye icon={faSlashEye} */}
                           </span>
                           <span
