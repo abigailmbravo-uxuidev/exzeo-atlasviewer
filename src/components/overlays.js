@@ -12,7 +12,8 @@ const Overlays = ({ setIsMapLoading }) => {
     if (target.checked) setIsMapLoading(true);
     const toggleIndex = layers.findIndex(l => l._id === target.value);
     const newLayers = layers.map((layer, index) => {
-      if (index === toggleIndex) return { ...layer, active: target.checked };
+      if (index === toggleIndex)
+        return { ...layer, inView: target.checked, active: target.checked };
       return layer;
     });
     setLayers(newLayers);

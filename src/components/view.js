@@ -14,7 +14,7 @@ import {
 import Logo from './logo';
 import Icon from './icon';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
-import { useLayers } from '../context/layer-context';
+import { useLayers, useSetLayers } from '../context/layer-context';
 import { mapStyles } from './map.utils';
 import ReactTooltip from 'react-tooltip';
 
@@ -23,18 +23,37 @@ const View = ({ setBasemap }) => {
   const feeds = useFeedState();
   const dispatch = useFeedDispatch();
   const layers = useLayers();
+  const setLayers = useSetLayers();
   const [viewActive, setViewState] = useState(true);
 
   useEffect(() => {
     setViewState(false);
   }, []);
 
+  const inViewFeeds = feeds.filter(feed => feed.inView);
+  const inViewLayers = layers.filter(layer => layer.inView);
+
   const handleBasemap = ({ target: { value } }) => {
     setBasemap(value);
   };
 
-  const removeFeed = (feed, active) => {
-    dispatch({ type: 'update', data: { ...feed, active: false } });
+  const toggleFeed = feed => {
+    const { active } = feed;
+
+    dispatch({
+      type: 'update',
+      data: { ...feed, active: !active }
+    });
+  };
+
+  const toggleLayer = layer => {
+    const { _id, active } = layer;
+    const toggleIndex = layers.findIndex(l => l._id === _id);
+    const newLayers = layers.map((layer, index) => {
+      if (index === toggleIndex) return { ...layer, active: !active };
+      return layer;
+    });
+    setLayers(newLayers);
   };
 
   const toggleStatus = (feed, status) => {
@@ -49,9 +68,6 @@ const View = ({ setBasemap }) => {
       data: { ...feed, filter: newFilter }
     });
   };
-
-  const activeFeeds = feeds.filter(feed => feed.active);
-  const activeLayers = layers.filter(layer => layer.active);
 
   return (
     <div id="view" className={`panel ${viewActive ? 'open' : 'closed'}`}>
@@ -69,14 +85,17 @@ const View = ({ setBasemap }) => {
           {/* start of active feeds loop */}
           <label htmlFor="feeds">Feeds</label>
           <ul className="panel-list">
-            {activeFeeds.length > 0 &&
-              activeFeeds.map(feed => (
+            {inViewFeeds.length > 0 &&
+              inViewFeeds.map((feed, index) => (
                 <li key={feed._id}>
-                  <span className="eyeball-wrapper wrapper">
-                    <FontAwesomeIcon
-                      icon={faEye}
-                      onClick={() => removeFeed(feed)}
-                    />
+                  <span
+                    className="eyeball-wrapper wrapper"
+                    role="button"
+                    tabIndex={index}
+                    onClick={() => toggleFeed(feed)}
+                    onKeyDown={() => toggleFeed(feed)}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
                     {/* toggle eye icon={faSlashEye} */}
                   </span>
                   <span className="feed-detail-wrapper wrapper">
@@ -135,10 +154,16 @@ const View = ({ setBasemap }) => {
           <label htmlFor="layer">Layers</label>
           <ul className="panel-list">
             {/* layer start */}
-            {activeLayers.length > 0 &&
-              activeLayers.map(layer => (
+            {inViewLayers.length > 0 &&
+              inViewLayers.map((layer, index) => (
                 <li key={layer._id}>
-                  <span className="eyeball-wrapper wrapper">
+                  <span
+                    className="eyeball-wrapper wrapper"
+                    role="button"
+                    tabIndex={index}
+                    onClick={() => toggleLayer(layer)}
+                    onKeyDown={() => toggleLayer(layer)}
+                  >
                     <FontAwesomeIcon icon={faEye} />
                     {/* toggle eye icon={faSlashEye} */}
                   </span>

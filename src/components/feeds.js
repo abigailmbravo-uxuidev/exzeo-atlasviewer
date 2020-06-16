@@ -35,9 +35,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     );
   };
 
-  const toggleFeed = (feed, active) => {
-    if (active) setIsMapLoading(true);
-    dispatch({ type: 'update', data: { ...feed, active } });
+  const toggleFeed = (feed, inView) => {
+    if (inView) setIsMapLoading(true);
+    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
-                    checked={feed.active || false}
+                    checked={feed.inView || false}
                     value={feed._id}
                     onChange={e => toggleFeed(feed, e.target.checked)}
                   />
