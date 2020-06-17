@@ -9,6 +9,7 @@ import {
   faNetworkWired,
   faLayerGroup,
   faExternalLinkSquareAlt,
+  faEyeSlash,
   faCircle
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from './logo';
@@ -95,8 +96,11 @@ const View = ({ setBasemap }) => {
                     onClick={() => toggleFeed(feed)}
                     onKeyDown={() => toggleFeed(feed)}
                   >
-                    <FontAwesomeIcon icon={faEye} />
-                    {/* toggle eye icon={faSlashEye} */}
+                    {feed.active ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
                   </span>
                   <span className="feed-detail-wrapper wrapper">
                     <h5>
@@ -118,12 +122,11 @@ const View = ({ setBasemap }) => {
                       feed.statuses.length > 0 &&
                       feed.statuses.map((status, index) => (
                         <li key={index}>
-                          <span className="eyeball-wrapper wrapper">
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              onClick={() => toggleStatus(feed, status.name)}
-                            />
-                            {/* toggle eye icon={faSlashEye} */}
+                          <span
+                            className="eyeball-wrapper wrapper"
+                            onClick={() => toggleStatus(feed, status.name)}
+                          >
+                            <FontAwesomeIcon icon={faEye} />
                           </span>
                           <span
                             className="icon-wrapper wrapper"
