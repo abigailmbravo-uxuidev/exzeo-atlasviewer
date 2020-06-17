@@ -65,6 +65,7 @@
   height: 100vh;
 
   .panel-list {
+    display: flex;
     li {
       padding-top: .25rem;
       padding-bottom: .75rem;
@@ -101,11 +102,25 @@
           }
 
           h6 {
+            display: block;
+            overflow: hidden;
+
+            width: 170px;
             margin: 0;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
 
             font-size: .75rem;
             font-weight: normal;
           }
+
+          .feed-detail-wrapper {
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-wrap: wrap;
+            }
 
           .detail-count {
             flex-grow: 0;
@@ -113,7 +128,22 @@
 
             margin-left: 4px;
 
+            text-align: right;
+
             font-size: .75rem;
+          }
+
+          ul {
+            display: flex;
+            flex-direction: column;
+            li {
+              .feed-detail-wrapper {
+                width: 50px;
+
+                text-align: right;
+              }
+
+            }
           }
         }
       }
