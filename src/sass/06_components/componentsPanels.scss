@@ -66,6 +66,7 @@
 
   .panel-list {
     display: flex;
+    flex-direction: column;
     li {
       padding-top: .25rem;
       padding-bottom: .75rem;
