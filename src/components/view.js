@@ -124,9 +124,17 @@ const View = ({ setBasemap }) => {
                         <li key={index}>
                           <span
                             className="eyeball-wrapper wrapper"
+                            role="button"
+                            tabIndex={index}
                             onClick={() => toggleStatus(feed, status.name)}
+                            onKeyDown={() => toggleStatus(feed, status.name)}
                           >
-                            <FontAwesomeIcon icon={faEye} />
+                            {!feed.filter ||
+                            !feed.filter.includes(status.name) ? (
+                              <FontAwesomeIcon icon={faEye} />
+                            ) : (
+                              <FontAwesomeIcon icon={faEyeSlash} />
+                            )}
                           </span>
                           <span
                             className="icon-wrapper wrapper"
@@ -167,8 +175,11 @@ const View = ({ setBasemap }) => {
                     onClick={() => toggleLayer(layer)}
                     onKeyDown={() => toggleLayer(layer)}
                   >
-                    <FontAwesomeIcon icon={faEye} />
-                    {/* toggle eye icon={faSlashEye} */}
+                    {layer.active ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
                   </span>
                   <span className="feed-detail-wrapper wrapper">
                     <h5>
