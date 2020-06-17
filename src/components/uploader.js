@@ -23,12 +23,13 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
 
   const step = row => {
     const { data } = row;
-    const status_name = Object.keys(data).find(
-      k => k.toLowerCase() === 'status_name'
-    );
-    const status_color = Object.keys(data).find(
-      k => k.toLowerCase() === 'status_color'
-    );
+
+    const getStatusValue = statusName =>
+      Object.keys(data).find(k => k.toLowerCase() === statusName);
+
+    const status_name = getStatusValue('status_name');
+    const status_color = getStatusValue('status_color');
+    const status_symbol = getStatusValue('status_symbol');
 
     if (!statusValues.some(sv => sv.status_name === data[status_name]))
       statusValues.push({
