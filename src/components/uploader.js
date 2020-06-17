@@ -22,12 +22,19 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const [statuses, setStatuses] = useState([]);
 
   const step = row => {
-    const {
-      meta: { fields },
-      data: { status_name, status_color }
-    } = row;
-    if (!statusValues.some(sv => sv.status_name === status_name))
-      statusValues.push({ status_name, status_color });
+    const { data } = row;
+    const status_name = Object.keys(data).find(
+      k => k.toLowerCase() === 'status_name'
+    );
+    const status_color = Object.keys(data).find(
+      k => k.toLowerCase() === 'status_color'
+    );
+
+    if (!statusValues.some(sv => sv.status_name === data[status_name]))
+      statusValues.push({
+        status_name: data[status_name],
+        status_color: data[status_color]
+      });
   };
 
   const complete = (results, file) => {
