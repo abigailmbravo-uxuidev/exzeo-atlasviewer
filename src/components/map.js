@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useUser } from '../context/user-context';
@@ -11,8 +12,12 @@ import {
   addLayer
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
+import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+
+const renderPopup = properties =>
+  renderToStaticMarkup(<MarkerPopup properties={properties} />);
 
 const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
@@ -57,7 +62,16 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
       mapbox.on('click', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
-        const feature = features.filter(f => f.layer.id.includes('dataset'));
+        const selectedFeatures = features.filter(f =>
+          f.layer.id.includes('dataset')
+        );
+        if (!selectedFeatures || selectedFeatures.length === 0) return;
+        const feature = selectedFeatures[0];
+
+        new mapboxgl.Popup()
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(renderPopup(feature.properties))
+          .addTo(mapbox);
       });
     };
 
@@ -90,7 +104,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
 
         // Set filter
-        if (filter !== prevFeed.filter) {         
+        if (filter !== prevFeed.filter) {
           if (!filter || filter.length === 0) {
             map.setFilter(layerId, null);
           } else {
