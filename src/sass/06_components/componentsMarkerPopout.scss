@@ -1,0 +1,79 @@
+#app[role='main'] {
+    .mapboxgl-popup {
+        display: flex;
+        overflow: hidden;
+    }
+
+        .mapboxgl-popup-content {
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            flex-grow: 0;
+            flex-shrink: 0;
+
+            max-height: 500px;
+            //header
+            h2 {
+                display: flex;
+                overflow: hidden;
+
+                padding: 0 0 1.25rem 0;
+
+                font-size: 1.25rem;
+                
+            }
+            //content
+            ul {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                flex-shrink: 1;
+
+                height: auto;
+                margin-top: 0;
+                padding: 0 .25rem;
+                
+              
+                li {
+                    display: flex;
+                    flex-direction: column;
+
+                    padding: .5rem 0;
+
+                    border-bottom: .5px dotted $navy;
+
+                    line-height: 1.2;
+
+                    span {
+                        margin-right: .5rem;
+                        margin-bottom: .25rem;
+
+                        font-weight: bold;
+                    }
+                    
+                }
+            }
+            //"x"
+            .mapboxgl-popup-close-button {
+                display: flex;
+                overflow: hidden;
+                align-items: center;
+
+                padding: .5rem;
+            }
+
+            //popup container
+            .marker-popup {
+                display: flex;
+                overflow: hidden;
+                flex-direction: column;
+
+                .popupContent {
+    display: flex;
+                    overflow: scroll;
+    flex-grow: 1;
+    flex-shrink: 1;
+                }
+            }
+        }  
+    }
