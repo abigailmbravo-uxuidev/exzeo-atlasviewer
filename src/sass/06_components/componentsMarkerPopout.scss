@@ -12,12 +12,13 @@
             flex-shrink: 0;
 
             max-height: 500px;
+            padding: .75rem 0;
             //header
             h2 {
                 display: flex;
                 overflow: hidden;
 
-                padding: 0 0 1.25rem 0;
+                padding: 0 0 1.25rem .5rem;
 
                 font-size: 1.25rem;
                 
@@ -58,8 +59,6 @@
                 display: flex;
                 overflow: hidden;
                 align-items: center;
-
-                padding: .5rem;
             }
 
             //popup container
@@ -69,10 +68,12 @@
                 flex-direction: column;
 
                 .popupContent {
-    display: flex;
-                    overflow: scroll;
-    flex-grow: 1;
-    flex-shrink: 1;
+                display: flex;
+                overflow: scroll;
+                flex-grow: 1;
+                flex-shrink: 1;
+
+                padding: 0 .5rem ;
                 }
             }
         }  
