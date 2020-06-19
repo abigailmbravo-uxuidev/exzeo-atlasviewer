@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const MarkerPopup = ({ properties }) => {
   return (
     <div className="marker-popup">
-      <h2>Properties</h2>
+      <h2>{properties.Name.replace(/<[^>]*>?/gm, ' ')}</h2>
       <div className="popupContent">
         <ul>
           {properties &&

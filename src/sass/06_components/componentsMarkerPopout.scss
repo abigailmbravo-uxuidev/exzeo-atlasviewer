@@ -17,8 +17,10 @@
             h2 {
                 display: flex;
                 overflow: hidden;
+                flex-grow: 0;
+                flex-shrink: 0;
 
-                padding: 0 0 1.25rem .5rem;
+                padding: 0 .5rem .5rem;
 
                 font-size: 1.25rem;
                 
