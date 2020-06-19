@@ -126,16 +126,18 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                             &nbsp;Info
                           </button>
                         </li>
+                        {/*
                         <li>
                           <button>
                             <FontAwesomeIcon icon={faFileExport} />
                             &nbsp;Export
                           </button>
                         </li>
+                      */}
                         <li>
                           <button>
                             <FontAwesomeIcon icon={faFileUpload} />
-                            &nbsp;Upload
+                            &nbsp;Update
                           </button>
                         </li>
                         <li>

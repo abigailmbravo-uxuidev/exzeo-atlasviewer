@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useUser } from '../context/user-context';
+import ReactTooltip from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faImage,
@@ -12,20 +12,20 @@ import {
   faEyeSlash,
   faCircle
 } from '@fortawesome/free-solid-svg-icons';
+import ViewPopout from './view-popout';
 import Logo from './logo';
 import Icon from './icon';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers, useSetLayers } from '../context/layer-context';
 import { mapStyles } from './map.utils';
-import ReactTooltip from 'react-tooltip';
 
 const View = ({ setBasemap }) => {
-  const user = useUser();
   const feeds = useFeedState();
   const dispatch = useFeedDispatch();
   const layers = useLayers();
   const setLayers = useSetLayers();
   const [viewActive, setViewState] = useState(true);
+  const [popouts, setPopouts] = useState([]);
 
   useEffect(() => {
     setViewState(false);
@@ -70,6 +70,16 @@ const View = ({ setBasemap }) => {
     });
   };
 
+  const togglePopout = id => {
+    const active = popouts.includes(id);
+
+    const newPopouts = active
+      ? popouts.filter(popout => popout !== id)
+      : [...popouts, id];
+
+    setPopouts(newPopouts);
+  };
+
   return (
     <div id="view" className={`panel ${viewActive ? 'open' : 'closed'}`}>
       <div className="section logo">
@@ -88,76 +98,84 @@ const View = ({ setBasemap }) => {
           <ul className="panel-list">
             {inViewFeeds.length > 0 &&
               inViewFeeds.map((feed, index) => (
-                <li key={feed._id}>
-                  <span
-                    className="eyeball-wrapper wrapper"
-                    role="button"
-                    tabIndex={index}
-                    onClick={() => toggleFeed(feed)}
-                    onKeyDown={() => toggleFeed(feed)}
-                  >
-                    {feed.active ? (
-                      <FontAwesomeIcon icon={faEye} />
-                    ) : (
-                      <FontAwesomeIcon icon={faEyeSlash} />
-                    )}
-                  </span>
-                  <span className="feed-detail-wrapper wrapper">
-                    <h5>
-                      <span
-                        className="overlay-name"
-                        data-tip
-                        data-for="feedTooltip"
-                      >
-                        {feed.name}
-                      </span>
-                    </h5>
-                  </span>
-                  <span className="icon-popOut">
-                    <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
-                  </span>
-                  {/* if details/statuses exist show loop and total --------------------------------------- */}
-                  <ul className="detail-list">
-                    {feed.statuses &&
-                      feed.statuses.length > 0 &&
-                      feed.statuses.map((status, index) => (
-                        <li key={index}>
-                          <span
-                            className="eyeball-wrapper wrapper"
-                            role="button"
-                            tabIndex={index}
-                            onClick={() => toggleStatus(feed, status.name)}
-                            onKeyDown={() => toggleStatus(feed, status.name)}
-                          >
-                            {!feed.filter ||
-                            !feed.filter.includes(status.name) ? (
-                              <FontAwesomeIcon icon={faEye} />
-                            ) : (
-                              <FontAwesomeIcon icon={faEyeSlash} />
-                            )}
-                          </span>
-                          <span
-                            className="icon-wrapper wrapper"
-                            style={{ color: status.color }}
-                          >
-                            <FontAwesomeIcon icon={faCircle} />
-                            {/* maps to icon and color from feed */}
-                          </span>
-                          <span className="feed-detail-wrapper wrapper">
-                            <h6>
-                              <span className="detail-name">{status.name}</span>
-                            </h6>
-                          </span>
-                          <span className="detail-count">{status.count}</span>
-                        </li>
-                      ))}
-                  </ul>
-                  <div className="total-count">
-                    <span>Total:&nbsp;</span>
-                    {feed.total}
-                  </div>
-                  {/* end of feed detail loop */}
-                </li>
+                <Fragment key={feed._id}>
+                  {popouts.includes(feed._id) && (
+                    <ViewPopout feed={feed} close={togglePopout} />
+                  )}
+                  <li key={feed._id}>
+                    <span
+                      className="eyeball-wrapper wrapper"
+                      role="button"
+                      tabIndex={index}
+                      onClick={() => toggleFeed(feed)}
+                      onKeyDown={() => toggleFeed(feed)}
+                    >
+                      {feed.active ? (
+                        <FontAwesomeIcon icon={faEye} />
+                      ) : (
+                        <FontAwesomeIcon icon={faEyeSlash} />
+                      )}
+                    </span>
+                    <span className="feed-detail-wrapper wrapper">
+                      <h5>
+                        <span
+                          className="overlay-name"
+                          data-tip
+                          data-for="feedTooltip"
+                        >
+                          {feed.name}
+                        </span>
+                      </h5>
+                    </span>
+                    <span className="icon-popOut">
+                      <FontAwesomeIcon
+                        icon={faExternalLinkSquareAlt}
+                        onClick={() => togglePopout(feed._id)}
+                      />
+                    </span>
+                    {/* if details/statuses exist show loop and total --------------------------------------- */}
+                    <ul className="detail-list">
+                      {feed.statuses &&
+                        feed.statuses.length > 0 &&
+                        feed.statuses.map((status, index) => (
+                          <li key={index}>
+                            <span
+                              className="eyeball-wrapper wrapper"
+                              role="button"
+                              tabIndex={index}
+                              onClick={() => toggleStatus(feed, status.name)}
+                              onKeyDown={() => toggleStatus(feed, status.name)}
+                            >
+                              {!feed.filter ||
+                              !feed.filter.includes(status.name) ? (
+                                <FontAwesomeIcon icon={faEye} />
+                              ) : (
+                                <FontAwesomeIcon icon={faEyeSlash} />
+                              )}
+                            </span>
+                            <span
+                              className="icon-wrapper wrapper"
+                              style={{ color: status.color }}
+                            >
+                              <FontAwesomeIcon icon={faCircle} />
+                              {/* maps to icon and color from feed */}
+                            </span>
+                            <span className="feed-detail-wrapper wrapper">
+                              <h6>
+                                <span className="detail-name">{status.name}</span>
+                              </h6>
+                            </span>
+                            <span className="detail-count">{status.count}</span>
+                          </li>
+                        ))}
+                    </ul>
+                    <div className="total-count">
+                      <span>Total:&nbsp;</span>
+                      {feed.total}
+                    </div>
+                    {/* end of feed detail loop */}
+                  </li>
+                </Fragment>
               ))}
           </ul>
           {/* end of active feeds loop */}

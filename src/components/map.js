@@ -60,6 +60,8 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
       });
 
+      mapbox.on('error', error => setIsMapLoading(false));
+
       mapbox.on('click', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
         const selectedFeatures = features.filter(f =>
