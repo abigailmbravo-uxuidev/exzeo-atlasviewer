@@ -71,7 +71,8 @@
 
                 .popupContent {
                 display: flex;
-                overflow: scroll;
+                overflow-x: hidden;
+                overflow-y: auto;
                 flex-grow: 1;
                 flex-shrink: 1;
 
