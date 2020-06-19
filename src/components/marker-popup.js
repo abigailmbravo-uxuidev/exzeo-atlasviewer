@@ -20,6 +20,7 @@ const MarkerPopup = ({ properties }) => {
             ))}
         </ul>
       </div>
+      <h4>{properties.PolicyStatus}</h4>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { faEye, faTimes, faCircle } from '@fortawesome/free-solid-svg-icons';
 const ViewPopout = ({ feed, close }) => {
   const { _id } = feed;
   return (
-    <Draggable>
+    <Draggable handle=".gripper">
       <div className="feed-popOut">
         <header>
           {/* Gripper is draggable point for data table */}
