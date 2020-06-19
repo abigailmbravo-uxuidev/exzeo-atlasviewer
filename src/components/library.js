@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 import Feeds from './feeds';
 import Overlays from './overlays';
+import ReactTooltip from 'react-tooltip';
 
 import Icon from './icon';
 

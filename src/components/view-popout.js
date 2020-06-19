@@ -57,7 +57,7 @@ const ViewPopout = ({ feed, close }) => {
                         {/* icon from data should be added here - will need to figure this out */}
                         <span
                           className="icon-wrapper wrapper"
-                          style={{ color: 'red' }}
+                          style={{ color: status.color }}
                         >
                           <FontAwesomeIcon icon={faCircle} />
                         </span>

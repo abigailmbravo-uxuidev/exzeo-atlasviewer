@@ -162,7 +162,9 @@ const View = ({ setBasemap }) => {
                             </span>
                             <span className="feed-detail-wrapper wrapper">
                               <h6>
-                                <span className="detail-name">{status.name}</span>
+                                <span className="detail-name">
+                                  {status.name}
+                                </span>
                               </h6>
                             </span>
                             <span className="detail-count">{status.count}</span>
