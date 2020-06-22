@@ -209,9 +209,42 @@
 
     //error messaging/modal on messaging popup 
     &.fade-in {
-      .error-card {
-        h4 {
-          color: red;
+      .card {
+        &.error {
+          width: 40vw;
+          .error-header {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+
+            svg {
+              margin-right: .5rem;
+
+              color: red;
+
+              font-size: 20px;
+            }
+          }
+          > header {
+            padding: 8px 8px 8px 16px;
+            
+            button {
+              width: 1.5rem;
+              height: 1.5rem;
+
+              color: grey;
+              color: rgba(51, 51, 51, 0.5);
+              border: none;
+              background: none;
+              box-shadow: none;
+            }
+     
+          }
+
+          .modal-message {
+            padding: 0 16px;
+          }
+          
         }
       }
       
