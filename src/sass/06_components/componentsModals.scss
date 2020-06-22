@@ -206,5 +206,15 @@
         }
       }
     }
+
+    //error messaging/modal on messaging popup 
+    &.fade-in {
+      .error-card {
+        h4 {
+          color: red;
+        }
+      }
+      
+    }
   }
 }
