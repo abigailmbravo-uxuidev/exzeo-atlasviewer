@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Modal = ({ message, closeModal, title = 'Error' }) => {
   return (
     <div className="modal fade-in">
-      <div className="error-card">
+      <div className="card error">
         <header>
           <h4>{title}</h4>
         </header>
