@@ -82,6 +82,35 @@ const ViewPopout = ({ feed, close }) => {
                 {/* End total row */}
               </tbody>
             </table>
+
+            <div className="grid-container grid-feed-popout">
+              <div className="table-status">
+                <div className="table-header">{feed.name}</div>
+                {feed.statuses &&
+                  feed.statuses.map((status, index) => (
+                    <div key={status.name}>
+                      <span className="eyeball-wrapper wrapper">
+                        <FontAwesomeIcon icon={faEye} />
+                        {/* toggle eye icon={faSlashEye} */}
+                      </span>
+                      {/* icon from data should be added here - will need to figure this out */}
+                      <span
+                        className="icon-wrapper wrapper"
+                        style={{ color: status.color }}
+                      >
+                        <FontAwesomeIcon icon={faCircle} />
+                      </span>
+                      {status.name}
+                    </div>
+                  ))}
+                <div className="table-footer">totals:</div>
+              </div>
+              <div className="table-data">
+                <div className="table-header">[ header ]</div>
+                <div className="table-body">[ body ]</div>
+                <div className="table-footer">[ calc ]</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
