@@ -4,6 +4,12 @@ import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faTimes, faCircle } from '@fortawesome/free-solid-svg-icons';
 
+const formatKey = value => value.replace(/-dollar/gi, '');
+const formatAvg = (value, count) => {
+  const avg = value / count;
+  return Math.round(avg * 10) / 10;
+}
+
 const ViewPopout = ({ feed, close }) => {
   const { _id } = feed;
   return (
@@ -24,40 +30,70 @@ const ViewPopout = ({ feed, close }) => {
             {/* toggle eye icon={faSlashEye} */}
           </span>
           <div className="table-wrapper">
-            <div className="grid-container grid-feed-popout">
-              <div className="table-status">
-                <div className="table-header">{feed.name}</div>
+            {/* Start of data table */}
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    {/* Name of feed */}
+                    <span data-tip data-for="feedPopOverTooltip">
+                      {feed.name}
+                    </span>
+                  </th>
+                  {/* Start loop of column titles */}
+                  {feed.statuses &&
+                    Object.entries(feed.statuses[0].aggregates).map(([key]) => (
+                      <Fragment key={key}>
+                        <th>{formatKey(key)}</th>
+                        <th>{formatKey(key)} Avg</th>
+                      </Fragment>
+                    ))}
+                </tr>
+              </thead>
+              <tbody>
+                {/* Start loop of data rows */}
                 {feed.statuses &&
                   feed.statuses.map((status, index) => (
-                    <div key={status.name}>
-                      <span className="eyeball-wrapper wrapper">
-                        <FontAwesomeIcon icon={faEye} />
-                        {/* toggle eye icon={faSlashEye} */}
-                      </span>
-                      {/* icon from data should be added here - will need to figure this out */}
-                      <span
-                        className="icon-wrapper wrapper"
-                        style={{ color: status.color }}
-                      >
-                        <FontAwesomeIcon icon={faCircle} />
-                      </span>
-                      {status.name}
-                      <div className="table-data">
-                        {status.aggregates &&
-                          Object.entries(status.aggregates).map(
-                            ([key, value], index) => (
-                              <Fragment key={key}>
-                                <div className="table-header">{key}</div>
-                                <div className="table-body">{value}</div>
-                              </Fragment>
-                            )
+                    <tr key={status.name}>
+                      <th>
+                        {/* Element to toggle hide/show of only this data points */}
+                        <span className="eyeball-wrapper wrapper">
+                          <FontAwesomeIcon icon={faEye} />
+                          {/* toggle eye icon={faSlashEye} */}
+                        </span>
+                        {/* icon from data should be added here - will need to figure this out */}
+                        <span
+                          className="icon-wrapper wrapper"
+                          style={{ color: status.color }}
+                        >
+                          <FontAwesomeIcon icon={faCircle} />
+                        </span>
+                        {status.name}
+                      </th>
+                      {status.aggregates &&
+                        Object.entries(status.aggregates).map(
+                          ([key, value]) => (
+                            <Fragment key={key}>
+                              <td>{value}</td>
+                              <td>{formatAvg(value, status.count)}</td>
+                            </Fragment>
+                          )
                         )}
-                      </div>
-                    </div>
+                    </tr>
                   ))}
-                <div className="table-footer">totals:</div>
-              </div>
-            </div>
+                {/* End loop of data rows */}
+                {/* Start total row - assume the app will calc these rows */}
+                <tr className="total-count">
+                  <th>totals:</th>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                  <td>body</td>
+                </tr>
+                {/* End total row */}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
