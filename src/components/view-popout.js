@@ -47,9 +47,7 @@ const ViewPopout = ({ feed, close }) => {
                           Object.entries(status.aggregates).map(
                             ([key, value], index) => (
                               <Fragment key={key}>
-                                {index === 0 && (
-                                  <div className="table-header">{key}</div>
-                                )}
+                                <div className="table-header">{key}</div>
                                 <div className="table-body">{value}</div>
                               </Fragment>
                             )

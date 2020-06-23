@@ -7,9 +7,10 @@ function strip(html) {
 }
 
 const MarkerPopup = ({ properties }) => {
+  const feedName = properties.Name || properties.name || 'Feed';
   return (
     <div className="marker-popup">
-      <h2>{properties.Name.replace('<br/>', ' ')}</h2>
+      <h2>{feedName.replace('<br/>', ' ')}</h2>
       <div className="popupContent">
         <ul>
           {properties &&
