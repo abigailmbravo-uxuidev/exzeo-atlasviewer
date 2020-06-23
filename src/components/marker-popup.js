@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const stripBreaks = value =>
-  value.replace(/^(\s+<br( \/)?>)*|(<br( \/)?>\s)*$/gm, '');
+  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi,'') : value;
 
 const MarkerPopup = ({ properties }) => {
   const feedName = properties.Name || properties.name || 'Feed';
