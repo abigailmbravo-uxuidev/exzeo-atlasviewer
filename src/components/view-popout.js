@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,7 @@ const formatKey = value => value.replace(/-dollar/gi, '');
 const formatAvg = (value, count) => {
   const avg = value / count;
   return Math.round(avg * 10) / 10;
-}
+};
 
 const ViewPopout = ({ feed, close }) => {
   const { _id } = feed;
@@ -85,11 +85,13 @@ const ViewPopout = ({ feed, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>totals:</th>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
-                  <td>body</td>
+                  {feed.statuses &&
+                    feed.statuses.map((status, index) => {
+                      const total = Object.values(status.aggregates).reduce(
+                        (sum, current) => sum + current
+                      );
+                      return <td key={status.name}>{total}</td>;
+                    })}
                 </tr>
                 {/* End total row */}
               </tbody>
