@@ -167,9 +167,13 @@
                 z-index: 1;
                 left: 0;
 
+                overflow: hidden;
+
+                max-width: 16rem;
                 margin: 0;
 
                 text-align: left;
+                text-overflow: ellipsis;
 
                 color: $navy;
                 border-right: 1px dotted rgba($navy, .2);
