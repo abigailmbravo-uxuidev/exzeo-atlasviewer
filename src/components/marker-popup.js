@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function strip(html) {
-  var doc = new DOMParser().parseFromString(html, 'text/html');
-  return doc.body.textContent || '';
-}
+const stripBreaks = value =>
+  value.replace(/^(\s+<br( \/)?>)*|(<br( \/)?>\s)*$/gm, '');
 
 const MarkerPopup = ({ properties }) => {
   const feedName = properties.Name || properties.name || 'Feed';
@@ -16,7 +14,7 @@ const MarkerPopup = ({ properties }) => {
           {properties &&
             Object.entries(properties).map(([key, value]) => (
               <li key={key}>
-                <span>{key}</span> {strip(value)}
+                <span>{key}</span> {stripBreaks(value)}
               </li>
             ))}
         </ul>
