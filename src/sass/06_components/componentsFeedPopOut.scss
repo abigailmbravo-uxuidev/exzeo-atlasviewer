@@ -1,7 +1,6 @@
 .feed-popOut {
     position: absolute;
     z-index: 1;
-    top: 25vh;
 
     display: flex;
     overflow-x: hidden;
@@ -9,6 +8,7 @@
     flex-direction: column;
 
     width: auto;
+    max-width: calc(100vw - 20rem);
 
     resize: both;
 
