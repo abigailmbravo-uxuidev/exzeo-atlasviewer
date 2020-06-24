@@ -99,10 +99,10 @@ const View = ({ setBasemap }) => {
             {inViewFeeds.length > 0 &&
               inViewFeeds.map((feed, index) => (
                 <Fragment key={feed._id}>
-                  {popouts.includes(feed._id) && (
-                    <ViewPopout feed={feed} close={togglePopout} />
-                  )}
                   <li key={feed._id}>
+                    {popouts.includes(feed._id) && (
+                      <ViewPopout feed={feed} close={togglePopout} />
+                    )}
                     <span
                       className="eyeball-wrapper wrapper"
                       role="button"

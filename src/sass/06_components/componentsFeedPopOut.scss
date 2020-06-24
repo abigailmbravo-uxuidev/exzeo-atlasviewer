@@ -166,7 +166,9 @@
                 z-index: 1;
                 left: 0;
 
+                display: flex;
                 overflow: hidden;
+                align-items: center;
 
                 max-width: 16rem;
                 margin: 0;
@@ -177,7 +179,7 @@
                 color: $navy;
                 border-right: 1px dotted rgba($navy, .2);
                 background-color: mix($white, $navy, 91);
-                box-shadow: 2px 0px 1px 0px rgba($black, .125);
+                box-shadow: 2px 0px 1px 0px rgba($black, .125);;
   
                 
   
