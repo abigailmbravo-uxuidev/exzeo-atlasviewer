@@ -174,16 +174,11 @@
                 max-width: 16rem;
                 margin: 0;
 
-                text-align: left;
-                text-overflow: ellipsis;
-
                 color: $navy;
                 border-right: 1px dotted rgba($navy, .2);
                 background-color: mix($white, $navy, 91);
                 box-shadow: 2px 0px 1px 0px rgba($black, .125);;
-  
-                
-  
+
                 .eyeball-wrapper {
                   margin-right: .25rem;
 
@@ -192,6 +187,16 @@
                 .icon-wrapper {
                   width: 1rem;
                   margin-right: .25rem;
+                }
+                .status-name {
+                  display: inline-block;
+                  overflow: hidden;
+                  flex-grow: 1;
+                  flex-shrink: 1;
+
+                  text-align: left;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
                 }
               }
               &:nth-of-type(odd) {

@@ -43,6 +43,7 @@ const ViewPopout = ({ feed, close }) => {
                       {feed.name}
                     </span>
                   </th>
+                  <th>Count</th>
                   {/* Start loop of column titles */}
                   {feed.statuses &&
                     Object.entries(feed.statuses[0].aggregates).map(([key]) => (
@@ -58,7 +59,7 @@ const ViewPopout = ({ feed, close }) => {
                 {feed.statuses &&
                   feed.statuses.map((status, index) => (
                     <tr key={status.name}>
-                      <th className="title-tip" title={status.name}>
+                      <th title={status.name}>
                         {/* Element to toggle hide/show of only this data points */}
                         <span className="eyeball-wrapper wrapper">
                           <FontAwesomeIcon icon={faEye} />
@@ -71,8 +72,11 @@ const ViewPopout = ({ feed, close }) => {
                         >
                           <FontAwesomeIcon icon={faCircle} />
                         </span>
-                        {status.name}
+                        <span className="status-name title-tip">
+                          {status.name}
+                        </span>
                       </th>
+                      <td>{status.count}</td>
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
                           ([key, value]) => {
@@ -97,6 +101,7 @@ const ViewPopout = ({ feed, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>totals:</th>
+                  <td></td>
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
