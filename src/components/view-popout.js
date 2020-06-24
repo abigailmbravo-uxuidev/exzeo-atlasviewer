@@ -12,6 +12,8 @@ const formatAvg = (value, count) => {
 
 const ViewPopout = ({ feed, close }) => {
   const { _id } = feed;
+  const aggregateTotals = {};
+
   return (
     <Draggable handle=".gripper">
       <div className="feed-popOut">
@@ -72,12 +74,16 @@ const ViewPopout = ({ feed, close }) => {
                       </th>
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
-                          ([key, value]) => (
-                            <Fragment key={key}>
-                              <td>{value}</td>
-                              <td>{formatAvg(value, status.count)}</td>
-                            </Fragment>
-                          )
+                          ([key, value]) => {
+                            aggregateTotals[key] = aggregateTotals[key]
+                              ? Number(aggregateTotals[key]) + Number(value)
+                              : Number(value);
+                            return (
+                              <Fragment key={key}>
+                                <td>{value}</td>
+                                <td>{formatAvg(value, status.count)}</td>
+                              </Fragment>
+                            )}
                         )}
                     </tr>
                   ))}
@@ -85,13 +91,13 @@ const ViewPopout = ({ feed, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>totals:</th>
-                  {feed.statuses &&
-                    feed.statuses.map((status, index) => {
-                      const total = Object.values(status.aggregates).reduce(
-                        (sum, current) => sum + current
-                      );
-                      return <td key={status.name}>{total}</td>;
-                    })}
+                  {aggregateTotals &&
+                    Object.entries(aggregateTotals).map(([key, value]) => (
+                      <Fragment key={key}>
+                        <td>{value}</td>
+                        <td>{}</td>
+                      </Fragment>
+                    ))}
                 </tr>
                 {/* End total row */}
               </tbody>
