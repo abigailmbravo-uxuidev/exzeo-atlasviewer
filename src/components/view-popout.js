@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faTimes, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { formatCurrency } from '../utils/utils';
 
 const formatKey = value => value.replace(/-dollar/gi, '');
 const formatAvg = (value, count) => {
@@ -80,8 +81,12 @@ const ViewPopout = ({ feed, close }) => {
                               : Number(value);
                             return (
                               <Fragment key={key}>
-                                <td>{value}</td>
-                                <td>{formatAvg(value, status.count)}</td>
+                                <td>{formatCurrency.format(value)}</td>
+                                <td>
+                                  {formatCurrency.format(
+                                    formatAvg(value, status.count)
+                                  )}
+                                </td>
                               </Fragment>
                             );
                           }
@@ -95,7 +100,7 @@ const ViewPopout = ({ feed, close }) => {
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
-                        <td>{value}</td>
+                        <td>{formatCurrency.format(value)}</td>
                         <td>{}</td>
                       </Fragment>
                     ))}

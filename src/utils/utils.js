@@ -8,4 +8,10 @@ const usePrevious = value => {
   return ref.current;
 };
 
-export { usePrevious };
+const formatCurrency = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+});
+
+export { usePrevious, formatCurrency };
