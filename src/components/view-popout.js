@@ -103,7 +103,7 @@ const ViewPopout = ({ feed, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>Aggregate Data:</th>
-                  <td></td>
+                  <td>{feed.total}</td>
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
