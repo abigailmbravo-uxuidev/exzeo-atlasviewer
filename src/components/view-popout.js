@@ -60,21 +60,23 @@ const ViewPopout = ({ feed, close }) => {
                   feed.statuses.map((status, index) => (
                     <tr key={status.name}>
                       <th title={status.name}>
-                        {/* Element to toggle hide/show of only this data points */}
-                        <span className="eyeball-wrapper wrapper">
-                          <FontAwesomeIcon icon={faEye} />
-                          {/* toggle eye icon={faSlashEye} */}
-                        </span>
-                        {/* icon from data should be added here - will need to figure this out */}
-                        <span
-                          className="icon-wrapper wrapper"
-                          style={{ color: status.color }}
-                        >
-                          <FontAwesomeIcon icon={faCircle} />
-                        </span>
-                        <span className="status-name title-tip">
-                          {status.name}
-                        </span>
+                        <div className="status-wrapper">
+                          {/* Element to toggle hide/show of only this data points */}
+                          <span className="eyeball-wrapper wrapper">
+                            <FontAwesomeIcon icon={faEye} />
+                            {/* toggle eye icon={faSlashEye} */}
+                          </span>
+                          {/* icon from data should be added here - will need to figure this out */}
+                          <span
+                            className="icon-wrapper wrapper"
+                            style={{ color: status.color }}
+                          >
+                            <FontAwesomeIcon icon={faCircle} />
+                          </span>
+                          <span className="status-name title-tip">
+                            {status.name}
+                          </span>
+                        </div>
                       </th>
                       <td>{status.count}</td>
                       {status.aggregates &&
@@ -100,7 +102,7 @@ const ViewPopout = ({ feed, close }) => {
                 {/* End loop of data rows */}
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
-                  <th>totals:</th>
+                  <th>Aggregate Data:</th>
                   <td></td>
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (

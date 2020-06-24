@@ -167,9 +167,7 @@
                 z-index: 1;
                 left: 0;
 
-                display: flex;
                 overflow: hidden;
-                align-items: center;
 
                 max-width: 16rem;
                 margin: 0;
@@ -177,27 +175,33 @@
                 color: $navy;
                 border-right: 1px dotted rgba($navy, .2);
                 background-color: mix($white, $navy, 91);
-                box-shadow: 2px 0px 1px 0px rgba($black, .125);;
+                box-shadow: 2px 0px 1px 0px rgba($black, .125);
 
-                .eyeball-wrapper {
-                  margin-right: .25rem;
+                .status-wrapper {
+                  display: flex;
+                  align-items: center;
+                  .eyeball-wrapper {
+                    margin-right: .25rem;
 
-                  font-size: 1rem;
-                }
-                .icon-wrapper {
-                  width: 1rem;
-                  margin-right: .25rem;
-                }
-                .status-name {
-                  display: inline-block;
-                  overflow: hidden;
-                  flex-grow: 1;
-                  flex-shrink: 1;
+                    font-size: 1rem;
+                  }
+                  .icon-wrapper {
+                    width: 1rem;
+                    margin-right: .25rem;
+                  }
+                  .status-name {
+                    display: inline-block;
+                    overflow: hidden;
+                    flex-grow: 1;
+                    flex-shrink: 1;
 
-                  text-align: left;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
+                    text-align: left;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                  }
                 }
+
+                
               }
               &:nth-of-type(odd) {
                 th {
@@ -207,11 +211,16 @@
               &.total-count {
                 background-color: $white;
                 th {
+                  display: inline-block;
+
                   text-align: right;
 
                   background-color: $white;
 
                   font-size: .875rem;
+                }
+                td {
+                  font-size:1rem;
                 }
               }
             }
