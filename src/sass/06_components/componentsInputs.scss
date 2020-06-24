@@ -116,3 +116,7 @@ label, .label {
   font-weight: bold;
   line-height: 1;
 }
+.title-tip {
+  cursor: help;
+  text-decoration: underline dotted $green;
+}

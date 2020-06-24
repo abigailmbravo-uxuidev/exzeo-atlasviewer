@@ -57,7 +57,7 @@ const ViewPopout = ({ feed, close }) => {
                 {feed.statuses &&
                   feed.statuses.map((status, index) => (
                     <tr key={status.name}>
-                      <th>
+                      <th className="title-tip" title={status.name}>
                         {/* Element to toggle hide/show of only this data points */}
                         <span className="eyeball-wrapper wrapper">
                           <FontAwesomeIcon icon={faEye} />
@@ -83,7 +83,8 @@ const ViewPopout = ({ feed, close }) => {
                                 <td>{value}</td>
                                 <td>{formatAvg(value, status.count)}</td>
                               </Fragment>
-                            )}
+                            );
+                          }
                         )}
                     </tr>
                   ))}
