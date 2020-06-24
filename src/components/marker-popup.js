@@ -6,6 +6,17 @@ const stripBreaks = value =>
 
 const MarkerPopup = ({ properties }) => {
   const feedName = properties.Name || properties.name || 'Feed';
+
+  const FilteredColumns = ({ column, value }) => {
+    const filter = ['name', 'status_name', 'status_color', 'symbol'];
+
+    return filter.includes(column.toLowerCase()) ? null : (
+      <li key={column}>
+        <span>{column.replace(/-dollar|-date/i, '')}</span> {stripBreaks(value)}
+      </li>
+    );
+  };
+
   return (
     <div className="marker-popup">
       <h2>{feedName.replace('<br/>', ' ')}</h2>
@@ -13,9 +24,7 @@ const MarkerPopup = ({ properties }) => {
         <ul>
           {properties &&
             Object.entries(properties).map(([key, value]) => (
-              <li key={key}>
-                <span>{key}</span> {stripBreaks(value)}
-              </li>
+              <FilteredColumns key={key} column={key} value={value} />
             ))}
         </ul>
       </div>
