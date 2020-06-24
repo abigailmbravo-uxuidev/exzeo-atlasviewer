@@ -1,4 +1,4 @@
-.feed-popOut {
+#view .feed-popOut {
     position: absolute;
     z-index: 15;
 
@@ -184,11 +184,12 @@
                 
   
                 .eyeball-wrapper {
-                  margin-right: .5rem;
+                  margin-right: .25rem;
 
                   font-size: 1rem;
                 }
                 .icon-wrapper {
+                  width: 1rem;
                   margin-right: .25rem;
                 }
               }
