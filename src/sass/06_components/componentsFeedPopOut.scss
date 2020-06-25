@@ -1,7 +1,6 @@
-.feed-popOut {
+#view .feed-popOut {
     position: absolute;
-    z-index: 1;
-    top: 25vh;
+    z-index: 15;
 
     display: flex;
     overflow-x: hidden;
@@ -9,12 +8,22 @@
     flex-direction: column;
 
     width: auto;
+    max-width: calc(100vw - 20rem);
+    max-height: 80vh;
 
     resize: both;
 
     border-radius: 6px;
     background-color: white;
     box-shadow: 0px 1px 4px 0px rgba($black, .25);
+
+    &.react-draggable-dragged {
+      //z-index: 100;
+  
+      &.react-draggable-dragging {
+        //z-index: 200;
+      }
+    }
   
     header {
       display: flex;
@@ -72,8 +81,8 @@
       overflow-x: hidden;
       overflow-y: auto;
 
-      padding: 0 .75rem .25rem .25rem;
       .eyeball-wrapper {
+        width: 1.75rem;
         padding: .25rem;
 
         cursor: pointer;
@@ -93,7 +102,26 @@
         overflow: auto;
 
         width: 100%;
-        max-height: 50vh;
+
+        .feed-name-wrapper {
+          position: sticky;
+          z-index: 1;
+          left: 0;
+
+          overflow: hidden;
+
+          max-width: 16rem;
+          margin: 0;
+
+          color: #221d40;
+          > span {
+            display: block;
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
   
         table {
           position: relative;
@@ -167,25 +195,41 @@
                 z-index: 1;
                 left: 0;
 
-                margin: 0;
+                overflow: hidden;
 
-                text-align: left;
+                max-width: 16rem;
+                margin: 0;
 
                 color: $navy;
                 border-right: 1px dotted rgba($navy, .2);
                 background-color: mix($white, $navy, 91);
                 box-shadow: 2px 0px 1px 0px rgba($black, .125);
-  
-                
-  
-                .eyeball-wrapper {
-                  margin-right: .5rem;
 
-                  font-size: 1rem;
+                .status-wrapper {
+                  display: flex;
+                  align-items: center;
+                  .eyeball-wrapper {
+                    margin-right: .25rem;
+
+                    font-size: 1rem;
+                  }
+                  .icon-wrapper {
+                    width: 1rem;
+                    margin-right: .25rem;
+                  }
+                  .status-name {
+                    display: inline-block;
+                    overflow: hidden;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+
+                    text-align: left;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                  }
                 }
-                .icon-wrapper {
-                  margin-right: .25rem;
-                }
+
+                
               }
               &:nth-of-type(odd) {
                 th {
@@ -200,6 +244,9 @@
                   background-color: $white;
 
                   font-size: .875rem;
+                }
+                td {
+                  font-size:1rem;
                 }
               }
             }

@@ -32,6 +32,22 @@
   width: 18rem;
   height: 100vh;
 
+  .feed-detail-wrapper {
+    max-width: calc(100% - 1.5rem);
+    h5 {
+      span {
+        overflow: hidden;
+
+        word-wrap: break-word;
+      }
+    }
+
+    dl {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+  }
+
   &.open {
     left: 0;
   }
@@ -49,6 +65,8 @@
   height: 100vh;
 
   .panel-list {
+    display: flex;
+    flex-direction: column;
     li {
       padding-top: .25rem;
       padding-bottom: .75rem;
@@ -85,11 +103,25 @@
           }
 
           h6 {
+            display: block;
+            overflow: hidden;
+
+            width: 170px;
             margin: 0;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
 
             font-size: .75rem;
             font-weight: normal;
           }
+
+          .feed-detail-wrapper {
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-wrap: wrap;
+            }
 
           .detail-count {
             flex-grow: 0;
@@ -97,7 +129,22 @@
 
             margin-left: 4px;
 
+            text-align: right;
+
             font-size: .75rem;
+          }
+
+          ul {
+            display: flex;
+            flex-direction: column;
+            li {
+              .feed-detail-wrapper {
+                width: 50px;
+
+                text-align: right;
+              }
+
+            }
           }
         }
       }
@@ -381,10 +428,18 @@ li {
       }
     }
     .file-name {
+      overflow: hidden;
       flex-grow: 1;
       flex-shrink: 1;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .menuIcon {
+      flex-grow: 0;
+      flex-shrink: 0;
+
+      margin-left: .5rem;
 
       &:hover {
         ~.menu {
@@ -484,21 +539,35 @@ li {
   }
   dl {
     display: flex;
+    overflow: hidden;
 
     margin: 0;
 
     span {
+      display: block;
+      overflow: hidden;
+
       margin-right: .5rem;
 
       &.date {
+        display: block;
+        flex-grow: 0;
+        flex-shrink: 0;
+
+        min-width: 4.0625rem;
+      }
+      &.author {
+        overflow: hidden;
         flex-grow: 1;
         flex-shrink: 1;
 
-        min-width: 25%;
-      }
-      &.author {
-        flex-grow: 1;
-        flex-shrink: 1;
+        > dd {
+            display: block;
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
       }
       dt {
         font-size: .75rem;

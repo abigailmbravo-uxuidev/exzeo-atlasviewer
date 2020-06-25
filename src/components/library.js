@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 import Feeds from './feeds';
 import Overlays from './overlays';
+import ReactTooltip from 'react-tooltip';
 
 import Icon from './icon';
 
-const Library = ({ setLayerToggle, setIsMapLoading }) => {
+const Library = ({ setIsMapLoading }) => {
   const [libraryActive, setLibraryState] = useState(true);
   const [filter, setFilter] = useState('');
   const handleFilter = ({ target: { value } }) => setFilter(value);
@@ -38,11 +39,7 @@ const Library = ({ setLayerToggle, setIsMapLoading }) => {
           <Feeds filter={filter} setIsMapLoading={setIsMapLoading} />
         </div>
         <div className="section shapes">
-          <Overlays
-            filter={filter}
-            setLayerToggle={setLayerToggle}
-            setIsMapLoading={setIsMapLoading}
-          />
+          <Overlays filter={filter} setIsMapLoading={setIsMapLoading} />
         </div>
       </div>
       <div className="panel-tab library-tab">

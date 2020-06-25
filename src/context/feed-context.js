@@ -13,11 +13,11 @@ const feedReducer = (feeds, action) => {
       return [...feeds, action.data];
     }
     case 'update': {
-      return feeds.map(l => {
-        if (l._id === action.data._id) {
-          return { ...l, ...action.data };
+      return feeds.map(feed => {
+        if (feed._id === action.data._id) {
+          return { ...feed, ...action.data };
         }
-        return l;
+        return feed;
       });
     }
     default: {

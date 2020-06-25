@@ -1,7 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faNetworkWired,
+  faTimes,
+  faCircle
+} from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import Papa from 'papaparse';
 import axios from 'axios';
@@ -14,11 +18,30 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const user = useUser();
   const [file, setFile] = useState({});
   const [fileInfo, setFileInfo] = useState({});
-  const [csvHeaders, setHeaders] = useState();
+  let statusValues = [];
+  const [statuses, setStatuses] = useState([]);
+
+  const step = row => {
+    const { data } = row;
+
+    const getStatusValue = statusName =>
+      Object.keys(data).find(k => k.toLowerCase() === statusName);
+
+    const status_name = getStatusValue('status_name');
+    const status_color = getStatusValue('status_color');
+    const status_symbol = getStatusValue('status_symbol');
+
+    if (!statusValues.some(sv => sv.status_name === data[status_name]))
+      statusValues.push({
+        status_name: data[status_name],
+        status_color: data[status_color]
+      });
+  };
 
   const complete = (results, file) => {
-    // const { errors } = results;
-    setHeaders(results.meta.fields);
+    //const { errors } = results;
+
+    setStatuses(statusValues);
     setFile(file);
   };
 
@@ -28,10 +51,10 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
 
     Papa.parse(selectedFile, {
       header: true,
-      preview: 1,
       dynamicTyping: true,
       skipEmptyLines: 'greedy',
-      complete: complete,
+      step,
+      complete,
       error: err => console.log(err)
     });
   };
@@ -66,6 +89,8 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
     try {
       const res = await axios(reqOptions);
       const feed = res.data.data;
+      feed.inView = true;
+      feed.active = true;
 
       dispatch({ type: 'add', data: feed });
       setUploaderState(false);
@@ -93,26 +118,55 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
           </button>
         </header>
         <div className="body">
-          <label htmlFor="feed" className="file-upload-label">
-            Choose File
-          </label>
-          <input
-            id="feed"
-            name="feed"
-            type="file"
-            accept="text/csv"
-            ref={register}
-            onChange={handleFile}
-          />
-          <label htmlFor="feed-name">Feed Name</label>
+          <label htmlFor="feed-name-placeholder">File Name</label>
+          <div className="uploadWrapper">
+            <input
+              placeholder="File name will appear here"
+              type="text"
+              id="feed-name-placeholder"
+              name="feednameplaceholder"
+              disabled="disabled"
+              ref={register({ required: true })}
+              defaultValue={file.name}
+            />
+            <label htmlFor="feed" className="file-upload-label">
+              Browse File
+            </label>
+            <input
+              id="feed"
+              name="feed"
+              type="file"
+              accept="text/csv"
+              ref={register}
+              onChange={handleFile}
+            />
+          </div>
+          <label htmlFor="feed-name">Data Feed Name</label>
           <input
             type="text"
             id="feed-name"
             name="feedname"
+            placeholder="Editable feed name"
             ref={register({ required: true })}
             defaultValue={file.name}
           />
           {errors.lastname && 'Feed Name is required.'}
+          <ul id="status" className="statusWrapper">
+            <label htmlFor="status" className="statusLabal">
+              Status
+            </label>
+            {statuses &&
+              statuses.map(s => (
+                <li key={s.status_name}>
+                  <FontAwesomeIcon
+                    className="statusIcon"
+                    icon={faCircle}
+                    style={{ color: s.status_color }}
+                  />
+                  {s.status_name}
+                </li>
+              ))}
+          </ul>
         </div>
         <footer>
           <button
@@ -127,7 +181,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             type="submit"
             enabled={String(formState.dirty)}
           >
-            Upload
+            Save and Map
           </button>
         </footer>
       </form>

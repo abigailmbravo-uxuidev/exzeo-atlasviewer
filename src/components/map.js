@@ -1,8 +1,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useUser } from '../context/user-context';
 import { useFeedState } from '../context/feed-context';
+import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
   addControls,
@@ -10,19 +12,26 @@ import {
   addLayer
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
+import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
+const renderPopup = properties =>
+  renderToStaticMarkup(<MarkerPopup properties={properties} />);
+
+const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
+  const layers = useLayers();
   const user = useUser();
   const [map, setMap] = useState({});
   const mapContainer = useRef(null);
   const prevFeeds = usePrevious(feeds);
+  const prevLayers = usePrevious(layers);
   const [isLoading, setIsLoading] = useState(false);
   const userId = user.user_id;
   const { token } = user;
 
+  // Load the map
   useLayoutEffect(() => {
     const initializeMap = (setMap, mapContainer) => {
       const mapbox = new mapboxgl.Map({
@@ -51,15 +60,27 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
         }
       });
 
+      mapbox.on('error', error => setIsMapLoading(false));
+
       mapbox.on('click', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
-        const feature = features.filter(f => f.layer.id.includes('dataset'));
+        const selectedFeatures = features.filter(f =>
+          f.layer.id.includes('dataset')
+        );
+        if (!selectedFeatures || selectedFeatures.length === 0) return;
+        const feature = selectedFeatures[0];
+
+        new mapboxgl.Popup()
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(renderPopup(feature.properties))
+          .addTo(mapbox);
       });
     };
 
     initializeMap(setMap, mapContainer);
   }, [setMap, token, setIsMapLoading]);
 
+  // Feeds
   useEffect(() => {
     if (!map.getLayer || !feeds || !prevFeeds) return;
     if (feeds.length > prevFeeds.length) {
@@ -70,10 +91,11 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
     } else {
       // Toggle feed
       feeds.map(feed => {
-        const { _id, active } = feed;
+        const { _id, active, filter } = feed;
         const layerId = `${_id}-dataset`;
+        const prevFeed = prevFeeds.find(p => p._id === _id);
 
-        if (feed.active !== prevFeeds.active) {
+        if (active !== prevFeed.active) {
           if (!map.getLayer(layerId)) {
             return addDataset(map, userId, feed);
           }
@@ -82,28 +104,47 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
           const newVisibility = active ? 'visible' : 'none';
           map.setLayoutProperty(layerId, 'visibility', newVisibility);
         }
+
+        // Set filter
+        if (filter !== prevFeed.filter) {
+          if (!filter || filter.length === 0) {
+            map.setFilter(layerId, null);
+          } else {
+            map.setFilter(layerId, [
+              '!',
+              ['in', ['get', 'status_name'], ['literal', filter]]
+            ]);
+          }
+        }
       });
     }
   }, [prevFeeds, feeds, userId, map]);
 
+  // Layers
+  useEffect(() => {
+    if (!map.getLayer || !layers || !prevLayers) return;
+    layers.map(layer => {
+      const { _id, active } = layer;
+      const layerId = `${_id}-layer`;
+
+      if (layer.active !== prevLayers.active) {
+        if (!map.getLayer(layerId)) {
+          return addLayer(map, userId, layer);
+        }
+
+        const visibility = map.getLayoutProperty(layerId, 'visibility');
+        const newVisibility = active ? 'visible' : 'none';
+        map.setLayoutProperty(layerId, 'visibility', newVisibility);
+      }
+    });
+  }, [prevLayers, layers, userId, map]);
+
+  // Basemap
   useEffect(() => {
     if (!map.getLayer || !basemap) return;
+
     map.setStyle(basemap);
   }, [basemap, map]);
-
-  useEffect(() => {
-    if (!map.getLayer || !layerToggle) return;
-    const { show, layer } = layerToggle;
-    const layerId = `${layer._id}-layer`
-
-    if (!map.getLayer(layerId)) {
-      return addLayer(map, userId, layer);
-    }
-
-    const visibility = map.getLayoutProperty(layerId, 'visibility');
-    const newVisibility = show ? 'visible' : 'none';
-    map.setLayoutProperty(layerId, 'visibility', newVisibility);
-  }, [layerToggle, map, userId]);
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;
 };

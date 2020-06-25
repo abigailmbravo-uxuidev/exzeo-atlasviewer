@@ -21,6 +21,10 @@ export const defaultConfig = {
   bearing: 0
 };
 
+export const getSourceId = id => `${id}-atlas`;
+export const getLayerId = id => `${id}-layer`;
+export const getDatasetId = id => `${id}-dataset`;
+
 export const addControls = mapbox => {
   mapbox.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   mapbox.addControl(
@@ -45,7 +49,7 @@ export const addControls = mapbox => {
 
 export const addLayer = (map, userId, layer) => {
   const { _id, source_type, source_layer, type, url } = layer;
-  const sourceId = `${_id}-atlas`;
+  const sourceId = getSourceId(_id);
 
   map.addSource(sourceId, {
     type: source_type,
@@ -53,7 +57,7 @@ export const addLayer = (map, userId, layer) => {
   });
 
   map.addLayer({
-    id: `${_id}-layer`,
+    id: getLayerId(_id),
     type,
     source: sourceId,
     'source-layer': source_layer,
@@ -72,7 +76,7 @@ export const addLayer = (map, userId, layer) => {
 export const addDataset = (map, userId, layer) => {
   const { _id, url } = layer;
   const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
-  const sourceId = `${_id}-atlas`;
+  const sourceId = getSourceId(_id);
 
   map.addSource(sourceId, {
     type: 'geojson',
@@ -81,7 +85,7 @@ export const addDataset = (map, userId, layer) => {
   });
 
   map.addLayer({
-    id: `${_id}-dataset`,
+    id: getDatasetId(_id),
     type: 'circle',
     source: sourceId,
     layout: {
@@ -92,4 +96,16 @@ export const addDataset = (map, userId, layer) => {
       'circle-color': ['get', 'status_color']
     }
   });
+};
+
+export const deleteDataset = (map, userId, layer) => {
+  const { _id } = layer;
+  const datasetId = getSourceId(_id);
+
+  if (map.getLayer(datasetId)) {
+    map.removeSource(datasetId);
+    map.removeLayer(datasetId);
+  }
+
+  const result = `${process.env.API_URL}/api/deleteFeed/${userId}/${_id}`;
 };

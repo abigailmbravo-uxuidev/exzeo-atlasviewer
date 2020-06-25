@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -34,9 +35,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     );
   };
 
-  const toggleFeed = (feed, active) => {
-    if (active) setIsMapLoading(true);
-    dispatch({ type: 'update', data: { ...feed, active } });
+  const toggleFeed = (feed, inView) => {
+    if (inView) setIsMapLoading(true);
+    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
   useEffect(() => {
@@ -64,6 +65,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           &nbsp;Data Feed
         </h4>
         <button
+          className="uploadBtn actionBtn"
+          type="button"
+          onClick={() => setUploaderState(!uploaderState)}
+        >
+          Upload
+        </button>
+        <button
           className={`paneToggle ${!paneActive ? 'closed' : 'open'}`}
           onClick={toggleAccordion}
         >
@@ -85,13 +93,6 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option>Updated Date</option>
             <option>Mapped Feeds</option>
           </select>
-          <button
-            className="uploadBtn actionBtn"
-            type="button"
-            onClick={() => setUploaderState(!uploaderState)}
-          >
-            Upload
-          </button>
         </div>
         <ul className="panel-list">
           <div className="notification shared-layer"></div>
@@ -101,7 +102,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
-                    checked={feed.active || false}
+                    checked={feed.inView || false}
                     value={feed._id}
                     onChange={e => toggleFeed(feed, e.target.checked)}
                   />
@@ -125,16 +126,18 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                             &nbsp;Info
                           </button>
                         </li>
+                        {/*
                         <li>
                           <button>
                             <FontAwesomeIcon icon={faFileExport} />
                             &nbsp;Export
                           </button>
                         </li>
+                      */}
                         <li>
                           <button>
                             <FontAwesomeIcon icon={faFileUpload} />
-                            &nbsp;Upload
+                            &nbsp;Update
                           </button>
                         </li>
                         <li>
@@ -198,11 +201,17 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                   <dl>
                     <span className="date">
                       <dt>Created</dt>
-                      <dd>{feed.created_at}</dd>
+                      <dd>
+                        {feed.created_at &&
+                          format(new Date(feed.created_at), 'MM-dd-yyyy')}
+                      </dd>
                     </span>
                     <span className="date">
                       <dt>Updated</dt>
-                      <dd>{feed.updated_at}</dd>
+                      <dd>
+                        {feed.updated_at &&
+                          format(new Date(feed.updated_at), 'MM-dd-yyyy')}
+                      </dd>
                     </span>
                     {/* only show author if feed is shared */}
                     <span className="author">

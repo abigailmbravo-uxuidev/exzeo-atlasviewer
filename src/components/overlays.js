@@ -2,14 +2,21 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '../context/user-context';
+import { useLayers, useSetLayers } from '../context/layer-context';
 
-const Overlays = ({ setLayerToggle, setIsMapLoading }) => {
-  const { layers } = useUser();
+const Overlays = ({ setIsMapLoading }) => {
+  const layers = useLayers();
+  const setLayers = useSetLayers();
 
   const toggleLayer = ({ target }) => {
     if (target.checked) setIsMapLoading(true);
-    const layer = layers.find(l => l._id === target.value);
-    setLayerToggle({ show: target.checked, layer });
+    const toggleIndex = layers.findIndex(l => l._id === target.value);
+    const newLayers = layers.map((layer, index) => {
+      if (index === toggleIndex)
+        return { ...layer, inView: target.checked, active: target.checked };
+      return layer;
+    });
+    setLayers(newLayers);
   };
 
   return (
