@@ -1,5 +1,6 @@
 #view .feed-popOut {
     position: absolute;
+    z-index: 15;
 
     display: flex;
     overflow-x: hidden;
