@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,12 +14,14 @@ import {
   faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
-import Uploader from './uploader';
+import DeleteFeed from './delete-feed';
 import FeedManager from './feedManager';
 import Modal from './modal';
+import Uploader from './uploader';
 
 const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState(false);
+  const [deleteFeed, setDeleteFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const feeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
@@ -45,7 +47,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {uploaderState && (
         <Uploader
           setUploaderState={setUploaderState}
@@ -53,6 +55,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           setIsMapLoading={setIsMapLoading}
         />
       )}
+      {deleteFeed && <DeleteFeed id={deleteFeed} close={setDeleteFeed} />}
       {error.length > 0 && (
         <Modal message={error} closeModal={() => setError('')} />
       )}
@@ -147,7 +150,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           </button>
                         </li>
                         <li>
-                          <button>
+                          <button onClick={() => setDeleteFeed(feed._id)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                             &nbsp;Delete
                           </button>
@@ -225,7 +228,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             ))}
         </ul>
       </div>
-    </Fragment>
+    </>
   );
 };
 
