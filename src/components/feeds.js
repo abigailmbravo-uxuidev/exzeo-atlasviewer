@@ -121,7 +121,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </span>
                     <div className="menu">
-                      <FontAwesomeIcon icon={faEllipsisV} />
+                      <div className="menu-button">
+                        <FontAwesomeIcon icon={faEllipsisV} />
+                      </div>
+
                       <ul>
                         <li>
                           <button>

@@ -361,7 +361,7 @@
 //----------------------------------------------------------
 .panel-list {
 margin: 0;
-padding: 0;
+padding: 0 4px 0 0;
 
 list-style: none;
 
@@ -397,6 +397,8 @@ li {
     }
   }
   h1, h2, h3, h4, h5, p {
+    position: relative;
+
     display: flex;
     align-items: center;
 
@@ -452,19 +454,25 @@ li {
     .menu {
       position: absolute;
       z-index: 1;
-      right: -2rem;
+      top: -2px;
+      right: -2px;
 
       display: none;
       flex-direction: column;
 
       width: auto;
       height: auto;
-      margin-top: 56px;
 
       opacity: 0;
       border-radius: .25rem;
       background-color: rgba($white, .9);
       box-shadow: 0px 0px 8px 0px rgba($black, .25);
+
+      .menu-button {
+        display: flex;
+    align-items: center;
+    justify-content: flex-end;
+      }
 
       svg {
         
