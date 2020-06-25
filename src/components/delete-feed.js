@@ -7,7 +7,19 @@ import { useUser } from '../context/user-context';
 const DeleteFeed = ({ setUploaderState, setError, setIsMapLoading }) => {
   return (
     <div className="modal fade-in">
-      Delete feed-contex
+      {/* form goes here if needed */}
+      <div className="card">
+        <header></header>
+        <div className="body">Delete feed-contex</div>
+        <footer>
+          <button className="secondaryBtn" type="button">
+            Cancel
+          </button>
+          <button className="actionBtn" type="submit">
+            onfirm Delete
+          </button>
+        </footer>
+      </div>
     </div>
   );
 };
