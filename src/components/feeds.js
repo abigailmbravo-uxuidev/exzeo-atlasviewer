@@ -55,7 +55,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           setIsMapLoading={setIsMapLoading}
         />
       )}
-      {deleteFeed && <DeleteFeed id={deleteFeed} close={setDeleteFeed} />}
+      {deleteFeed && (
+        <DeleteFeed id={deleteFeed} setDeleteFeed={setDeleteFeed} />
+      )}
       {error.length > 0 && (
         <Modal message={error} closeModal={() => setError('')} />
       )}
@@ -153,7 +155,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           </button>
                         </li>
                         <li>
-                          <button onClick={() => setDeleteFeed(feed._id)}>
+                          <button onClick={() => setDeleteFeed(feed)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                             &nbsp;Delete
                           </button>

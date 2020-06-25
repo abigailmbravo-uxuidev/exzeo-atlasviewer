@@ -4,18 +4,25 @@ import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
-const DeleteFeed = ({ id, close }) => {
+const DeleteFeed = ({ feed, setDeleteFeed }) => {
   return (
     <div className="modal fade-in">
-      {/* form goes here if needed */}
       <div className="card">
         <header></header>
-        <div className="body">Delete feed-contex</div>
+        <div className="body">Delete feed: {feed.name}</div>
         <footer>
-          <button className="secondaryBtn" type="button">
+          <button
+            className="secondaryBtn"
+            type="button"
+            onClick={() => setDeleteFeed()}
+          >
             Cancel
           </button>
-          <button className="actionBtn" type="submit">
+          <button
+            className="actionBtn"
+            type="submit"
+            onCClick={() => console.log(feed._id)}
+          >
             onfirm Delete
           </button>
         </footer>
@@ -25,8 +32,8 @@ const DeleteFeed = ({ id, close }) => {
 };
 
 DeleteFeed.propTypes = {
-  id: PropTypes.string.isRequired,
-  close: PropTypes.func.isRequired
+  feed: PropTypes.object.isRequired,
+  setDeleteFeed: PropTypes.func.isRequired
 };
 
 export default DeleteFeed;
