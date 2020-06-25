@@ -70,8 +70,6 @@ const Map = ({ basemap, setIsMapLoading }) => {
         if (!selectedFeatures || selectedFeatures.length === 0) return;
         const feature = selectedFeatures[0];
 
-        console.log(feature);
-
         new mapboxgl.Popup()
           .setLngLat(feature.geometry.coordinates)
           .setHTML(renderPopup(feature.properties))
