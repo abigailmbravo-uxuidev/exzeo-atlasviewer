@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
-const DeleteFeed = ({ setUploaderState, setError, setIsMapLoading }) => {
+const DeleteFeed = ({ id, close }) => {
   return (
     <div className="modal fade-in">
       {/* form goes here if needed */}
@@ -24,6 +24,9 @@ const DeleteFeed = ({ setUploaderState, setError, setIsMapLoading }) => {
   );
 };
 
-DeleteFeed.propTypes = {};
+DeleteFeed.propTypes = {
+  id: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired
+};
 
 export default DeleteFeed;
