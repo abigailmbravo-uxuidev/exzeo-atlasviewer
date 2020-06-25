@@ -371,6 +371,20 @@ li {
 
   margin-bottom: .75rem;
 
+  &:last-of-type {
+
+    .menu {
+      top: auto;
+      bottom: -2px;
+
+      flex-direction: column-reverse;
+
+      .menu-button {
+        padding: 0 2px 2px 0;
+      }
+    }
+  }
+
   span {
     &.wrapper {
       display: flex;
@@ -446,6 +460,9 @@ li {
       &:hover {
         ~.menu {
           display: flex;
+          visibility: visible;
+
+          height: auto;
 
           opacity: 1;
         }
@@ -457,11 +474,13 @@ li {
       top: -2px;
       right: -2px;
 
-      display: none;
+      visibility: hidden;
+      overflow: hidden;
       flex-direction: column;
 
       width: auto;
-      height: auto;
+
+      transition: all .2s ease-out;
 
       opacity: 0;
       border-radius: .25rem;
@@ -470,22 +489,21 @@ li {
 
       .menu-button {
         display: flex;
-    align-items: center;
-    justify-content: flex-end;
-      }
+        align-items: center;
+        justify-content: flex-end;
 
-      svg {
-        
+        padding: 2px 2px 0 0;
       }
 
       &:hover {
         display: flex;
+        visibility: visible;
 
         opacity: 1;
       }
 
       ul {
-        padding: .25rem 0;
+        padding: 0;
 
         list-style: none;
 
@@ -507,6 +525,7 @@ li {
             transition: all .2s ease-out;
 
             border: none;
+            background-color: $white;
 
             font-size: .75rem;
             
