@@ -24,6 +24,32 @@
         z-index: 200;
       }
     }
+
+    &.collapsed {
+      width: 20rem;
+
+      .content {
+        .table-wrapper {
+          .feed-name-wrapper {
+            max-width: 7rem;
+          }
+
+          table {
+            tbody {
+              tr {
+                th {
+                  max-width: 7rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.expanded {
+      width: auto;
+    }
   
     header {
       display: flex;
@@ -252,6 +278,20 @@
             }
           }
         }
-      }  
+      }
+      .button-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 0 .3125rem 0 .125rem;
+
+        border-left: 1px dotted rgba($navy, .2);
+        .round-btn {
+          margin: .25rem 0;
+
+          font-size: .625rem;
+        }
+      }
     }
   }

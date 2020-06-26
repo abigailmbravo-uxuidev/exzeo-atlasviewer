@@ -1,8 +1,14 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faTimes, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEye,
+  faTimes,
+  faCircle,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 import { formatCurrency } from '../utils/utils';
 
 const formatKey = value => value.replace(/-dollar/gi, '');
@@ -12,12 +18,19 @@ const formatAvg = (value, count) => {
 };
 
 const ViewPopout = ({ feed, close }) => {
+  const [panelCollapse, setPanelCollapseState] = useState('expanded');
   const { _id } = feed;
   const aggregateTotals = {};
+  console.log(panelCollapse);
 
   return (
     <Draggable handle=".gripper">
-      <div className="feed-popOut">
+      <div
+        className={`feed-popOut ${(panelCollapse == 'collapsed'
+          ? 'collapsed'
+          : '') || (panelCollapse == 'expanded' ? 'expanded' : '')}`}
+        style={{ width: panelCollapse == 'collapsed' ? '13.5rem' : 'initial' }}
+      >
         <header>
           {/* Gripper is draggable point for data table */}
           <span className="gripper">&nbsp;</span>
@@ -115,6 +128,20 @@ const ViewPopout = ({ feed, close }) => {
                 {/* End total row */}
               </tbody>
             </table>
+          </div>
+          <div className="button-wrapper">
+            <button
+              className="round-btn collapse"
+              onClick={() => setPanelCollapseState('collapsed')}
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <button
+              className="round-btn expand"
+              onClick={() => setPanelCollapseState('expanded')}
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
           </div>
         </div>
       </div>
