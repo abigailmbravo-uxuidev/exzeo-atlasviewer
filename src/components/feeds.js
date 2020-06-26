@@ -23,12 +23,17 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState(false);
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
-  const feeds = useFeedState();
+  const allFeeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
   const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
+
+  const feeds =
+    filter && filter.length > 1
+      ? allFeeds.filter(feed => feed.name.includes(filter))
+      : allFeeds;
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -242,7 +247,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 };
 
 Feeds.propTypes = {
-  filter: PropTypes.string
+  filter: PropTypes.string,
+  setIsMapLoading: PropTypes.func.isRequired
 };
 
 export default Feeds;

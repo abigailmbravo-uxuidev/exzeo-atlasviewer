@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '../context/user-context';
 import { useLayers, useSetLayers } from '../context/layer-context';
 
-const Overlays = ({ setIsMapLoading }) => {
-  const layers = useLayers();
+const Overlays = ({ filter, setIsMapLoading }) => {
+  const allLayers = useLayers();
   const setLayers = useSetLayers();
 
   const toggleLayer = ({ target }) => {
@@ -18,6 +19,11 @@ const Overlays = ({ setIsMapLoading }) => {
     });
     setLayers(newLayers);
   };
+
+  const layers =
+    filter && filter.length > 1
+      ? allLayers.filter(layer => layer.name.includes(filter))
+      : allLayers;
 
   return (
     <React.Fragment>
@@ -50,4 +56,8 @@ const Overlays = ({ setIsMapLoading }) => {
   );
 };
 
+Overlays.propTypes = {
+  filter: PropTypes.string,
+  setIsMapLoading: PropTypes.func.isRequired
+};
 export default Overlays;
