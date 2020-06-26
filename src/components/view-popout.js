@@ -25,7 +25,7 @@ const ViewPopout = ({ feed, close }) => {
   return (
     <Draggable handle=".gripper">
       <div
-        className={panelCollapse}
+        className={`feed-popOut ${panelCollapse}`}
         style={{ width: panelCollapse == 'collapsed' ? '16rem' : 'initial' }}
       >
         <header>
