@@ -182,6 +182,12 @@
 
               font-weight: normal;
             }
+
+            td {
+              &:nth-of-type(odd) {
+                background-color: rgba($navy, .075);
+              }
+            }
           }
   
           

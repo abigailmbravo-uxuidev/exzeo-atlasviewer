@@ -97,8 +97,10 @@ const ViewPopout = ({ feed, close }) => {
                               : Number(value);
                             return (
                               <Fragment key={key}>
-                                <td>{formatCurrency.format(value)}</td>
-                                <td>
+                                <td className={key}>
+                                  {formatCurrency.format(value)}
+                                </td>
+                                <td className={`average ${key}`}>
                                   {formatCurrency.format(
                                     formatAvg(value, status.count)
                                   )}
