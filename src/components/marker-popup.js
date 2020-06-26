@@ -10,9 +10,22 @@ const MarkerPopup = ({ properties }) => {
   const FilteredColumns = ({ column, value }) => {
     const filter = ['name', 'status_name', 'status_color', 'symbol'];
 
+    if (column.toLowerCase().includes('-url')) {
+      return (
+        <li key={column}>
+          <span>
+            <a href={value} rel="noopener noreferrer" target="_blank">
+              {column.replace(/-url/i, '')}
+            </a>
+          </span>
+        </li>
+      );
+    }
+
     return filter.includes(column.toLowerCase()) ? null : (
       <li key={column}>
-        <span>{column.replace(/-dollar|-date/i, '')}</span> {stripBreaks(value)}
+        <span>{column.replace(/-dollar|-date/i, '')}</span>
+        {stripBreaks(value)}
       </li>
     );
   };
