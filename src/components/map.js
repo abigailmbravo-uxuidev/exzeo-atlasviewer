@@ -9,7 +9,8 @@ import {
   defaultConfig,
   addControls,
   addDataset,
-  addLayer
+  addLayer,
+  removeLayer
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
@@ -87,7 +88,11 @@ const Map = ({ basemap, setIsMapLoading }) => {
       // Add feed
       addDataset(map, userId, feeds[feeds.length - 1]);
     } else if (prevFeeds.length > feeds.length) {
-      // Delete feed
+      const deletedFeed = prevFeeds.filter(
+        pf => !feeds.some(f => f._id == pf._id)
+      );
+      if (deletedFeed && deletedFeed.length > 0)
+        removeLayer(map, deletedFeed[0]._id);
     } else {
       // Toggle feed
       feeds.map(feed => {

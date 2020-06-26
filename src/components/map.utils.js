@@ -47,6 +47,14 @@ export const addControls = mapbox => {
   mapbox.addControl(geocoder, 'bottom-left');
 };
 
+export const removeLayer = (map, id) => {
+  const sourceId = getSourceId(id);
+  const layerId = getDatasetId(id);
+
+  map.removeSource(sourceId);
+  map.removeLayer(layerId);
+};
+
 export const addLayer = (map, userId, layer) => {
   const { _id, source_type, source_layer, type, url } = layer;
   const sourceId = getSourceId(_id);

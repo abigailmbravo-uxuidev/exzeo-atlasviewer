@@ -20,6 +20,9 @@ const feedReducer = (feeds, action) => {
         return feed;
       });
     }
+    case 'delete': {
+      return feeds.filter(feed => feed._id !== action.id);
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }

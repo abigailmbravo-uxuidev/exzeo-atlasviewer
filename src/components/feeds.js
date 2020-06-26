@@ -56,7 +56,11 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         />
       )}
       {deleteFeed && (
-        <DeleteFeed id={deleteFeed} setDeleteFeed={setDeleteFeed} />
+        <DeleteFeed
+          feed={deleteFeed}
+          setDeleteFeed={setDeleteFeed}
+          setError={setError}
+        />
       )}
       {error.length > 0 && (
         <Modal message={error} closeModal={() => setError('')} />
