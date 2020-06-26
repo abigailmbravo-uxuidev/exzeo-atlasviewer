@@ -25,8 +25,10 @@ const ViewPopout = ({ feed, close }) => {
   return (
     <Draggable handle=".gripper">
       <div
-        className={`feed-popOut ${panelCollapse}`}
-        style={{ width: panelCollapse === 'collapsed' ? '13.5rem' : 'initial' }}
+        className={`feed-popOut ${(panelCollapse == 'collapsed'
+          ? 'collapsed'
+          : '') || (panelCollapse == 'expanded' ? 'expanded' : '')}`}
+        style={{ width: panelCollapse == 'collapsed' ? '16rem' : 'initial' }}
       >
         <header>
           {/* Gripper is draggable point for data table */}
@@ -53,7 +55,7 @@ const ViewPopout = ({ feed, close }) => {
                       {feed.name}
                     </span>
                   </th>
-                  <th>Count</th>
+                  <th className="status-count">Count</th>
                   {/* Start loop of column titles */}
                   {feed.statuses &&
                     Object.entries(feed.statuses[0].aggregates).map(([key]) => (
@@ -88,7 +90,7 @@ const ViewPopout = ({ feed, close }) => {
                           </span>
                         </div>
                       </th>
-                      <td>{status.count}</td>
+                      <td className="status-count">{status.count}</td>
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
                           ([key, value]) => {
@@ -113,7 +115,7 @@ const ViewPopout = ({ feed, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>Aggregate Data:</th>
-                  <td>{feed.total}</td>
+                  <td className="status-count">{feed.total}</td>
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>

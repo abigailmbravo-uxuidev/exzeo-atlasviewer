@@ -26,7 +26,15 @@
     }
 
     &.collapsed {
-      width: 20rem;
+
+      .status-count {
+        //display: inline-block;
+
+        //width: 5.5rem;
+      }
+      th.status-count {
+        height: 34px;
+      }
 
       .content {
         .table-wrapper {
