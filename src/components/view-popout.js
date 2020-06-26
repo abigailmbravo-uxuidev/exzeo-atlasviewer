@@ -119,8 +119,8 @@ const ViewPopout = ({ feed, close }) => {
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
-                        <td>{formatCurrency.format(value)}</td>
-                        <td>{}</td>
+                        <td>{formatCurrency.format(Math.floor(value))}</td>
+                        <td>{formatCurrency.format(value / feed.total)}</td>
                       </Fragment>
                     ))}
                 </tr>
