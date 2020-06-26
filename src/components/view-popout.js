@@ -21,15 +21,12 @@ const ViewPopout = ({ feed, close }) => {
   const [panelCollapse, setPanelCollapseState] = useState('expanded');
   const { _id } = feed;
   const aggregateTotals = {};
-  console.log(panelCollapse);
 
   return (
     <Draggable handle=".gripper">
       <div
-        className={`feed-popOut ${(panelCollapse == 'collapsed'
-          ? 'collapsed'
-          : '') || (panelCollapse == 'expanded' ? 'expanded' : '')}`}
-        style={{ width: panelCollapse == 'collapsed' ? '13.5rem' : 'initial' }}
+        className={`feed-popOut ${panelCollapse}`}
+        style={{ width: panelCollapse === 'collapsed' ? '13.5rem' : 'initial' }}
       >
         <header>
           {/* Gripper is draggable point for data table */}
