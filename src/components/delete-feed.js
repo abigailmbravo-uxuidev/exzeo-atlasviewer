@@ -53,7 +53,7 @@ const DeleteFeed = ({ feed, setDeleteFeed, setError }) => {
             type="submit"
             onClick={() => handleDelete(feed._id, user.user_id, ulitlies)}
           >
-            onfirm Delete
+            Confirm Delete
           </button>
         </footer>
       </div>
