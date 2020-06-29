@@ -361,7 +361,7 @@
 //----------------------------------------------------------
 .panel-list {
 margin: 0;
-padding: 0;
+padding: 0 4px 0 0;
 
 list-style: none;
 
@@ -370,6 +370,20 @@ li {
   flex-wrap: wrap;
 
   margin-bottom: .75rem;
+
+  &:last-of-type {
+
+    .menu {
+      top: auto;
+      bottom: -2px;
+
+      flex-direction: column-reverse;
+
+      .menu-button {
+        padding: 0 2px 2px 0;
+      }
+    }
+  }
 
   span {
     &.wrapper {
@@ -397,6 +411,8 @@ li {
     }
   }
   h1, h2, h3, h4, h5, p {
+    position: relative;
+
     display: flex;
     align-items: center;
 
@@ -444,6 +460,9 @@ li {
       &:hover {
         ~.menu {
           display: flex;
+          visibility: visible;
+
+          height: auto;
 
           opacity: 1;
         }
@@ -452,32 +471,39 @@ li {
     .menu {
       position: absolute;
       z-index: 1;
-      right: -2.75rem;
+      top: -2px;
+      right: -2px;
 
-      display: none;
+      visibility: hidden;
+      overflow: hidden;
       flex-direction: column;
 
       width: auto;
-      height: auto;
-      margin-top: 56px;
+
+      transition: all .2s ease-out;
 
       opacity: 0;
       border-radius: .25rem;
       background-color: rgba($white, .9);
       box-shadow: 0px 0px 8px 0px rgba($black, .25);
 
-      svg {
-        
+      .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        padding: 2px 2px 0 0;
       }
 
       &:hover {
         display: flex;
+        visibility: visible;
 
         opacity: 1;
       }
 
       ul {
-        padding: .25rem 0;
+        padding: 0;
 
         list-style: none;
 
@@ -499,6 +525,7 @@ li {
             transition: all .2s ease-out;
 
             border: none;
+            background-color: $white;
 
             font-size: .75rem;
             

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,19 +14,26 @@ import {
   faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
-import Uploader from './uploader';
+import DeleteFeed from './delete-feed';
 import FeedManager from './feedManager';
 import Modal from './modal';
+import Uploader from './uploader';
 
 const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState(false);
+  const [deleteFeed, setDeleteFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
-  const feeds = useFeedState();
+  const allFeeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
   const [paneHeight, setPaneHeightState] = useState();
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
+
+  const feeds =
+    filter && filter.length > 1
+      ? allFeeds.filter(feed => feed.name.includes(filter))
+      : allFeeds;
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -45,12 +52,19 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {uploaderState && (
         <Uploader
           setUploaderState={setUploaderState}
           setError={setError}
           setIsMapLoading={setIsMapLoading}
+        />
+      )}
+      {deleteFeed && (
+        <DeleteFeed
+          feed={deleteFeed}
+          setDeleteFeed={setDeleteFeed}
+          setError={setError}
         />
       )}
       {error.length > 0 && (
@@ -118,7 +132,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </span>
                     <div className="menu">
-                      <FontAwesomeIcon icon={faEllipsisV} />
+                      <div className="menu-button">
+                        <FontAwesomeIcon icon={faEllipsisV} />
+                      </div>
+
                       <ul>
                         <li>
                           <button>
@@ -147,7 +164,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           </button>
                         </li>
                         <li>
-                          <button>
+                          <button onClick={() => setDeleteFeed(feed)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                             &nbsp;Delete
                           </button>
@@ -225,12 +242,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             ))}
         </ul>
       </div>
-    </Fragment>
+    </>
   );
 };
 
 Feeds.propTypes = {
-  filter: PropTypes.string
+  filter: PropTypes.string,
+  setIsMapLoading: PropTypes.func.isRequired
 };
 
 export default Feeds;

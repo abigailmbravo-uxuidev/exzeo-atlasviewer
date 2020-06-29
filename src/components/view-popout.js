@@ -1,8 +1,14 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faTimes, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEye,
+  faTimes,
+  faCircle,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 import { formatCurrency } from '../utils/utils';
 
 const formatKey = value => value.replace(/-dollar/gi, '');
@@ -12,12 +18,16 @@ const formatAvg = (value, count) => {
 };
 
 const ViewPopout = ({ feed, close }) => {
+  const [panelCollapse, setPanelCollapseState] = useState('expanded');
   const { _id } = feed;
   const aggregateTotals = {};
 
   return (
     <Draggable handle=".gripper">
-      <div className="feed-popOut">
+      <div
+        className={`feed-popOut ${panelCollapse}`}
+        style={{ width: panelCollapse == 'collapsed' ? '16rem' : 'initial' }}
+      >
         <header>
           {/* Gripper is draggable point for data table */}
           <span className="gripper">&nbsp;</span>
@@ -43,7 +53,7 @@ const ViewPopout = ({ feed, close }) => {
                       {feed.name}
                     </span>
                   </th>
-                  <th>Count</th>
+                  <th className="status-count">Count</th>
                   {/* Start loop of column titles */}
                   {feed.statuses &&
                     Object.entries(feed.statuses[0].aggregates).map(([key]) => (
@@ -78,7 +88,7 @@ const ViewPopout = ({ feed, close }) => {
                           </span>
                         </div>
                       </th>
-                      <td>{status.count}</td>
+                      <td className="status-count">{status.count}</td>
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
                           ([key, value]) => {
@@ -87,8 +97,10 @@ const ViewPopout = ({ feed, close }) => {
                               : Number(value);
                             return (
                               <Fragment key={key}>
-                                <td>{formatCurrency.format(value)}</td>
-                                <td>
+                                <td className={key}>
+                                  {formatCurrency.format(value)}
+                                </td>
+                                <td className={`average ${key}`}>
                                   {formatCurrency.format(
                                     formatAvg(value, status.count)
                                   )}
@@ -103,18 +115,32 @@ const ViewPopout = ({ feed, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>Aggregate Data:</th>
-                  <td>{feed.total}</td>
+                  <td className="status-count">{feed.total}</td>
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
-                        <td>{formatCurrency.format(value)}</td>
-                        <td>{}</td>
+                        <td>{formatCurrency.format(Math.floor(value))}</td>
+                        <td>{formatCurrency.format(value / feed.total)}</td>
                       </Fragment>
                     ))}
                 </tr>
                 {/* End total row */}
               </tbody>
             </table>
+          </div>
+          <div className="button-wrapper">
+            <button
+              className="round-btn collapse"
+              onClick={() => setPanelCollapseState('collapsed')}
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <button
+              className="round-btn expand"
+              onClick={() => setPanelCollapseState('expanded')}
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
           </div>
         </div>
       </div>
