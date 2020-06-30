@@ -88,6 +88,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
       // Add feed
       addDataset(map, userId, feeds[feeds.length - 1]);
     } else if (prevFeeds.length > feeds.length) {
+      // Delete feed
       const deletedFeed = prevFeeds.filter(
         pf => !feeds.some(f => f._id == pf._id)
       );
