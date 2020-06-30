@@ -20,7 +20,7 @@ import Modal from './modal';
 import Uploader from './uploader';
 
 const Feeds = ({ filter, setIsMapLoading }) => {
-  const [uploaderState, setUploaderState] = useState(false);
+  const [uploaderState, setUploaderState] = useState({});
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState();
@@ -47,14 +47,19 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
+  const toggleUpdate = feed => {
+    setUploaderState({ action: 'Update', feed });
+  };
+
   useEffect(() => {
     setPaneHeightState(content.current.scrollHeight);
   }, []);
 
   return (
     <>
-      {uploaderState && (
+      {uploaderState && uploaderState.action && (
         <Uploader
+          data={uploaderState}
           setUploaderState={setUploaderState}
           setError={setError}
           setIsMapLoading={setIsMapLoading}
@@ -81,7 +86,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         <button
           className="uploadBtn actionBtn"
           type="button"
-          onClick={() => setUploaderState(!uploaderState)}
+          onClick={() => setUploaderState({ action: 'Upload' })}
         >
           Upload
         </button>
@@ -152,9 +157,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                         </li>
                       */}
                         <li>
-                          <button
-                            onClick={() => setUploaderState(!uploaderState)}
-                          >
+                          <button onClick={e => toggleUpdate(feed)}>
                             <FontAwesomeIcon icon={faFileUpload} />
                             &nbsp;Update
                           </button>

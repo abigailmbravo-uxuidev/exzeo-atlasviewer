@@ -29,7 +29,7 @@ const handleDelete = async (feedId, userId, utilities) => {
 const DeleteFeed = ({ feed, setDeleteFeed, setError }) => {
   const dispatch = useFeedDispatch();
   const user = useUser();
-  const ulitlies = {
+  const utilities = {
     setDeleteFeed,
     dispatch,
     setError
@@ -51,7 +51,7 @@ const DeleteFeed = ({ feed, setDeleteFeed, setError }) => {
           <button
             className="actionBtn"
             type="submit"
-            onClick={() => handleDelete(feed._id, user.user_id, ulitlies)}
+            onClick={() => handleDelete(feed._id, user.user_id, utilities)}
           >
             Confirm Delete
           </button>
