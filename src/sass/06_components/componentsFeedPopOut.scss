@@ -8,6 +8,7 @@
     flex-direction: column;
 
     width: auto;
+    min-width: 25rem;
     max-width: calc(100vw - 20rem);
     max-height: 80vh;
 
@@ -26,6 +27,7 @@
     }
 
     &.collapsed {
+      min-width: 15rem;
 
       .status-count {
         //display: inline-block;
