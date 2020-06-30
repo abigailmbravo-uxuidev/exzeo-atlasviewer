@@ -96,9 +96,10 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
       const newFeed = res.data.data;
       feed.inView = true;
       feed.active = true;
+      const actionType = action === 'Upload' ? 'add' : 'update';
 
-      dispatch({ type: 'add', data: newFeed });
-      setUploaderState();
+      dispatch({ type: actionType, data: newFeed });
+      setUploaderState(false);
     } catch (err) {
       setIsMapLoading(false);
       setUploaderState(false);
