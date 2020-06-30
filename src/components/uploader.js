@@ -94,8 +94,8 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
     try {
       const res = await axios(reqOptions);
       const newFeed = res.data.data;
-      feed.inView = true;
-      feed.active = true;
+      newFeed.inView = true;
+      newFeed.active = true;
       const actionType = action === 'Upload' ? 'add' : 'update';
 
       dispatch({ type: actionType, data: newFeed });
