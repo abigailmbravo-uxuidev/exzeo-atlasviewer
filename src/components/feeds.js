@@ -152,7 +152,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                         </li>
                       */}
                         <li>
-                          <button>
+                          <button
+                            onClick={() => setUploaderState(!uploaderState)}
+                          >
                             <FontAwesomeIcon icon={faFileUpload} />
                             &nbsp;Update
                           </button>
