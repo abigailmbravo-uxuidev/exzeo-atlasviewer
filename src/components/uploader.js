@@ -57,7 +57,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
       skipEmptyLines: 'greedy',
       step,
       complete,
-      error: err => console.log(err)
+      error: err => setError(err)
     });
   };
 
@@ -101,6 +101,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
 
       dispatch({ type: actionType, data: newFeed });
       setUploaderState(false);
+      if (action === 'Update') setIsMapLoading(false);
     } catch (err) {
       setIsMapLoading(false);
       setUploaderState(false);

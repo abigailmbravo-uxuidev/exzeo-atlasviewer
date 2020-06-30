@@ -95,7 +95,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
       if (deletedFeed && deletedFeed.length > 0)
         removeLayer(map, deletedFeed[0]._id);
     } else {
-      // Toggle feed
+      // Update feed
       feeds.map(feed => {
         const { _id, active, filter } = feed;
         const layerId = `${_id}-dataset`;
