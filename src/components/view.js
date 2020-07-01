@@ -235,7 +235,10 @@ const View = ({ setBasemap }) => {
           <Icon />
         </button>
       </div>
-
+      {/* TO DO: @ERIC - the tooltips aren't working.
+        I think it is due to these being linked to the ID and ID isn't currently dynamic.
+        I am unsure how to connect, but if you can get this one, I should be able to figure out the rest of them.
+      */}
       <ReactTooltip
         className="panel-tooltip"
         id="feedTooltip"
