@@ -97,6 +97,7 @@ export const addDataset = (map, userId, layer) => {
   map.addLayer({
     id: getDatasetId(_id),
     type: 'circle',
+    interactive: true,
     source: sourceId,
     layout: {
       visibility: 'visible'

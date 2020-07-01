@@ -32,6 +32,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
   const [isLoading, setIsLoading] = useState(false);
   const userId = user.user_id;
   const { token } = user;
+  const hoveredStateId = useRef(null);
 
   // Load the map
   useLayoutEffect(() => {
@@ -76,6 +77,16 @@ const Map = ({ basemap, setIsMapLoading }) => {
           .setLngLat(feature.geometry.coordinates)
           .setHTML(renderPopup(feature.properties))
           .addTo(mapbox);
+      });
+
+      mapbox.on('mousemove', e => {
+        const features = mapbox.queryRenderedFeatures(e.point);
+        const selectedFeatures = features.filter(f =>
+          f.layer.id.includes('dataset')
+        );
+
+        mapbox.getCanvas().style.cursor =
+          selectedFeatures.length > 0 ? 'pointer' : '';
       });
     };
 
