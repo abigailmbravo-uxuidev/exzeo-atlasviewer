@@ -11,7 +11,7 @@
             flex-shrink: 0;
 
             max-height: 500px;
-            padding: 0 0 .75rem 0;
+            padding: 0;
             
             //"x"
             .mapboxgl-popup-close-button {
@@ -34,7 +34,7 @@
                      //feed name header 
                     p {
                         margin: 0;
-                        padding: 0 0 4px 8px ;
+                        padding: 0 0 .25remx .5rem;
 
                         color: $white;
                     }
@@ -59,14 +59,15 @@
 
                     //status 
                     p {
-                        margin: 0;    padding: 0 8px 4px 8px;
+                        margin: 0;
+                        padding: 0 .5rem .25rem;
 
                         font-weight: bold;
 
                         .icon-wrapper {
                             margin-right: .5rem;
                         }
-                        }
+                    }
                 }
 
                 .popupContent {
