@@ -385,6 +385,19 @@ li {
     }
   }
 
+  &:first-of-type {
+    .menu {
+      top: -2px;
+      bottom: auto;
+
+      flex-direction: column;
+
+      .menu-button {
+        padding: 2px 2px 0 0;
+      }
+    }
+  }
+
   span {
     &.wrapper {
       display: flex;
