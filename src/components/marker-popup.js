@@ -5,7 +5,7 @@ const stripBreaks = value =>
   value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '') : value;
 
 const MarkerPopup = ({ properties }) => {
-  const pinName = properties.Name || properties.name || 'Feed';
+  const markerName = properties.Name || properties.name || 'Feed';
 
   const FilteredColumns = ({ column, value }) => {
     const filter = ['name', 'status_name', 'status_color', 'symbol'];
@@ -32,7 +32,7 @@ const MarkerPopup = ({ properties }) => {
 
   return (
     <div className="marker-popup">
-      <h2>{pinName.replace('<br/>', ' ')}</h2>
+      <h2>{markerName.replace('<br/>', ' ')}</h2>
       <div className="popupContent">
         <ul>
           {properties &&
