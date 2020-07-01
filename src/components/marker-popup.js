@@ -50,7 +50,7 @@ const MarkerPopup = ({ properties }) => {
           >
             <FontAwesomeIcon icon={faCircle} />
           </span>
-          {properties.PolicyStatus}
+          {properties.status_name}
         </p>
       </div>
       <div className="popupContent">
