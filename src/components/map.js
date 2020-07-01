@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useUser } from '../context/user-context';
-import { useFeedState } from '../context/feed-context';
+import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
@@ -22,6 +22,7 @@ const renderPopup = properties =>
 
 const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
+  const dispatch = useFeedDispatch();
   const layers = useLayers();
   const user = useUser();
   const [map, setMap] = useState({});
@@ -97,9 +98,18 @@ const Map = ({ basemap, setIsMapLoading }) => {
     } else {
       // Update feed
       feeds.map(feed => {
-        const { _id, active, filter } = feed;
+        const { _id, active, filter, updated } = feed;
         const layerId = `${_id}-dataset`;
         const prevFeed = prevFeeds.find(p => p._id === _id);
+
+        // feed data updated
+        if (updated) {
+          map
+            .getSource(`${_id}-atlas`)
+            .setData(`${process.env.API_URL}/api/geojson/${userId}/${_id}`);
+          feed.updated = false;
+          dispatch({ type: 'update', data: feed });
+        }
 
         if (active !== prevFeed.active) {
           if (!map.getLayer(layerId)) {
@@ -124,7 +134,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
       });
     }
-  }, [prevFeeds, feeds, userId, map]);
+  }, [prevFeeds, feeds, userId, map, dispatch]);
 
   // Layers
   useEffect(() => {

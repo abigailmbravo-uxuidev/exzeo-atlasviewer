@@ -98,6 +98,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
       const newFeed = res.data.data;
       newFeed.inView = true;
       newFeed.active = true;
+      newFeed.updated = action === 'Update';
       const actionType = action === 'Upload' ? 'add' : 'update';
 
       dispatch({ type: actionType, data: newFeed });
