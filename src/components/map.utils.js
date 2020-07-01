@@ -51,8 +51,10 @@ export const removeLayer = (map, id) => {
   const sourceId = getSourceId(id);
   const layerId = getDatasetId(id);
 
-  map.removeSource(sourceId);
-  map.removeLayer(layerId);
+  if (map.getLayer(layerId)) {
+    map.removeSource(sourceId);
+    map.removeLayer(layerId);
+  }
 };
 
 export const addLayer = (map, userId, layer) => {
