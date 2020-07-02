@@ -118,8 +118,7 @@ body {
           cursor: move;
 
           color: mix($white, $navy, 75%);
-          background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAS0lEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8/fo1g5aWFlyMESQIU/3y5UsGHR0dhCRI4tq1a////fuHIoFiLLJdMDaKA9AV4JUEAB6pGQg6FVP6AAAAAElFTkSuQmCC) repeat;
-    
+          background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAS0lEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8/fo1g5aWFlyMESQIU/3y5UsGHR0dhCRI4tq1a////fuHIoFiLLJdMDaKA9AV4JUEAB6pGQg6FVP6AAAAAElFTkSuQmCC) repeat;          ;
           &:active {
             cursor: grab;
           }
