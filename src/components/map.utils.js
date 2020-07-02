@@ -96,15 +96,16 @@ export const addDataset = (map, userId, layer) => {
 
   map.addLayer({
     id: getDatasetId(_id),
-    type: 'circle',
+    type: 'symbol',
     interactive: true,
     source: sourceId,
     layout: {
-      visibility: 'visible'
+      visibility: 'visible',
+      'icon-image': 'circle-12',
+      'icon-size': 0.8
     },
     paint: {
-      'circle-radius': 4,
-      'circle-color': ['get', 'status_color']
+      'icon-color': ['get', 'status_color']
     }
   });
 };

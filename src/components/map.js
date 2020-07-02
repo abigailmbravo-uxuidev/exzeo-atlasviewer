@@ -16,6 +16,7 @@ import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import circle from '../img/circle-12.png';
 
 const renderPopup = properties =>
   renderToStaticMarkup(<MarkerPopup properties={properties} />);
@@ -87,6 +88,10 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
         mapbox.getCanvas().style.cursor =
           selectedFeatures.length > 0 ? 'pointer' : '';
+      });
+
+      mapbox.loadImage(circle, (error, image) => {
+        mapbox.addImage('circle-12', image, { sdf: true });
       });
     };
 
