@@ -6,7 +6,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 const stripBreaks = value =>
   value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '') : value;
 
-const MarkerPopup = ({ properties }) => {
+const MarkerPopup = ({ properties, feedName }) => {
   const markerName = properties.Name || properties.name || 'Feed';
 
   const FilteredColumns = ({ column, value }) => {
@@ -36,7 +36,7 @@ const MarkerPopup = ({ properties }) => {
     <div className="marker-popup">
       <div className="marker-popup-title-header">
         {/* TO DO: @ERIC - this is the placeholder for the feed name */}
-        <p>[Feed Name]</p>
+        <p>{feedName}</p>
       </div>
       <div className="marker-popup-header">
         <h2 className="title-tip" title={markerName.replace('<br/>', ' ')}>
@@ -66,7 +66,8 @@ const MarkerPopup = ({ properties }) => {
 };
 
 MarkerPopup.propTypes = {
-  properties: PropTypes.object
+  properties: PropTypes.object,
+  feedName: PropTypes.string
 };
 
 export default MarkerPopup;

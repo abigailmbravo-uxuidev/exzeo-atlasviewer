@@ -30,8 +30,10 @@ const loadIcon = (map, icon, name) =>
     });
   });
 
-const renderPopup = properties =>
-  renderToStaticMarkup(<MarkerPopup properties={properties} />);
+const renderPopup = (properties, feedName) =>
+  renderToStaticMarkup(
+    <MarkerPopup properties={properties} feedName={feedName} />
+  );
 
 const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
@@ -88,7 +90,9 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
         new mapboxgl.Popup()
           .setLngLat(feature.geometry.coordinates)
-          .setHTML(renderPopup(feature.properties))
+          .setHTML(
+            renderPopup(feature.properties, feature.layer.metadata.feedname)
+          )
           .addTo(mapbox);
       });
 

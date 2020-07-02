@@ -99,6 +99,9 @@ export const addDataset = (map, userId, layer) => {
     type: 'symbol',
     interactive: true,
     source: sourceId,
+    metadata: {
+      feedname: layer.name
+    },
     layout: {
       visibility: 'visible',
       'icon-image': 'circle-12',
