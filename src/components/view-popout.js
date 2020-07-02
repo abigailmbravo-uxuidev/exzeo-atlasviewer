@@ -24,7 +24,7 @@ const ViewPopout = ({ feed, close }) => {
   const aggregateTotals = {};
 
   return createPortal(
-    <Draggable handle=".gripper" defaultPosition={{ x: 580, y: 100 }}>
+    <Draggable handle=".gripper" defaultPosition={{ x: 600, y: 32 }}>
       <div
         className={`feed-popOut ${panelCollapse}`}
         style={{ width: panelCollapse == 'collapsed' ? '16rem' : 'initial' }}
