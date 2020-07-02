@@ -101,7 +101,7 @@ export const addDataset = (map, userId, layer) => {
     source: sourceId,
     layout: {
       visibility: 'visible',
-      'icon-image': 'circle-12',
+      'icon-image': 'triangle-12',
       'icon-size': 0.8
     },
     paint: {

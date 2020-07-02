@@ -16,7 +16,7 @@ import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import circle from '../img/circle-12.png';
+import triangle from '../img/triangle-12.png';
 
 const renderPopup = properties =>
   renderToStaticMarkup(<MarkerPopup properties={properties} />);
@@ -90,8 +90,8 @@ const Map = ({ basemap, setIsMapLoading }) => {
           selectedFeatures.length > 0 ? 'pointer' : '';
       });
 
-      mapbox.loadImage(circle, (error, image) => {
-        mapbox.addImage('circle-12', image, { sdf: true });
+      mapbox.loadImage(triangle, (error, image) => {
+        mapbox.addImage('triangle-12', image, { sdf: true });
       });
     };
 
