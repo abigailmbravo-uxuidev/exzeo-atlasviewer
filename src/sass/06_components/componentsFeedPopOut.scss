@@ -144,7 +144,7 @@ body {
 
         .eyeball-wrapper {
           width: 1.75rem;
-          padding: .25rem;
+          padding: .5rem .25rem;
 
           cursor: pointer;
           transition: all .2s ease-out;
@@ -221,6 +221,8 @@ body {
                   position: sticky;
                   z-index: 10;
                   top: 0;
+
+                  padding-left: .5rem;
 
                   color: $navy;
                   border-collapse: collapse;
