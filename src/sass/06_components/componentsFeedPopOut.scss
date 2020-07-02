@@ -35,6 +35,7 @@ body {
       background-color: white;
       box-shadow: 0px 1px 4px 0px rgba($black, .25);
 
+
       &.react-draggable-dragged {
         z-index: 100;
     
@@ -88,10 +89,17 @@ body {
 
         transition: all .2s ease-out;
 
-        background: $white;
+        background: $navy;
+
+        //"x"
+        .iconBtn {
+          &.closeBtn {
+            color: $white;
+          }
+        }
     
         &:hover {
-          background: mix($white, $navy, 97%);
+          background: mix($navy, $white, 75%);
     
           span {
             background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQUlEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8+PAhg4mJCVyMESQIU40hCZI4c+YMWAGyLhRjke2CsVEcgK4AryQA3tsWCM9oX6IAAAAASUVORK5CYII=) repeat;
@@ -184,28 +192,22 @@ body {
             border-collapse: collapse;
     
             tr {
-              background-color: mix($white, $navy, 91);
-    
-              &:nth-of-type(odd) {
-                background-color: mix($white, $navy, 95);
-              }
-    
               td,
               th {
-                padding: 0.25rem .375rem;
+                padding: 0.5rem .5rem .5rem 2rem;
 
                 text-align: right;
                 white-space: nowrap;
 
                 color: $navy;
+                border-bottom: 1px dotted rgba($navy, .2);
+                background: $white;
 
                 font-weight: normal;
               }
 
               td {
-                &:nth-of-type(odd) {
-                  background-color: rgba($navy, .075);
-                }
+                border-bottom: 1px dotted rgba($navy, .2);
               }
             }
     
@@ -213,6 +215,7 @@ body {
     
             thead {
               tr {
+
                 
                 th {
                   position: sticky;
@@ -224,6 +227,7 @@ body {
                   background: $white;
 
                   font-size: .875rem;
+                  font-weight: bold;
     
                   &:first-child {
                     z-index: 1;
@@ -261,7 +265,6 @@ body {
 
                   color: $navy;
                   border-right: 1px dotted rgba($navy, .2);
-                  background-color: mix($white, $navy, 91);
                   box-shadow: 2px 0px 1px 0px rgba($black, .125);
 
                   .status-wrapper {
@@ -292,9 +295,16 @@ body {
                 }
                 &:nth-of-type(odd) {
                   th {
-                    background-color: mix($white, $navy, 95);
+                    padding-left: 0;
                   }
                 }
+
+                &:nth-of-type(even) {
+                  th {
+                    padding-left: 0;
+                  }
+                }
+                
                 &.total-count {
                   background-color: $white;
                   th {
