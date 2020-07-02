@@ -91,7 +91,7 @@ export const addDataset = (map, userId, layer) => {
   map.addSource(sourceId, {
     type: 'geojson',
     data: source,
-    buffer: 32
+    buffer: 64
   });
 
   map.addLayer({
