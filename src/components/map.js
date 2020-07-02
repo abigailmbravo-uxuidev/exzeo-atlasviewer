@@ -16,7 +16,19 @@ import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import circle from '../img/circle-12.png';
+import hexagon from '../img/hexagon-12.png';
+import square from '../img/square-12.png';
+import pentagon from '../img/pentagon-12.png';
 import triangle from '../img/triangle-12.png';
+
+const loadIcon = (map, icon, name) =>
+  new Promise((resolve, reject) => {
+    map.loadImage(icon, (error, image) => {
+      map.addImage(name, image, { sdf: true });
+      resolve();
+    });
+  });
 
 const renderPopup = properties =>
   renderToStaticMarkup(<MarkerPopup properties={properties} />);
@@ -37,7 +49,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
   // Load the map
   useLayoutEffect(() => {
-    const initializeMap = (setMap, mapContainer) => {
+    const initializeMap = async (setMap, mapContainer) => {
       const mapbox = new mapboxgl.Map({
         container: mapContainer.current,
         ...defaultConfig,
@@ -90,9 +102,11 @@ const Map = ({ basemap, setIsMapLoading }) => {
           selectedFeatures.length > 0 ? 'pointer' : '';
       });
 
-      mapbox.loadImage(triangle, (error, image) => {
-        mapbox.addImage('triangle-12', image, { sdf: true });
-      });
+      await loadIcon(mapbox, circle, 'circle-12');
+      await loadIcon(mapbox, hexagon, 'hexagon-12');
+      await loadIcon(mapbox, pentagon, 'pentagon-12');
+      await loadIcon(mapbox, square, 'square-12');
+      await loadIcon(mapbox, triangle, 'triangle-12');
     };
 
     initializeMap(setMap, mapContainer);
