@@ -25,7 +25,7 @@ body {
 
       width: auto;
       min-width: 25rem;
-      max-width: calc(100vw - 20rem);
+      max-width: 90vw;
       min-height: 6.5rem;
       max-height: 80vh;
 
@@ -143,8 +143,10 @@ body {
         overflow-y: auto;
 
         .eyeball-wrapper {
-          width: 1.75rem;
-          padding: .5rem .25rem;
+          flex-grow: 0;
+          flex-shrink: 0;
+
+          padding: 0 .25rem;
 
           cursor: pointer;
           transition: all .2s ease-out;
@@ -194,8 +196,6 @@ body {
             tr {
               td,
               th {
-                padding: 0.5rem .5rem .5rem 2rem;
-
                 text-align: right;
                 white-space: nowrap;
 
@@ -207,7 +207,12 @@ body {
               }
 
               td {
+                padding: 0.25rem .5rem .25rem 2.5rem;
+
                 border-bottom: 1px dotted rgba($navy, .2);
+              }
+              th {
+                padding: 0 .5rem 0 0;
               }
             }
     
@@ -216,7 +221,6 @@ body {
             thead {
               tr {
 
-                
                 th {
                   position: sticky;
                   z-index: 10;
@@ -295,16 +299,8 @@ body {
 
                   
                 }
-                &:nth-of-type(odd) {
-                  th {
-                    padding-left: 0;
-                  }
-                }
-
-                &:nth-of-type(even) {
-                  th {
-                    padding-left: 0;
-                  }
+                th {
+                  padding-left: 0;
                 }
                 
                 &.total-count {
