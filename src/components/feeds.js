@@ -145,13 +145,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       </div>
 
                       <ul>
-                        <li>
+                        {/*<li>
                           <button>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             &nbsp;Info
                           </button>
                         </li>
-                        {/*
+                        
                         <li>
                           <button>
                             <FontAwesomeIcon icon={faFileExport} />
