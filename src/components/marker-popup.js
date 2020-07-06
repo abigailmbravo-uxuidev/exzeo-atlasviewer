@@ -2,35 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
-
-const stripBreaks = value =>
-  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '') : value;
+import MarkerRow from './marker-row';
 
 const MarkerPopup = ({ properties, feedName }) => {
   const markerName = properties.Name || properties.name || 'Feed';
-
-  const FilteredColumns = ({ column, value }) => {
-    const filter = ['name', 'status_name', 'status_color', 'symbol'];
-
-    if (column.toLowerCase().includes('-url')) {
-      return (
-        <li key={column}>
-          <span>
-            <a href={value} rel="noopener noreferrer" target="_blank">
-              {column.replace(/-url/i, '')}
-            </a>
-          </span>
-        </li>
-      );
-    }
-
-    return filter.includes(column.toLowerCase()) ? null : (
-      <li key={column}>
-        <span>{column.replace(/-dollar|-date/i, '')}</span>
-        {stripBreaks(value)}
-      </li>
-    );
-  };
 
   return (
     <div className="marker-popup">
@@ -57,7 +32,7 @@ const MarkerPopup = ({ properties, feedName }) => {
         <ul>
           {properties &&
             Object.entries(properties).map(([key, value]) => (
-              <FilteredColumns key={key} column={key} value={value} />
+              <MarkerRow key={key} column={key} value={value} />
             ))}
         </ul>
       </div>
