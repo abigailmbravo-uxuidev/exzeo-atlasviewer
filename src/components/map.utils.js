@@ -51,8 +51,10 @@ export const removeLayer = (map, id) => {
   const sourceId = getSourceId(id);
   const layerId = getDatasetId(id);
 
-  map.removeSource(sourceId);
-  map.removeLayer(layerId);
+  if (map.getLayer(layerId)) {
+    map.removeSource(sourceId);
+    map.removeLayer(layerId);
+  }
 };
 
 export const addLayer = (map, userId, layer) => {
@@ -89,19 +91,24 @@ export const addDataset = (map, userId, layer) => {
   map.addSource(sourceId, {
     type: 'geojson',
     data: source,
-    buffer: 32
+    buffer: 64
   });
 
   map.addLayer({
     id: getDatasetId(_id),
-    type: 'circle',
+    type: 'symbol',
+    interactive: true,
     source: sourceId,
+    metadata: {
+      feedname: layer.name
+    },
     layout: {
-      visibility: 'visible'
+      visibility: 'visible',
+      'icon-image': ['downcase', ['concat', ['get', 'symbol'], '-12']],
+      'icon-size': 0.625
     },
     paint: {
-      'circle-radius': 4,
-      'circle-color': ['get', 'status_color']
+      'icon-color': ['get', 'status_color']
     }
   });
 };

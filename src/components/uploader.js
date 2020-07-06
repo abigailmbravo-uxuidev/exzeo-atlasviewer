@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
-const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
+const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
   const user = useUser();
@@ -20,6 +20,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   const [fileInfo, setFileInfo] = useState({});
   let statusValues = [];
   const [statuses, setStatuses] = useState([]);
+  const { feed = {}, action } = data;
 
   const step = row => {
     const { data } = row;
@@ -39,7 +40,8 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   };
 
   const complete = (results, file) => {
-    //const { errors } = results;
+    const { errors } = results;
+    if (errors && errors.length > 0) setError(errors.join());
 
     setStatuses(statusValues);
     setFile(file);
@@ -55,7 +57,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
       skipEmptyLines: 'greedy',
       step,
       complete,
-      error: err => console.log(err)
+      error: err => setError(err)
     });
   };
 
@@ -65,7 +67,10 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
   };
 
   const handleUpload = async data => {
-    const url = `${process.env.API_URL}/api/upload`;
+    const url =
+      action === 'Upload'
+        ? `${process.env.API_URL}/api/upload`
+        : `${process.env.API_URL}/api/update`;
     const userData = {
       userId: user.user_id,
       name: `${user.first_name} ${user.last_name}`
@@ -75,6 +80,8 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
     formData.append('name', data.feedname);
     formData.append('userData', JSON.stringify(userData));
     formData.append('file', file);
+
+    if (action === 'Update') formData.append('feedId', feed._id);
 
     const reqOptions = {
       url,
@@ -88,12 +95,15 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
     setIsMapLoading(true);
     try {
       const res = await axios(reqOptions);
-      const feed = res.data.data;
-      feed.inView = true;
-      feed.active = true;
+      const newFeed = res.data.data;
+      newFeed.inView = true;
+      newFeed.active = true;
+      newFeed.updated = action === 'Update';
+      const actionType = action === 'Upload' ? 'add' : 'update';
 
-      dispatch({ type: 'add', data: feed });
+      dispatch({ type: actionType, data: newFeed });
       setUploaderState(false);
+      if (action === 'Update') setIsMapLoading(false);
     } catch (err) {
       setIsMapLoading(false);
       setUploaderState(false);
@@ -107,7 +117,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
         <header>
           <h4>
             <FontAwesomeIcon icon={faNetworkWired} />
-            &nbsp;Data Feed Upload
+            &nbsp;Data Feed {action}
           </h4>
           <button
             className="iconBtn closeBtn"
@@ -148,7 +158,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
             name="feedname"
             placeholder="Editable feed name"
             ref={register({ required: true })}
-            defaultValue={file.name}
+            defaultValue={feed.name ? feed.name : file.name}
           />
           {errors.lastname && 'Feed Name is required.'}
           <ul id="status" className="statusWrapper">
@@ -190,6 +200,7 @@ const Uploader = ({ setUploaderState, setError, setIsMapLoading }) => {
 };
 
 Uploader.propTypes = {
+  data: PropTypes.object.isRequired,
   setUploaderState: PropTypes.func.isRequired,
   setError: PropTypes.func,
   setIsMapLoading: PropTypes.func

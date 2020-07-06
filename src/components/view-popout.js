@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,8 +23,8 @@ const ViewPopout = ({ feed, close }) => {
   const { _id } = feed;
   const aggregateTotals = {};
 
-  return (
-    <Draggable handle=".gripper">
+  return createPortal(
+    <Draggable handle=".gripper" defaultPosition={{ x: 600, y: 32 }}>
       <div
         className={`feed-popOut ${panelCollapse}`}
         style={{ width: panelCollapse == 'collapsed' ? '16rem' : 'initial' }}
@@ -144,7 +145,8 @@ const ViewPopout = ({ feed, close }) => {
           </div>
         </div>
       </div>
-    </Draggable>
+    </Draggable>,
+    document.getElementById('popout')
   );
 };
 

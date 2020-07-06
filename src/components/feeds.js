@@ -20,7 +20,7 @@ import Modal from './modal';
 import Uploader from './uploader';
 
 const Feeds = ({ filter, setIsMapLoading }) => {
-  const [uploaderState, setUploaderState] = useState(false);
+  const [uploaderState, setUploaderState] = useState({});
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState();
@@ -47,14 +47,19 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
+  const toggleUpdate = feed => {
+    setUploaderState({ action: 'Update', feed });
+  };
+
   useEffect(() => {
     setPaneHeightState(content.current.scrollHeight);
   }, []);
 
   return (
     <>
-      {uploaderState && (
+      {uploaderState && uploaderState.action && (
         <Uploader
+          data={uploaderState}
           setUploaderState={setUploaderState}
           setError={setError}
           setIsMapLoading={setIsMapLoading}
@@ -81,7 +86,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         <button
           className="uploadBtn actionBtn"
           type="button"
-          onClick={() => setUploaderState(!uploaderState)}
+          onClick={() => setUploaderState({ action: 'Upload' })}
         >
           Upload
         </button>
@@ -123,10 +128,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                 </span>
                 <span className="feed-detail-wrapper wrapper">
                   <h5>
-                    {/*icon should only show if feed is shared, should have new class until notification associated with it is dismissed*/}
+                    {/* TO DO @Eric: icon should only show if feed is shared
+                        Icon should have new class once we add "new notification" When notification is dismissed, new class should be removed
+                    */}
                     <span className="icon shared new">
                       <FontAwesomeIcon icon={faShareAlt} />
                     </span>
+                    {/* END TO DO */}
                     <span className="file-name">{feed.name}</span>
                     <span className="menuIcon">
                       <FontAwesomeIcon icon={faEllipsisV} />
@@ -137,13 +145,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       </div>
 
                       <ul>
-                        <li>
+                        {/*<li>
                           <button>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             &nbsp;Info
                           </button>
                         </li>
-                        {/*
+                        
                         <li>
                           <button>
                             <FontAwesomeIcon icon={faFileExport} />
@@ -152,7 +160,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                         </li>
                       */}
                         <li>
-                          <button>
+                          <button onClick={e => toggleUpdate(feed)}>
                             <FontAwesomeIcon icon={faFileUpload} />
                             &nbsp;Update
                           </button>
@@ -171,49 +179,6 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                         </li>
                       </ul>
                     </div>
-                    {/* 
-                    <button
-                      onClick={() => setMenuActive(!menuActive)}
-                      className="menu-btn"
-                    >
-                      <FontAwesomeIcon icon={faEllipsisV} />
-                    </button>
-                    <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
-                      <FontAwesomeIcon icon={faEllipsisV} />
-                      <ul>
-                        <li className="menu-icon"></li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            &nbsp;Info
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileExport} />
-                            &nbsp;Export
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileUpload} />
-                            &nbsp;Upload
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faShareAltSquare} />
-                            &nbsp;Share
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                            &nbsp;Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>*/}
                   </h5>
                   <dl>
                     <span className="date">

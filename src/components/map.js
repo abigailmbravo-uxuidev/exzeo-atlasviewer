@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import { useUser } from '../context/user-context';
-import { useFeedState } from '../context/feed-context';
+import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
@@ -16,12 +16,28 @@ import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import circle from '../img/circle-12.png';
+import hexagon from '../img/hexagon-12.png';
+import square from '../img/square-12.png';
+import pentagon from '../img/pentagon-12.png';
+import triangle from '../img/triangle-12.png';
 
-const renderPopup = properties =>
-  renderToStaticMarkup(<MarkerPopup properties={properties} />);
+const loadIcon = (map, icon, name) =>
+  new Promise((resolve, reject) => {
+    map.loadImage(icon, (error, image) => {
+      map.addImage(name, image, { sdf: true });
+      resolve();
+    });
+  });
+
+const renderPopup = (properties, feedName) =>
+  renderToStaticMarkup(
+    <MarkerPopup properties={properties} feedName={feedName} />
+  );
 
 const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
+  const dispatch = useFeedDispatch();
   const layers = useLayers();
   const user = useUser();
   const [map, setMap] = useState({});
@@ -31,10 +47,11 @@ const Map = ({ basemap, setIsMapLoading }) => {
   const [isLoading, setIsLoading] = useState(false);
   const userId = user.user_id;
   const { token } = user;
+  const hoveredStateId = useRef(null);
 
   // Load the map
   useLayoutEffect(() => {
-    const initializeMap = (setMap, mapContainer) => {
+    const initializeMap = async (setMap, mapContainer) => {
       const mapbox = new mapboxgl.Map({
         container: mapContainer.current,
         ...defaultConfig,
@@ -73,9 +90,27 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
         new mapboxgl.Popup()
           .setLngLat(feature.geometry.coordinates)
-          .setHTML(renderPopup(feature.properties))
+          .setHTML(
+            renderPopup(feature.properties, feature.layer.metadata.feedname)
+          )
           .addTo(mapbox);
       });
+
+      mapbox.on('mousemove', e => {
+        const features = mapbox.queryRenderedFeatures(e.point);
+        const selectedFeatures = features.filter(f =>
+          f.layer.id.includes('dataset')
+        );
+
+        mapbox.getCanvas().style.cursor =
+          selectedFeatures.length > 0 ? 'pointer' : '';
+      });
+
+      await loadIcon(mapbox, circle, 'circle-12');
+      await loadIcon(mapbox, hexagon, 'hexagon-12');
+      await loadIcon(mapbox, pentagon, 'pentagon-12');
+      await loadIcon(mapbox, square, 'square-12');
+      await loadIcon(mapbox, triangle, 'triangle-12');
     };
 
     initializeMap(setMap, mapContainer);
@@ -88,17 +123,27 @@ const Map = ({ basemap, setIsMapLoading }) => {
       // Add feed
       addDataset(map, userId, feeds[feeds.length - 1]);
     } else if (prevFeeds.length > feeds.length) {
+      // Delete feed
       const deletedFeed = prevFeeds.filter(
         pf => !feeds.some(f => f._id == pf._id)
       );
       if (deletedFeed && deletedFeed.length > 0)
         removeLayer(map, deletedFeed[0]._id);
     } else {
-      // Toggle feed
+      // Update feed
       feeds.map(feed => {
-        const { _id, active, filter } = feed;
+        const { _id, active, filter, updated } = feed;
         const layerId = `${_id}-dataset`;
         const prevFeed = prevFeeds.find(p => p._id === _id);
+
+        // feed data updated
+        if (updated) {
+          map
+            .getSource(`${_id}-atlas`)
+            .setData(`${process.env.API_URL}/api/geojson/${userId}/${_id}`);
+          feed.updated = false;
+          dispatch({ type: 'update', data: feed });
+        }
 
         if (active !== prevFeed.active) {
           if (!map.getLayer(layerId)) {
@@ -123,7 +168,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
       });
     }
-  }, [prevFeeds, feeds, userId, map]);
+  }, [prevFeeds, feeds, userId, map, dispatch]);
 
   // Layers
   useEffect(() => {
