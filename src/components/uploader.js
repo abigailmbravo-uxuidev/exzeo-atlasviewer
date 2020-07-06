@@ -191,7 +191,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
             type="submit"
             enabled={String(formState.dirty)}
           >
-            Save and Map
+            {action === 'Update' ? 'Update' : 'Save'} and Map
           </button>
         </footer>
       </form>
