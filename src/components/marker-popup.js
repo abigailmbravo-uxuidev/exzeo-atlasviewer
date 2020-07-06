@@ -3,14 +3,29 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import MarkerRow from './marker-row';
+import circle from '../img/circle-12.png';
+import hexagon from '../img/hexagon-12.png';
+import square from '../img/square-12.png';
+import pentagon from '../img/pentagon-12.png';
+import triangle from '../img/triangle-12.png';
 
 const MarkerPopup = ({ properties, feedName }) => {
   const markerName = properties.Name || properties.name || 'Feed';
+  const color = properties.status_color || 'black';
+  const shape = properties.symbol ? properties.symbol.toLowerCase() : circle;
+
+  const shapes = {
+    circle,
+    hexagon,
+    square,
+    pentagon
+  };
+
+  const displaySymbol = shapes[shape] || cirle;
 
   return (
     <div className="marker-popup">
       <div className="marker-popup-title-header">
-        {/* TO DO: @ERIC - this is the placeholder for the feed name */}
         <p>{feedName}</p>
       </div>
       <div className="marker-popup-header">
@@ -18,12 +33,8 @@ const MarkerPopup = ({ properties, feedName }) => {
           {markerName.replace('<br/>', ' ')}
         </h2>
         <p>
-          {/* TO DO: @ERIC - here we just need help finding the status color so it properly displays the mapping color*/}
-          <span
-            className="icon-wrapper wrapper"
-            style={{ color: status.color }}
-          >
-            <FontAwesomeIcon icon={faCircle} />
+          <span className="icon-wrapper wrapper" style={{ color: color }}>
+            <img src={displaySymbol} alt="Status Symbol" />
           </span>
           {properties.status_name}
         </p>
