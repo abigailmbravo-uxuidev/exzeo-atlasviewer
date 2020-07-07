@@ -18,10 +18,11 @@ const MarkerPopup = ({ properties, feedName }) => {
     circle,
     hexagon,
     square,
-    pentagon
+    pentagon,
+    triangle
   };
 
-  const displaySymbol = shapes[shape] || cirle;
+  const displaySymbol = shapes[shape] || circle;
 
   return (
     <div className="marker-popup">
