@@ -36,7 +36,8 @@ const Overlays = ({ filter, setIsMapLoading }) => {
 
   const layers =
     filter && filter.length > 1
-      ? allLayers.filter(layer => layer.name.includes(filter))
+      ? allLayers.filter(layer =>
+          layer.name.toLowerCase().includes(filter.toLowerCase()))
       : allLayers;
 
   return (

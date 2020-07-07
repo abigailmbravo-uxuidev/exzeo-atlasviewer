@@ -32,7 +32,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
   const feeds =
     filter && filter.length > 1
-      ? allFeeds.filter(feed => feed.name.toLowerCase().includes(filter.toLowerCase()))
+      ? allFeeds.filter(feed =>
+          feed.name.toLowerCase().includes(filter.toLowerCase()))
       : allFeeds;
 
   const toggleAccordion = () => {
