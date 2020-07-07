@@ -131,7 +131,6 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                   <h5>
                     {/* TO DO @Eric: icon should only show if feed is shared
                         Icon should have new class once we add "new notification" When notification is dismissed, new class should be removed
-                    */}
                     <span className="icon shared new">
                       <FontAwesomeIcon icon={faShareAlt} />
                     </span>
