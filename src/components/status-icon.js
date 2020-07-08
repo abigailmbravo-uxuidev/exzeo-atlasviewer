@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
+const StatusIcon = ({ shape = 'circle', fill = 'black' }) => {
   switch (shape.toLowerCase()) {
     case 'circle':
       return (
@@ -93,8 +93,8 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
 };
 
 StatusIcon.propTypes = {
-  shape: PropTypes.string.isRequired,
-  fill: PropTypes.string.isRequired
+  shape: PropTypes.string,
+  fill: PropTypes.string
 };
 
 export default StatusIcon;

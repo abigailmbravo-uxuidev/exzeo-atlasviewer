@@ -31,16 +31,16 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
 
     const status_name = getStatusValue('status_name');
     const status_color = getStatusValue('status_color');
-    const status_symbol = getStatusValue('status_symbol');
+    const symbol = getStatusValue('symbol');
 
     if (!statusValues.some(sv => sv.status_name === data[status_name]))
       statusValues.push({
         status_name: data[status_name],
         status_color: data[status_color],
-        status_symbol: data[status_symbol]
+        symbol: data[symbol]
       });
   };
-
+  
   const complete = (results, file) => {
     const { errors } = results;
     if (errors && errors.length > 0) setError(errors.join());
@@ -170,12 +170,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
             {statuses &&
               statuses.map(s => (
                 <li key={s.status_name}>
-                  <FontAwesomeIcon
-                    className="statusIcon"
-                    icon={faCircle}
-                    style={{ color: s.status_color }}
-                  />
-                  <StatusIcon shape={s.status_symbol} fill={s.status_color} />
+                  <StatusIcon shape={s.symbol} fill={s.status_color} />
                   {s.status_name}
                 </li>
               ))}
