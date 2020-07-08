@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const handleDelete = async (feedId, userId, utilities) => {
   const { setDeleteFeed, dispatch, setError } = utilities;
@@ -38,7 +40,12 @@ const DeleteFeed = ({ feed, setDeleteFeed, setError }) => {
   return (
     <div className="modal fade-in">
       <div className="card">
-        <header></header>
+        <header>
+          <h4>
+            <FontAwesomeIcon icon={faTrashAlt} />
+            &nbsp;Delete Feed
+          </h4>
+        </header>
         <div className="body">Delete feed: {feed.name}</div>
         <footer>
           <button

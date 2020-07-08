@@ -84,8 +84,9 @@
             li {
               display: flex;
               align-items: center;
-              .statusIcon {
-                margin-right: .75rem;
+              svg, .statusIcon {
+                width: .75rem;
+                margin-right: .5rem;
 
                 font-size: .75rem;
 
