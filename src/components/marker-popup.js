@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import MarkerRow from './marker-row';
-import circle from '../img/circle-12.png';
+import Circle from './circle.js';
 import hexagon from '../img/hexagon-12.png';
 import square from '../img/square-12.png';
 import pentagon from '../img/pentagon-12.png';
@@ -15,15 +15,15 @@ const MarkerPopup = ({ properties, feedName }) => {
   const shape = properties.symbol ? properties.symbol.toLowerCase() : circle;
 
   const shapes = {
-    circle,
+    Circle,
     hexagon,
     square,
     pentagon,
     triangle
   };
 
-  const displaySymbol = shapes[shape] || circle;
-
+  const displaySymbol = Circle;//shapes[shape] || circle;
+  displaySymbol.fill = 'red';
   return (
     <div className="marker-popup">
       <div className="marker-popup-title-header">
@@ -35,7 +35,7 @@ const MarkerPopup = ({ properties, feedName }) => {
         </h2>
         <p>
           <span className="icon-wrapper wrapper" style={{ color: color }}>
-            <img src={displaySymbol} alt="Status Symbol" />
+            <Circle fill={color} />
           </span>
           {properties.status_name}
         </p>
