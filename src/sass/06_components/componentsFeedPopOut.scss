@@ -281,8 +281,15 @@ body {
                       font-size: 1rem;
                     }
                     .icon-wrapper {
-                      width: 1rem;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+
                       margin-right: .25rem;
+
+                      svg {
+                        width: .875rem;
+                      }
                     }
                     .status-name {
                       display: inline-block;
