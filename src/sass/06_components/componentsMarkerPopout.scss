@@ -27,6 +27,8 @@
                 overflow: hidden;
                 flex-direction: column;
 
+                min-width: 14rem;
+
                 .marker-popup-title-header {
                     margin-bottom: .5rem;
 
@@ -45,27 +47,39 @@
 
                     //header
                     h2 {
-                        display: flex; display: block;
+                        display: flex;
                         overflow: hidden;
                         flex-grow: 0;
                         flex-shrink: 0;
 
-                        padding: 0 .5rem 0 .5rem;
+                        margin-bottom: .25rem;
+                        padding: 0 .5rem;
 
                         white-space: nowrap;
-                       text-overflow: ellipsis;  font-size: 1.25rem;
+                        text-overflow: ellipsis;
 
-                        }
+                        font-size: 1.25rem;
+                        line-height: 1.4;
+                    }
 
-                    //status 
+                    //status
+                    
                     p {
+                        display: flex;
+                        align-items: center;
+
                         margin: 0;
                         padding: 0 .5rem .25rem;
 
                         font-weight: bold;
+                        line-height: 1;;
 
                         .icon-wrapper {
                             margin-right: .25rem;
+
+                            svg {
+                                width: .75rem;
+                            }
                         }
                     }
                 }
