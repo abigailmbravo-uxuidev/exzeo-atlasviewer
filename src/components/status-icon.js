@@ -11,14 +11,7 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 12 12"
         >
-          <circle
-            fill={fill}
-            stroke="#999"
-            d="M5 40 l215 0"
-            cx="6"
-            cy="6"
-            r="6"
-          />
+          <circle fill={fill} stroke="#999" d="M5" cx="6" cy="6" r="6" />
         </svg>
       );
     case 'hexagon':
@@ -32,7 +25,7 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
           <polygon
             fill={fill}
             stroke="#999"
-            d="M5 40 l215 0"
+            d="M5"
             points="9.75 0 3.25 0 0 5.63 3.25 11.26 9.75 11.26 13 5.63 9.75 0"
           />
         </svg>
@@ -48,8 +41,7 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
           <polygon
             fill={fill}
             stroke="#999"
-            d="M5 40 l215 0"
-            className="cls-1"
+            d="M5"
             points="6.5 0 0 4.72 2.48 12.36 10.52 12.36 13 4.72 6.5 0"
           />
         </svg>
@@ -65,7 +57,7 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
           <rect
             fill={fill}
             stroke="#999"
-            d="M5 40 l215 0"
+            d="M 1 1 H 90 V 90 H 12 L12 12"
             width="12"
             height="12"
           />
@@ -82,7 +74,7 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
           <polygon
             fill={fill}
             stroke="#999"
-            d="M5 40 l215 0"
+            d="M5"
             className="cls-1"
             points="6.5 0 0 11.26 13 11.26 6.5 0"
           />
