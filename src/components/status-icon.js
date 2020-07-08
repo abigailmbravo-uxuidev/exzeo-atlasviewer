@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const StatusIcon = ({ shape, fill }) => {
-  switch (shape) {
+const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
+  switch (shape.toLowerCase()) {
     case 'circle':
       return (
         <svg
