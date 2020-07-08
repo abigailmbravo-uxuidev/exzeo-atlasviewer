@@ -11,7 +11,7 @@ const StatusIcon = ({ shape, fill }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 12 12"
         >
-          <circle fill={fill} r="12" />
+          <circle fill={fill} cx="6" cy="6" r="6" />
         </svg>
       );
     case 'hexagon':
@@ -62,13 +62,16 @@ const StatusIcon = ({ shape, fill }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 13 11.26"
         >
-          <polygon fill={fill} className="cls-1" points="6.5 0 0 11.26 13 11.26 6.5 0" />
+          <polygon
+            fill={fill}
+            className="cls-1"
+            points="6.5 0 0 11.26 13 11.26 6.5 0"
+          />
         </svg>
       );
     default:
       return null;
   }
-
 };
 
 StatusIcon.propTypes = {
