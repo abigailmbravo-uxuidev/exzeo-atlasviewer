@@ -105,7 +105,7 @@ export const addDataset = (map, userId, layer) => {
     layout: {
       visibility: 'visible',
       'icon-image': ['downcase', ['concat', ['get', 'symbol'], '-12']],
-      'icon-size': 0.625,
+      'icon-size': 1,
       'icon-allow-overlap': true
     },
     paint: {
