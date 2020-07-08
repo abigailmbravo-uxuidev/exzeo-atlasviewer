@@ -16,6 +16,7 @@ import {
 import ViewPopout from './view-popout';
 import Logo from './logo';
 import Icon from './icon';
+import StatusIcon from './status-icon.js';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers, useSetLayers } from '../context/layer-context';
 import { mapStyles } from './map.utils';
@@ -189,11 +190,11 @@ const View = ({ setBasemap }) => {
                               <FontAwesomeIcon icon={faEyeSlash} />
                             )}
                           </span>
-                          <span
-                            className="icon-wrapper wrapper"
-                            style={{ color: status.color }}
-                          >
-                            <FontAwesomeIcon icon={faCircle} />
+                          <span className="icon-wrapper wrapper">
+                            <StatusIcon
+                              shape={status.symbol}
+                              fill={status.color}
+                            />
                             {/* maps to icon and color from feed */}
                           </span>
                           <span className="feed-detail-wrapper wrapper">
