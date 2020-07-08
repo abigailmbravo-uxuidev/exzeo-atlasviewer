@@ -11,7 +11,7 @@ const StatusIcon = ({ shape, fill }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 12 12"
         >
-          <rect fill={fill} width="12" height="12" />
+          <circle fill={fill} r="12" />
         </svg>
       );
     case 'hexagon':
@@ -20,9 +20,12 @@ const StatusIcon = ({ shape, fill }) => {
           id="Layer_1"
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 12 12"
+          viewBox="0 0 13 11.26"
         >
-          <rect fill={fill} width="12" height="12" />
+          <polygon
+            fill={fill}
+            points="9.75 0 3.25 0 0 5.63 3.25 11.26 9.75 11.26 13 5.63 9.75 0"
+          />
         </svg>
       );
     case 'pentagon':
@@ -31,20 +34,13 @@ const StatusIcon = ({ shape, fill }) => {
           id="Layer_1"
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 12 12"
+          viewBox="0 0 13 12.36"
         >
-          <rect fill={fill} width="12" height="12" />
-        </svg>
-      );
-    case 'circle':
-      return (
-        <svg
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 12 12"
-        >
-          <rect fill={fill} width="12" height="12" />
+          <polygon
+            fill={fill}
+            className="cls-1"
+            points="6.5 0 0 4.72 2.48 12.36 10.52 12.36 13 4.72 6.5 0"
+          />
         </svg>
       );
     case 'square':
@@ -58,15 +54,15 @@ const StatusIcon = ({ shape, fill }) => {
           <rect fill={fill} width="12" height="12" />
         </svg>
       );
-    case 'triange':
+    case 'triangle':
       return (
         <svg
           id="Layer_1"
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 12 12"
+          viewBox="0 0 13 11.26"
         >
-          <rect fill={fill} width="12" height="12" />
+          <polygon fill={fill} className="cls-1" points="6.5 0 0 11.26 13 11.26 6.5 0" />
         </svg>
       );
     default:
