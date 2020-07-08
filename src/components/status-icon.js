@@ -11,7 +11,14 @@ const StatusIcon = ({ shape = 'black', fill = 'circle' }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 12 12"
         >
-          <circle fill={fill} stroke="#999" d="M7" cx="6" cy="6" r="6" />
+          <circle
+            fill={fill}
+            stroke="#999"
+            d="M6,1A5,5,0,1,1,1,6,5,5,0,0,1,6,1M6,0a6,6,0,1,0,6,6A6,6,0,0,0,6,0Z"
+            cx="6"
+            cy="6"
+            r="6"
+          />
         </svg>
       );
     case 'hexagon':

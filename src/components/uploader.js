@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import StatusIcon from './status-icon.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -35,7 +36,8 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
     if (!statusValues.some(sv => sv.status_name === data[status_name]))
       statusValues.push({
         status_name: data[status_name],
-        status_color: data[status_color]
+        status_color: data[status_color],
+        status_symbol: data[status_symbol]
       });
   };
 
@@ -173,6 +175,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
                     icon={faCircle}
                     style={{ color: s.status_color }}
                   />
+                  <StatusIcon shape={s.status_symbol} fill={s.status_color} />
                   {s.status_name}
                 </li>
               ))}
