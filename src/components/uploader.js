@@ -40,7 +40,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
         symbol: data[symbol]
       });
   };
-  
+
   const complete = (results, file) => {
     const { errors } = results;
     if (errors && errors.length > 0) setError(errors.join());

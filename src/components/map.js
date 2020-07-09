@@ -8,8 +8,10 @@ import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
   addControls,
-  addDataset,
+  addFeed,
   addLayer,
+  getFeedId,
+  getSourceId,
   removeLayer
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
@@ -121,7 +123,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
     if (!map.getLayer || !feeds || !prevFeeds) return;
     if (feeds.length > prevFeeds.length) {
       // Add feed
-      addDataset(map, userId, feeds[feeds.length - 1]);
+      addFeed(map, userId, feeds[feeds.length - 1]);
     } else if (prevFeeds.length > feeds.length) {
       // Delete feed
       const deletedFeed = prevFeeds.filter(
@@ -133,13 +135,14 @@ const Map = ({ basemap, setIsMapLoading }) => {
       // Update feed
       feeds.map(feed => {
         const { _id, active, filter, updated } = feed;
-        const layerId = `${_id}-dataset`;
+        const layerId = getFeedId(_id);
         const prevFeed = prevFeeds.find(p => p._id === _id);
 
         // feed data updated
         if (updated) {
+          const sourceId = getSourceId(_id);
           map
-            .getSource(`${_id}-atlas`)
+            .getSource(sourceId)
             .setData(`${process.env.API_URL}/api/geojson/${userId}/${_id}`);
           feed.updated = false;
           dispatch({ type: 'update', data: feed });
@@ -147,7 +150,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
         if (active !== prevFeed.active) {
           if (!map.getLayer(layerId)) {
-            return addDataset(map, userId, feed);
+            return addFeed(map, userId, feed);
           }
 
           const visibility = map.getLayoutProperty(layerId, 'visibility');
