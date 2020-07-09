@@ -85,7 +85,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
       mapbox.on('click', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
         const selectedFeatures = features.filter(f =>
-          f.layer.id.includes('dataset')
+          f.layer.id.includes('feed')
         );
         if (!selectedFeatures || selectedFeatures.length === 0) return;
         const feature = selectedFeatures[0];
