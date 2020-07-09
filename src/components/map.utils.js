@@ -86,8 +86,8 @@ export const addLayer = (map, userId, layer) => {
   });
 };
 
-export const addFeed = (map, userId, layer) => {
-  const { _id, url } = layer;
+export const addFeed = (map, userId, feed) => {
+  const { _id, name, url } = feed;
   const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
   const sourceId = getSourceId(_id);
   const feedId = getFeedId(_id);
@@ -106,13 +106,16 @@ export const addFeed = (map, userId, layer) => {
     interactive: true,
     source: sourceId,
     metadata: {
-      feedname: layer.name
+      feedname: name
     },
     layout: {
       visibility: 'visible',
-      'icon-image': ['downcase', ['concat', ['get', 'symbol'], '-12']],
+      'icon-image': ['downcase', ['get', 'symbol']],
       'icon-size': 1,
-      'icon-allow-overlap': true
+      'icon-allow-overlap': true,
+      'text-allow-overlap': true,
+      'icon-ignore-placement': true,
+      'text-ignore-placement': true
     },
     paint: {
       'icon-color': ['get', 'status_color']

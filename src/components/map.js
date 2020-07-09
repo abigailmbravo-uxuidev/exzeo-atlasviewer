@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
+import diffStyles from 'mapbox-gl/src/style-spec/diff.js';
 import { useUser } from '../context/user-context';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
@@ -18,19 +19,35 @@ import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+
 import circle from '../img/circle-12.png';
 import hexagon from '../img/hexagon-12.png';
 import square from '../img/square-12.png';
 import pentagon from '../img/pentagon-12.png';
 import triangle from '../img/triangle-12.png';
 
-const loadIcon = (map, icon, name) =>
+const loadIcon = (map, name, icon) =>
   new Promise((resolve, reject) => {
     map.loadImage(icon, (error, image) => {
+      if (error) return reject;
       map.addImage(name, image, { sdf: true });
-      resolve();
+      return resolve();
     });
   });
+
+const loadIcons = async map => {
+  const icons = {
+    circle,
+    hexagon,
+    square,
+    pentagon,
+    triangle
+  };
+
+  return await Promise.all(
+    Object.entries(icons).map(([key, value]) => loadIcon(map, key, value))
+  );
+};
 
 const renderPopup = (properties, feedName) =>
   renderToStaticMarkup(
@@ -80,7 +97,9 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
       });
 
-      mapbox.on('error', error => setIsMapLoading(false));
+      mapbox.on('error', error => {
+        setIsMapLoading(false);
+      });
 
       mapbox.on('click', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
@@ -108,11 +127,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
           selectedFeatures.length > 0 ? 'pointer' : '';
       });
 
-      await loadIcon(mapbox, circle, 'circle-12');
-      await loadIcon(mapbox, hexagon, 'hexagon-12');
-      await loadIcon(mapbox, pentagon, 'pentagon-12');
-      await loadIcon(mapbox, square, 'square-12');
-      await loadIcon(mapbox, triangle, 'triangle-12');
+      await loadIcons(mapbox);
     };
 
     initializeMap(setMap, mapContainer);
@@ -195,9 +210,19 @@ const Map = ({ basemap, setIsMapLoading }) => {
   // Basemap
   useEffect(() => {
     if (!map.getLayer || !basemap) return;
-
+    let isReset = false;
     map.setStyle(basemap);
-  }, [basemap, map]);
+
+    map.once('styledata', async () => {
+      if (!isReset) {
+        await loadIcons(map);
+        feeds
+          .filter(feed => feed.active)
+          .forEach(feed => addFeed(map, userId, feed));
+        isReset = true;
+      }
+    });
+  }, [basemap, map, userId, feeds]);
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;
 };
