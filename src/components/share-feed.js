@@ -8,11 +8,11 @@ const handleShare = data => {
   console.log(data);
 };
 
-const Share = ({ data, setShareState, setError }) => {
+const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { register, handleSubmit, errors, formState } = useForm();
   return (
     <div className="modal fade-in">
-      <form className="card" onSubmit={handleSubmit(handleUpload)}>
+      <form className="card" onSubmit={handleSubmit(handleShare)}>
         <header>
           <h4>
             <FontAwesomeIcon icon={faNetworkWired} />
@@ -21,7 +21,7 @@ const Share = ({ data, setShareState, setError }) => {
           <button
             className="iconBtn closeBtn"
             type="button"
-            onClick={() => setShareState(false)}
+            onClick={() => setShareFeed()}
           >
             <FontAwesomeIcon icon={faTimes} />
           </button>
@@ -38,13 +38,6 @@ const Share = ({ data, setShareState, setError }) => {
         </div>
         <footer>
           <button
-            className="secondaryBtn"
-            type="button"
-            onClick={() => setUploaderState(false)}
-          >
-            Cancel
-          </button>
-          <button
             className="actionBtn"
             type="submit"
             enabled={String(formState.dirty)}
@@ -57,10 +50,10 @@ const Share = ({ data, setShareState, setError }) => {
   );
 };
 
-Share.propTypes = {
-  data: PropTypes.object.isRequired,
-  setShareState: PropTypes.func.isRequired,
+ShareFeed.propTypes = {
+  feed: PropTypes.object.isRequired,
+  setShareFeed: PropTypes.func.isRequired,
   setError: PropTypes.func.isRequired
 };
 
-export default Share;
+export default ShareFeed;

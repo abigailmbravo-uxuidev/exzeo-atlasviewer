@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import DeleteFeed from './delete-feed';
+import ShareFeed from './share-feed';
 import FeedManager from './feedManager';
 import Modal from './modal';
 import Uploader from './uploader';
@@ -22,6 +23,7 @@ import Uploader from './uploader';
 const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState({});
   const [deleteFeed, setDeleteFeed] = useState(null);
+  const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
@@ -70,6 +72,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         <DeleteFeed
           feed={deleteFeed}
           setDeleteFeed={setDeleteFeed}
+          setError={setError}
+        />
+      )}
+      {shareFeed && (
+        <ShareFeed
+          feed={shareFeed}
+          setShareFeed={setShareFeed}
           setError={setError}
         />
       )}
@@ -166,7 +175,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           </button>
                         </li>
                         <li>
-                          <button>
+                          <button onClick={() => setShareFeed(feed)}>
                             <FontAwesomeIcon icon={faShareAltSquare} />
                             &nbsp;Share
                           </button>
