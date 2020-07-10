@@ -11,12 +11,20 @@ import {
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { name } = feed;
-  const { getValues, register, handleSubmit, errors, formState } = useForm();
+  const {
+    errors,
+    formState,
+    getValues,
+    handleSubmit,
+    register,
+    reset
+  } = useForm();
   const [recipientList, setRecipientList] = useState([]);
 
-  const handleAdd = entity => {
-    console.log(getValues('recipient'));
-    setRecipientList([entity, ...recipientList]);
+  const handleAdd = () => {
+    const recipient = getValues('recipient');
+    setRecipientList([recipient, ...recipientList]);
+    reset();
   };
   const handleShare = entity => {
     console.log(entity);
