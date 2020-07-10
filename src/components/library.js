@@ -14,27 +14,27 @@ const Library = ({ setIsMapLoading }) => {
 
   return (
     <div id="library" className={`panel ${libraryActive ? 'open' : 'closed'}`}>
-      <div className="section search">
-        <div className="icon">
-          <Icon />
-        </div>
-        <div className="search-wrapper">
-          <label htmlFor="search">Filter feeds &amp; Layers</label>
-          <div className="searchBar">
-            <span className="input-icon-wrapper">
-              <input
-                placeholder="Type to filter by name or tag"
-                type="input"
-                name="search"
-                id="search"
-                onChange={handleFilter}
-              />
-              <FontAwesomeIcon icon={faFilter} />
-            </span>
+      <div className="panel-content">
+        <div className="section search">
+          <div className="icon">
+            <Icon />
+          </div>
+          <div className="search-wrapper">
+            <label htmlFor="search">Filter feeds &amp; Layers</label>
+            <div className="searchBar">
+              <span className="input-icon-wrapper">
+                <input
+                  placeholder="Type to filter by name or tag"
+                  type="input"
+                  name="search"
+                  id="search"
+                  onChange={handleFilter}
+                />
+                <FontAwesomeIcon icon={faFilter} />
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="scroll">
         <div className="section feeds">
           <Feeds filter={filter} setIsMapLoading={setIsMapLoading} />
         </div>

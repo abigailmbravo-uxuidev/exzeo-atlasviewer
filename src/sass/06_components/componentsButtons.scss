@@ -152,10 +152,13 @@ a {
   display: flex;
   align-items: center;
   flex-direction: row;
+  flex-grow: 0;
+  flex-shrink: 0;
   justify-content: space-between;
 
   width: 100%;
-  padding-bottom: 16px;
+  padding: 0 1rem .5rem;
+
 }
 .logoutBtn {
   position: fixed;

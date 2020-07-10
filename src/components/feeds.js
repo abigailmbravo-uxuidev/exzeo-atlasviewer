@@ -27,7 +27,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
-  const [paneHeight, setPaneHeightState] = useState();
+
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
@@ -35,14 +35,12 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const feeds =
     filter && filter.length > 1
       ? allFeeds.filter(feed =>
-          feed.name.toLowerCase().includes(filter.toLowerCase()))
+          feed.name.toLowerCase().includes(filter.toLowerCase())
+        )
       : allFeeds;
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
-    setPaneHeightState(
-      paneActive === true ? '0px' : `${content.current.scrollHeight}px`
-    );
   };
 
   const toggleFeed = (feed, inView) => {
@@ -54,9 +52,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     setUploaderState({ action: 'Update', feed });
   };
 
-  useEffect(() => {
-    setPaneHeightState(content.current.scrollHeight);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -107,11 +103,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div
-        className={`pane ${!paneActive ? 'closed' : 'open'}`}
-        ref={content}
-        style={{ maxHeight: `${paneHeight}` }}
-      >
+      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
           <select>
             <option>Name | A - Z</option>
@@ -123,7 +115,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option>Mapped Feeds</option>
           </select>
         </div>
-        <ul className="panel-list">
+        <ul className="panel-list scroll">
           <div className="notification shared-layer"></div>
           {feeds &&
             feeds.map((feed, index) => (

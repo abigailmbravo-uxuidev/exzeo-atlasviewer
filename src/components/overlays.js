@@ -8,15 +8,12 @@ import { useLayers, useSetLayers } from '../context/layer-context';
 const Overlays = ({ filter, setIsMapLoading }) => {
   const allLayers = useLayers();
   const setLayers = useSetLayers();
-  const [paneActive, setPaneActive] = useState(false);
-  const [paneHeight, setPaneHeightState] = useState();
+  const [paneActive, setPaneActive] = useState(true);
+
   const content = useRef(null);
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
-    setPaneHeightState(
-      paneActive === true ? '0px' : `${content.current.scrollHeight}px`
-    );
   };
 
   const toggleLayer = ({ target }) => {
@@ -30,14 +27,13 @@ const Overlays = ({ filter, setIsMapLoading }) => {
     setLayers(newLayers);
   };
 
-  useEffect(() => {
-    setPaneHeightState(content.current.scrollHeight);
-  }, []);
+  useEffect(() => {}, []);
 
   const layers =
     filter && filter.length > 1
       ? allLayers.filter(layer =>
-          layer.name.toLowerCase().includes(filter.toLowerCase()))
+          layer.name.toLowerCase().includes(filter.toLowerCase())
+        )
       : allLayers;
 
   return (
@@ -54,12 +50,8 @@ const Overlays = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div
-        className={`pane ${!paneActive ? 'closed' : 'open'}`}
-        ref={content}
-        style={{ maxHeight: `${paneHeight}` }}
-      >
-        <ul className="panel-list">
+      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
+        <ul className="panel-list scroll">
           {layers &&
             layers.map((layer, index) => (
               <li key={layer._id}>
