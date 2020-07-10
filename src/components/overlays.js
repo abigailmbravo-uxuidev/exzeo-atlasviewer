@@ -41,7 +41,7 @@ const Overlays = ({ filter, setIsMapLoading }) => {
       : allLayers;
 
   return (
-    <React.Fragment>
+    <>
       <header>
         <h4>
           <FontAwesomeIcon icon={faLayerGroup} />
@@ -79,7 +79,7 @@ const Overlays = ({ filter, setIsMapLoading }) => {
             ))}
         </ul>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

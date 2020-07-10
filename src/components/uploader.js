@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StatusIcon from './status-icon.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
