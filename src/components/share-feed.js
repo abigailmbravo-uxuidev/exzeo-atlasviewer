@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -29,6 +29,15 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const handleShare = entity => {
     console.log(entity);
   };
+
+  const columns = React.useMemo(
+    () => [
+      { Header: 'User', accessor: 'user' },
+      { Header: 'Invited', accessor: 'created_at' },
+      { Header: 'Last Viewed', accessor: 'updated_at' }
+    ],
+    []
+  );
 
   return (
     <div className="modal fade-in">
