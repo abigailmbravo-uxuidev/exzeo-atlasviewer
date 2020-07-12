@@ -8,6 +8,7 @@ import {
   faTimes,
   faPlus
 } from '@fortawesome/free-solid-svg-icons';
+const Table = './Table';
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { name } = feed;
@@ -20,6 +21,17 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reset
   } = useForm();
   const [recipientList, setRecipientList] = useState([]);
+
+  useEffect(() => {
+    const url = `${process.env.API_URL}/api/users/${userId}`;
+    const fetchUsers = async () => {
+      const result = await axios(url);
+
+      setData(result.data);
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleAdd = () => {
     const recipient = getValues('recipient');
@@ -84,7 +96,9 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         </div>
         <footer></footer>
       </form>
-
+      <div>
+        <Table columns={columns} data={recipientList} />
+      </div>
     </div>
   );
 };
