@@ -44,8 +44,6 @@ body {
         flex-direction: column;
         flex-grow: 1;
         flex-shrink: 1;
-
-        transition: all .2s ease-out;
       }
       
       .panel-content {
@@ -58,8 +56,6 @@ body {
           overflow: hidden;
           flex-grow: 1;
           flex-shrink: 1;
-
-          transition: all .2s ease-out;
 
           border-bottom: $white .5rem solid;
 
@@ -287,8 +283,6 @@ body {
 
     .pane {
         overflow: hidden;
-
-        transition: all .2s ease-out;
     }
 
     &.feeds {
