@@ -219,10 +219,13 @@ const Map = ({ basemap, setIsMapLoading }) => {
         feeds
           .filter(feed => feed.active)
           .forEach(feed => addFeed(map, userId, feed));
+        layers
+          .filter(layer => layer.active)
+          .forEach(layer => addLayer(map, userId, layer));
         isReset = true;
       }
     });
-  }, [basemap, map, userId, feeds]);
+  }, [basemap, map, userId, feeds, layers]);
 
   return <div id="map" ref={el => (mapContainer.current = el)} />;
 };
