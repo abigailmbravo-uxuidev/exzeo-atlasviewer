@@ -1,62 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Downshift from 'downshift';
+import { useCombobox } from 'downshift';
 
-const Autocomplete = ({
-  value,
-  onChange,
-  items,
-  placeholder = 'Start typing...'
-}) => {
+const Autocomplete = ({ items }) => {
+  const [inputItems, setInputItems] = useState(items);
+  const {
+    isOpen,
+    getToggleButtonProps,
+    getLabelProps,
+    getMenuProps,
+    getInputProps,
+    getComboboxProps,
+    highlightedIndex,
+    getItemProps
+  } = useCombobox({
+    items: inputItems,
+    onInputValueChange: ({ inputValue }) => {
+      setInputItems(
+        items.filter(item =>
+          item.toLowerCase().startsWith(inputValue.toLowerCase())
+        )
+      );
+    }
+  });
   return (
-    <Downshift
-      initialInputValue={value}
-      onChange={onChange}
-      itemToString={item => (item ? item : '')}
-    >
-      {({
-        getInputProps,
-        getItemProps,
-        getLabelProps,
-        getMenuProps,
-        isOpen,
-        inputValue,
-        highlightedIndex,
-        selectedItem
-      }) => (
-        <div>
-          <input
-            {...getInputProps()}
-            className="input"
-            placeholder={placeholder}
-          />
-          <ul {...getMenuProps()}>
-            {isOpen
-              ? items
-                  .filter(item => !inputValue || item.includes(inputValue))
-                  .map((item, index) => (
-                    <li
-                      key={item}
-                      {...getItemProps({
-                        key: item,
-                        index,
-                        item,
-                        style: {
-                          backgroundColor:
-                            highlightedIndex === index ? 'lightgray' : null,
-                          fontWeight: selectedItem === item ? 'bold' : 'normal'
-                        }
-                      })}
-                    >
-                      {item}
-                    </li>
-                  ))
-              : null}
-          </ul>
-        </div>
-      )}
-    </Downshift>
-  );
+    <div>
+      <div {...getComboboxProps()}>
+        <input {...getInputProps()} />
+        <button
+          type="button"
+          {...getToggleButtonProps()}
+          aria-label="toggle menu"
+        >
+          &#8595;
+        </button>
+      </div>
+      <ul {...getMenuProps()}>
+        {isOpen &&
+          inputItems.map((item, index) => (
+            <li
+              style={
+                highlightedIndex === index ? { backgroundColor: '#bde4ff' } : {}
+              }
+              key={`${item}${index}`}
+              {...getItemProps({ item, index })}
+            >
+              {item}
+            </li>
+          ))}
+      </ul>
+    </div>
+  )
 };
 
 Autocomplete.propTypes = {
