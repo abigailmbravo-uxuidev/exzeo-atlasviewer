@@ -1,18 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
   faTimes,
   faPlus
 } from '@fortawesome/free-solid-svg-icons';
-const Table = './Table';
+import Table from './table';
+import autocomplete from './autocomplete';
+import { useUser } from '../context/user-context';
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { name } = feed;
   const {
+    control,
     errors,
     formState,
     getValues,
@@ -21,17 +24,19 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reset
   } = useForm();
   const [recipientList, setRecipientList] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const { user_id } = useUser();
 
   useEffect(() => {
-    const url = `${process.env.API_URL}/api/users/${userId}`;
+    const url = `${process.env.API_URL}/api/users/${user_id}`;
     const fetchUsers = async () => {
       const result = await axios(url);
 
-      setData(result.data);
+      //setUserList(result.data);
     };
 
     fetchUsers();
-  }, []);
+  }, [user_id]);
 
   const handleAdd = () => {
     const recipient = getValues('recipient');
@@ -68,15 +73,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </button>
         </header>
         <div className="body">
-          <input
-            type="text"
-            id="recipient"
+          <Controller
+            as={autocomplete}
+            control={control}
             name="recipient"
-            placeholder="Add"
-            ref={register({
-              required: true,
-              pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            })}
+            items={recipientList}
           />
           <button
             className="secondaryActionBtn inputBtn"
