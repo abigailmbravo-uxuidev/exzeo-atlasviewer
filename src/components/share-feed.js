@@ -30,9 +30,9 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   useEffect(() => {
     const url = `${process.env.API_URL}/api/users/${user_id}`;
     const fetchUsers = async () => {
-      const result = await axios(url);
+      const { data } = await axios(url);
 
-      //setUserList(result.data);
+      setUserList(data);
     };
 
     fetchUsers();
@@ -77,7 +77,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             as={autocomplete}
             control={control}
             name="recipient"
-            items={recipientList}
+            items={userList}
           />
           <button
             className="secondaryActionBtn inputBtn"

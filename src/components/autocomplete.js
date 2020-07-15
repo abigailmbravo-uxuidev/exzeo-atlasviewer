@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 
+const menuStyles = {
+  maxHeight: '180px',
+  overflowY: 'auto',
+  width: '135px',
+  margin: 0,
+  borderTop: 0,
+  background: 'white',
+  position: 'absolute',
+  zIndex: 1000,
+  listStyle: 'none',
+  padding: 0,
+  left: '135px'
+};
+
+const comboboxStyles = { display: 'inline-block', marginLeft: '5px' };
+
 const Autocomplete = ({ items }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
@@ -18,14 +34,15 @@ const Autocomplete = ({ items }) => {
     onInputValueChange: ({ inputValue }) => {
       setInputItems(
         items.filter(item =>
-          item.toLowerCase().startsWith(inputValue.toLowerCase())
+          item.toLowerCase().startsWith(inputValue.toLowerCase()),
         )
       );
     }
   });
+
   return (
     <div>
-      <div {...getComboboxProps()}>
+      <div style={comboboxStyles} {...getComboboxProps()}>
         <input {...getInputProps()} />
         <button
           type="button"
@@ -35,7 +52,7 @@ const Autocomplete = ({ items }) => {
           &#8595;
         </button>
       </div>
-      <ul {...getMenuProps()}>
+      <ul {...getMenuProps()} style={menuStyles}>
         {isOpen &&
           inputItems.map((item, index) => (
             <li
@@ -50,7 +67,7 @@ const Autocomplete = ({ items }) => {
           ))}
       </ul>
     </div>
-  )
+  );
 };
 
 Autocomplete.propTypes = {
