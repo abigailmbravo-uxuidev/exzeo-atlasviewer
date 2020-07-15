@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 
@@ -18,7 +18,21 @@ const menuStyles = {
 
 const comboboxStyles = { display: 'inline-block', marginLeft: '5px' };
 
-const Autocomplete = ({ items }) => {
+let Item = ({ isHighlighted, getItemProps, item, index }) => {
+  return (
+    <li
+      style={isHighlighted ? { backgroundColor: '#bde4ff' } : {}}
+      key={`${item}${index}`}
+      {...getItemProps({ item, index })}
+    >
+      {item}
+    </li>
+  );
+};
+
+Item = memo(Item);
+
+const Autocomplete = ({ items, onChange }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
     isOpen,
@@ -31,10 +45,11 @@ const Autocomplete = ({ items }) => {
     getItemProps
   } = useCombobox({
     items: inputItems,
+    onSelectedItemChange: onChange,
     onInputValueChange: ({ inputValue }) => {
       setInputItems(
         items.filter(item =>
-          item.toLowerCase().startsWith(inputValue.toLowerCase()),
+          item.toLowerCase().includes(inputValue.toLowerCase())
         )
       );
     }
@@ -43,27 +58,21 @@ const Autocomplete = ({ items }) => {
   return (
     <div>
       <div style={comboboxStyles} {...getComboboxProps()}>
-        <input {...getInputProps()} />
-        <button
-          type="button"
-          {...getToggleButtonProps()}
-          aria-label="toggle menu"
-        >
+        <input name="autocomplete" {...getInputProps()} />
+        <button {...getToggleButtonProps()} aria-label="toggle menu">
           &#8595;
         </button>
       </div>
       <ul {...getMenuProps()} style={menuStyles}>
         {isOpen &&
           inputItems.map((item, index) => (
-            <li
-              style={
-                highlightedIndex === index ? { backgroundColor: '#bde4ff' } : {}
-              }
-              key={`${item}${index}`}
-              {...getItemProps({ item, index })}
-            >
-              {item}
-            </li>
+            <Item
+              key={item}
+              isHighlighted={highlightedIndex === index}
+              getItemProps={getItemProps}
+              item={item}
+              index={index}
+            />
           ))}
       </ul>
     </div>

@@ -9,7 +9,7 @@ import {
   faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
-import autocomplete from './autocomplete';
+import Autocomplete from './autocomplete';
 import { useUser } from '../context/user-context';
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
@@ -23,7 +23,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     register,
     reset
   } = useForm();
-  const [recipientList, setRecipientList] = useState([]);
+  const [shareList, setShareList] = useState([]);
   const [userList, setUserList] = useState([]);
   const { user_id } = useUser();
 
@@ -31,20 +31,14 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     const url = `${process.env.API_URL}/api/users/${user_id}`;
     const fetchUsers = async () => {
       const { data } = await axios(url);
-
       setUserList(data);
     };
 
     fetchUsers();
   }, [user_id]);
 
-  const handleAdd = () => {
-    const recipient = getValues('recipient');
-    setRecipientList([recipient, ...recipientList]);
-    reset();
-  };
-  const handleShare = entity => {
-    console.log(entity);
+  const handleShare = data => {
+    console.log(data);
   };
 
   const columns = React.useMemo(
@@ -74,22 +68,22 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         </header>
         <div className="body">
           <Controller
-            as={autocomplete}
+            as={Autocomplete}
             control={control}
             name="recipient"
             items={userList}
           />
           <button
             className="secondaryActionBtn inputBtn"
-            type="button"
-            onClick={e => handleAdd(e)}
+            type="submit"
+            enabled={String(formState.dirty)}
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>
           <button
             className="actionBtn"
-            type="submit"
-            enabled={String(formState.dirty)}
+            type="button"
+            onClick={() => console.log('test')}
           >
             Import
           </button>
@@ -98,7 +92,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         <footer></footer>
       </form>
       <div>
-        <Table columns={columns} data={recipientList} />
+        <Table columns={columns} data={shareList} />
       </div>
     </div>
   );
