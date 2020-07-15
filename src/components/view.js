@@ -171,7 +171,10 @@ const View = ({ setBasemap }) => {
                         </ReactTooltip>
                       </>
                     </span>
-                    <span className="icon-popOut">
+                    <span
+                      title="Pop feed and detailed data into panel overlaying map"
+                      className="icon-popOut"
+                    >
                       <FontAwesomeIcon
                         icon={faExternalLinkSquareAlt}
                         onClick={() => togglePopout(feed._id)}
