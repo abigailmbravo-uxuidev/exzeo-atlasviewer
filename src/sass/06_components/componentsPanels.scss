@@ -365,6 +365,8 @@
 //panel lists
 //----------------------------------------------------------
 .panel-list {
+flex-direction: row-reverse;
+
 margin: 0;
 padding: 0 4px 0 0;
 
@@ -376,6 +378,10 @@ li {
 
   width: 100%;
   margin-bottom: .75rem;
+
+  .menu {
+    flex-direction: row-reverse;
+  }
 
   &:last-of-type {
     .menu {
