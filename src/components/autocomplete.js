@@ -45,7 +45,7 @@ const Autocomplete = ({ items, onChange }) => {
     getItemProps
   } = useCombobox({
     items: inputItems,
-    onSelectedItemChange: onChange,
+    onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
     onInputValueChange: ({ inputValue }) => {
       setInputItems(
         items.filter(item =>

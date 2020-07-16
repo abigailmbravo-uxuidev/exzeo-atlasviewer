@@ -18,7 +18,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     control,
     errors,
     formState,
-    getValues,
     handleSubmit,
     register,
     reset
@@ -37,8 +36,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     fetchUsers();
   }, [user_id]);
 
-  const handleShare = data => {
-    console.log(data);
+  const handleShare = ({ recipient }) => {
+    if (!recipient || !recipient.includes('|')) return;
+    const parts = recipient.split('|');
+    setShareList([parts[1], ...shareList]);
+    reset();
   };
 
   const columns = React.useMemo(
@@ -91,8 +93,13 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         </div>
         <footer></footer>
       </form>
+      <ul>
+        {shareList.map(share => (
+          <span key={share}>{share}</span>
+        ))}
+      </ul>
       <div>
-        <Table columns={columns} data={shareList} />
+        <Table columns={columns} data={[]} />
       </div>
     </div>
   );
