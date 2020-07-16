@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 
@@ -32,7 +32,7 @@ let Item = ({ isHighlighted, getItemProps, item, index }) => {
 
 Item = memo(Item);
 
-const Autocomplete = ({ items, onChange }) => {
+const Autocomplete = ({ items, onChange, isSubmitted }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
     isOpen,
@@ -41,8 +41,10 @@ const Autocomplete = ({ items, onChange }) => {
     getMenuProps,
     getInputProps,
     getComboboxProps,
+    getItemProps,
     highlightedIndex,
-    getItemProps
+    inputValue,
+    reset
   } = useCombobox({
     items: inputItems,
     onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
@@ -54,6 +56,10 @@ const Autocomplete = ({ items, onChange }) => {
       );
     }
   });
+
+  useEffect(() => {
+    if (inputValue.length > 0 && isSubmitted) reset();
+  }, [inputValue, isSubmitted, reset]);
 
   return (
     <div>

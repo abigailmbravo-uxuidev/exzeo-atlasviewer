@@ -16,12 +16,17 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { name } = feed;
   const {
     control,
+    defaultValues,
     errors,
     formState,
     handleSubmit,
     register,
     reset
-  } = useForm();
+  } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    defaultValues: { recipient: '' }
+  });
   const [shareList, setShareList] = useState([]);
   const [userList, setUserList] = useState([]);
   const { user_id } = useUser();
@@ -40,7 +45,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     if (!recipient || !recipient.includes('|')) return;
     const parts = recipient.split('|');
     setShareList([parts[1], ...shareList]);
-    reset();
+    reset({});
   };
 
   const columns = React.useMemo(
@@ -74,6 +79,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             control={control}
             name="recipient"
             items={userList}
+            defaultValue=""
+            isSubmitted={formState.isSubmitted}
           />
           <button
             className="secondaryActionBtn inputBtn"
