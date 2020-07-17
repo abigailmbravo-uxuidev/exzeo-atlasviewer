@@ -66,7 +66,6 @@ const Autocomplete = ({ items, onChange }) => {
         <button {...getToggleButtonProps()} aria-label="toggle menu">
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
-        <button type="button" onClick={reset}>Reset</button>
       </div>
       <ul {...getMenuProps()} style={menuStyles}>
         {isOpen &&
