@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const menuStyles = {
   maxHeight: '180px',
@@ -62,11 +64,11 @@ const Autocomplete = ({ items, onChange, isSubmitted }) => {
   }, [inputValue, isSubmitted, reset]);
 
   return (
-    <div>
+    <div className="input-field">
       <div style={comboboxStyles} {...getComboboxProps()}>
         <input name="autocomplete" {...getInputProps()} />
         <button {...getToggleButtonProps()} aria-label="toggle menu">
-          &#8595;
+          <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </div>
       <ul {...getMenuProps()} style={menuStyles}>

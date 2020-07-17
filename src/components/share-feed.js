@@ -59,7 +59,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
   return (
     <div className="modal fade-in">
-      <form className="card" onSubmit={handleSubmit(handleShare)}>
+      <form className="card share" onSubmit={handleSubmit(handleShare)}>
         <header>
           <h4>
             <FontAwesomeIcon icon={faNetworkWired} />

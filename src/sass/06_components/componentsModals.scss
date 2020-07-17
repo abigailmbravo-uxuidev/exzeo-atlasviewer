@@ -247,6 +247,60 @@
           }
           
         }
+
+      //share modal 
+        &.share {
+          .body {
+            justify-content: flex-end;
+            .input-field {
+              position: relative;
+
+              flex-grow: 1;
+              flex-shrink: 1;
+
+              >div {
+                          display: inline-block;
+
+              width: 100%;
+              margin-left: 5px;
+                            
+                input {
+                  width: 100%;
+                  padding-right: 40px;
+
+                  border-radius: 6px 0 0 6px;
+                }
+              }
+
+              button {
+                position: absolute;
+                top: 10px;
+                right: 16px;
+
+                border: none;
+                background-color: transparent;
+              }
+            }
+            
+          }
+          h5 {
+            margin: 0 .5rem;
+          }
+          .secondaryActionBtn {
+            display: flex;
+
+            margin-right: 2rem;
+
+            border: 1px solid rgba($navy, 1);
+          }
+
+          .actionBtn {
+            justify-content: flex-end;
+
+            border: solid 1px rgba($navy, 1);
+            background-color: rgba($navy, 1);
+          }
+        }
       }
       
     }
