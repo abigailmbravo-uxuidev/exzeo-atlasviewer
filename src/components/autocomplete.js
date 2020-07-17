@@ -34,7 +34,7 @@ let Item = ({ isHighlighted, getItemProps, item, index }) => {
 
 Item = memo(Item);
 
-const Autocomplete = ({ items, onChange, isSubmitted }) => {
+const Autocomplete = ({ items, onChange }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
     isOpen,
@@ -43,8 +43,8 @@ const Autocomplete = ({ items, onChange, isSubmitted }) => {
     getMenuProps,
     getInputProps,
     getComboboxProps,
-    getItemProps,
     highlightedIndex,
+    getItemProps,
     inputValue,
     reset
   } = useCombobox({
@@ -59,10 +59,6 @@ const Autocomplete = ({ items, onChange, isSubmitted }) => {
     }
   });
 
-  useEffect(() => {
-    if (inputValue.length > 0 && isSubmitted) reset();
-  }, [inputValue, isSubmitted, reset]);
-
   return (
     <div className="input-field">
       <div style={comboboxStyles} {...getComboboxProps()}>
@@ -70,6 +66,7 @@ const Autocomplete = ({ items, onChange, isSubmitted }) => {
         <button {...getToggleButtonProps()} aria-label="toggle menu">
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
+        <button type="button" onClick={reset}>Reset</button>
       </div>
       <ul {...getMenuProps()} style={menuStyles}>
         {isOpen &&
