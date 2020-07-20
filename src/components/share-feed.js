@@ -88,7 +88,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             name="recipient"
             items={userList}
             defaultValue=""
-            isSubmitting={submitting}
+            submitting={submitting}
           />
           <button
             className="secondaryActionBtn inputBtn"
