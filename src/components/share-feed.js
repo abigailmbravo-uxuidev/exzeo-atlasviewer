@@ -18,7 +18,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     control,
     defaultValues,
     errors,
-    formState: { dirty },
+    formState: { dirty, isSubmitting },
     handleSubmit,
     register,
     reset
@@ -27,7 +27,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reValidateMode: 'onChange',
     defaultValues: { recipient: '' }
   });
-  const [submitting, setSubmitting] = useState(false);
   const [shareList, setShareList] = useState([]);
   const [userList, setUserList] = useState([]);
   const { user_id } = useUser();
@@ -43,7 +42,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   }, [user_id]);
 
   const handleShare = ({ recipient }) => {
-    setSubmitting(true);
     if (shareList.includes(recipient)) {
       setSubmitting(false);
       return;
@@ -53,7 +51,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     setShareList([parts[1], ...shareList]);
     setUserList(userList.filter(user => !user.includes(recipient)));
     reset({});
-    setSubmitting(false);
   };
 
   const columns = React.useMemo(
@@ -88,7 +85,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             name="recipient"
             items={userList}
             defaultValue=""
-            submitting={submitting}
+            isSubmitting={isSubmitting}
           />
           <button
             className="secondaryActionBtn inputBtn"
