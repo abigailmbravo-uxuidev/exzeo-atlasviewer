@@ -36,9 +36,6 @@
     max-width: calc(100% - 1.5rem);
     h5 {
       span {
-        overflow: hidden;
-
-        word-wrap: break-word;
       }
     }
 
@@ -49,7 +46,6 @@
   }
 
   &.open {
-    left: 0;
   }
   &.closed {
     left: -18rem;
@@ -70,7 +66,6 @@
 
     min-height: 1rem;
     li {
-      width: 100%;
       padding-top: .25rem;
       padding-bottom: .75rem;
 
@@ -85,7 +80,6 @@
         padding-left: .5rem;
     
         li {
-          display: flex;
           align-items: flex-start;
           flex-wrap: nowrap;
 

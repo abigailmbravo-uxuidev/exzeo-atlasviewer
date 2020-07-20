@@ -179,10 +179,8 @@ body {
 
           &.feeds, &.shapes {
             display: flex;
-            overflow: hidden;
             flex-direction: column;
             flex-grow: 0;
-            flex-shrink: 1;
 
             .pane {
               display: flex;
@@ -190,9 +188,7 @@ body {
               flex-direction: column;
 
               .panel-list {
-                display: flex;
                 align-items: flex-start;
-                flex-direction: column;
 
                 padding: 1rem .75rem .5rem;
 
@@ -204,7 +200,6 @@ body {
 
           &.view {
             display: flex;
-            overflow: hidden;
             flex-direction: column;
             .scroll {
               border-top: 1px solid rgba($navy, .2);
