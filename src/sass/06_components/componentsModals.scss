@@ -250,6 +250,9 @@
 
       //share modal 
         &.share {
+          overflow: visible;
+
+          min-width: 35%;
           .body {
             justify-content: flex-end;
             .input-field {
@@ -304,5 +307,30 @@
       }
       
     }
+  }
+}
+
+.auto-complete-list {
+  position: absolute;
+  z-index:1000;
+  right: 0;
+  left: 10px;
+
+  overflow-y: auto;
+
+  max-height: 180px;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  border-top: 0;
+  border-radius: 0 0 6px 6px;
+  background: white;
+  box-shadow: 0px 14px 29px -17px rgba($navy,0.48);
+
+  .auto-complete-list-item {
+    padding: 8px 4px;
+
   }
 }

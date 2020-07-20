@@ -4,25 +4,12 @@ import { useCombobox } from 'downshift';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-const menuStyles = {
-  maxHeight: '180px',
-  overflowY: 'auto',
-  width: '135px',
-  margin: 0,
-  borderTop: 0,
-  background: 'white',
-  position: 'absolute',
-  zIndex: 1000,
-  listStyle: 'none',
-  padding: 0,
-  left: '135px'
-};
-
 const comboboxStyles = { display: 'inline-block', marginLeft: '5px' };
 
 let Item = ({ isHighlighted, getItemProps, item, index }) => {
   return (
     <li
+      className="auto-complete-list-item"
       style={isHighlighted ? { backgroundColor: '#bde4ff' } : {}}
       key={`${item}${index}`}
       {...getItemProps({ item, index })}
@@ -71,7 +58,7 @@ const Autocomplete = ({ items, onChange, isSubmitting }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </div>
-      <ul {...getMenuProps()} style={menuStyles}>
+      <ul {...getMenuProps()} className="auto-complete-list">
         {isOpen &&
           inputItems.map((item, index) => (
             <Item
