@@ -29,7 +29,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   });
   const [shareList, setShareList] = useState([]);
   const [userList, setUserList] = useState([]);
-  const { user_id } = useUser();
+  const { user_id, first_name, last_name } = useUser();
 
   useEffect(() => {
     const url = `${process.env.API_URL}/api/users/${user_id}`;
@@ -41,7 +41,38 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     fetchUsers();
   }, [user_id]);
 
-  const handleShare = ({ recipient }) => {
+  const handleShare = async () => {
+    if (shareList.length < 1) return;
+
+    const url = `${process.env.API_URL}/api/share`;
+    const users = shareList.map(email => ({
+      email,
+      userId: user_id,
+      name: `${user.first_name} ${user.last_name}`
+    }));
+
+    const reqOptions = {
+      url,
+      method: 'POST',
+      data: {
+        feedId: feed.feedId,
+        users
+      }
+    };
+
+    try {
+      const res = await axios(reqOptions);
+      const result = res.data.data;
+
+      //dispatch({ type: actionType, data: newFeed });
+      setShareFeed();
+    } catch (err) {
+      setShareFeed();
+      return setError(err.message);
+    }
+  };
+
+  const handleAdd = ({ recipient }) => {
     if (shareList.includes(recipient)) {
       setSubmitting(false);
       return;
@@ -64,7 +95,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
   return (
     <div className="modal fade-in">
-      <form className="card share" onSubmit={handleSubmit(handleShare)}>
+      <form className="card share" onSubmit={handleSubmit(handleAdd)}>
         <header>
           <h4>
             <FontAwesomeIcon icon={faNetworkWired} />
@@ -97,7 +128,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           <button
             className="actionBtn"
             type="button"
-            onClick={() => console.log('test')}
+            onClick={() => handleShare}
           >
             Import
           </button>
