@@ -34,7 +34,7 @@ let Item = ({ isHighlighted, getItemProps, item, index }) => {
 
 Item = memo(Item);
 
-const Autocomplete = ({ items, onChange }) => {
+const Autocomplete = ({ items, onChange, isSubmitting }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
     isOpen,
@@ -58,6 +58,10 @@ const Autocomplete = ({ items, onChange }) => {
       );
     }
   });
+
+  useEffect(() => {
+    if (inputValue.length > 0 && isSubmitting) reset();
+  }, [inputValue, isSubmitting, reset]);
 
   return (
     <div className="input-field">
