@@ -130,6 +130,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           {errors.lastname && 'Feed Name is required.'}
         </div>
         <div className="feed-share-results">
+          <h5>User Added</h5>
           <div className="name-chips">
             {shareList.map(share => (
               <span key={share}>

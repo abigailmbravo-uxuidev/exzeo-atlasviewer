@@ -255,6 +255,14 @@
 
           //feed share data share results 
           .feed-share-results {
+            h5 {
+              margin-left: 24px;
+              padding-top:8px;
+
+              text-transform: uppercase;
+
+              font-size: 14px;
+            }
             .name-chips {
               display: flex;
 
@@ -289,8 +297,27 @@
               }
             }
             .shared-to-table {
+              display: flex;
               table {
                 width: 100%;
+                margin: 0 16px 0 16px;
+
+                border-radius: 4px;
+                background-color: rgba($blue-gray, 1);
+
+                tr {
+                  justify-content: space-between;
+
+                  padding: 4px 8px;
+
+                  th {
+                    text-transform: uppercase;
+
+                    color: rgba($base-gray, .75);
+
+                    font-size: 14px;
+                  }
+                }
               }
             }
           }
