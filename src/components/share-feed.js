@@ -79,6 +79,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reset({});
   };
 
+  const handleRemove = email => {
+    setUserList([email, ...userList]);
+    setShareList(shareList.filter(share => !share.includes(email)));
+  };
+
   const columns = React.useMemo(
     () => [
       { Header: 'User', accessor: 'user' },
@@ -132,10 +137,16 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         <div className="feed-share-results">
           <h5>Users Added</h5>
           <div className="name-chips">
-            {shareList.map(share => (
+            {shareList.map((share, index) => (
               <span key={share}>
                 {share}
-                <span className="remove-icon">
+                <span
+                  className="remove-icon"
+                  role="button"
+                  tabIndex={index}
+                  onKeyPress={() => handleRemove(share)}
+                  onClick={() => handleRemove(share)}
+                >
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
               </span>
