@@ -252,6 +252,48 @@
           overflow: visible;
 
           min-width: 35%;
+
+          //feed share data share results 
+          .feed-share-results {
+            .name-chips {
+              display: flex;
+
+              margin-bottom: 16px;
+              span {
+                margin: 8px 8px 8px 16px;
+                padding: 4px 4px 4px 16px;
+
+                color: $white;
+                border-radius: 24px;
+                background-color: $orange;
+                box-shadow: 0px 0px 6px 0px rgba($navy,0.375);
+
+                .remove-icon {
+                  align-items: center;
+                  justify-content: center;
+
+                  margin-left: 8px;
+                  padding: 0;
+
+                  box-shadow: none;
+
+                  font-size: 14px;
+
+                  :hover {
+                    cursor: pointer;
+
+                    color: rgba($navy,0.8);
+                    
+                  }
+                }
+              }
+            }
+            .shared-to-table {
+              table {
+                width: 100%;
+              }
+            }
+          }
           .body {
             justify-content: flex-end;
             .input-field {

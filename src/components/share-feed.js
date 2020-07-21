@@ -134,16 +134,23 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </button>
           {errors.lastname && 'Feed Name is required.'}
         </div>
+        <div className="feed-share-results">
+          <div className="name-chips">
+            {shareList.map(share => (
+              <span key={share}>
+                {share}
+                <span className="remove-icon">
+                  <FontAwesomeIcon icon={faTimes} />
+                </span>
+              </span>
+            ))}
+          </div>
+          <div className="shared-to-table">
+            <Table columns={columns} data={[]} />
+          </div>
+        </div>
         <footer></footer>
       </form>
-      <ul>
-        {shareList.map(share => (
-          <span key={share}>{share}</span>
-        ))}
-      </ul>
-      <div>
-        <Table columns={columns} data={[]} />
-      </div>
     </div>
   );
 };
