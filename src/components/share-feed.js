@@ -45,18 +45,13 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     if (shareList.length < 1) return;
 
     const url = `${process.env.API_URL}/api/share`;
-    const users = shareList.map(email => ({
-      email,
-      userId: user_id,
-      name: `${user.first_name} ${user.last_name}`
-    }));
-
+    console.log('sharing...')
     const reqOptions = {
       url,
       method: 'POST',
       data: {
-        feedId: feed.feedId,
-        users
+        feed,
+        users: shareList
       }
     };
 
@@ -128,7 +123,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           <button
             className="actionBtn"
             type="button"
-            onClick={() => handleShare}
+            onClick={() => handleShare()}
           >
             Import
           </button>
