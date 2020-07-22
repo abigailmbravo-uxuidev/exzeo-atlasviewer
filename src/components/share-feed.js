@@ -86,7 +86,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
   const columns = React.useMemo(
     () => [
-      { Header: 'User', accessor: 'user' },
+      { Header: 'User', accessor: 'user,name' },
       { Header: 'Invited', accessor: 'created_at' },
       { Header: 'Last Viewed', accessor: 'updated_at' }
     ],

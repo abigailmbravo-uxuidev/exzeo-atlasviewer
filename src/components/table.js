@@ -1,6 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTable } from 'react-table';
+import { useTable, useRowSelect } from 'react-table';
+
+const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = useRef()
+  const resolvedRef = ref || defaultRef
+
+  useEffect(() => {
+    resolvedRef.current.indeterminate = indeterminate
+  }, [resolvedRef, indeterminate])
+
+  return (
+    <>
+      <input type="checkbox" ref={resolvedRef} {...rest} />
+    </>
+  )
+});
+
+IndeterminateCheckbox.displayNmae = 'IndeterminateCheckbox';
 
 const Table = ({ columns, data }) => {
   const {
@@ -8,11 +25,38 @@ const Table = ({ columns, data }) => {
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
-  } = useTable({
-    columns,
-    data
-  });
+    prepareRow,
+    state: { selectedRowIds },
+  } = useTable(
+    {
+      columns,
+      data
+    },
+    useRowSelect,
+    hooks => {
+      hooks.visibleColumns.push(columns => [
+        // Let's make a column for selection
+        ...columns,
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        }
+      ])
+    }
+  );
 
   return (
     <table {...getTableProps()}>
