@@ -40,7 +40,7 @@ const Table = ({ columns, data, selectedRows, setSelectedRows }) => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, iindex) => {
+        {rows.map((row, index) => {
           prepareRow(row);
           return (
             <tr key={index} {...row.getRowProps()}>

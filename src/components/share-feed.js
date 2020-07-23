@@ -14,7 +14,7 @@ import Checkbox from './checkbox';
 import { useUser } from '../context/user-context';
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
-  const { name } = feed;
+  const { _id, name } = feed;
   const {
     control,
     defaultValues,
@@ -30,18 +30,23 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   });
   const [selectedRows, setSelectedRows] = useState([]);
   const [shareList, setShareList] = useState([]);
+  const [previousShares, setPreviousShare] = useState([]);
   const [userList, setUserList] = useState([]);
   const { user_id, first_name, last_name } = useUser();
 
   useEffect(() => {
-    const url = `${process.env.API_URL}/api/users/${user_id}`;
+    const url = `${process.env.API_URL}/api/shares/${_id}`;
     const fetchUsers = async () => {
-      const { data } = await axios(url);
-      setUserList(data);
+      const {
+        data: { users = [], shares = [] }
+      } = await axios(url);
+
+      setUserList(users);
+      setPreviousShare(shares);
     };
 
     fetchUsers();
-  }, [user_id]);
+  }, [_id]);
 
   const handleShare = async () => {
     if (shareList.length < 1) return;
@@ -61,7 +66,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       const res = await axios(reqOptions);
       const result = res.data.data;
 
-      //dispatch({ type: actionType, data: newFeed });
       setShareFeed();
     } catch (err) {
       setShareFeed();
@@ -88,14 +92,14 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
   const columns = React.useMemo(
     () => [
-      { Header: 'User', accessor: 'user,name' },
+      { Header: 'User', accessor: 'share' },
       { Header: 'Invited', accessor: 'created_at' },
       { Header: 'Last Viewed', accessor: 'updated_at' },
       {
         id: 'selection',
         Header: ({ getToggleAllRowsSelectedProps }) => (
           <div>
-            <Checkbox {...getToggleAllRowsSelectedProps()} />
+            <Checkbox {...getToggleAllRowsSelectedProps()} indeterminate />
           </div>
         ),
         Cell: ({ row }) => (
@@ -170,7 +174,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           <div className="shared-to-table">
             <Table
               columns={columns}
-              data={[]}
+              data={previousShares}
               selectedRows={selectedRows}
               setSelectedRows={setSelectedRows}
             />

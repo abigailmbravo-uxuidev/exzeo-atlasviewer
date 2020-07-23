@@ -5,8 +5,8 @@ const Checkbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
   const resolvedRef = ref || defaultRef;
   useEffect(() => {
-    resolvedRef.current.indeterminate = indeterminate
-  }, [resolvedRef, indeterminate])
+    resolvedRef.current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
 
   return (
     <>
@@ -14,8 +14,6 @@ const Checkbox = forwardRef(({ indeterminate, ...rest }, ref) => {
     </>
   );
 });
-
-Checkbox.displayNmae = 'Checkbox';
 
 Checkbox.propTypes = {};
 
