@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useRef, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
 import Autocomplete from './autocomplete';
+import Checkbox from './checkbox';
 import { useUser } from '../context/user-context';
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
@@ -27,6 +28,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reValidateMode: 'onChange',
     defaultValues: { recipient: '' }
   });
+  const [selectedRows, setSelectedRows] = useState([]);
   const [shareList, setShareList] = useState([]);
   const [userList, setUserList] = useState([]);
   const { user_id, first_name, last_name } = useUser();
@@ -88,7 +90,20 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     () => [
       { Header: 'User', accessor: 'user,name' },
       { Header: 'Invited', accessor: 'created_at' },
-      { Header: 'Last Viewed', accessor: 'updated_at' }
+      { Header: 'Last Viewed', accessor: 'updated_at' },
+      {
+        id: 'selection',
+        Header: ({ getToggleAllRowsSelectedProps }) => (
+          <div>
+            <Checkbox {...getToggleAllRowsSelectedProps()} />
+          </div>
+        ),
+        Cell: ({ row }) => (
+          <div>
+            <Checkbox {...row.getToggleRowSelectedProps()} />
+          </div>
+        )
+      }
     ],
     []
   );
@@ -153,7 +168,12 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             ))}
           </div>
           <div className="shared-to-table">
-            <Table columns={columns} data={[]} />
+            <Table
+              columns={columns}
+              data={[]}
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+            />
           </div>
         </div>
         <footer></footer>
