@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
-import diffStyles from 'mapbox-gl/src/style-spec/diff.js';
+import Modal from './modal';
 import { useUser } from '../context/user-context';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
@@ -64,6 +64,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
   const prevFeeds = usePrevious(feeds);
   const prevLayers = usePrevious(layers);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const userId = user.user_id;
   const { token } = user;
   const hoveredStateId = useRef(null);
@@ -97,7 +98,8 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
       });
 
-      mapbox.on('error', error => {
+      mapbox.on('error', ({ error: { message } }) => {
+        setError(message || 'Error');
         setIsMapLoading(false);
       });
 
@@ -227,7 +229,14 @@ const Map = ({ basemap, setIsMapLoading }) => {
     });
   }, [basemap, map, userId, feeds, layers]);
 
-  return <div id="map" ref={el => (mapContainer.current = el)} />;
+  return (
+    <>
+      {error.length > 0 && (
+        <Modal message={error} closeModal={() => setError('')} />
+      )}
+      <div id="map" ref={el => (mapContainer.current = el)} />
+    </>
+  );
 };
 
 Map.propTypes = {

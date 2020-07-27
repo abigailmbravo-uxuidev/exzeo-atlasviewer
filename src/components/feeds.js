@@ -130,12 +130,11 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                 </span>
                 <span className="feed-detail-wrapper wrapper">
                   <h5>
-                    {/* TO DO @Eric: icon should only show if feed is shared
-                        Icon should have new class once we add "new notification" When notification is dismissed, new class should be removed
-                    <span className="icon shared new">
-                      <FontAwesomeIcon icon={faShareAlt} />
-                    </span>
-                    {/* END TO DO */}
+                    {feed.share && (
+                      <span className="icon shared new">
+                        <FontAwesomeIcon icon={faShareAlt} />
+                      </span>
+                    )}
                     <span className="file-name">{feed.name}</span>
                     <span className="menuIcon">
                       <FontAwesomeIcon icon={faEllipsisV} />
@@ -196,12 +195,12 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           format(new Date(feed.updated_at), 'MM-dd-yyyy')}
                       </dd>
                     </span>
-                    {/* only show author if feed is shared */}
+                    {feed.share &&
                     <span className="author">
                       <dt>Author</dt>
                       <dd>{feed.owner.name}</dd>
                     </span>
-                    {/* end only show author if feed is shared */}
+                    }
                   </dl>
                 </span>
               </li>
