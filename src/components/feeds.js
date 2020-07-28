@@ -195,12 +195,12 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           format(new Date(feed.updated_at), 'MM-dd-yyyy')}
                       </dd>
                     </span>
-                    {feed.share &&
-                    <span className="author">
-                      <dt>Author</dt>
-                      <dd>{feed.owner.name}</dd>
-                    </span>
-                    }
+                    {feed.share && (
+                      <span className="author">
+                        <dt>Author</dt>
+                        <dd>{feed.owner.name}</dd>
+                      </span>
+                    )}
                   </dl>
                 </span>
               </li>
