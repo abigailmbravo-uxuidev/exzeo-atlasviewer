@@ -149,7 +149,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             type="button"
             onClick={() => handleShare()}
           >
-            Import
+            Share
           </button>
           {errors.lastname && 'Feed Name is required.'}
         </div>
