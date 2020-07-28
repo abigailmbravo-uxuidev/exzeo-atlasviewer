@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -26,8 +26,6 @@ const Overlays = ({ filter, setIsMapLoading }) => {
     });
     setLayers(newLayers);
   };
-
-  useEffect(() => {}, []);
 
   const layers =
     filter && filter.length > 1
