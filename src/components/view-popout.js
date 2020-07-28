@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { createPortal } from 'react-dom';
+import StatusIcon from './status-icon.js';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -82,7 +83,10 @@ const ViewPopout = ({ feed, close }) => {
                             className="icon-wrapper wrapper"
                             style={{ color: status.color }}
                           >
-                            <FontAwesomeIcon icon={faCircle} />
+                            <StatusIcon
+                              shape={status.symbol}
+                              fill={status.color}
+                            />
                           </span>
                           <span className="status-name title-tip">
                             {status.name}

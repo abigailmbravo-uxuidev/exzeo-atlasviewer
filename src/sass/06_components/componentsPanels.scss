@@ -36,9 +36,6 @@
     max-width: calc(100% - 1.5rem);
     h5 {
       span {
-        overflow: hidden;
-
-        word-wrap: break-word;
       }
     }
 
@@ -49,7 +46,6 @@
   }
 
   &.open {
-    left: 0;
   }
   &.closed {
     left: -18rem;
@@ -67,6 +63,8 @@
   .panel-list {
     display: flex;
     flex-direction: column;
+
+    min-height: 1rem;
     li {
       padding-top: .25rem;
       padding-bottom: .75rem;
@@ -74,7 +72,7 @@
       border-bottom: 1px dotted rgba($navy, .2);
 
       &:last-of-type {
-        border-bottom: 1px solid rgba($navy, .3);
+        border-bottom-width: 0;
       }
 
       .detail-list {
@@ -82,7 +80,6 @@
         padding-left: .5rem;
     
         li {
-          display: flex;
           align-items: flex-start;
           flex-wrap: nowrap;
 
@@ -100,6 +97,10 @@
             height: 1rem;
 
             font-size: .875rem;
+
+            svg {
+              width: .75rem;
+            }
           }
 
           h6 {
@@ -222,9 +223,7 @@
     display: flex;
     align-items: center;
 
-    padding-bottom: .75rem;
-
-    border-bottom: 1px solid rgba($navy, .3);
+    padding: 0 .75rem .75rem;
 
     select {
       margin: 8px 0;
@@ -360,6 +359,8 @@
 //panel lists
 //----------------------------------------------------------
 .panel-list {
+flex-direction: row-reverse;
+
 margin: 0;
 padding: 0 4px 0 0;
 
@@ -369,7 +370,12 @@ li {
   display: flex;
   flex-wrap: wrap;
 
+  width: 100%;
   margin-bottom: .75rem;
+
+  .menu {
+    flex-direction: row-reverse;
+  }
 
   &:last-of-type {
     .menu {
@@ -399,9 +405,15 @@ li {
   &:first-of-type:last-of-type {
     
     .menu {
-      top: -26px;
+      top: -8px;
 
       flex-direction: row-reverse;
+
+      .menu-button {
+        align-items: flex-start;
+
+        margin-top: 6px;
+      }
     }
   }
 

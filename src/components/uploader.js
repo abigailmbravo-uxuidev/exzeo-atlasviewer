@@ -1,5 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import StatusIcon from './status-icon.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -30,12 +31,13 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
 
     const status_name = getStatusValue('status_name');
     const status_color = getStatusValue('status_color');
-    const status_symbol = getStatusValue('status_symbol');
+    const symbol = getStatusValue('symbol');
 
     if (!statusValues.some(sv => sv.status_name === data[status_name]))
       statusValues.push({
         status_name: data[status_name],
-        status_color: data[status_color]
+        status_color: data[status_color],
+        symbol: data[symbol]
       });
   };
 
@@ -79,6 +81,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
     const formData = new FormData();
     formData.append('name', data.feedname);
     formData.append('userData', JSON.stringify(userData));
+    formData.append('userName', userData.name);
     formData.append('file', file);
 
     if (action === 'Update') formData.append('feedId', feed._id);
@@ -168,11 +171,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
             {statuses &&
               statuses.map(s => (
                 <li key={s.status_name}>
-                  <FontAwesomeIcon
-                    className="statusIcon"
-                    icon={faCircle}
-                    style={{ color: s.status_color }}
-                  />
+                  <StatusIcon shape={s.symbol} fill={s.status_color} />
                   {s.status_name}
                 </li>
               ))}
@@ -191,7 +190,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
             type="submit"
             enabled={String(formState.dirty)}
           >
-            Save and Map
+            {action === 'Update' ? 'Update' : 'Save'} and Map
           </button>
         </footer>
       </form>

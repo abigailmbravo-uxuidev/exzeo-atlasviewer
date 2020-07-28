@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -8,15 +8,12 @@ import { useLayers, useSetLayers } from '../context/layer-context';
 const Overlays = ({ filter, setIsMapLoading }) => {
   const allLayers = useLayers();
   const setLayers = useSetLayers();
-  const [paneActive, setPaneActive] = useState(false);
-  const [paneHeight, setPaneHeightState] = useState();
+  const [paneActive, setPaneActive] = useState(true);
+
   const content = useRef(null);
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
-    setPaneHeightState(
-      paneActive === true ? '0px' : `${content.current.scrollHeight}px`
-    );
   };
 
   const toggleLayer = ({ target }) => {
@@ -30,17 +27,15 @@ const Overlays = ({ filter, setIsMapLoading }) => {
     setLayers(newLayers);
   };
 
-  useEffect(() => {
-    setPaneHeightState(content.current.scrollHeight);
-  }, []);
-
   const layers =
     filter && filter.length > 1
-      ? allLayers.filter(layer => layer.name.includes(filter))
+      ? allLayers.filter(layer =>
+          layer.name.toLowerCase().includes(filter.toLowerCase())
+        )
       : allLayers;
 
   return (
-    <React.Fragment>
+    <>
       <header>
         <h4>
           <FontAwesomeIcon icon={faLayerGroup} />
@@ -53,12 +48,8 @@ const Overlays = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div
-        className={`pane ${!paneActive ? 'closed' : 'open'}`}
-        ref={content}
-        style={{ maxHeight: `${paneHeight}` }}
-      >
-        <ul className="panel-list">
+      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
+        <ul className="panel-list scroll">
           {layers &&
             layers.map((layer, index) => (
               <li key={layer._id}>
@@ -78,7 +69,7 @@ const Overlays = ({ filter, setIsMapLoading }) => {
             ))}
         </ul>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

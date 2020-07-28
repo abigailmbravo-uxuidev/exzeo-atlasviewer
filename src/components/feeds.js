@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import DeleteFeed from './delete-feed';
+import ShareFeed from './share-feed';
 import FeedManager from './feedManager';
 import Modal from './modal';
 import Uploader from './uploader';
@@ -22,24 +23,24 @@ import Uploader from './uploader';
 const Feeds = ({ filter, setIsMapLoading }) => {
   const [uploaderState, setUploaderState] = useState({});
   const [deleteFeed, setDeleteFeed] = useState(null);
+  const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState();
   const [paneActive, setPaneActive] = useState(true);
-  const [paneHeight, setPaneHeightState] = useState();
+
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
 
   const feeds =
     filter && filter.length > 1
-      ? allFeeds.filter(feed => feed.name.includes(filter))
+      ? allFeeds.filter(feed =>
+          feed.name.toLowerCase().includes(filter.toLowerCase())
+        )
       : allFeeds;
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
-    setPaneHeightState(
-      paneActive === true ? '0px' : `${content.current.scrollHeight}px`
-    );
   };
 
   const toggleFeed = (feed, inView) => {
@@ -51,9 +52,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     setUploaderState({ action: 'Update', feed });
   };
 
-  useEffect(() => {
-    setPaneHeightState(content.current.scrollHeight);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -69,6 +68,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         <DeleteFeed
           feed={deleteFeed}
           setDeleteFeed={setDeleteFeed}
+          setError={setError}
+        />
+      )}
+      {shareFeed && (
+        <ShareFeed
+          feed={shareFeed}
+          setShareFeed={setShareFeed}
           setError={setError}
         />
       )}
@@ -97,11 +103,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div
-        className={`pane ${!paneActive ? 'closed' : 'open'}`}
-        ref={content}
-        style={{ maxHeight: `${paneHeight}` }}
-      >
+      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
           <select>
             <option>Name | A - Z</option>
@@ -113,7 +115,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option>Mapped Feeds</option>
           </select>
         </div>
-        <ul className="panel-list">
+        <ul className="panel-list scroll">
           <div className="notification shared-layer"></div>
           {feeds &&
             feeds.map((feed, index) => (
@@ -128,13 +130,11 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                 </span>
                 <span className="feed-detail-wrapper wrapper">
                   <h5>
-                    {/* TO DO @Eric: icon should only show if feed is shared
-                        Icon should have new class once we add "new notification" When notification is dismissed, new class should be removed
-                    */}
-                    <span className="icon shared new">
-                      <FontAwesomeIcon icon={faShareAlt} />
-                    </span>
-                    {/* END TO DO */}
+                    {feed.share && (
+                      <span className="icon shared new">
+                        <FontAwesomeIcon icon={faShareAlt} />
+                      </span>
+                    )}
                     <span className="file-name">{feed.name}</span>
                     <span className="menuIcon">
                       <FontAwesomeIcon icon={faEllipsisV} />
@@ -166,7 +166,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           </button>
                         </li>
                         <li>
-                          <button>
+                          <button onClick={() => setShareFeed(feed)}>
                             <FontAwesomeIcon icon={faShareAltSquare} />
                             &nbsp;Share
                           </button>
@@ -195,12 +195,12 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                           format(new Date(feed.updated_at), 'MM-dd-yyyy')}
                       </dd>
                     </span>
-                    {/* only show author if feed is shared */}
-                    <span className="author">
-                      <dt>Author</dt>
-                      <dd>{feed.owner.name}</dd>
-                    </span>
-                    {/* end only show author if feed is shared */}
+                    {feed.share && (
+                      <span className="author">
+                        <dt>Author</dt>
+                        <dd>{feed.owner.name}</dd>
+                      </span>
+                    )}
                   </dl>
                 </span>
               </li>

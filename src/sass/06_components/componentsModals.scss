@@ -36,7 +36,6 @@
         padding: .5rem 2.25rem .5rem 1rem;
 
         h4 {
-          display: flex;
           overflow: hidden;
           align-items: flex-end;
 
@@ -84,8 +83,9 @@
             li {
               display: flex;
               align-items: center;
-              .statusIcon {
-                margin-right: .75rem;
+              svg, .statusIcon {
+                width: .75rem;
+                margin-right: .5rem;
 
                 font-size: .75rem;
 
@@ -246,8 +246,159 @@
           }
           
         }
+
+      //share modal 
+        &.share {
+          overflow: visible;
+
+          min-width: 35%;
+
+          //feed share data share results 
+          .feed-share-results {
+            h5 {
+              margin-left: 24px;
+              padding-top:8px;
+
+              text-transform: uppercase;
+
+              font-size: 14px;
+            }
+            .name-chips {
+              display: flex;
+
+              margin-bottom: 16px;
+              span {
+                margin: 8px 8px 8px 20px;
+                padding: 4px 4px 4px 16px;
+
+                color: $white;
+                border-radius: 24px;
+                background-color: $orange;
+                box-shadow: 0px 0px 6px 0px rgba($navy,0.375);
+
+                .remove-icon {
+                  align-items: center;
+                  justify-content: center;
+
+                  margin-left: 8px;
+                  padding: 0;
+
+                  box-shadow: none;
+
+                  font-size: 14px;
+
+                  :hover {
+                    cursor: pointer;
+
+                    color: rgba($navy,0.8);
+                    
+                  }
+                }
+              }
+            }
+            .shared-to-table {
+              display: flex;
+              table {
+                width: 100%;
+                margin: 0 24px 0 24px;
+
+                border-radius: 4px;
+                background-color: rgba($blue-gray, 1);
+
+                tr {
+                  justify-content: space-between;
+
+                  padding: 4px 8px;
+
+                  th {
+                    text-transform: uppercase;
+
+                    color: rgba($base-gray, .75);
+
+                    font-size: 14px;
+                  }
+                }
+              }
+            }
+          }
+          .body {
+            justify-content: flex-end;
+            .input-field {
+              position: relative;
+
+              flex-grow: 1;
+              flex-shrink: 1;
+
+              >div {
+                          display: inline-block;
+
+              width: 100%;
+              margin-left: 5px;
+                            
+                input {
+                  width: 100%;
+                  padding-right: 40px;
+
+                  border-radius: 6px 0 0 6px;
+                }
+              }
+
+              button {
+                position: absolute;
+                top: 10px;
+                right: 16px;
+
+                border: none;
+                background-color: transparent;
+              }
+            }
+            
+          }
+          h5 {
+            margin: 0 .5rem;
+          }
+          .secondaryActionBtn {
+            display: flex;
+
+            margin-right: 2rem;
+
+            border: 1px solid rgba($navy, 1);
+          }
+
+          .actionBtn {
+            justify-content: flex-end;
+
+            border: solid 1px rgba($navy, 1);
+            background-color: rgba($navy, 1);
+          }
+        }
       }
       
     }
+  }
+}
+
+.auto-complete-list {
+  position: absolute;
+  z-index:1000;
+  right: 0;
+  left: 10px;
+
+  overflow-y: auto;
+
+  max-height: 180px;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  border-top: 0;
+  border-radius: 0 0 6px 6px;
+  background: white;
+  box-shadow: 0px 14px 29px -17px rgba($navy,0.48);
+
+  .auto-complete-list-item {
+    padding: 8px 4px;
+
   }
 }

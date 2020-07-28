@@ -23,7 +23,7 @@ export const defaultConfig = {
 
 export const getSourceId = id => `${id}-atlas`;
 export const getLayerId = id => `${id}-layer`;
-export const getDatasetId = id => `${id}-dataset`;
+export const getFeedId = id => `${id}-feed`;
 
 export const addControls = mapbox => {
   mapbox.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -49,7 +49,7 @@ export const addControls = mapbox => {
 
 export const removeLayer = (map, id) => {
   const sourceId = getSourceId(id);
-  const layerId = getDatasetId(id);
+  const layerId = getFeedId(id);
 
   if (map.getLayer(layerId)) {
     map.removeSource(sourceId);
@@ -60,6 +60,9 @@ export const removeLayer = (map, id) => {
 export const addLayer = (map, userId, layer) => {
   const { _id, source_type, source_layer, type, url } = layer;
   const sourceId = getSourceId(_id);
+  const layerId = getLayerId(_id);
+
+  if (map.getLayer(layerId)) return;
 
   map.addSource(sourceId, {
     type: source_type,
@@ -67,7 +70,7 @@ export const addLayer = (map, userId, layer) => {
   });
 
   map.addLayer({
-    id: getLayerId(_id),
+    id: layerId,
     type,
     source: sourceId,
     'source-layer': source_layer,
@@ -83,10 +86,13 @@ export const addLayer = (map, userId, layer) => {
   });
 };
 
-export const addDataset = (map, userId, layer) => {
-  const { _id, url } = layer;
+export const addFeed = (map, userId, feed) => {
+  const { _id, name, url } = feed;
   const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
   const sourceId = getSourceId(_id);
+  const feedId = getFeedId(_id);
+
+  if (map.getLayer(feedId)) return;
 
   map.addSource(sourceId, {
     type: 'geojson',
@@ -95,17 +101,21 @@ export const addDataset = (map, userId, layer) => {
   });
 
   map.addLayer({
-    id: getDatasetId(_id),
+    id: feedId,
     type: 'symbol',
     interactive: true,
     source: sourceId,
     metadata: {
-      feedname: layer.name
+      feedname: name
     },
     layout: {
       visibility: 'visible',
-      'icon-image': ['downcase', ['concat', ['get', 'symbol'], '-12']],
-      'icon-size': 0.625
+      'icon-image': ['downcase', ['get', 'symbol']],
+      'icon-size': 1,
+      'icon-allow-overlap': true,
+      'text-allow-overlap': true,
+      'icon-ignore-placement': true,
+      'text-ignore-placement': true
     },
     paint: {
       'icon-color': ['get', 'status_color']
