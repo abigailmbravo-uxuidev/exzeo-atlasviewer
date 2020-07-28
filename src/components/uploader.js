@@ -81,6 +81,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
     const formData = new FormData();
     formData.append('name', data.feedname);
     formData.append('userData', JSON.stringify(userData));
+    formData.append('userName', userData.name);
     formData.append('file', file);
 
     if (action === 'Update') formData.append('feedId', feed._id);
