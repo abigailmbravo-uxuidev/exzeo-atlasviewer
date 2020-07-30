@@ -1,8 +1,0 @@
-{
-  "presets": [["@babel/preset-env", {"targets": {"node": "current"}}], "@babel/preset-react"],
-  "env": {
-    "test": {
-      "presets": ["@parcel/babel-preset-env", "@babel/preset-react"]
-    }
-  }
-}
