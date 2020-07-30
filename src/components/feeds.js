@@ -136,49 +136,52 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       </span>
                     )}
                     <span className="file-name">{feed.name}</span>
-                    <span className="menuIcon">
-                      <FontAwesomeIcon icon={faEllipsisV} />
-                    </span>
-                    <div className="menu">
-                      <div className="menu-button">
-                        <FontAwesomeIcon icon={faEllipsisV} />
-                      </div>
-
-                      <ul>
-                        {/*<li>
-                          <button>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            &nbsp;Info
-                          </button>
-                        </li>
-                        
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileExport} />
-                            &nbsp;Export
-                          </button>
-                        </li>
-                      */}
-                        <li>
-                          <button onClick={e => toggleUpdate(feed)}>
-                            <FontAwesomeIcon icon={faFileUpload} />
-                            &nbsp;Update
-                          </button>
-                        </li>
-                        <li>
-                          <button onClick={() => setShareFeed(feed)}>
-                            <FontAwesomeIcon icon={faShareAltSquare} />
-                            &nbsp;Share
-                          </button>
-                        </li>
-                        <li>
-                          <button onClick={() => setDeleteFeed(feed)}>
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                            &nbsp;Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
+                    {!feed.share && (
+                      <>
+                        <span className="menuIcon">
+                          <FontAwesomeIcon icon={faEllipsisV} />
+                        </span>
+                        <div className="menu">
+                          <div className="menu-button">
+                            <FontAwesomeIcon icon={faEllipsisV} />
+                          </div>
+                          <ul>
+                            {/*<li>
+                              <button>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                &nbsp;Info
+                              </button>
+                            </li>
+                            
+                            <li>
+                              <button>
+                                <FontAwesomeIcon icon={faFileExport} />
+                                &nbsp;Export
+                              </button>
+                            </li>
+                          */}
+                            <li>
+                              <button onClick={e => toggleUpdate(feed)}>
+                                <FontAwesomeIcon icon={faFileUpload} />
+                                &nbsp;Update
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => setShareFeed(feed)}>
+                                <FontAwesomeIcon icon={faShareAltSquare} />
+                                &nbsp;Share
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => setDeleteFeed(feed)}>
+                                <FontAwesomeIcon icon={faTrashAlt} />
+                                &nbsp;Delete
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </>
+                    )}
                   </h5>
                   <dl>
                     <span className="date">
