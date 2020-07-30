@@ -1,6 +1,6 @@
 {
   "name": "atlas-web",
-  "version": "1.0.0",
+  "version": "0.0.9",
   "description": "Atlas Viewer",
   "main": "./src/index.html",
   "scripts": {
@@ -9,14 +9,17 @@
     "test": "jest --config ./jest.config.json",
     "lint": "./node_modules/.bin/eslint src --ext .jsx --ext .js"
   },
-  "author": "",
+  "repository": {
+    "type" : "git",
+    "url" : "https://bitbucket.org/exzeo-usa/atlas-web.git"
+  },
+  "author": "Exzeo",
   "license": "ISC",
   "browserslist": [
     "last 1 Chrome versions"
   ],
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.8.1",
-    "@babel/preset-react": "^7.10.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.8",
@@ -41,8 +44,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
-    "@testing-library/jest-dom": "^5.1.1",
+    "@babel/preset-react": "^7.10.4",
     "@testing-library/react": "^9.4.0",
+    "@testing-library/jest-dom": "^5.11.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
