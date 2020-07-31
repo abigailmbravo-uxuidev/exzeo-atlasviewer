@@ -9,9 +9,9 @@ const Checkbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   }, [resolvedRef, indeterminate]);
 
   return (
-    <>
+    <div>
       <input type="checkbox" ref={resolvedRef} {...rest} />
-    </>
+    </div>
   );
 });
 

@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
 import Autocomplete from './autocomplete';
-import Checkbox from './checkbox';
 import { useUser } from '../context/user-context';
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
@@ -28,7 +27,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reValidateMode: 'onChange',
     defaultValues: { recipient: '' }
   });
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState({});
   const [shareList, setShareList] = useState([]);
   const [previousShares, setPreviousShare] = useState([]);
   const [userList, setUserList] = useState([]);
@@ -94,20 +93,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     () => [
       { Header: 'User', accessor: 'share' },
       { Header: 'Invited', accessor: 'created_at' },
-      { Header: 'Last Viewed', accessor: 'updated_at' },
-      {
-        id: 'selection',
-        Header: ({ getToggleAllRowsSelectedProps }) => (
-          <div>
-            <Checkbox {...getToggleAllRowsSelectedProps()} indeterminate />
-          </div>
-        ),
-        Cell: ({ row }) => (
-          <div>
-            <Checkbox {...row.getToggleRowSelectedProps()} />
-          </div>
-        )
-      }
+      { Header: 'Last Viewed', accessor: 'updated_at' }
     ],
     []
   );
@@ -175,9 +161,9 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             <Table
               columns={columns}
               data={previousShares}
-              selectedRows={selectedRows}
               setSelectedRows={setSelectedRows}
             />
+            <p>Selected Rows: {selectedRows.length}</p>
           </div>
         </div>
         <footer></footer>
