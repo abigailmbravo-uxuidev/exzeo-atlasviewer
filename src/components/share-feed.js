@@ -51,7 +51,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     if (shareList.length < 1) return;
 
     const url = `${process.env.API_URL}/api/share`;
-    console.log('sharing...');
     const reqOptions = {
       url,
       method: 'POST',
@@ -63,8 +62,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
     try {
       const res = await axios(reqOptions);
-      const result = res.data.data;
-
       setShareFeed();
     } catch (err) {
       setShareFeed();
@@ -87,6 +84,19 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const handleRemove = email => {
     setUserList([email, ...userList]);
     setShareList(shareList.filter(share => !share.includes(email)));
+  };
+
+  const handleRevoke = async () => {
+    ids = selectedRows.map(row => `id=${row.original._id}`);
+    const url = `${process.env.API_URL}/api/delete?${ids.join('&')}`;
+
+    try {
+      await axios.delete(url);
+      setShareFeed();
+    } catch (err) {
+      setShareFeed();
+      return setError(err.message);
+    }
   };
 
   const columns = React.useMemo(
@@ -163,10 +173,13 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
               data={previousShares}
               setSelectedRows={setSelectedRows}
             />
-            <p>Selected Rows: {selectedRows.length}</p>
           </div>
         </div>
-        <footer></footer>
+        <footer>
+          <button type="button" onClick={() => handleRevoke()}>
+            Revoke selected
+          </button>
+        </footer>
       </form>
     </div>
   );

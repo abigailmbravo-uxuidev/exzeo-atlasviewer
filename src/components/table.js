@@ -39,8 +39,8 @@ const Table = ({ columns, data, setSelectedRows }) => {
   );
 
   useEffect(() => {
-    setSelectedRows(selectedRowIds);
-  }, [setSelectedRows, selectedRowIds]);
+    setSelectedRows(selectedFlatRows);
+  }, [setSelectedRows, selectedFlatRows]);
 
   return (
     <table {...getTableProps()}>
