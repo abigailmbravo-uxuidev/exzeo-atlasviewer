@@ -143,12 +143,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>
-          <button
-            className="actionBtn"
-            type="button"
-            onClick={() => handleShare()}
-          >
-            Share
+          <button className="actionBtn" type="button" disabled="disabled">
+            Import
           </button>
           {errors.lastname && 'Feed Name is required.'}
         </div>
@@ -169,6 +165,18 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
                 </span>
               </span>
             ))}
+          </div>
+          <div className="share-modal-btns">
+            <button className="reset" disabled="disabled">
+              Reset
+            </button>
+            <button
+              className="actionBtn send"
+              type="button"
+              onClick={() => handleShare()}
+            >
+              Share
+            </button>
           </div>
           <div className="shared-to-table">
             <Table
