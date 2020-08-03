@@ -61,8 +61,10 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     };
 
     try {
-      const res = await axios(reqOptions);
-      setShareFeed();
+      const { data } = await axios(reqOptions);
+
+      setPreviousShare([...data.result, ...previousShares]);
+      setShareList([]);
     } catch (err) {
       setShareFeed();
       return setError(err.message);
@@ -87,8 +89,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   };
 
   const handleRevoke = async () => {
-    ids = selectedRows.map(row => `id=${row.original._id}`);
-    const url = `${process.env.API_URL}/api/delete?${ids.join('&')}`;
+    const ids = selectedRows.map(row => row.original._id);
+    const url = `${process.env.API_URL}/api/share/delete/${ids.join()}`;
 
     try {
       await axios.delete(url);
