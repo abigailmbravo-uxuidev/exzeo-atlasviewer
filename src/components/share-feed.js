@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
   faTimes,
-  faPlus
+  faPlus,
+  faBan
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
 import Autocomplete from './autocomplete';
@@ -179,7 +180,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         </div>
         <footer>
           <button type="button" onClick={() => handleRevoke()}>
-            Revoke selected
+            <FontAwesomeIcon icon={faBan} /> Revoke selected
           </button>
         </footer>
       </form>
