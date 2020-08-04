@@ -13,6 +13,12 @@ import Table from './table';
 import Autocomplete from './autocomplete';
 import { useUser } from '../context/user-context';
 
+const addViewProp = shares =>
+  shares.map(share => ({
+    viewed: share.viewed || 'Never',
+    ...share
+  }));
+
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { _id, name } = feed;
   const {
@@ -34,6 +40,15 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const [userList, setUserList] = useState([]);
   const { user_id, first_name, last_name } = useUser();
 
+  const columns = useMemo(
+    () => [
+      { Header: 'User', accessor: 'share', sortType: 'basic' },
+      { Header: 'Invited', accessor: 'created_at', sortType: 'basic' },
+      { Header: 'Last Viewed', accessor: 'viewed', sortType: 'basic' }
+    ],
+    []
+  );
+
   useEffect(() => {
     const url = `${process.env.API_URL}/api/shares/${_id}`;
     const fetchUsers = async () => {
@@ -42,7 +57,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       } = await axios(url);
 
       setUserList(users);
-      setPreviousShare(shares);
+      setPreviousShare(addViewProp(shares));
     };
 
     fetchUsers();
@@ -63,8 +78,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
     try {
       const { data } = await axios(reqOptions);
-
-      setPreviousShare([...data.result, ...previousShares]);
+      const shares = addViewProp(data.result);
+      setPreviousShare([...shares, ...previousShares]);
       setShareList([]);
     } catch (err) {
       setShareFeed();
@@ -101,15 +116,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       return setError(err.message);
     }
   };
-
-  const columns = React.useMemo(
-    () => [
-      { Header: 'User', accessor: 'share' },
-      { Header: 'Invited', accessor: 'created_at' },
-      { Header: 'Last Viewed', accessor: 'updated_at' }
-    ],
-    []
-  );
 
   return (
     <div className="modal fade-in">
