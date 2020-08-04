@@ -136,17 +136,15 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       </span>
                     )}
                     <span className="file-name">{feed.name}</span>
-                    {!feed.share && (
-                      <>
-                        <span className="menuIcon">
-                          <FontAwesomeIcon icon={faEllipsisV} />
-                        </span>
-                        <div className="menu">
-                          <div className="menu-button">
-                            <FontAwesomeIcon icon={faEllipsisV} />
-                          </div>
-                          <ul>
-                            {/*<li>
+                    <span className="menuIcon">
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                    </span>
+                    <div className="menu">
+                      <div className="menu-button">
+                        <FontAwesomeIcon icon={faEllipsisV} />
+                      </div>
+                      <ul>
+                        {/*<li>
                               <button>
                                 <FontAwesomeIcon icon={faInfoCircle} />
                                 &nbsp;Info
@@ -160,28 +158,32 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                               </button>
                             </li>
                           */}
-                            <li>
-                              <button onClick={e => toggleUpdate(feed)}>
-                                <FontAwesomeIcon icon={faFileUpload} />
-                                &nbsp;Update
-                              </button>
-                            </li>
-                            <li>
-                              <button onClick={() => setShareFeed(feed)}>
-                                <FontAwesomeIcon icon={faShareAltSquare} />
-                                &nbsp;Share
-                              </button>
-                            </li>
-                            <li>
-                              <button onClick={() => setDeleteFeed(feed)}>
-                                <FontAwesomeIcon icon={faTrashAlt} />
-                                &nbsp;Delete
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
-                      </>
-                    )}
+                        <li>
+                          <button
+                            {...(feed.share ? { disabled: 'disabled' } : {})}
+                            onClick={e => toggleUpdate(feed)}
+                          >
+                            <FontAwesomeIcon icon={faFileUpload} />
+                            &nbsp;Update
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            {...(feed.share ? { disabled: 'disabled' } : {})}
+                            onClick={() => setShareFeed(feed)}
+                          >
+                            <FontAwesomeIcon icon={faShareAltSquare} />
+                            &nbsp;Share
+                          </button>
+                        </li>
+                        <li>
+                          <button onClick={() => setDeleteFeed(feed)}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                            &nbsp;Delete
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </h5>
                   <dl>
                     <span className="date">
