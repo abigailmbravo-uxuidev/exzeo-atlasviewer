@@ -16,7 +16,8 @@ import {
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import DeleteFeed from './delete-feed';
 import ShareFeed from './share-feed';
-import FeedManager from './feedManager';
+import FeedManager from './feed-manager';
+import FeedNotification from './feed-notification';
 import Modal from './modal';
 import Uploader from './uploader';
 
@@ -25,8 +26,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
-  const allFeeds = useFeedState();
+  const allFeeds = useFeedState([]);
   const [paneActive, setPaneActive] = useState(true);
+  const [feedNotifications, setFeedNotifications] = useState(null);
 
   const dispatch = useFeedDispatch();
   const content = useRef(null);
@@ -87,8 +89,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
       <header>
         <h4>
           <FontAwesomeIcon icon={faNetworkWired} />
-          &nbsp;Data Feed
+          &nbsp;Data Feeds
         </h4>
+        <div>
+          {feeds &&
+            feeds.map(feed => feed.share && !feed.share.viewed ? <FeedNotification feed={feed} /> :null)
+          }
+        </div>
         <button
           className="uploadBtn actionBtn"
           type="button"
