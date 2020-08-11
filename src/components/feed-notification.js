@@ -6,7 +6,7 @@ import { faFileExport } from '@fortawesome/free-solid-svg-icons';
 const FeedNotification = ({ feed, close }) => {
   if (!feed) return null;
   return (
-    <div class="new-feed-notification" key={feed._id}>
+    <div className="new-feed-notification" key={feed._id}>
       <FontAwesomeIcon icon={faFileExport} />
       New Shared Feed
     </div>

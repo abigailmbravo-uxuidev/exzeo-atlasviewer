@@ -54,6 +54,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     setUploaderState({ action: 'Update', feed });
   };
 
+  const toggleNotification = (feed) => {
+    dispatch({ type: 'update', data: { ...feed, notified: true } });
+  };
+
   useEffect(() => {}, []);
 
   return (
@@ -93,7 +97,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         </h4>
         <div>
           {feeds &&
-            feeds.map(feed => feed.share && !feed.share.viewed ? <FeedNotification feed={feed} /> :null)
+            feeds.map(feed => 
+              feed.share && !feed.share.viewed && !feed.notified
+                ? <FeedNotification feed={feed} key={feed._id} close={() => toggleNotification(feed)} />
+                : null)
           }
         </div>
         <button
