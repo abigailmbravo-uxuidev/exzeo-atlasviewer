@@ -87,8 +87,8 @@ export const addLayer = (map, userId, layer) => {
 };
 
 export const addFeed = (map, userId, feed) => {
-  const { _id, name, url } = feed;
-  const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
+  const { _id, name, url, share } = feed;
+  const source = `${process.env.API_URL}/api/geojson/${_id}/${share}`;
   const sourceId = getSourceId(_id);
   const feedId = getFeedId(_id);
 
@@ -121,6 +121,10 @@ export const addFeed = (map, userId, feed) => {
       'icon-color': ['get', 'status_color']
     }
   });
+
+  if (share) {
+
+  }
 };
 
 export const deleteDataset = (map, userId, layer) => {
@@ -132,5 +136,5 @@ export const deleteDataset = (map, userId, layer) => {
     map.removeLayer(datasetId);
   }
 
-  const result = `${process.env.API_URL}/api/deleteFeed/${userId}/${_id}`;
+  const result = `${process.env.API_URL}/api/deleteFeed/${_id}`;
 };
