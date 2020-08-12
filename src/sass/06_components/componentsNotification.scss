@@ -23,6 +23,23 @@
 
             .notification-content {
                 font-size: 14px;
+
+                header {
+                    font-size: 10px;
+                }
+
+                .feed-name {
+                    display: flex;
+                    overflow: hidden;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    flex-wrap: wrap;
+
+                    text-transform: capitalize;
+
+                    font-weight: bold;
+                    
+                }
             }
 
             button {
