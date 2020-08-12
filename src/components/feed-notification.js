@@ -7,16 +7,20 @@ const FeedNotification = ({ feed, close }) => {
   if (!feed) return null;
   return (
     <div className="new-feed-notification card fade-in" key={feed._id}>
-      <header>
+      <div className="notification-bar">
+        <div className="notification-content">
+          <header>
+            <FontAwesomeIcon icon={faFileExport} /> New Shared Feed
+          </header>
+          <div className="feed-name">{feed.name}</div>
+        </div>
         <button className="actionBtn" type="button" onClick={close}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <FontAwesomeIcon icon={faFileExport} /> New Shared Feed
-      </header>
-      <div className="feed-name">{feed.name}</div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 FeedNotification.propTypes = {
   feed: PropTypes.object,

@@ -1,0 +1,43 @@
+//feed notifications 
+
+.feed-notification {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1; 
+
+    .new-feed-notification {
+        display: flex; flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 1;  margin: 8px 16px;
+
+        color: $white;
+        border-radius: 6px;
+        background-color: $red;
+
+        size: 14px;
+
+        .notification-bar {
+            display: flex;  justify-content: space-between;
+
+            padding: 4px 16px;
+
+            .notification-content {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 0;
+
+                border: none;
+                background-color: transparent;
+                box-shadow: none;
+
+                :hover {
+                    cursor: pointer;
+
+                    color: $navy;
+                }
+            }
+            }
+    }
+}
