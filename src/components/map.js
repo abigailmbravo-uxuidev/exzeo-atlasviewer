@@ -99,7 +99,6 @@ const Map = ({ basemap, setIsMapLoading }) => {
       });
 
       mapbox.on('error', ({ error: { message } }) => {
-        setError(message || 'Error');
         setIsMapLoading(false);
       });
 
