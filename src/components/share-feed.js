@@ -6,12 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
   faTimes,
-  faPlus
+  faPlus,
+  faBan
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
 import Autocomplete from './autocomplete';
-import Checkbox from './checkbox';
 import { useUser } from '../context/user-context';
+
+const addViewProp = shares =>
+  shares.map(share => ({
+    viewed: share.viewed || 'Never',
+    ...share
+  }));
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const { _id, name } = feed;
@@ -28,11 +34,20 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     reValidateMode: 'onChange',
     defaultValues: { recipient: '' }
   });
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState({});
   const [shareList, setShareList] = useState([]);
   const [previousShares, setPreviousShare] = useState([]);
   const [userList, setUserList] = useState([]);
   const { user_id, first_name, last_name } = useUser();
+
+  const columns = useMemo(
+    () => [
+      { Header: 'User', accessor: 'share', sortType: 'basic' },
+      { Header: 'Invited', accessor: 'created_at', sortType: 'basic' },
+      { Header: 'Last Viewed', accessor: 'viewed', sortType: 'basic' }
+    ],
+    []
+  );
 
   useEffect(() => {
     const url = `${process.env.API_URL}/api/shares/${_id}`;
@@ -42,7 +57,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       } = await axios(url);
 
       setUserList(users);
-      setPreviousShare(shares);
+      setPreviousShare(addViewProp(shares));
     };
 
     fetchUsers();
@@ -52,7 +67,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     if (shareList.length < 1) return;
 
     const url = `${process.env.API_URL}/api/share`;
-    console.log('sharing...');
     const reqOptions = {
       url,
       method: 'POST',
@@ -63,10 +77,10 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     };
 
     try {
-      const res = await axios(reqOptions);
-      const result = res.data.data;
-
-      setShareFeed();
+      const { data } = await axios(reqOptions);
+      const shares = addViewProp(data.result);
+      setPreviousShare([...shares, ...previousShares]);
+      setShareList([]);
     } catch (err) {
       setShareFeed();
       return setError(err.message);
@@ -90,27 +104,18 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     setShareList(shareList.filter(share => !share.includes(email)));
   };
 
-  const columns = React.useMemo(
-    () => [
-      { Header: 'User', accessor: 'share' },
-      { Header: 'Invited', accessor: 'created_at' },
-      { Header: 'Last Viewed', accessor: 'updated_at' },
-      {
-        id: 'selection',
-        Header: ({ getToggleAllRowsSelectedProps }) => (
-          <div>
-            <Checkbox {...getToggleAllRowsSelectedProps()} indeterminate />
-          </div>
-        ),
-        Cell: ({ row }) => (
-          <div>
-            <Checkbox {...row.getToggleRowSelectedProps()} />
-          </div>
-        )
-      }
-    ],
-    []
-  );
+  const handleRevoke = async () => {
+    const ids = selectedRows.map(row => row.original._id);
+    const url = `${process.env.API_URL}/api/share/delete/${ids.join()}`;
+
+    try {
+      await axios.delete(url);
+      setShareFeed();
+    } catch (err) {
+      setShareFeed();
+      return setError(err.message);
+    }
+  };
 
   return (
     <div className="modal fade-in">
@@ -144,11 +149,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>
-          <button
-            className="actionBtn"
-            type="button"
-            onClick={() => handleShare()}
-          >
+          <button className="actionBtn" type="button" disabled="disabled">
             Import
           </button>
           {errors.lastname && 'Feed Name is required.'}
@@ -171,16 +172,31 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
               </span>
             ))}
           </div>
+          <div className="share-modal-btns">
+            <button className="reset" disabled="disabled">
+              Reset
+            </button>
+            <button
+              className="actionBtn send"
+              type="button"
+              onClick={() => handleShare()}
+            >
+              Share
+            </button>
+          </div>
           <div className="shared-to-table">
             <Table
               columns={columns}
               data={previousShares}
-              selectedRows={selectedRows}
               setSelectedRows={setSelectedRows}
             />
           </div>
         </div>
-        <footer></footer>
+        <footer>
+          <button type="button" onClick={() => handleRevoke()}>
+            <FontAwesomeIcon icon={faBan} /> Revoke selected
+          </button>
+        </footer>
       </form>
     </div>
   );

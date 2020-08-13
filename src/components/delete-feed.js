@@ -8,7 +8,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const handleDelete = async (feedId, userId, utilities) => {
   const { setDeleteFeed, dispatch, setError } = utilities;
-  const url = `${process.env.API_URL}/api/delete/${userId}/${feedId}`;
+  const url = `${process.env.API_URL}/api/delete/${feedId}`;
 
   const reqOptions = {
     url,

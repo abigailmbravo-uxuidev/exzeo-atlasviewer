@@ -99,7 +99,6 @@ const Map = ({ basemap, setIsMapLoading }) => {
       });
 
       mapbox.on('error', ({ error: { message } }) => {
-        setError(message || 'Error');
         setIsMapLoading(false);
       });
 
@@ -160,7 +159,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
           const sourceId = getSourceId(_id);
           map
             .getSource(sourceId)
-            .setData(`${process.env.API_URL}/api/geojson/${userId}/${_id}`);
+            .setData(`${process.env.API_URL}/api/geojson/${_id}/feed`);
           feed.updated = false;
           dispatch({ type: 'update', data: feed });
         }

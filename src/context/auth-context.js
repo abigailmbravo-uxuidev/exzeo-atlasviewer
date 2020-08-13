@@ -20,9 +20,9 @@ const AuthProvider = ({
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
-    const fetchUserData = async id => {
+    const fetchUserData = async () => {
       const opts = {
-        url: `${process.env.API_URL}/api/userdata/${id}`,
+        url: `${process.env.API_URL}/api/userdata`,
         method: 'GET'
       };
       const res = await axios(opts).catch(err => console.log(err));
@@ -50,7 +50,7 @@ const AuthProvider = ({
         const user = await auth0FromHook.getUser();
         axios.defaults.headers.common.authorization = `Bearer ${token}`;
 
-        const userData = await fetchUserData(user.sub);
+        const userData = await fetchUserData();
         userData.token = token;
         setUser(userData);
       }

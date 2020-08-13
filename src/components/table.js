@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTable, useRowSelect } from 'react-table';
+import Checkbox from './checkbox';
 
-const Table = ({ columns, data, selectedRows, setSelectedRows }) => {
+const Table = ({ columns, data, setSelectedRows }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -10,21 +11,36 @@ const Table = ({ columns, data, selectedRows, setSelectedRows }) => {
     rows,
     prepareRow,
     selectedFlatRows,
-    state: { selectedRowPaths }
+    state: { selectedRowIds }
   } = useTable(
     {
       columns,
-      data,
-      state: {
-        selectedRowPaths: selectedRows
-      }
+      data
     },
-    useRowSelect
+    useRowSelect,
+    hooks => {
+      hooks.visibleColumns.push(columns => [
+        ...columns,
+        {
+          id: 'selection',
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <Checkbox {...getToggleAllRowsSelectedProps()} indeterminate />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <Checkbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          )
+        }
+      ]);
+    }
   );
 
   useEffect(() => {
-    setSelectedRows(selectedRowPaths);
-  }, [setSelectedRows, selectedRowPaths]);
+    setSelectedRows(selectedFlatRows);
+  }, [setSelectedRows, selectedFlatRows]);
 
   return (
     <table {...getTableProps()}>
@@ -40,20 +56,20 @@ const Table = ({ columns, data, selectedRows, setSelectedRows }) => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, index) => {
-          prepareRow(row);
-          return (
-            <tr key={index} {...row.getRowProps()}>
-              {row.cells.map((cell, index) => {
-                return (
-                  <td key={index} {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
+        {rows.map(
+          (row, i) =>
+            prepareRow(row) || (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell, index) => {
+                  return (
+                    <td key={index} {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
+              </tr>
+            )
+        )}
       </tbody>
     </table>
   );

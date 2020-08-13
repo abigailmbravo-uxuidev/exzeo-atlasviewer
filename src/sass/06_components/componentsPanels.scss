@@ -547,7 +547,6 @@ li {
 
           min-height: 1rem;
           margin: 0;
-          
 
           button {
             display: flex;
@@ -565,6 +564,7 @@ li {
             font-size: .75rem;
             
             &:hover {
+              border-radius: 0;
               background-color: #a3e5ff;
             }
           }

@@ -16,7 +16,8 @@ import {
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import DeleteFeed from './delete-feed';
 import ShareFeed from './share-feed';
-import FeedManager from './feedManager';
+import FeedManager from './feed-manager';
+import FeedNotification from './feed-notification';
 import Modal from './modal';
 import Uploader from './uploader';
 
@@ -25,8 +26,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
-  const allFeeds = useFeedState();
+  const allFeeds = useFeedState([]);
   const [paneActive, setPaneActive] = useState(true);
+  const [feedNotifications, setFeedNotifications] = useState(null);
 
   const dispatch = useFeedDispatch();
   const content = useRef(null);
@@ -50,6 +52,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
   const toggleUpdate = feed => {
     setUploaderState({ action: 'Update', feed });
+  };
+
+  const toggleNotification = feed => {
+    dispatch({ type: 'update', data: { ...feed, notified: true } });
   };
 
   useEffect(() => {}, []);
@@ -87,7 +93,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
       <header>
         <h4>
           <FontAwesomeIcon icon={faNetworkWired} />
-          &nbsp;Data Feed
+          &nbsp;Data Feeds
         </h4>
         <button
           className="uploadBtn actionBtn"
@@ -103,6 +109,18 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
+      <div className="feed-notification">
+        {feeds &&
+          feeds.map(feed =>
+            feed.share && !feed.share.viewed && !feed.notified ? (
+              <FeedNotification
+                feed={feed}
+                key={feed._id}
+                close={() => toggleNotification(feed)}
+              />
+            ) : null
+          )}
+      </div>
       <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
           <select>
@@ -143,30 +161,35 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                       <div className="menu-button">
                         <FontAwesomeIcon icon={faEllipsisV} />
                       </div>
-
                       <ul>
                         {/*<li>
-                          <button>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            &nbsp;Info
-                          </button>
-                        </li>
-                        
+                              <button>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                &nbsp;Info
+                              </button>
+                            </li>
+                            
+                            <li>
+                              <button>
+                                <FontAwesomeIcon icon={faFileExport} />
+                                &nbsp;Export
+                              </button>
+                            </li>
+                          */}
                         <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileExport} />
-                            &nbsp;Export
-                          </button>
-                        </li>
-                      */}
-                        <li>
-                          <button onClick={e => toggleUpdate(feed)}>
+                          <button
+                            {...(feed.share ? { disabled: 'disabled' } : {})}
+                            onClick={e => toggleUpdate(feed)}
+                          >
                             <FontAwesomeIcon icon={faFileUpload} />
                             &nbsp;Update
                           </button>
                         </li>
                         <li>
-                          <button onClick={() => setShareFeed(feed)}>
+                          <button
+                            {...(feed.share ? { disabled: 'disabled' } : {})}
+                            onClick={() => setShareFeed(feed)}
+                          >
                             <FontAwesomeIcon icon={faShareAltSquare} />
                             &nbsp;Share
                           </button>
