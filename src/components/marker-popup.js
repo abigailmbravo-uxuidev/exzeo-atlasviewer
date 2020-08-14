@@ -5,6 +5,9 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import MarkerRow from './marker-row';
 import StatusIcon from './status-icon.js';
 
+const convertBreaks = value =>
+  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '\u000A') : value;
+
 const MarkerPopup = ({ properties, feedName }) => {
   const markerName = properties.Name || properties.name || 'Feed';
   const color = properties.status_color || 'black';
@@ -16,11 +19,8 @@ const MarkerPopup = ({ properties, feedName }) => {
         <p>{feedName}</p>
       </div>
       <div className="marker-popup-header">
-        <h2
-          className="title-tip"
-          title={markerName.replace(/[<]br[^>]*[>]/gi, '\u000A')}
-        >
-          {markerName.replace(/[<]br[^>]*[>]/gi, '\u000A')}
+        <h2 className="title-tip" title={convertBreaks(markerName)}>
+          {convertBreaks(markerName)}
         </h2>
         <p>
           <span className="icon-wrapper wrapper" style={{ color: color }}>
