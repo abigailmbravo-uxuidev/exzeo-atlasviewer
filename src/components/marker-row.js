@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-const stripBreaks = value =>
-  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '\u000A') : value;
+import { convertBreaks } from '../utils/utils';
 
 const MarkerRow = ({ column, value }) => {
   const filter = ['name', 'status_name', 'status_color', 'symbol'];
@@ -22,7 +20,7 @@ const MarkerRow = ({ column, value }) => {
   return filter.includes(column.toLowerCase()) ? null : (
     <li key={column}>
       <span>{column.replace(/-dollar|-date/i, '')}</span>
-      {stripBreaks(value)}
+      {convertBreaks(value)}
     </li>
   );
 };

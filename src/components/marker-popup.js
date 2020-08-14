@@ -4,9 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import MarkerRow from './marker-row';
 import StatusIcon from './status-icon.js';
-
-const convertBreaks = value =>
-  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '\u000A') : value;
+import { convertBreaks } from '../utils/utils';
 
 const MarkerPopup = ({ properties, feedName }) => {
   const markerName = properties.Name || properties.name || 'Feed';
