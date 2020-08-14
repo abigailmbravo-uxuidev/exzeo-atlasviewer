@@ -14,4 +14,9 @@ const formatCurrency = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2
 });
 
-export { usePrevious, formatCurrency };
+const convertBreaks = (value, replacement = '\u000A') =>
+  value && value.replace
+    ? value.replace(/[<]br[^>]*[>]/gi, replacement)
+    : value;
+
+export { usePrevious, formatCurrency, convertBreaks };
