@@ -16,8 +16,8 @@ const MarkerPopup = ({ properties, feedName }) => {
         <p>{feedName}</p>
       </div>
       <div className="marker-popup-header">
-        <h2 className="title-tip" title={markerName.replace('<br/>', ' ')}>
-          {markerName.replace('<br/>', ' ')}
+        <h2 className="title-tip" title={markerName}>
+          {markerName}
         </h2>
         <p>
           <span className="icon-wrapper wrapper" style={{ color: color }}>
