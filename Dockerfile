@@ -2,7 +2,7 @@ FROM node:12-alpine
 
 LABEL maintainer=Exzeo
 
-RUN apk update && \
+RUN apk update && apk upgrade && \
   apk --no-cache add bash libc6-compat && \
   addgroup -S docker && adduser -S -G docker docker
 
