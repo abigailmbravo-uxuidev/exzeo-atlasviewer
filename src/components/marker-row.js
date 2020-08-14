@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const stripBreaks = value =>
-  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '') : value;
+  value && value.replace ? value.replace(/[<]br[^>]*[>]/gi, '\u000A') : value;
 
 const MarkerRow = ({ column, value }) => {
   const filter = ['name', 'status_name', 'status_color', 'symbol'];
