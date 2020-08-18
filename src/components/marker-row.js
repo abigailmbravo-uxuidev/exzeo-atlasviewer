@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { convertBreaks, formatCurrency } from '../utils/utils';
 
-const doNotShow = ['lat', 'lon', 'lng', 'latitude', 'longitude'];
+const doNotShow = ['lat', 'lon', 'lng', 'latitude', 'longitude', '-sum'];
 
 const MarkerRow = ({ column, value }) => {
   const filter = ['name', 'status_name', 'status_color', 'symbol'];
