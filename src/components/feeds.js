@@ -109,18 +109,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div className="feed-notification">
-        {feeds &&
-          feeds.map(feed =>
-            feed.share && !feed.share.viewed && !feed.notified ? (
-              <FeedNotification
-                feed={feed}
-                key={feed._id}
-                close={() => toggleNotification(feed)}
-              />
-            ) : null
-          )}
-      </div>
+
       <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
           <select>
@@ -134,6 +123,18 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           </select>
         </div>
         <ul className="panel-list scroll">
+          <div className="feed-notification">
+            {feeds &&
+              feeds.map(feed =>
+                feed.share && !feed.share.viewed && !feed.notified ? (
+                  <FeedNotification
+                    feed={feed}
+                    key={feed._id}
+                    close={() => toggleNotification(feed)}
+                  />
+                ) : null
+              )}
+          </div>
           <div className="notification shared-layer"></div>
           {feeds &&
             feeds.map((feed, index) => (
