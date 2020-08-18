@@ -33,6 +33,10 @@ const MarkerRow = ({ column, value }) => {
     formattedValue = format(new Date(formattedValue), 'MM-dd-yyyy h:mma');
   }
 
+  if (columnName.endsWith('-time')) {
+    formattedValue = format(new Date(formattedValue), 'h:mma');
+  }
+
   if (columnName.endsWith('-dollar')) {
     formattedValue = formatCurrency.format(formattedValue);
   }
