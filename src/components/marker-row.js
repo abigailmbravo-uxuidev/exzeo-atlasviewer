@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { convertBreaks } from '../utils/utils';
+import { convertBreaks, formatCurrency } from '../utils/utils';
 
 const doNotShow = ['lat', 'lon', 'lng', 'latitude', 'longitude'];
 
@@ -13,7 +13,7 @@ const MarkerRow = ({ column, value }) => {
 
   let formattedValue = value;
 
-  if (columnName.includes('-url')) {
+  if (columnName.endsWith('-url')) {
     return (
       <li key={column}>
         <span>
@@ -25,13 +25,21 @@ const MarkerRow = ({ column, value }) => {
     );
   }
 
-  if (columnName.includes('-date')) {
+  if (columnName.endsWith('-date')) {
     formattedValue = format(new Date(formattedValue), 'MM-dd-yyyy');
+  }
+
+  if (columnName.endsWith('-datetime')) {
+    formattedValue = format(new Date(formattedValue), 'MM-dd-yyyy h:mma');
+  }
+
+  if (columnName.endsWith('-dollar')) {
+    formattedValue = formatCurrency.format(formattedValue);
   }
 
   return filter.includes(columnName) ? null : (
     <li key={column}>
-      <span>{column.replace(/-dollar|-date/i, '')}</span>
+      <span>{column.replace(/-dollar|-date|-datetime|-dollar/i, '')}</span>
       {convertBreaks(formattedValue)}
     </li>
   );
