@@ -41,6 +41,12 @@ const MarkerRow = ({ column, value }) => {
     formattedValue = formatCurrency.format(formattedValue);
   }
 
+  if (columnName.endsWith('-percent')) {
+    formattedValue = formattedValue.includes('%')
+      ? formattedValue
+      : `${formattedValue} %`;
+  }
+
   return filter.includes(columnName) ? null : (
     <li key={column}>
       <span>{column.replace(/-dollar|-date|-datetime|-dollar/i, '')}</span>
