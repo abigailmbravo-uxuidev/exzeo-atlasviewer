@@ -48,7 +48,12 @@ const MarkerRow = ({ column, value }) => {
 
   return filter.includes(columnName) ? null : (
     <li key={column}>
-      <span>{column.replace(/-dollar|-date|-datetime|-dollar/i, '')}</span>
+      <span>
+        {column.replace(
+          /-dollar|-date|-datetime|-time|-dollar|-percentage|-sum/i,
+          ''
+        )}
+      </span>
       {convertBreaks(formattedValue)}
     </li>
   );
