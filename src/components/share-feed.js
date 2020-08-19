@@ -173,7 +173,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             ))}
           </div>
           <div className="share-modal-btns">
-            <button className="reset" disabled="disabled">
+            <button
+              className="reset"
+              disabled={shareList.length < 1}
+              onClick={() => setShareList([])}
+            >
               Reset
             </button>
             <button
