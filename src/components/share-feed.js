@@ -110,9 +110,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
     try {
       await axios.delete(url);
-      setShareFeed();
     } catch (err) {
-      setShareFeed();
       return setError(err.message);
     }
   };
