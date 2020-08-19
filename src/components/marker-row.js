@@ -30,7 +30,6 @@ const MarkerRow = ({ column, value }) => {
   }
 
   if (columnName.endsWith('-datetime')) {
-    console.log(column)
     formattedValue = format(new Date(formattedValue), 'MM-dd-yyyy h:mma');
   }
 
@@ -42,7 +41,7 @@ const MarkerRow = ({ column, value }) => {
   }
 
   if (columnName.endsWith('-percent')) {
-    formattedValue = formattedValue.includes('%')
+    formattedValue = String(formattedValue).includes('%')
       ? formattedValue
       : `${formattedValue} %`;
   }
