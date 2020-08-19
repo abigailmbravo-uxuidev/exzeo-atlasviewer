@@ -30,6 +30,7 @@ const MarkerRow = ({ column, value }) => {
   }
 
   if (columnName.endsWith('-datetime')) {
+    console.log(column)
     formattedValue = format(new Date(formattedValue), 'MM-dd-yyyy h:mma');
   }
 
@@ -50,7 +51,7 @@ const MarkerRow = ({ column, value }) => {
     <li key={column}>
       <span>
         {column.replace(
-          /-dollar|-date|-datetime|-time|-dollar|-percentage|-sum/i,
+          /\b(-dollar|-date|-datetime|-time|-dollar|-percentage|-sum)\b/i,
           ''
         )}
       </span>
