@@ -36,8 +36,12 @@ const Autocomplete = ({ items, onChange, isSubmitting }) => {
     reset
   } = useCombobox({
     items: inputItems,
-    onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
+    //onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
     onInputValueChange: ({ inputValue }) => {
+      if (isSubmitting) {
+        console.log('wwwwowpwpwolsksj', inputValue)
+        return onChange(inputValue);
+      }
       setInputItems(
         items.filter(item =>
           item.toLowerCase().includes(inputValue.toLowerCase())
@@ -47,7 +51,7 @@ const Autocomplete = ({ items, onChange, isSubmitting }) => {
   });
 
   useEffect(() => {
-    if (inputValue.length > 0 && isSubmitting) reset();
+    //if (inputValue.length > 0 && isSubmitting) reset();
   }, [inputValue, isSubmitting, reset]);
 
   return (

@@ -72,7 +72,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       method: 'POST',
       data: {
         feed,
-        users: shareList
+        shares: shareList
       }
     };
 
@@ -88,6 +88,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   };
 
   const handleAdd = ({ recipient }) => {
+    console.log('recipient', recipient)
     if (shareList.includes(recipient)) {
       setSubmitting(false);
       return;
