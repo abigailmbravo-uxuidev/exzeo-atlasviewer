@@ -24,9 +24,10 @@ const formatTime = time => {
   if (!time || time.toLowerCase().includes('m')) return time;
   const [hour, minute] = time.split(':');
   if (!hour || !minute) return time;
+
   const date = new Date();
-  date.setHours(Number(hour));
-  date.setMinutes(Number(minute));
+  date.setHours(hour);
+  date.setMinutes(minute);
   return format(date, 'h:mm a');
 };
 
