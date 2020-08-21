@@ -44,7 +44,7 @@ const MarkerRow = ({ column, value }) => {
 
   if (columnName.endsWith('-dollar')) {
     formattedValue =
-      formattedValue || isNaN(formattedValue)
+      !formattedValue || isNaN(formattedValue)
         ? ''
         : formatCurrency.format(formattedValue);
   }
