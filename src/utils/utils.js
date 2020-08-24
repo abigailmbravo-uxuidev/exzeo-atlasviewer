@@ -26,9 +26,9 @@ const formatTime = time => {
   if (!hour || !minute) return time;
 
   const date = new Date();
-  date.setHours(hour);
-  date.setMinutes(minute);
-  return date;
+  //date.setHours(Number(hour));
+  //date.setMinutes(Number(minute));
+  return format(date, 'h:mm a');
 };
 
 export { usePrevious, formatCurrency, convertBreaks, formatTime };
