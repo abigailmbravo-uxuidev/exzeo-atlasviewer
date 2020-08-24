@@ -26,8 +26,8 @@ const formatTime = time => {
   if (!hour || !minute) return time;
 
   const date = new Date();
-  //date.setHours(Number(hour));
-  //date.setMinutes(Number(minute));
+  date.setHours(Number(hour));
+  date.setMinutes(Number(minute));
   return format(date, 'h:mm a');
 };
 
