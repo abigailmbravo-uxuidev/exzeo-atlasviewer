@@ -50,13 +50,14 @@ const MarkerRow = ({ column, value }) => {
   }
 
   if (columnName.endsWith('-percent')) {
+    console.log()
     formattedValue = String(formattedValue).includes('%')
       ? formattedValue
       : `${formattedValue} %`;
   }
 
   let columnDisplay = column.replace(
-    /\b(-dollar|-date|-datetime|-time|-dollar|-percentage|-sum)\b/i,
+    /\b(-dollar|-date|-datetime|-time|-dollar|-percent|-sum)\b/i,
     ''
   );
 
