@@ -10,7 +10,6 @@ import {
   faBan
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
-import Autocomplete from './autocomplete';
 import { useUser } from '../context/user-context';
 
 const addViewProp = shares =>
@@ -37,7 +36,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const [selectedRows, setSelectedRows] = useState({});
   const [shareList, setShareList] = useState([]);
   const [previousShares, setPreviousShare] = useState([]);
-  const [userList, setUserList] = useState([]);
   const { user_id, first_name, last_name } = useUser();
 
   const columns = useMemo(
@@ -53,10 +51,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     const url = `${process.env.API_URL}/api/shares/${_id}`;
     const fetchUsers = async () => {
       const {
-        data: { users = [], shares = [] }
+        data: { shares = [] }
       } = await axios(url);
-
-      setUserList(users);
       setPreviousShare(addViewProp(shares));
     };
 
@@ -87,21 +83,21 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     }
   };
 
-  const handleAdd = ({ recipient }) => {
-    console.log('recipient', recipient)
-    if (shareList.includes(recipient)) {
-      setSubmitting(false);
-      return;
-    }
-    if (!recipient || !recipient.includes('|')) return;
-    const parts = recipient.split('|');
-    setShareList([parts[1], ...shareList]);
-    setUserList(userList.filter(user => !user.includes(recipient)));
+  const handleAdd = ({ recipients }) => {
+    const list = recipients.split();
+    const emails = list.filter(email => {
+      const shareExists = previousShares.some(prev => {
+        return prev.share === email.trim();
+      });
+
+      console.log('shareExists', shareExists);
+      return !shareList.includes(email) && shareExists;
+    });
+    setShareList([...emails, ...shareList]);
     reset({});
   };
 
   const handleRemove = email => {
-    setUserList([email, ...userList]);
     setShareList(shareList.filter(share => !share.includes(email)));
   };
 
@@ -133,13 +129,12 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </button>
         </header>
         <div className="body">
-          <Controller
-            as={Autocomplete}
-            control={control}
-            name="recipient"
-            items={userList}
+          <input
+            type="text"
+            id="recipients"
+            name="recipients"
             defaultValue=""
-            isSubmitting={isSubmitting}
+            ref={register({ required: true })}
           />
           <button
             className="secondaryActionBtn inputBtn"
