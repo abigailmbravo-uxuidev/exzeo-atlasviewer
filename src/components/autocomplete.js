@@ -36,10 +36,9 @@ const Autocomplete = ({ items, onChange, isSubmitting }) => {
     reset
   } = useCombobox({
     items: inputItems,
-    //onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
+    onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
     onInputValueChange: ({ inputValue }) => {
       if (isSubmitting) {
-        console.log('wwwwowpwpwolsksj', inputValue)
         return onChange(inputValue);
       }
       setInputItems(
