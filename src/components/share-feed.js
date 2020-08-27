@@ -2,6 +2,7 @@ import React, { forwardRef, useRef, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
+import { format } from 'date-fns-tz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -12,10 +13,17 @@ import {
 import Table from './table';
 import { useUser } from '../context/user-context';
 
-const addViewProp = shares =>
+const formatData = shares =>
   shares.map(share => ({
-    viewed: share.viewed || 'Never',
-    ...share
+    viewed: share.viewed
+      ? format(new Date(share.viewed), 'MM-dd-yyyy h:mm a', {
+          timeZone: 'America/New_York'
+        })
+      : 'Never',
+    ...share,
+    created_at: format(new Date(share.created_at), 'MM/dd/yyyy h:mm a', {
+      timeZone: 'America/New_York'
+    })
   }));
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
@@ -53,7 +61,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       const {
         data: { shares = [] }
       } = await axios(url);
-      setPreviousShare(addViewProp(shares));
+      setPreviousShare(formatData(shares));
     };
 
     fetchUsers();
@@ -74,7 +82,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
     try {
       const { data } = await axios(reqOptions);
-      const shares = addViewProp(data.result);
+      const shares = formatData(data.result);
       setPreviousShare([...shares, ...previousShares]);
       setShareList([]);
     } catch (err) {
@@ -86,11 +94,9 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const handleAdd = ({ recipients }) => {
     const list = recipients.split();
     const emails = list.filter(email => {
-      const shareExists = previousShares.some(prev => {
-        return prev.share === email.trim();
-      });
-
-      console.log('shareExists', shareExists);
+      const shareExists = previousShares.some(
+        prev => prev.share === email.trim()
+      );
       return !shareList.includes(email) && shareExists;
     });
     setShareList([...emails, ...shareList]);
