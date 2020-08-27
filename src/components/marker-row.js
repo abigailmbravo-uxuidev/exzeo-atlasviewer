@@ -9,7 +9,11 @@ const MarkerRow = ({ column, value }) => {
   const filter = ['name', 'status_name', 'status_color', 'symbol'];
   const columnName = column.toLowerCase();
 
-  if (doNotShow.includes(columnName)) return null;
+  if (
+    doNotShow.includes(columnName) ||
+    value === undefined ||
+    value.toLowerCase() === 'null'
+  ) return null;
 
   let formattedValue = value;
 
