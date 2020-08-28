@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTable, useRowSelect } from 'react-table';
+import { useTable, useRowSelect, useSortBy } from 'react-table';
 import Checkbox from './checkbox';
 
 const Table = ({ columns, data, setSelectedRows }) => {
@@ -17,6 +17,7 @@ const Table = ({ columns, data, setSelectedRows }) => {
       columns,
       data
     },
+    useSortBy,
     useRowSelect,
     hooks => {
       hooks.visibleColumns.push(columns => [
@@ -48,8 +49,14 @@ const Table = ({ columns, data, setSelectedRows }) => {
         {headerGroups.map((headerGroup, index) => (
           <tr key={index} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column, index) => (
-              <th key={index} {...column.getHeaderProps()}>
+              <th
+                key={index}
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+              >
                 {column.render('Header')}
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                </span>
               </th>
             ))}
           </tr>

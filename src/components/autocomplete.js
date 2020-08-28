@@ -38,6 +38,9 @@ const Autocomplete = ({ items, onChange, isSubmitting }) => {
     items: inputItems,
     onSelectedItemChange: ({ inputValue }) => onChange(inputValue),
     onInputValueChange: ({ inputValue }) => {
+      if (isSubmitting) {
+        return onChange(inputValue);
+      }
       setInputItems(
         items.filter(item =>
           item.toLowerCase().includes(inputValue.toLowerCase())
@@ -47,7 +50,7 @@ const Autocomplete = ({ items, onChange, isSubmitting }) => {
   });
 
   useEffect(() => {
-    if (inputValue.length > 0 && isSubmitting) reset();
+    //if (inputValue.length > 0 && isSubmitting) reset();
   }, [inputValue, isSubmitting, reset]);
 
   return (

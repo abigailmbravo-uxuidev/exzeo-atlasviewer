@@ -2,6 +2,7 @@ import React, { forwardRef, useRef, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
+import { format } from 'date-fns-tz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -10,13 +11,19 @@ import {
   faBan
 } from '@fortawesome/free-solid-svg-icons';
 import Table from './table';
-import Autocomplete from './autocomplete';
 import { useUser } from '../context/user-context';
 
-const addViewProp = shares =>
+const formatData = shares =>
   shares.map(share => ({
-    viewed: share.viewed || 'Never',
-    ...share
+    viewed: share.viewed
+      ? format(new Date(share.viewed), 'MM-dd-yyyy h:mm a', {
+          timeZone: 'America/New_York'
+        })
+      : 'Never',
+    ...share,
+    created_at: format(new Date(share.created_at), 'MM/dd/yyyy h:mm a', {
+      timeZone: 'America/New_York'
+    })
   }));
 
 const ShareFeed = ({ feed, setShareFeed, setError }) => {
@@ -37,7 +44,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const [selectedRows, setSelectedRows] = useState({});
   const [shareList, setShareList] = useState([]);
   const [previousShares, setPreviousShare] = useState([]);
-  const [userList, setUserList] = useState([]);
   const { user_id, first_name, last_name } = useUser();
 
   const columns = useMemo(
@@ -53,11 +59,9 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     const url = `${process.env.API_URL}/api/shares/${_id}`;
     const fetchUsers = async () => {
       const {
-        data: { users = [], shares = [] }
+        data: { shares = [] }
       } = await axios(url);
-
-      setUserList(users);
-      setPreviousShare(addViewProp(shares));
+      setPreviousShare(formatData(shares));
     };
 
     fetchUsers();
@@ -72,13 +76,13 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       method: 'POST',
       data: {
         feed,
-        users: shareList
+        shares: shareList
       }
     };
 
     try {
       const { data } = await axios(reqOptions);
-      const shares = addViewProp(data.result);
+      const shares = formatData(data.result);
       setPreviousShare([...shares, ...previousShares]);
       setShareList([]);
     } catch (err) {
@@ -87,20 +91,19 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     }
   };
 
-  const handleAdd = ({ recipient }) => {
-    if (shareList.includes(recipient)) {
-      setSubmitting(false);
-      return;
-    }
-    if (!recipient || !recipient.includes('|')) return;
-    const parts = recipient.split('|');
-    setShareList([parts[1], ...shareList]);
-    setUserList(userList.filter(user => !user.includes(recipient)));
+  const handleAdd = ({ recipients }) => {
+    const list = recipients.split();
+    const emails = list.filter(email => {
+      const shareExists = previousShares.some(
+        prev => prev.share === email.trim()
+      );
+      return !shareList.includes(email) && shareExists;
+    });
+    setShareList([...emails, ...shareList]);
     reset({});
   };
 
   const handleRemove = email => {
-    setUserList([email, ...userList]);
     setShareList(shareList.filter(share => !share.includes(email)));
   };
 
@@ -110,9 +113,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
     try {
       await axios.delete(url);
-      setShareFeed();
     } catch (err) {
-      setShareFeed();
       return setError(err.message);
     }
   };
@@ -134,13 +135,12 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </button>
         </header>
         <div className="body">
-          <Controller
-            as={Autocomplete}
-            control={control}
-            name="recipient"
-            items={userList}
+          <input
+            type="text"
+            id="recipients"
+            name="recipients"
             defaultValue=""
-            isSubmitting={isSubmitting}
+            ref={register({ required: true })}
           />
           <button
             className="secondaryActionBtn inputBtn"
@@ -173,7 +173,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             ))}
           </div>
           <div className="share-modal-btns">
-            <button className="reset" disabled="disabled">
+            <button
+              className="reset"
+              disabled={shareList.length < 1}
+              onClick={() => setShareList([])}
+            >
               Reset
             </button>
             <button
