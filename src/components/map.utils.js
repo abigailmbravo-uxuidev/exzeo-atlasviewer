@@ -52,6 +52,7 @@ export const removeLayer = (map, id) => {
   const layerId = getFeedId(id);
 
   if (map.getLayer(layerId)) {
+    map.setLayoutProperty(layerId, 'visibility', 'none');
     map.removeSource(sourceId);
     map.removeLayer(layerId);
   }

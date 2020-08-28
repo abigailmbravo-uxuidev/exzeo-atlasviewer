@@ -251,7 +251,7 @@
         &.share {
           overflow: visible;
 
-          min-width: 35%;
+          min-width: 34rem;
 
           //feed share data share results 
           .feed-share-results {
@@ -391,8 +391,6 @@
           }
           .secondaryActionBtn {
             display: flex;
-
-            margin-right: 2rem;
 
             border: 1px solid rgba($navy, 1);
           }

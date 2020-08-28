@@ -149,9 +149,6 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>
-          <button className="actionBtn" type="button" disabled="disabled">
-            Import
-          </button>
           {errors.lastname && 'Feed Name is required.'}
         </div>
         <div className="feed-share-results">
