@@ -135,21 +135,23 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </button>
         </header>
         <div className="body">
-          <input
-            type="text"
-            id="recipients"
-            name="recipients"
-            defaultValue=""
-            ref={register({ required: true })}
-          />
-          <button
-            className="secondaryActionBtn inputBtn"
-            type="submit"
-            enabled={String(dirty)}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-          {errors.lastname && 'Feed Name is required.'}
+          <div className="search-wrapper">
+            <input
+              type="text"
+              id="recipients"
+              name="recipients"
+              defaultValue=""
+              ref={register({ required: true })}
+            />
+            <button
+              className="secondaryActionBtn inputBtn"
+              type="submit"
+              enabled={String(dirty)}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            {errors.lastname && 'Feed Name is required.'}
+          </div>
         </div>
         <div className="feed-share-results">
           <h5>Users Added</h5>
