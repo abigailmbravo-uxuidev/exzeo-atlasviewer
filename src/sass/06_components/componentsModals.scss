@@ -305,9 +305,12 @@
             }
             .shared-to-table {
               display: flex;
+              overflow: hidden;
+
+              margin: 0 24px 0 24px;
               table {
-                width: 100%;
-                margin: 0 24px 0 24px;
+                flex-grow: 1;
+                flex-shrink: 1;
 
                 border-radius: 4px;
                 background-color: rgba($base-gray, .05);
