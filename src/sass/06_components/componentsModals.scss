@@ -249,9 +249,16 @@
 
       //share modal 
         &.share {
-          overflow: visible;
+          overflow: auto;
 
           min-width: 34rem;
+
+          //search
+          .search-wrapper {
+            display: flex;
+
+            width: 100%;
+          }
 
           //feed share data share results 
           .feed-share-results {
