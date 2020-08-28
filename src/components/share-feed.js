@@ -97,7 +97,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       const shareExists = previousShares.some(
         prev => prev.share === email.trim()
       );
-      return !shareList.includes(email) && shareExists;
+      return !shareList.includes(email) && !shareExists;
     });
     setShareList([...emails, ...shareList]);
     reset({});
