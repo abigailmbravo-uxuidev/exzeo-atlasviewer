@@ -27,6 +27,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState([]);
+  const [feedSort, setFeedSort] = useState(null);
   const [paneActive, setPaneActive] = useState(true);
   const [feedNotifications, setFeedNotifications] = useState(null);
 
@@ -58,7 +59,17 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     dispatch({ type: 'update', data: { ...feed, notified: true } });
   };
 
-  useEffect(() => {}, []);
+  const sortFeeds = ({ target: { value } }) => {
+    console.log(value);
+  };
+
+  useEffect(() => {
+    const sortFeed = type => {
+      const types = {};
+    };
+
+    sortFeed(feedSort);
+  }, [feedSort]);
 
   return (
     <>
@@ -112,14 +123,14 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
       <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
-          <select>
-            <option>Name | A - Z</option>
-            <option>Name | Z - A</option>
-            <option>Author | A - Z</option>
-            <option>Author | Z - A</option>
-            <option>Created Date</option>
-            <option>Updated Date</option>
-            <option>Mapped Feeds</option>
+          <select onChange={e => setFeedSort(e.target.value)}>
+            <option value="name,asc">Name | A - Z</option>
+            <option value="name,desc">Name | Z - A</option>
+            <option value="owner,asc">Author | A - Z</option>
+            <option value="owner,desc">Author | Z - A</option>
+            <option value="created_date">Created Date</option>
+            <option value="updated_date">Updated Date</option>
+            <option value="active">Mapped Feeds</option>
           </select>
         </div>
         <ul className="panel-list scroll">
