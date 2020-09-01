@@ -30,17 +30,11 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [feedSort, setFeedSort] = useState(null);
   const [paneActive, setPaneActive] = useState(true);
   const [feedNotifications, setFeedNotifications] = useState(null);
+  const feeds = useState([]);
 
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
-
-  const feeds =
-    filter && filter.length > 1
-      ? allFeeds.filter(feed =>
-          feed.name.toLowerCase().includes(filter.toLowerCase())
-        )
-      : allFeeds;
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -59,17 +53,24 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     dispatch({ type: 'update', data: { ...feed, notified: true } });
   };
 
-  const sortFeeds = ({ target: { value } }) => {
-    console.log(value);
-  };
-
   useEffect(() => {
+    if (!feedSort) return;
     const sortFeed = type => {
       const types = {};
     };
 
+    const [sortField, direction = 'asc'] = feedSort.split(',');
     sortFeed(feedSort);
   }, [feedSort]);
+
+  useEffect(() => {
+    const feeds =
+      filter && filter.length > 1
+        ? allFeeds.filter(feed =>
+            feed.name.toLowerCase().includes(filter.toLowerCase())
+          )
+        : allFeeds;
+  }, [allFeeds, filter]);
 
   return (
     <>
