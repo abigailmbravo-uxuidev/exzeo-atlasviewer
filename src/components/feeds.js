@@ -1,5 +1,6 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -13,43 +14,74 @@ import {
   faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
-import Uploader from './uploader';
-import FeedManager from './feedManager';
+import DeleteFeed from './delete-feed';
+import ShareFeed from './share-feed';
+import FeedManager from './feed-manager';
+import FeedNotification from './feed-notification';
 import Modal from './modal';
+import Uploader from './uploader';
 
 const Feeds = ({ filter, setIsMapLoading }) => {
-  const [uploaderState, setUploaderState] = useState(false);
+  const [uploaderState, setUploaderState] = useState({});
+  const [deleteFeed, setDeleteFeed] = useState(null);
+  const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
-  const feeds = useFeedState();
+  const allFeeds = useFeedState([]);
   const [paneActive, setPaneActive] = useState(true);
-  const [paneHeight, setPaneHeightState] = useState();
+  const [feedNotifications, setFeedNotifications] = useState(null);
+
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
 
+  const feeds =
+    filter && filter.length > 1
+      ? allFeeds.filter(feed =>
+          feed.name.toLowerCase().includes(filter.toLowerCase())
+        )
+      : allFeeds;
+
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
-    setPaneHeightState(
-      paneActive === true ? '0px' : `${content.current.scrollHeight}px`
-    );
   };
 
-  const toggleFeed = (feed, active) => {
-    if (active) setIsMapLoading(true);
-    dispatch({ type: 'update', data: { ...feed, active } });
+  const toggleFeed = (feed, inView) => {
+    if (inView) setIsMapLoading(true);
+    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
-  useEffect(() => {
-    setPaneHeightState(content.current.scrollHeight);
-  }, []);
+  const toggleUpdate = feed => {
+    setUploaderState({ action: 'Update', feed });
+  };
+
+  const toggleNotification = feed => {
+    dispatch({ type: 'update', data: { ...feed, notified: true } });
+  };
+
+  useEffect(() => {}, []);
 
   return (
-    <Fragment>
-      {uploaderState && (
+    <>
+      {uploaderState && uploaderState.action && (
         <Uploader
+          data={uploaderState}
           setUploaderState={setUploaderState}
           setError={setError}
           setIsMapLoading={setIsMapLoading}
+        />
+      )}
+      {deleteFeed && (
+        <DeleteFeed
+          feed={deleteFeed}
+          setDeleteFeed={setDeleteFeed}
+          setError={setError}
+        />
+      )}
+      {shareFeed && (
+        <ShareFeed
+          feed={shareFeed}
+          setShareFeed={setShareFeed}
+          setError={setError}
         />
       )}
       {error.length > 0 && (
@@ -61,8 +93,15 @@ const Feeds = ({ filter, setIsMapLoading }) => {
       <header>
         <h4>
           <FontAwesomeIcon icon={faNetworkWired} />
-          &nbsp;Data Feed
+          &nbsp;Data Feeds
         </h4>
+        <button
+          className="uploadBtn actionBtn"
+          type="button"
+          onClick={() => setUploaderState({ action: 'Upload' })}
+        >
+          Upload
+        </button>
         <button
           className={`paneToggle ${!paneActive ? 'closed' : 'open'}`}
           onClick={toggleAccordion}
@@ -70,11 +109,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div
-        className={`pane ${!paneActive ? 'closed' : 'open'}`}
-        ref={content}
-        style={{ maxHeight: `${paneHeight}` }}
-      >
+
+      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
           <select>
             <option>Name | A - Z</option>
@@ -85,15 +121,20 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option>Updated Date</option>
             <option>Mapped Feeds</option>
           </select>
-          <button
-            className="uploadBtn actionBtn"
-            type="button"
-            onClick={() => setUploaderState(!uploaderState)}
-          >
-            Upload
-          </button>
         </div>
-        <ul className="panel-list">
+        <ul className="panel-list scroll">
+          <div className="feed-notification">
+            {feeds &&
+              feeds.map(feed =>
+                feed.share && !feed.share.viewed && !feed.notified ? (
+                  <FeedNotification
+                    feed={feed}
+                    key={feed._id}
+                    close={() => toggleNotification(feed)}
+                  />
+                ) : null
+              )}
+          </div>
           <div className="notification shared-layer"></div>
           {feeds &&
             feeds.map((feed, index) => (
@@ -101,127 +142,102 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
-                    checked={feed.active || false}
+                    checked={feed.inView || false}
                     value={feed._id}
                     onChange={e => toggleFeed(feed, e.target.checked)}
                   />
                 </span>
                 <span className="feed-detail-wrapper wrapper">
                   <h5>
-                    {/*icon should only show if feed is shared, should have new class until notification associated with it is dismissed*/}
-                    <span className="icon shared new">
-                      <FontAwesomeIcon icon={faShareAlt} />
-                    </span>
+                    {feed.share && (
+                      <span className="icon shared new">
+                        <FontAwesomeIcon icon={faShareAlt} />
+                      </span>
+                    )}
                     <span className="file-name">{feed.name}</span>
                     <span className="menuIcon">
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </span>
                     <div className="menu">
-                      <FontAwesomeIcon icon={faEllipsisV} />
+                      <div className="menu-button">
+                        <FontAwesomeIcon icon={faEllipsisV} />
+                      </div>
                       <ul>
+                        {/*<li>
+                              <button>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                &nbsp;Info
+                              </button>
+                            </li>
+                            
+                            <li>
+                              <button>
+                                <FontAwesomeIcon icon={faFileExport} />
+                                &nbsp;Export
+                              </button>
+                            </li>
+                          */}
                         <li>
-                          <button>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            &nbsp;Info
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileExport} />
-                            &nbsp;Export
-                          </button>
-                        </li>
-                        <li>
-                          <button>
+                          <button
+                            {...(feed.share ? { disabled: 'disabled' } : {})}
+                            onClick={e => toggleUpdate(feed)}
+                          >
                             <FontAwesomeIcon icon={faFileUpload} />
-                            &nbsp;Upload
+                            &nbsp;Update
                           </button>
                         </li>
                         <li>
-                          <button>
+                          <button
+                            {...(feed.share ? { disabled: 'disabled' } : {})}
+                            onClick={() => setShareFeed(feed)}
+                          >
                             <FontAwesomeIcon icon={faShareAltSquare} />
                             &nbsp;Share
                           </button>
                         </li>
                         <li>
-                          <button>
+                          <button onClick={() => setDeleteFeed(feed)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                             &nbsp;Delete
                           </button>
                         </li>
                       </ul>
                     </div>
-                    {/* 
-                    <button
-                      onClick={() => setMenuActive(!menuActive)}
-                      className="menu-btn"
-                    >
-                      <FontAwesomeIcon icon={faEllipsisV} />
-                    </button>
-                    <div className={`menu ${menuActive ? 'closed' : 'open'}`}>
-                      <FontAwesomeIcon icon={faEllipsisV} />
-                      <ul>
-                        <li className="menu-icon"></li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            &nbsp;Info
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileExport} />
-                            &nbsp;Export
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faFileUpload} />
-                            &nbsp;Upload
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faShareAltSquare} />
-                            &nbsp;Share
-                          </button>
-                        </li>
-                        <li>
-                          <button>
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                            &nbsp;Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>*/}
                   </h5>
                   <dl>
                     <span className="date">
                       <dt>Created</dt>
-                      <dd>{feed.created_at}</dd>
+                      <dd>
+                        {feed.created_at &&
+                          format(new Date(feed.created_at), 'MM-dd-yyyy')}
+                      </dd>
                     </span>
                     <span className="date">
                       <dt>Updated</dt>
-                      <dd>{feed.updated_at}</dd>
+                      <dd>
+                        {feed.updated_at &&
+                          format(new Date(feed.updated_at), 'MM-dd-yyyy')}
+                      </dd>
                     </span>
-                    {/* only show author if feed is shared */}
-                    <span className="author">
-                      <dt>Author</dt>
-                      <dd>{feed.owner.name}</dd>
-                    </span>
-                    {/* end only show author if feed is shared */}
+                    {feed.share && (
+                      <span className="author">
+                        <dt>Author</dt>
+                        <dd>{feed.owner.name}</dd>
+                      </span>
+                    )}
                   </dl>
                 </span>
               </li>
             ))}
         </ul>
       </div>
-    </Fragment>
+    </>
   );
 };
 
 Feeds.propTypes = {
-  filter: PropTypes.string
+  filter: PropTypes.string,
+  setIsMapLoading: PropTypes.func.isRequired
 };
 
 export default Feeds;

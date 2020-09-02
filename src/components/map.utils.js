@@ -21,6 +21,10 @@ export const defaultConfig = {
   bearing: 0
 };
 
+export const getSourceId = id => `${id}-atlas`;
+export const getLayerId = id => `${id}-layer`;
+export const getFeedId = id => `${id}-feed`;
+
 export const addControls = mapbox => {
   mapbox.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   mapbox.addControl(
@@ -43,9 +47,23 @@ export const addControls = mapbox => {
   mapbox.addControl(geocoder, 'bottom-left');
 };
 
+export const removeLayer = (map, id) => {
+  const sourceId = getSourceId(id);
+  const layerId = getFeedId(id);
+
+  if (map.getLayer(layerId)) {
+    map.setLayoutProperty(layerId, 'visibility', 'none');
+    map.removeSource(sourceId);
+    map.removeLayer(layerId);
+  }
+};
+
 export const addLayer = (map, userId, layer) => {
   const { _id, source_type, source_layer, type, url } = layer;
-  const sourceId = `${_id}-atlas`;
+  const sourceId = getSourceId(_id);
+  const layerId = getLayerId(_id);
+
+  if (map.getLayer(layerId)) return;
 
   map.addSource(sourceId, {
     type: source_type,
@@ -53,7 +71,7 @@ export const addLayer = (map, userId, layer) => {
   });
 
   map.addLayer({
-    id: `${_id}-layer`,
+    id: layerId,
     type,
     source: sourceId,
     'source-layer': source_layer,
@@ -69,27 +87,56 @@ export const addLayer = (map, userId, layer) => {
   });
 };
 
-export const addDataset = (map, userId, layer) => {
-  const { _id, url } = layer;
-  const source = `${process.env.API_URL}/api/geojson/${userId}/${_id}`;
-  const sourceId = `${_id}-atlas`;
+export const addFeed = (map, userId, feed) => {
+  const { _id, name, url, share } = feed;
+  const sourceId = getSourceId(_id);
+  const feedId = getFeedId(_id);
+  let source = `${process.env.API_URL}/api/geojson/${_id}`;
+
+  if (share && share._id) source = `${source}/${share._id}`;
+  if (map.getLayer(feedId)) return;
 
   map.addSource(sourceId, {
     type: 'geojson',
     data: source,
-    buffer: 32
+    buffer: 64
   });
 
   map.addLayer({
-    id: `${_id}-dataset`,
-    type: 'circle',
+    id: feedId,
+    type: 'symbol',
+    interactive: true,
     source: sourceId,
+    metadata: {
+      feedname: name
+    },
     layout: {
-      visibility: 'visible'
+      visibility: 'visible',
+      'icon-image': ['downcase', ['get', 'symbol']],
+      'icon-size': 1,
+      'icon-allow-overlap': true,
+      'text-allow-overlap': true,
+      'icon-ignore-placement': true,
+      'text-ignore-placement': true
     },
     paint: {
-      'circle-radius': 4,
-      'circle-color': ['get', 'status_color']
+      'icon-color': ['get', 'status_color']
     }
   });
+
+  if (share) {
+
+  }
+};
+
+export const deleteDataset = (map, userId, layer) => {
+  const { _id } = layer;
+  const datasetId = getSourceId(_id);
+
+  if (map.getLayer(datasetId)) {
+    map.removeSource(datasetId);
+    map.removeLayer(datasetId);
+  }
+
+  const result = `${process.env.API_URL}/api/deleteFeed/${_id}`;
 };

@@ -15,6 +15,10 @@ body {
     #map-canvas {
       position: relative;
       z-index: 1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
 
       width: 100vw;
       height: 100vh;
@@ -33,7 +37,6 @@ body {
       flex-direction: column;
 
       transition: all .3s ease-out;
-
       .scroll {
         display: flex;
         overflow-x: hidden;
@@ -41,103 +44,184 @@ body {
         flex-direction: column;
         flex-grow: 1;
         flex-shrink: 1;
-
-        transition: all .2s ease-out;
       }
+      
+      .panel-content {
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 1;
+        .section {
+          overflow: hidden;
+          flex-grow: 1;
+          flex-shrink: 1;
 
-      .section {
-        flex-grow: 0;
-        flex-shrink: 0;
+          border-bottom: $white .5rem solid;
 
-        padding: .5rem 1rem;
-
-        transition: all .2s ease-out;
-
-        border-bottom: $white .5rem solid;
-
-        &:last-of-type {
-          border-bottom-width: 0;
-        }
-        &.search {
-          display: flex;
-          justify-content: center;
-
-          height: 4.5rem;
-          .icon {
-            display: flex;
-            align-items: flex-end;
-
-            width: 1.5rem;
-            margin-right: 8px;
-
-            svg {
-              display: block;
-
-              width: 100%;
-              padding: 6px 0;
-            }
+          &:last-of-type {
+            border-bottom-width: 0;
           }
-          .search-wrapper {
+          
+          > header {
             display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            flex-shrink: 1;
+            align-items: center;
+            flex-grow: 0;
+            flex-shrink: 0;
+            justify-content: space-between;
 
-            .searchBar {
-              display: flex;
-              flex-direction: row;
-              flex-grow: 1;
-              flex-shrink: 1;
-              justify-content: space-between;
+            height: 3rem;
+            padding: 0 1rem;
 
-              .input-icon-wrapper {
-                display: flex;
-                flex-grow: 1;
-                flex-shrink: 1;
-                
-                input {
-                  height: 1.75rem;
-                  padding: 4px 24px 4px 8px;
+            h1, h2, h3, h4 {
+              flex-grow: 0;
+              flex-shrink: 0;
 
-                  font-size: .875rem;
-                }
-                .fa-filter {
-                    color: $navy;
+              margin: .5rem 0;
+            }
+            button {
+              padding: .375rem .75rem;
+
+              font-size: .75rem;
+
+              &.paneToggle {
+                flex-grow: 0;
+                flex-shrink: 0;
+
+                padding: 0;
+
+                border-width: 0;
+                background: transparent;
+
+                font-size: 1.25rem;
+
+                &.closed {
+                  transform: rotate(-90deg);
                 }
               }
             }
           }
-        }
-        &.logo {
-          display: flex;
-          align-items: center;
-          flex-direction: column;
-          justify-content: center;
 
-          height: 4.5rem;
-          padding: .75rem;
-        }
-        > header {
-          display: flex;
-          align-items: center;
-
-          h1, h2, h3, h4 {
-            flex-grow: 1;
-            flex-shrink: 1;
-          }
-          button {
+          &.logo {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
             flex-grow: 0;
             flex-shrink: 0;
+            justify-content: center;
 
-            transition: all .3s ease-out;
+            height: 4.5rem;
+            padding: .75rem;
+          }
 
-            border: none;
-            background: transparent;
+          &.search {
+            display: flex;
+            align-items: center;
+            flex-grow: 0;
+            flex-shrink: 0;
+            justify-content: center;
 
-            font-size: 1.25rem;
+            height: 4.5rem;
+            padding: 0 .5rem;
+            .icon {
+              display: flex;
+              align-self: flex-end;
 
-            &.closed {
-              transform: rotate(-90deg);
+              width: 1.75rem;
+              margin: 0 8px 4px 0;
+  
+              svg {
+                display: block;
+
+                width: 100%;
+                padding: 6px 0;
+              }
+            }
+            .search-wrapper {
+              display: flex;
+              flex-direction: column;
+              flex-grow: 1;
+              flex-shrink: 1;
+  
+              .searchBar {
+                display: flex;
+                flex-direction: row;
+                flex-grow: 1;
+                flex-shrink: 1;
+                justify-content: space-between;
+  
+                .input-icon-wrapper {
+                  display: flex;
+                  flex-grow: 1;
+                  flex-shrink: 1;
+                  
+                  input {
+                    height: 1.75rem;
+                    padding: 4px 24px 4px 8px;
+
+                    font-size: .875rem;
+                  }
+                  .fa-filter {
+                      color: $navy;
+                  }
+                }
+              }
+            }
+          }
+
+          &.feeds {
+            max-height: calc((100vh - 9rem));
+          }
+
+          &.shapes {
+            max-height: calc((100vh - 9rem));
+          }
+
+          &.feeds, &.shapes {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 0;
+
+            .pane {
+              display: flex;
+              overflow: hidden;
+              flex-direction: column;
+
+              .panel-list {
+                align-items: flex-start;
+
+                padding: 1rem .75rem .5rem;
+
+                border-top: 1px solid rgba($navy, .2);
+                background: rgba($navy, .05);
+              }
+            }
+          }
+
+          &.view {
+            display: flex;
+            flex-direction: column;
+            .scroll {
+              border-top: 1px solid rgba($navy, .2);
+              background: rgba($navy, .05);
+
+              label {
+                padding: .5rem .75rem;
+
+                border-top: 1px solid rgba($navy, .2);
+
+                &:first-of-type {
+                  border-top-width: 0;
+                }
+              }
+
+              .panel-list {
+                flex-grow: 1;
+                flex-shrink: 1;
+
+                min-height: min-content;
+                padding: .25rem .5rem 0;
+              }
             }
           }
         }
@@ -194,14 +278,44 @@ body {
 
     .pane {
         overflow: hidden;
+    }
 
-        transition: all 1s ease-out;
+    &.feeds {
+      .pane {
+        
+        &.open {
+          flex-grow: 1;
+          flex-shrink: 1;
+          //set height to 70% of space - should add up to 100 for all panels
+          //min-height: calc((100vh - 156px) * .7);
+          //max-height: calc((100vh - 156px) * .7);
+        }
+        &.closed {
+          flex-grow: 0;
+          flex-shrink: 0;
 
-      &.open {
-        //attributes if needed when pane open
+          height: 0;
+          min-height: 0;
+        }
       }
-      &.closed {
+    }
+    &.shapes {
+      .pane {
+        
+        &.open {
+          flex-grow: 1;
+          flex-shrink: 1;
+          //set height to 30% of space - should add up to 100 for all panels
+          //min-height: calc((100vh - 148px) * .3);
+          //max-height: calc((100vh - 148px) * .3);
+        }
+        &.closed {
+          flex-grow: 0;
+          flex-shrink: 0;
 
+          height: 0;
+          min-height: 0;
+        }
       }
     }
   }

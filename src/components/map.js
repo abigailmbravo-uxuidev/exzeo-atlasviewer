@@ -1,30 +1,77 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
+import Modal from './modal';
 import { useUser } from '../context/user-context';
-import { useFeedState } from '../context/feed-context';
+import { useFeedState, useFeedDispatch } from '../context/feed-context';
+import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
   addControls,
-  addDataset,
-  addLayer
+  addFeed,
+  addLayer,
+  getFeedId,
+  getSourceId,
+  removeLayer
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
+import MarkerPopup from './marker-popup';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
+import circle from '../img/circle-12.png';
+import hexagon from '../img/hexagon-12.png';
+import square from '../img/square-12.png';
+import pentagon from '../img/pentagon-12.png';
+import triangle from '../img/triangle-12.png';
+
+const loadIcon = (map, name, icon) =>
+  new Promise((resolve, reject) => {
+    map.loadImage(icon, (error, image) => {
+      if (error) return reject;
+      map.addImage(name, image, { sdf: true });
+      return resolve();
+    });
+  });
+
+const loadIcons = async map => {
+  const icons = {
+    circle,
+    hexagon,
+    square,
+    pentagon,
+    triangle
+  };
+
+  return await Promise.all(
+    Object.entries(icons).map(([key, value]) => loadIcon(map, key, value))
+  );
+};
+
+const renderPopup = (properties, feedName) =>
+  renderToStaticMarkup(
+    <MarkerPopup properties={properties} feedName={feedName} />
+  );
+
+const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
+  const dispatch = useFeedDispatch();
+  const layers = useLayers();
   const user = useUser();
   const [map, setMap] = useState({});
   const mapContainer = useRef(null);
   const prevFeeds = usePrevious(feeds);
+  const prevLayers = usePrevious(layers);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const userId = user.user_id;
   const { token } = user;
+  const hoveredStateId = useRef(null);
 
+  // Load the map
   useLayoutEffect(() => {
-    const initializeMap = (setMap, mapContainer) => {
+    const initializeMap = async (setMap, mapContainer) => {
       const mapbox = new mapboxgl.Map({
         container: mapContainer.current,
         ...defaultConfig,
@@ -51,61 +98,144 @@ const Map = ({ basemap, layerToggle, setIsMapLoading }) => {
         }
       });
 
+      mapbox.on('error', ({ error: { message } }) => {
+        setIsMapLoading(false);
+      });
+
       mapbox.on('click', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
-        const feature = features.filter(f => f.layer.id.includes('dataset'));
+        const selectedFeatures = features.filter(f =>
+          f.layer.id.includes('feed')
+        );
+        if (!selectedFeatures || selectedFeatures.length === 0) return;
+        const feature = selectedFeatures[0];
+
+        new mapboxgl.Popup()
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(
+            renderPopup(feature.properties, feature.layer.metadata.feedname)
+          )
+          .addTo(mapbox);
       });
+
+      mapbox.on('mousemove', e => {
+        const features = mapbox.queryRenderedFeatures(e.point);
+        const selectedFeatures = features.filter(f =>
+          f.layer.id.includes('dataset')
+        );
+
+        mapbox.getCanvas().style.cursor =
+          selectedFeatures.length > 0 ? 'pointer' : '';
+      });
+
+      await loadIcons(mapbox);
     };
 
     initializeMap(setMap, mapContainer);
   }, [setMap, token, setIsMapLoading]);
 
+  // Feeds
   useEffect(() => {
     if (!map.getLayer || !feeds || !prevFeeds) return;
     if (feeds.length > prevFeeds.length) {
       // Add feed
-      addDataset(map, userId, feeds[feeds.length - 1]);
+      addFeed(map, userId, feeds[feeds.length - 1]);
     } else if (prevFeeds.length > feeds.length) {
       // Delete feed
+      const deletedFeed = prevFeeds.filter(
+        pf => !feeds.some(f => f._id == pf._id)
+      );
+      if (deletedFeed && deletedFeed.length > 0)
+        removeLayer(map, deletedFeed[0]._id);
     } else {
-      // Toggle feed
+      // Update feed
       feeds.map(feed => {
-        const { _id, active } = feed;
-        const layerId = `${_id}-dataset`;
+        const { _id, active, filter, updated } = feed;
+        const layerId = getFeedId(_id);
+        const prevFeed = prevFeeds.find(p => p._id === _id);
 
-        if (feed.active !== prevFeeds.active) {
+        // feed data updated
+        if (updated) {
+          const sourceId = getSourceId(_id);
+          map
+            .getSource(sourceId)
+            .setData(`${process.env.API_URL}/api/geojson/${_id}/feed`);
+          feed.updated = false;
+          dispatch({ type: 'update', data: feed });
+        }
+
+        if (active !== prevFeed.active) {
           if (!map.getLayer(layerId)) {
-            return addDataset(map, userId, feed);
+            return addFeed(map, userId, feed);
           }
 
           const visibility = map.getLayoutProperty(layerId, 'visibility');
           const newVisibility = active ? 'visible' : 'none';
           map.setLayoutProperty(layerId, 'visibility', newVisibility);
         }
+
+        // Set filter
+        if (filter !== prevFeed.filter) {
+          if (!filter || filter.length === 0) {
+            map.setFilter(layerId, null);
+          } else {
+            map.setFilter(layerId, [
+              '!',
+              ['in', ['get', 'status_name'], ['literal', filter]]
+            ]);
+          }
+        }
       });
     }
-  }, [prevFeeds, feeds, userId, map]);
+  }, [prevFeeds, feeds, userId, map, dispatch]);
 
+  // Layers
+  useEffect(() => {
+    if (!map.getLayer || !layers || !prevLayers) return;
+    layers.map(layer => {
+      const { _id, active } = layer;
+      const layerId = `${_id}-layer`;
+
+      if (layer.active !== prevLayers.active) {
+        if (!map.getLayer(layerId)) {
+          return addLayer(map, userId, layer);
+        }
+
+        const visibility = map.getLayoutProperty(layerId, 'visibility');
+        const newVisibility = active ? 'visible' : 'none';
+        map.setLayoutProperty(layerId, 'visibility', newVisibility);
+      }
+    });
+  }, [prevLayers, layers, userId, map]);
+
+  // Basemap
   useEffect(() => {
     if (!map.getLayer || !basemap) return;
+    let isReset = false;
     map.setStyle(basemap);
-  }, [basemap, map]);
 
-  useEffect(() => {
-    if (!map.getLayer || !layerToggle) return;
-    const { show, layer } = layerToggle;
-    const layerId = `${layer._id}-layer`
+    map.once('styledata', async () => {
+      if (!isReset) {
+        await loadIcons(map);
+        feeds
+          .filter(feed => feed.active)
+          .forEach(feed => addFeed(map, userId, feed));
+        layers
+          .filter(layer => layer.active)
+          .forEach(layer => addLayer(map, userId, layer));
+        isReset = true;
+      }
+    });
+  }, [basemap, map, userId, feeds, layers]);
 
-    if (!map.getLayer(layerId)) {
-      return addLayer(map, userId, layer);
-    }
-
-    const visibility = map.getLayoutProperty(layerId, 'visibility');
-    const newVisibility = show ? 'visible' : 'none';
-    map.setLayoutProperty(layerId, 'visibility', newVisibility);
-  }, [layerToggle, map, userId]);
-
-  return <div id="map" ref={el => (mapContainer.current = el)} />;
+  return (
+    <>
+      {error.length > 0 && (
+        <Modal message={error} closeModal={() => setError('')} />
+      )}
+      <div id="map" ref={el => (mapContainer.current = el)} />
+    </>
+  );
 };
 
 Map.propTypes = {

@@ -32,8 +32,20 @@
   width: 18rem;
   height: 100vh;
 
+  .feed-detail-wrapper {
+    max-width: calc(100% - 1.5rem);
+    h5 {
+      span {
+      }
+    }
+
+    dl {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+  }
+
   &.open {
-    left: 0;
   }
   &.closed {
     left: -18rem;
@@ -49,6 +61,10 @@
   height: 100vh;
 
   .panel-list {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 1rem;
     li {
       padding-top: .25rem;
       padding-bottom: .75rem;
@@ -56,7 +72,7 @@
       border-bottom: 1px dotted rgba($navy, .2);
 
       &:last-of-type {
-        border-bottom: 1px solid rgba($navy, .3);
+        border-bottom-width: 0;
       }
 
       .detail-list {
@@ -64,7 +80,6 @@
         padding-left: .5rem;
     
         li {
-          display: flex;
           align-items: flex-start;
           flex-wrap: nowrap;
 
@@ -82,14 +97,32 @@
             height: 1rem;
 
             font-size: .875rem;
+
+            svg {
+              width: .75rem;
+            }
           }
 
           h6 {
+            display: block;
+            overflow: hidden;
+
+            width: 170px;
             margin: 0;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
 
             font-size: .75rem;
             font-weight: normal;
           }
+
+          .feed-detail-wrapper {
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-wrap: wrap;
+            }
 
           .detail-count {
             flex-grow: 0;
@@ -97,7 +130,22 @@
 
             margin-left: 4px;
 
+            text-align: right;
+
             font-size: .75rem;
+          }
+
+          ul {
+            display: flex;
+            flex-direction: column;
+            li {
+              .feed-detail-wrapper {
+                width: 50px;
+
+                text-align: right;
+              }
+
+            }
           }
         }
       }
@@ -175,9 +223,7 @@
     display: flex;
     align-items: center;
 
-    padding-bottom: .75rem;
-
-    border-bottom: 1px solid rgba($navy, .3);
+    padding: 0 .75rem .75rem;
 
     select {
       margin: 8px 0;
@@ -313,8 +359,10 @@
 //panel lists
 //----------------------------------------------------------
 .panel-list {
+flex-direction: row-reverse;
+
 margin: 0;
-padding: 0;
+padding: 0 4px 0 0;
 
 list-style: none;
 
@@ -322,7 +370,52 @@ li {
   display: flex;
   flex-wrap: wrap;
 
+  width: 100%;
   margin-bottom: .75rem;
+
+  .menu {
+    flex-direction: row-reverse;
+  }
+
+  &:last-of-type {
+    .menu {
+      top: auto;
+      bottom: -2px;
+
+      flex-direction: column-reverse;
+
+      .menu-button {
+        padding: 0 2px 2px 0;
+      }
+    }
+  }
+
+  &:first-of-type {
+    .menu {
+      top: -2px;
+      bottom: auto;
+
+      flex-direction: column;
+
+      .menu-button {
+        padding: 2px 2px 0 0;
+      }
+    }
+  }
+  &:first-of-type:last-of-type {
+    
+    .menu {
+      top: -8px;
+
+      flex-direction: row-reverse;
+
+      .menu-button {
+        align-items: flex-start;
+
+        margin-top: 6px;
+      }
+    }
+  }
 
   span {
     &.wrapper {
@@ -350,6 +443,8 @@ li {
     }
   }
   h1, h2, h3, h4, h5, p {
+    position: relative;
+
     display: flex;
     align-items: center;
 
@@ -381,14 +476,22 @@ li {
       }
     }
     .file-name {
+      overflow: hidden;
       flex-grow: 1;
       flex-shrink: 1;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .menuIcon {
+      flex-grow: 0;
+      flex-shrink: 0;
+
+      margin-left: .5rem;
 
       &:hover {
         ~.menu {
-          display: flex;
+          visibility: visible;
 
           opacity: 1;
         }
@@ -397,32 +500,45 @@ li {
     .menu {
       position: absolute;
       z-index: 1;
-      right: -2.75rem;
+      right: -2px;
 
-      display: none;
-      flex-direction: column;
+      display: flex;
+      visibility: hidden;
+      overflow: hidden;
 
       width: auto;
-      height: auto;
-      margin-top: 56px;
+
+      transition: opacity .1s ease-out;
 
       opacity: 0;
       border-radius: .25rem;
       background-color: rgba($white, .9);
       box-shadow: 0px 0px 8px 0px rgba($black, .25);
 
-      svg {
+      &:not(:last-of-type), &:not(:first-of-type:last-of-type) {
+        top: -2px;
+
+        flex-direction: column;
         
+      }
+
+      .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        padding: 2px 2px 0 0;
       }
 
       &:hover {
         display: flex;
+        visibility: visible;
 
         opacity: 1;
       }
 
       ul {
-        padding: .25rem 0;
+        padding: 0;
 
         list-style: none;
 
@@ -431,7 +547,6 @@ li {
 
           min-height: 1rem;
           margin: 0;
-          
 
           button {
             display: flex;
@@ -441,13 +556,15 @@ li {
             padding: .25rem .5rem;
 
             cursor: pointer;
-            transition: all .2s ease-out;
+            transition: all .1s ease-out;
 
             border: none;
+            background-color: $white;
 
             font-size: .75rem;
             
             &:hover {
+              border-radius: 0;
               background-color: #a3e5ff;
             }
           }
@@ -464,7 +581,7 @@ li {
       padding-left: .25rem;
 
       cursor: pointer;
-      transition: all .2s ease-out;
+      transition: all .1s ease-out;
 
       color: mix($base-gray, $white, 70%);
       border: none;
@@ -484,21 +601,35 @@ li {
   }
   dl {
     display: flex;
+    overflow: hidden;
 
     margin: 0;
 
     span {
+      display: block;
+      overflow: hidden;
+
       margin-right: .5rem;
 
       &.date {
+        display: block;
+        flex-grow: 0;
+        flex-shrink: 0;
+
+        min-width: 4.0625rem;
+      }
+      &.author {
+        overflow: hidden;
         flex-grow: 1;
         flex-shrink: 1;
 
-        min-width: 25%;
-      }
-      &.author {
-        flex-grow: 1;
-        flex-shrink: 1;
+        > dd {
+            display: block;
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
       }
       dt {
         font-size: .75rem;

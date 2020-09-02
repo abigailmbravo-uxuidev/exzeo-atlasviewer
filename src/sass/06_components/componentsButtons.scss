@@ -1,4 +1,15 @@
 //button styles
+button {
+  text-transform: uppercase;
+
+  border-radius: 6px;
+  
+  &:disabled, &[disabled="disabled"] {
+    cursor: not-allowed;
+
+    opacity: .35;
+  }
+}
 a {
   display: flex;
 
@@ -112,7 +123,6 @@ a {
   flex-shrink: 0;
   justify-content: center;
 
-  width: auto;
   width: 1.5rem;
   height: 1.5rem;
   padding: 0;
@@ -152,14 +162,13 @@ a {
   display: flex;
   align-items: center;
   flex-direction: row;
+  flex-grow: 0;
+  flex-shrink: 0;
   justify-content: space-between;
 
   width: 100%;
-  padding-bottom: 16px;
+  padding: 0 1rem .5rem;
 
-  select {
-    margin-right: .5rem;
-  }
 }
 .logoutBtn {
   position: fixed;
@@ -188,24 +197,27 @@ a {
 }
 .file-upload-label {
   display: inline-flex;
+  align-items: center;
   align-self: center;
-  flex-grow: 0;
-  flex-shrink: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
 
   width: auto;
-  margin: 0 0 1rem;
+  height: 36px;
+  margin: 0 0 0 1rem;
   padding: 8px 16px;
 
   cursor: pointer;
   transition: all .2s ease-out;
-  text-transform: none;
+  white-space: nowrap;
+  text-transform: uppercase;
 
   color: $white;
   border-radius: 6px;
   background: $navy;
 
   font-size: .875rem;
-  font-weight: normal;
+  font-weight: bold;
   line-height: 1;
 
   &:hover {
@@ -219,3 +231,16 @@ a {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+.round-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1rem;
+  height: 1rem;
+
+  border-width: 0;
+  border-radius: .5rem;
+}
+
