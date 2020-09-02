@@ -1,4 +1,6 @@
 import 'cypress-file-upload';
+import 'cypress-plugin-snapshots/commands';
+import { usersData } from '../fixtures/data'
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -38,3 +40,34 @@ import 'cypress-file-upload';
 //       });
 //   });
 // });
+
+Cypress.Commands.add('loginToApplication', (user) => {
+  cy.visit('/');
+  cy.get('button').click();
+  cy.url().then( url => {
+    if (url.includes('atlas-viewer.auth0.com')){
+      cy.get('[name="username"]').type(usersData[user].login);
+      cy.get('[name="password"]').type(usersData[user].password);
+      cy.get('button').click();
+      cy.wait('@getUserData').then(response => {        
+        expect(response.status).to.equal(200)
+      })
+      cy.wait(2000)      
+      cy.reload()
+    } else {
+      cy.logoutFromApplication();
+      cy.loginToApplication(user)
+    }
+  })
+
+  
+});
+
+Cypress.Commands.add('logoutFromApplication', () => {
+  cy.get('.logoutBtn').click();
+  cy.url().should('eq', 'https://www-stage.atlasviewer.com/');
+});
+
+Cypress.on('window:before:load', win => {
+  delete win.fetch;
+});
