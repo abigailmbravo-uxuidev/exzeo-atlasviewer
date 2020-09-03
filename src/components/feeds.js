@@ -65,15 +65,26 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
   useEffect(() => {
     const [sortField, direction = 'asc'] = feedSort.split(',');
-    const sorted = [...allFeeds].sort((a, b) => {
-      const aValue = a[sortField].toLowerCase();
-      const bValue = b[sortField].toLowerCase();
+    let sorted = [...allFeeds].sort((a, b) => {
+      const aValue =
+        sortField === 'owner'
+          ? a.owner.name.toLowerCase()
+          : a[sortField].toLowerCase();
+
+      const bValue =
+        sortField === 'owner'
+          ? b.owner.name.toLowerCase()
+          : b[sortField].toLowerCase();
 
       if (aValue === bValue) {
         return 0;
       }
+
       return aValue < bValue ? -1 : 1;
     });
+
+    if (direction === 'desc') sorted.reverse();
+    
     setFeeds(sorted);
   }, [feedSort, allFeeds, setFeeds]);
 
