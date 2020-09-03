@@ -19,7 +19,7 @@ const formatAvg = (value, count) => {
   return Math.round(avg * 10) / 10;
 };
 
-const ViewPopout = ({ feed, close }) => {
+const ViewPopout = ({ feed, toggleStatus, close }) => {
   const [panelCollapse, setPanelCollapseState] = useState('expanded');
   const { _id } = feed;
   const aggregateTotals = {};
@@ -74,9 +74,19 @@ const ViewPopout = ({ feed, close }) => {
                       <th title={status.name}>
                         <div className="status-wrapper">
                           {/* Element to toggle hide/show of only this data points */}
-                          <span className="eyeball-wrapper wrapper">
-                            <FontAwesomeIcon icon={faEye} />
-                            {/* toggle eye icon={faSlashEye} */}
+                          <span
+                            className="eyeball-wrapper wrapper"
+                            role="button"
+                            tabIndex={index}
+                            onClick={() => toggleStatus(feed, status.name)}
+                            onKeyDown={() => toggleStatus(feed, status.name)}
+                          >
+                            {!feed.filter ||
+                            !feed.filter.includes(status.name) ? (
+                              <FontAwesomeIcon icon={faEye} />
+                            ) : (
+                              <FontAwesomeIcon icon={faEyeSlash} />
+                            )}
                           </span>
                           {/* icon from data should be added here - will need to figure this out */}
                           <span
@@ -155,7 +165,9 @@ const ViewPopout = ({ feed, close }) => {
 };
 
 ViewPopout.propTypes = {
-  feed: PropTypes.object
+  feed: PropTypes.object.isRequired,
+  toggleStatus: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired
 };
 
 export default ViewPopout;

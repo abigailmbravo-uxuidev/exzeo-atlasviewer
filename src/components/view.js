@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -108,7 +108,11 @@ const View = ({ setBasemap }) => {
                 inViewFeeds.map((feed, index) => (
                   <li key={feed._id}>
                     {popouts.includes(feed._id) && (
-                      <ViewPopout feed={feed} close={togglePopout} />
+                      <ViewPopout
+                        feed={feed}
+                        toggleStatus={toggleStatus}
+                        close={togglePopout}
+                      />
                     )}
                     <span
                       className="eyeball-wrapper wrapper"
@@ -307,6 +311,8 @@ const View = ({ setBasemap }) => {
   );
 };
 
-export default View;
+View.propTypes = {
+  setBasemap: PropTypes.func.isRequired
+};
 
-//ABBY THIS IS WHAT YOU NEED
+export default View;
