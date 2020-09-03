@@ -34,6 +34,11 @@ const View = ({ setBasemap }) => {
   }, []);
 
   const inViewFeeds = feeds.filter(feed => feed.inView);
+  inViewFeeds.forEach(feed =>
+    feed.statuses.sort((a, b) =>
+      a.name === b.name ? 0 : a.name < b.name ? -1 : 1
+    )
+  );
   const inViewLayers = layers.filter(layer => layer.inView);
 
   const handleBasemap = ({ target: { value } }) => {
