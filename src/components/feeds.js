@@ -65,26 +65,36 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
   useEffect(() => {
     const [sortField, direction = 'asc'] = feedSort.split(',');
-    let sorted = [...allFeeds].sort((a, b) => {
-      const aValue =
-        sortField === 'owner'
-          ? a.owner.name.toLowerCase()
-          : a[sortField].toLowerCase();
 
-      const bValue =
-        sortField === 'owner'
-          ? b.owner.name.toLowerCase()
-          : b[sortField].toLowerCase();
+    const sortString = (allFeeds, sortField) =>
+      [...allFeeds].sort((a, b) => {
+        const aValue =
+          sortField === 'owner'
+            ? a.owner.name.toLowerCase()
+            : a[sortField].toLowerCase();
 
-      if (aValue === bValue) {
-        return 0;
-      }
+        const bValue =
+          sortField === 'owner'
+            ? b.owner.name.toLowerCase()
+            : b[sortField].toLowerCase();
 
-      return aValue < bValue ? -1 : 1;
-    });
+        return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
+      });
 
+    const sortBoolean = (allFeeds, sortField) =>
+      [...allFeeds].sort((a, b) =>
+        a[sortField] === b[sortField] ? 0 : a[sortField] ? -1 : 1
+      );
+
+    let sorted = [];
+
+    if (sortField === 'active') {
+      sorted = sortBoolean(allFeeds, sortField);
+    } else {
+      sorted = sortString(allFeeds, sortField);
+    }
     if (direction === 'desc') sorted.reverse();
-    
+
     setFeeds(sorted);
   }, [feedSort, allFeeds, setFeeds]);
 
