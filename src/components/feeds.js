@@ -27,10 +27,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState([]);
-  const [feedSort, setFeedSort] = useState(null);
+  const [feedSort, setFeedSort] = useState('name,asc');
   const [paneActive, setPaneActive] = useState(true);
   const [feedNotifications, setFeedNotifications] = useState(null);
-  const feeds = useState([]);
+  const [feeds, setFeeds] = useState([]);
 
   const dispatch = useFeedDispatch();
   const content = useRef(null);
@@ -54,23 +54,28 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   };
 
   useEffect(() => {
-    if (!feedSort) return;
-    const sortFeed = type => {
-      const types = {};
-    };
-
-    const [sortField, direction = 'asc'] = feedSort.split(',');
-    sortFeed(feedSort);
-  }, [feedSort]);
-
-  useEffect(() => {
     const feeds =
       filter && filter.length > 1
         ? allFeeds.filter(feed =>
             feed.name.toLowerCase().includes(filter.toLowerCase())
           )
         : allFeeds;
+    setFeeds(feeds);
   }, [allFeeds, filter]);
+
+  useEffect(() => {
+    const [sortField, direction = 'asc'] = feedSort.split(',');
+    const sorted = [...allFeeds].sort((a, b) => {
+      const aValue = a[sortField].toLowerCase();
+      const bValue = b[sortField].toLowerCase();
+
+      if (aValue === bValue) {
+        return 0;
+      }
+      return aValue < bValue ? -1 : 1;
+    });
+    setFeeds(sorted);
+  }, [feedSort, allFeeds, setFeeds]);
 
   return (
     <>
@@ -129,8 +134,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option value="name,desc">Name | Z - A</option>
             <option value="owner,asc">Author | A - Z</option>
             <option value="owner,desc">Author | Z - A</option>
-            <option value="created_date">Created Date</option>
-            <option value="updated_date">Updated Date</option>
+            <option value="created_at">Created Date</option>
+            <option value="updated_at">Updated Date</option>
             <option value="active">Mapped Feeds</option>
           </select>
         </div>
