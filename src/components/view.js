@@ -112,6 +112,7 @@ const View = ({ setBasemap }) => {
                     {popouts.includes(feed._id) && (
                       <ViewPopout
                         feed={feed}
+                        toggleFeed={toggleFeed}
                         toggleStatus={toggleStatus}
                         close={togglePopout}
                       />
