@@ -126,10 +126,6 @@ export const addFeed = (map, userId, feed) => {
       'icon-color': ['get', 'status_color']
     }
   });
-
-  if (!hasCustomFeed) {
-    console.log(map.getSource(sourceId));
-  }
 };
 
 export const deleteDataset = (map, userId, layer) => {
