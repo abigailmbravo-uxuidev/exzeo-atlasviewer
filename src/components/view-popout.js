@@ -6,6 +6,7 @@ import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEye,
+  faEyeSlash,
   faTimes,
   faCircle,
   faChevronLeft,

@@ -96,6 +96,9 @@ export const addFeed = (map, userId, feed) => {
   if (share && share._id) source = `${source}/${share._id}`;
   if (map.getLayer(feedId)) return;
 
+  const layers = map.getStyle().layers;
+  const hasCustomFeed = layers.some(layer => layer.id.endsWith('-feed'));
+
   map.addSource(sourceId, {
     type: 'geojson',
     data: source,
@@ -124,8 +127,8 @@ export const addFeed = (map, userId, feed) => {
     }
   });
 
-  if (share) {
-
+  if (!hasCustomFeed) {
+    console.log(map.getSource(sourceId));
   }
 };
 
