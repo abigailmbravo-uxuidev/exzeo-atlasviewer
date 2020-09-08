@@ -27,19 +27,14 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [shareFeed, setShareFeed] = useState(null);
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState([]);
+  const [feedSort, setFeedSort] = useState('name,asc');
   const [paneActive, setPaneActive] = useState(true);
   const [feedNotifications, setFeedNotifications] = useState(null);
+  const [feeds, setFeeds] = useState([]);
 
   const dispatch = useFeedDispatch();
   const content = useRef(null);
   const [error, setError] = useState('');
-
-  const feeds =
-    filter && filter.length > 1
-      ? allFeeds.filter(feed =>
-          feed.name.toLowerCase().includes(filter.toLowerCase())
-        )
-      : allFeeds;
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -58,7 +53,50 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     dispatch({ type: 'update', data: { ...feed, notified: true } });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const feeds =
+      filter && filter.length > 1
+        ? allFeeds.filter(feed =>
+            feed.name.toLowerCase().includes(filter.toLowerCase())
+          )
+        : allFeeds;
+    setFeeds(feeds);
+  }, [allFeeds, filter]);
+
+  useEffect(() => {
+    const [sortField, direction = 'asc'] = feedSort.split(',');
+
+    const sortString = (allFeeds, sortField) =>
+      [...allFeeds].sort((a, b) => {
+        const aValue =
+          sortField === 'owner'
+            ? a.owner.name.toLowerCase()
+            : a[sortField].toLowerCase();
+
+        const bValue =
+          sortField === 'owner'
+            ? b.owner.name.toLowerCase()
+            : b[sortField].toLowerCase();
+
+        return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
+      });
+
+    const sortBoolean = (allFeeds, sortField) =>
+      [...allFeeds].sort((a, b) =>
+        a[sortField] === b[sortField] ? 0 : a[sortField] ? -1 : 1
+      );
+
+    let sorted = [];
+
+    if (sortField === 'active') {
+      sorted = sortBoolean(allFeeds, sortField);
+    } else {
+      sorted = sortString(allFeeds, sortField);
+    }
+    if (direction === 'desc') sorted.reverse();
+
+    setFeeds(sorted);
+  }, [feedSort, allFeeds, setFeeds]);
 
   return (
     <>
@@ -112,14 +150,14 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
       <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
         <div className="feedBtns">
-          <select>
-            <option>Name | A - Z</option>
-            <option>Name | Z - A</option>
-            <option>Author | A - Z</option>
-            <option>Author | Z - A</option>
-            <option>Created Date</option>
-            <option>Updated Date</option>
-            <option>Mapped Feeds</option>
+          <select onChange={e => setFeedSort(e.target.value)}>
+            <option value="name,asc">Name | A - Z</option>
+            <option value="name,desc">Name | Z - A</option>
+            <option value="owner,asc">Author | A - Z</option>
+            <option value="owner,desc">Author | Z - A</option>
+            <option value="created_at">Created Date</option>
+            <option value="updated_at">Updated Date</option>
+            <option value="active">Mapped Feeds</option>
           </select>
         </div>
         <ul className="panel-list scroll">
