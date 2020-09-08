@@ -92,7 +92,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   };
 
   const handleAdd = ({ recipients }) => {
-    const list = recipients.split();
+    const list = recipients.split(',');
     const emails = list.filter(email => {
       const shareExists = previousShares.some(
         prev => prev.share === email.trim()
