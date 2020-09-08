@@ -88,7 +88,7 @@ export const addLayer = (map, userId, layer) => {
 };
 
 export const addFeed = (map, userId, feed) => {
-  const { _id, name, url, share } = feed;
+  const { _id, name, url, share, bounds } = feed;
   const sourceId = getSourceId(_id);
   const feedId = getFeedId(_id);
   let source = `${process.env.API_URL}/api/geojson/${_id}`;
@@ -126,6 +126,8 @@ export const addFeed = (map, userId, feed) => {
       'icon-color': ['get', 'status_color']
     }
   });
+
+  if (!hasCustomFeed && bounds) map.fitBounds(bounds);
 };
 
 export const deleteDataset = (map, userId, layer) => {
