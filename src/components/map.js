@@ -26,9 +26,6 @@ import square from '../img/square-12.png';
 import pentagon from '../img/pentagon-12.png';
 import triangle from '../img/triangle-12.png';
 
-const clientId = 'GAvApBdH3GkI96PWbO8Jf';
-const clientKey = 'QgKWZlLJasgO403L8xMoa2aPjJtjZ0K9Fe9TmieD';
-
 const loadIcon = (map, name, icon) =>
   new Promise((resolve, reject) => {
     map.loadImage(icon, (error, image) => {
@@ -92,25 +89,6 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
       mapbox.on('load', () => {
         setMap(mapbox);
-
-        mapbox.addSource('aerisweather-radar', {
-          type: 'raster',
-          tiles: [
-            `https://maps1.aerisapi.com/${clientId}_${clientKey}/tropical-cyclones,tropical-cyclones-names/{z}/{x}/{y}/current.png`
-          ],
-          tileSize: 256,
-          attribution:
-            '<a href="https://www.aerisweather.com/">AerisWeather</a>'
-        });
-
-        mapbox.addLayer({
-          id: 'radar-tiles',
-          type: 'raster',
-          source: 'aerisweather-radar',
-          minzoom: 0,
-          maxzoom: 22
-        });
-
         mapbox.resize();
       });
 
