@@ -15,12 +15,12 @@ import { useUser } from '../context/user-context';
 
 const formatData = shares =>
   shares.map(share => ({
+    ...share,
     viewed: share.viewed
       ? format(new Date(share.viewed), 'MM-dd-yyyy h:mm a', {
           timeZone: 'America/New_York'
         })
       : 'Never',
-    ...share,
     created_at: format(new Date(share.created_at), 'MM/dd/yyyy h:mm a', {
       timeZone: 'America/New_York'
     })
