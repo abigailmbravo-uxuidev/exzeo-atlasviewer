@@ -237,7 +237,20 @@ const Map = ({ basemap, setIsMapLoading }) => {
         await loadIcons(map);
         feeds
           .filter(feed => feed.active)
-          .forEach(feed => addFeed(map, userId, feed));
+          .forEach(feed => {
+            addFeed(map, userId, feed);
+            const { _id, filter } = feed;
+            const layerId = getFeedId(_id);
+
+            if (!filter || filter.length === 0) {
+              map.setFilter(layerId, null);
+            } else {
+              map.setFilter(layerId, [
+                '!',
+                ['in', ['get', 'status_name'], ['literal', filter]]
+              ]);
+            }
+          });
         layers
           .filter(layer => layer.active)
           .forEach(layer => addLayer(map, userId, layer));
