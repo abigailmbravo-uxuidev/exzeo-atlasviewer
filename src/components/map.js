@@ -157,6 +157,11 @@ const Map = ({ basemap, setIsMapLoading }) => {
         // feed data updated
         if (updated) {
           const sourceId = getSourceId(_id);
+
+          if (!map.getLayer(layerId)) {
+            return addFeed(map, userId, feed);
+          }
+
           map
             .getSource(sourceId)
             .setData(`${process.env.API_URL}/api/geojson/${_id}/feed`);
