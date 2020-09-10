@@ -97,7 +97,9 @@ export const addFeed = (map, userId, feed) => {
   if (map.getLayer(feedId)) return;
 
   const layers = map.getStyle().layers;
-  const hasCustomFeed = layers.some(layer => layer.id.endsWith('-feed'));
+  const hasCustomFeed = layers.some(
+    layer => layer.id.endsWith('-feed') && layer.layout.visibility === 'visible'
+  );
 
   map.addSource(sourceId, {
     type: 'geojson',
