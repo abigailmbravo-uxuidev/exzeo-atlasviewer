@@ -17,6 +17,10 @@ Cypress.on('window:before:load', win => {
     it('Login to the app as User1', () => {         
         cy.loginToApplication('user1');
     });
+
+    it("Delete all previous feeds", () => {
+        onDataFeedPane.deleteAllFeeds();
+    })
     
     it ('Load 3 feeds', () => {       
         onDataFeedPane.clickToOpenCurrentViewPane();
@@ -24,9 +28,22 @@ Cypress.on('window:before:load', win => {
             onDataFeedPane.uploadFeed(name)
             onDataFeedPane.verifyFeedNameAndCreationDate(name)                       
             onCurrentViewPane.verifyThatFeedPresentOnCurrentViewPane(name);
-            onCurrentViewPane.verifyThatFeedIsAddedtoMap(name);          
+            onCurrentViewPane.verifyThatFeedIsAddedtoMap(name);                     
         })      
     })
+
+    it ('Sort tasks and verify correctness of sorting', () => {
+        onDataFeedPane.uncheckFeed(feeds[2]) 
+        onDataFeedPane.sotFeeds('name,asc')
+        onDataFeedPane.verifySorting(feeds, [2,0,1])
+        onDataFeedPane.sotFeeds('Mapped Feeds')   
+        onDataFeedPane.verifySorting(feeds, [0,1,2]) 
+        onDataFeedPane.sotFeeds('name,desc')
+        onDataFeedPane.verifySorting(feeds, [0,2,1])
+        onDataFeedPane.sotFeeds('created_at')
+        onDataFeedPane.verifySorting(feeds, [0,1,2])
+           
+    } )
 
 
     it ('Share 3 feeds with User2', () => {

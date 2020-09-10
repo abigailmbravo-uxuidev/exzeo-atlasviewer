@@ -131,12 +131,12 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
           </button>
         </header>
         <div className="body">
-          <label htmlFor="feed-name-placeholder">File Name</label>
+          <label htmlFor="feedname-placeholder">File Name</label>
           <div className="uploadWrapper">
             <input
               placeholder="File name will appear here"
               type="text"
-              id="feed-name-placeholder"
+              id="feedname-placeholder"
               name="feednameplaceholder"
               disabled="disabled"
               ref={register({ required: true })}
@@ -154,10 +154,10 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
               onChange={handleFile}
             />
           </div>
-          <label htmlFor="feed-name">Data Feed Name</label>
+          <label htmlFor="feedname">Data Feed Name</label>
           <input
             type="text"
-            id="feed-name"
+            id="feedname"
             name="feedname"
             placeholder="Editable feed name"
             ref={register({ required: true })}

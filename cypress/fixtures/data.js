@@ -1,5 +1,5 @@
 export const usersData = {
-    user1 : { login: 'ashatunov@exzeo.com',
+    user1 : { login: 'andreiShat',
     password: 'Vega1407!' },
     user2 : { login: 'atlasqa',
     password:  'Titan123' },
@@ -16,4 +16,4 @@ let d,m,h,s,date;
     let feedNo2Name = 'feedNo2' + d + m + h + s
     let feedNo3Name = 'feedNo3' + d + m + h + s
 
-export const feeds = [feedNo1Name,feedNo2Name,feedNo3Name]
+export const feeds = [feedNo3Name,feedNo1Name,feedNo2Name]

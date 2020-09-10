@@ -1,5 +1,5 @@
 {
-    "baseUrl" : "https://www-stage.atlasviewer.com/",
+    "baseUrl" : "https://av-678.exzeo.io/",
     "ignoreTestFiles": "**/examples/*",
     "viewportHight": 1080,
     "viewportWidth": 1920,

@@ -17,7 +17,7 @@ export class FeedPane {
         mimeType: 'text/csv'
       });
     });
-    cy.get('#feed-name')
+    cy.get('#feedname')
       .clear()
       .type(feedName);
     cy.get('button[type = "submit"]').click();
@@ -46,12 +46,44 @@ export class FeedPane {
       .find('dd')
       .last();   
   }
+  
+  uncheckFeed(name) {
+    cy.contains(name)    
+      .parents('li')
+      .find('input')
+      .uncheck()      
+  }
+
+  sotFeeds(type) {
+    cy.get('.section.feeds').find('select').select(type)
+  }
+
+  verifySorting(feeds, order){
+    feeds.map( ( feed, index ) => {
+      cy.get('.file-name').eq(order[index]).should('have.text', feed)
+    })
+  }
 
   verifyThatFeedIsChecked(name) {
     cy.contains(name)    
       .parents('li')
       .find('input')
       .should('be.checked');
+  }
+
+  deleteAllFeeds() {
+    cy.get('.file-name').each( () => {
+      cy.get('.file-name')      
+        .siblings('.menuIcon')
+        .parents('li')
+        .contains('Delete')
+        .click({ force: true });
+    cy.contains('Confirm Delete').click();
+    cy.wait('@deleteTheFeed').then( response => {
+      expect(response.xhr.status).to.equal(200)
+    })
+    })
+
   }
 
   deleteTheFeed(name) {    
@@ -78,7 +110,6 @@ export class FeedPane {
   }
 
   shareFeed(name) {
-
     cy.contains(name).first().parents('h5').find('button').contains('Share').click({force:true})
             cy.wait('@shareFeedModal').then( response => {
               expect(response.xhr.status).to.equal(200)
@@ -93,11 +124,9 @@ export class FeedPane {
             cy.wait('@shareFeed').then( response => {
               expect(response.xhr.status).to.equal(200)
             })
-
   }
 
   revokeFeed(name, email) {
-
     cy.contains(name).first().parents('h5').find('button').contains('Share').click({force:true});
     cy.get('[title*="Toggle A"]').uncheck();
     cy.contains(email).siblings('[role="cell"]').find('[title*="Toggle R"]').check();
@@ -106,17 +135,13 @@ export class FeedPane {
     cy.wait('@revokeFeed').then( response => {
       expect(response.xhr.status).to.equal(200)
     })
-
-
   }
 
   verifySharedFeedNotifications(name) {
-
      cy.get('.feed-name').contains(name).siblings('header').contains('New Shared Feed')
      cy.get('.feed-name').contains(name).siblings('header').find('[role="img"]')
      cy.get('.feed-name').contains(name).parent('.notification-content').siblings('button').click()
-     cy.get('.feed-name').contains(name).should('not.exist');
-
+    //  cy.get('.feed-name').contains(name).should('not.exist');
   }
 
   verifySharedFeeds(name) {
