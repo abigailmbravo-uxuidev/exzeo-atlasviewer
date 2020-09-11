@@ -154,7 +154,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
               onChange={handleFile}
             />
           </div>
-          <label htmlFor="feedname">Data Feed Name</label>
+          <label htmlFor="feed-name">Data Feed Name</label>
           <input
             type="text"
             id="feed-name"
