@@ -14,7 +14,7 @@ export class map {
   verifyDataOnPopUp() {
     cy.get('canvas')
       .eq(1)
-      .click(755, 313, { force: true });
+      .click(666, 143, { force: true });
     cy.wait(2000);
     cy.wrap(Object.entries(feedDetails)).each(([field, value]) => {
       cy.contains(field)

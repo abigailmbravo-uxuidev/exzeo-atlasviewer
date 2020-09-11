@@ -72,18 +72,21 @@ export class FeedPane {
   }
 
   deleteAllFeeds() {
-    cy.get('.file-name').each( () => {
-      cy.get('.file-name')      
-        .siblings('.menuIcon')
-        .parents('li')
-        .contains('Delete')
-        .click({ force: true });
-    cy.contains('Confirm Delete').click();
-    cy.wait('@deleteTheFeed').then( response => {
-      expect(response.xhr.status).to.equal(200)
-    })
-    })
-
+    cy.wait('@getUserData').then( data => {
+      if ((data.response.body.data.feeds).length > 0) {
+        cy.get('.file-name').each( () => {
+          cy.get('.file-name')      
+            .siblings('.menuIcon')
+            .parents('li')
+            .contains('Delete')
+            .click({ force: true });
+        cy.contains('Confirm Delete').click();
+        cy.wait('@deleteTheFeed').then( response => {
+            expect(response.xhr.status).to.equal(200)
+          })
+        })
+      }
+    })      
   }
 
   deleteTheFeed(name) {    
@@ -97,9 +100,9 @@ export class FeedPane {
     cy.wait('@deleteTheFeed').then( response => {
       expect(response.xhr.status).to.equal(200)
     })
-    cy.get('.file-name')
-      .contains(name)
-      .should('not.exist')
+    cy.get('.panel-list.scroll').first().within( () => {
+      cy.contains(name).should('not.exist')
+    })
   }
 
   verifyFeedExistance(name, exist) {
@@ -111,19 +114,19 @@ export class FeedPane {
 
   shareFeed(name) {
     cy.contains(name).first().parents('h5').find('button').contains('Share').click({force:true})
-            cy.wait('@shareFeedModal').then( response => {
-              expect(response.xhr.status).to.equal(200)
-            })
-            cy.get("#recipients").type('exzeoatlasqa@gmail.com');          
-            cy.get("[data-icon='plus']").click();
-            cy.contains('exzeoatlasqa@gmail.com');
-            cy.get("[class='card share']").find('button').contains('Share').click();
-            cy.get('td').contains('exzeoatlasqa@gmail.com');
-            cy.get("[data-icon='times']").click();
-            cy.get("[class='card share']").should('not.exist');
-            cy.wait('@shareFeed').then( response => {
-              expect(response.xhr.status).to.equal(200)
-            })
+    cy.wait('@shareFeedModal').then( response => {
+      expect(response.xhr.status).to.equal(200)
+    })
+    cy.get("#recipients").type('exzeoatlasqa@gmail.com');          
+    cy.get("[data-icon='plus']").click();
+    cy.contains('exzeoatlasqa@gmail.com');
+    cy.get("[class='card share']").find('button').contains('Share').click();
+    cy.get('td').contains('exzeoatlasqa@gmail.com');
+    cy.get("[data-icon='times']").click();
+    cy.get("[class='card share']").should('not.exist');
+    cy.wait('@shareFeed').then( response => {
+      expect(response.xhr.status).to.equal(200)
+    })
   }
 
   revokeFeed(name, email) {
@@ -141,7 +144,10 @@ export class FeedPane {
      cy.get('.feed-name').contains(name).siblings('header').contains('New Shared Feed')
      cy.get('.feed-name').contains(name).siblings('header').find('[role="img"]')
      cy.get('.feed-name').contains(name).parent('.notification-content').siblings('button').click()
-    //  cy.get('.feed-name').contains(name).should('not.exist');
+     cy.get('.feed-notification').within(() => {
+       cy.contains(name).should('not.exist')
+     })
+   
   }
 
   verifySharedFeeds(name) {

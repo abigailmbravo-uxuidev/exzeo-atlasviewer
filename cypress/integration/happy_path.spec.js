@@ -5,7 +5,8 @@ import { onLegendPopUp } from '../support/page_objects/legendPopUp';
 import { onLayersSection } from '../support/page_objects/layersSection';
 import { onMap } from '../support/page_objects/map';
 import { setRouteAliases } from '../helpers/index';
-import { feeds } from '../fixtures/data'
+import { feeds } from '../fixtures/data';
+const CircularJSON = require('circular-json');
 
 Cypress.on('window:before:load', win => {
   delete win.fetch;
@@ -16,7 +17,14 @@ describe('Happy Path', () => {
   
   it('Login to the app', () => {
     cy.loginToApplication('user1');
+   
   });
+  
+
+  it("Delete all previous feeds", () => {
+    onDataFeedPane.deleteAllFeeds();
+})
+
 
   it('Upload Feed and verify it on the Data Feed pane', () => {    
     onDataFeedPane.uploadFeed(feeds[0]);    

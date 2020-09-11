@@ -22,7 +22,7 @@ Cypress.on('window:before:load', win => {
         onDataFeedPane.deleteAllFeeds();
     })
     
-    it ('Load 3 feeds', () => {       
+    it ('Load 3 feeds', () => {           
         onDataFeedPane.clickToOpenCurrentViewPane();
         feeds.map( name => {              
             onDataFeedPane.uploadFeed(name)
