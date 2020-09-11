@@ -13,6 +13,14 @@ import axios from 'axios';
 import { useFeedDispatch } from '../context/feed-context';
 import { useUser } from '../context/user-context';
 
+const stripExtension = filename =>
+  !filename
+    ? ''
+    : filename
+        .split('.')
+        .slice(0, -1)
+        .join('.');
+
 const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
@@ -154,16 +162,16 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
               onChange={handleFile}
             />
           </div>
-          <label htmlFor="feed-name">Data Feed Name</label>
+          <label htmlFor="feedname">Data Feed Name</label>
           <input
             type="text"
-            id="feed-name"
+            id="feedname"
             name="feedname"
             placeholder="Editable feed name"
             ref={register({ required: true })}
-            defaultValue={feed.name ? feed.name : file.name}
+            defaultValue={feed.name ? feed.name : stripExtension(file.name)}
           />
-          {errors.lastname && 'Feed Name is required.'}
+          {errors.feedname && 'Feed Name is required.'}
           <ul id="status" className="statusWrapper">
             <label htmlFor="status" className="statusLabal">
               Status

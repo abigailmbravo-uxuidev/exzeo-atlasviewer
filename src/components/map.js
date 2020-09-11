@@ -150,13 +150,18 @@ const Map = ({ basemap, setIsMapLoading }) => {
     } else {
       // Update feed
       feeds.map(feed => {
-        const { _id, active, filter, updated } = feed;
+        const { _id, active, bounds, filter, updated } = feed;
         const layerId = getFeedId(_id);
         const prevFeed = prevFeeds.find(p => p._id === _id);
 
         // feed data updated
         if (updated) {
           const sourceId = getSourceId(_id);
+
+          if (!map.getLayer(layerId)) {
+            return addFeed(map, userId, feed);
+          }
+
           map
             .getSource(sourceId)
             .setData(`${process.env.API_URL}/api/geojson/${_id}/feed`);
@@ -172,6 +177,19 @@ const Map = ({ basemap, setIsMapLoading }) => {
           const visibility = map.getLayoutProperty(layerId, 'visibility');
           const newVisibility = active ? 'visible' : 'none';
           map.setLayoutProperty(layerId, 'visibility', newVisibility);
+
+          // Zoom to bounds if this is th only layer
+          if (active) {
+            const mapLayers = map.getStyle().layers;
+            const hasCustomFeed = mapLayers.some(
+              mapLayer =>
+                mapLayer.id.endsWith('-feed') &&
+                mapLayer.layout.visibility === 'visible' &&
+                layerId !== mapLayer.id
+            );
+
+            if (!hasCustomFeed && bounds) map.fitBounds(bounds);
+          }
         }
 
         // Set filter
@@ -219,7 +237,20 @@ const Map = ({ basemap, setIsMapLoading }) => {
         await loadIcons(map);
         feeds
           .filter(feed => feed.active)
-          .forEach(feed => addFeed(map, userId, feed));
+          .forEach(feed => {
+            addFeed(map, userId, feed);
+            const { _id, filter } = feed;
+            const layerId = getFeedId(_id);
+
+            if (!filter || filter.length === 0) {
+              map.setFilter(layerId, null);
+            } else {
+              map.setFilter(layerId, [
+                '!',
+                ['in', ['get', 'status_name'], ['literal', filter]]
+              ]);
+            }
+          });
         layers
           .filter(layer => layer.active)
           .forEach(layer => addLayer(map, userId, layer));

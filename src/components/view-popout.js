@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { formatCurrency } from '../utils/utils';
 
-const formatKey = value => value.replace(/-dollar/gi, '');
+const formatKey = value => value.replace(/-dollar|-sum/gi, '');
 const formatAvg = (value, count) => {
   const avg = value / count;
   return Math.round(avg * 10) / 10;
@@ -71,7 +71,9 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                     Object.entries(feed.statuses[0].aggregates).map(([key]) => (
                       <Fragment key={key}>
                         <th>{formatKey(key)}</th>
-                        <th>{formatKey(key)} Avg</th>
+                        {!key.toLowerCase().endsWith('sum') && (
+                          <th>{formatKey(key)} Avg</th>
+                        )}
                       </Fragment>
                     ))}
                 </tr>
@@ -125,11 +127,13 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                                 <td className={key}>
                                   {formatCurrency.format(value)}
                                 </td>
-                                <td className={`average ${key}`}>
-                                  {formatCurrency.format(
-                                    formatAvg(value, status.count)
-                                  )}
-                                </td>
+                                {!key.toLowerCase().endsWith('sum') && (
+                                  <td className={`average ${key}`}>
+                                    {formatCurrency.format(
+                                      formatAvg(value, status.count)
+                                    )}
+                                  </td>
+                                )}
                               </Fragment>
                             );
                           }
@@ -145,7 +149,9 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
                         <td>{formatCurrency.format(Math.floor(value))}</td>
-                        <td>{formatCurrency.format(value / feed.total)}</td>
+                        {!key.toLowerCase().endsWith('sum') && (
+                          <td>{formatCurrency.format(value / feed.total)}</td>
+                        )}
                       </Fragment>
                     ))}
                 </tr>
