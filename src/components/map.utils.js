@@ -88,13 +88,16 @@ export const addLayer = (map, userId, layer) => {
 };
 
 export const addFeed = (map, userId, feed) => {
-  const { _id, name, url, share } = feed;
+  const { _id, name, url, share, bounds } = feed;
   const sourceId = getSourceId(_id);
   const feedId = getFeedId(_id);
   let source = `${process.env.API_URL}/api/geojson/${_id}`;
 
   if (share && share._id) source = `${source}/${share._id}`;
   if (map.getLayer(feedId)) return;
+
+  const layers = map.getStyle().layers;
+  const hasCustomFeed = layers.some(layer => layer.id.endsWith('-feed'));
 
   map.addSource(sourceId, {
     type: 'geojson',
@@ -124,9 +127,7 @@ export const addFeed = (map, userId, feed) => {
     }
   });
 
-  if (share) {
-
-  }
+  if (!hasCustomFeed && bounds) map.fitBounds(bounds);
 };
 
 export const deleteDataset = (map, userId, layer) => {
