@@ -59,7 +59,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
             <table>
               <thead>
                 <tr>
-                  <th className="feedname-wrapper">
+                  <th className="feed-name-wrapper">
                     {/* Name of feed */}
                     <span data-tip data-for="feedPopOverTooltip">
                       {feed.name}

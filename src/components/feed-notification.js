@@ -12,7 +12,7 @@ const FeedNotification = ({ feed, close }) => {
           <header>
             <FontAwesomeIcon icon={faFileExport} /> New Shared Feed
           </header>
-          <div className="feedname">{feed.name}</div>
+          <div className="feed-name">{feed.name}</div>
         </div>
         <button className="actionBtn" type="button" onClick={close}>
           <FontAwesomeIcon icon={faTimes} />
