@@ -93,17 +93,14 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
   const handleAdd = ({ recipients }) => {
     const list = recipients.split(',');
-    const emails = list.filter((email, index) => {
-      const shareExists = previousShares.some(
-        prev => prev.share === email.trim()
-      );
-      const addEmail =
-        !shareList.includes(email) &&
-        !shareExists &&
-        list.indexOf(email.trim()) === index;
-
-      return addEmail;
-    });
+    const allEmails = list
+      .map(email => email.trim())
+      .filter((email, index) => {
+        const shareExists = previousShares.some(prev => prev.share === email);
+        const addEmail = !shareList.includes(email) && !shareExists;
+        return addEmail;
+      });
+    const emails = [...new Set(allEmails)];
     setShareList([...emails, ...shareList]);
     reset({});
   };
