@@ -93,11 +93,16 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
 
   const handleAdd = ({ recipients }) => {
     const list = recipients.split(',');
-    const emails = list.filter(email => {
+    const emails = list.filter((email, index) => {
       const shareExists = previousShares.some(
         prev => prev.share === email.trim()
       );
-      return !shareList.includes(email) && !shareExists;
+      const addEmail =
+        !shareList.includes(email) &&
+        !shareExists &&
+        list.indexOf(email.trim()) === index;
+
+      return addEmail;
     });
     setShareList([...emails, ...shareList]);
     reset({});
