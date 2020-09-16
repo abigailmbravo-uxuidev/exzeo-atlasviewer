@@ -10,10 +10,11 @@ const MarkerRow = ({ column, value }) => {
   const columnName = column.toLowerCase();
 
   if (
-    doNotShow.includes(columnName) ||
+    doNotShow.includes(String(columnName).trim()) ||
     value === undefined ||
     String(value).toLowerCase() === 'null'
-  ) return null;
+  )
+    return null;
 
   let formattedValue = value;
 
