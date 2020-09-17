@@ -10,7 +10,8 @@ const MarkerRow = ({ column, value }) => {
   const columnName = column.toLowerCase();
 
   if (
-    doNotShow.includes(String(columnName).trim()) ||
+    doNotShow.includes(columnName) ||
+    columnName.toLowerCase().endsWith('-sum') ||
     value === undefined ||
     String(value).toLowerCase() === 'null'
   )
