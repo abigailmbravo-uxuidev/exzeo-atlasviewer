@@ -217,7 +217,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
       if (layer.active !== prevLayers.active) {
         if (!map.getLayer(layerId)) {
-          return (type = 'weather')
+          return type === 'weather'
             ? addWeatherLayer(map, userId, layer)
             : addLayer(map, userId, layer);
         }
