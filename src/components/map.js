@@ -11,6 +11,7 @@ import {
   addControls,
   addFeed,
   addLayer,
+  addWeatherLayer,
   getFeedId,
   getSourceId,
   removeLayer
@@ -211,12 +212,14 @@ const Map = ({ basemap, setIsMapLoading }) => {
   useEffect(() => {
     if (!map.getLayer || !layers || !prevLayers) return;
     layers.map(layer => {
-      const { _id, active } = layer;
+      const { _id, active, type } = layer;
       const layerId = `${_id}-layer`;
 
       if (layer.active !== prevLayers.active) {
         if (!map.getLayer(layerId)) {
-          return addLayer(map, userId, layer);
+          return (type = weather)
+            ? addWeatherLayer(map, userId, layer)
+            : addLayer(map, userId, layer);
         }
 
         const visibility = map.getLayoutProperty(layerId, 'visibility');
