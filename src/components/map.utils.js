@@ -88,25 +88,26 @@ export const addLayer = (map, userId, layer) => {
   });
 };
 
-export const addWeatherLayer = async (map, userId, layer) => {
+export const addWeatherLayer = async (map, userId, layer, setError) => {
   const { _id, name, product, config = 'tms' } = layer;
   const sourceId = getSourceId(_id);
-  const feedId = getFeedId(_id);
+  const layerId = getLayerId(_id);
+  const tileRequest = `${process.env.API_URL}/api/weather/${product}/${config}`;
 
-  const tileUrl = await axios(
-    `${process.env.API_URL}/api/weather${product}/${config}`
+  const { data: tileUrl } = await axios(tileRequest).catch(err =>
+    setError(err)
   );
 
   if (map.getLayer(layerId)) return;
 
-  mapbox.addSource(sourceId, {
+  map.addSource(sourceId, {
     type: 'raster',
     tiles: [tileUrl],
     scheme: 'tms'
   });
 
-  mapbox.addLayer({
-    id: feedId,
+  map.addLayer({
+    id: layerId,
     type: 'raster',
     source: sourceId,
     layout: {
