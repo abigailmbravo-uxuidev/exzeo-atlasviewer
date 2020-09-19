@@ -93,7 +93,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         mapbox.resize();
       });
 
-      mapbox.on('data', data => {
+      mapbox.on('sourcedata', data => {
         if (data.isSourceLoaded) {
           setIsMapLoading(false);
         }
@@ -220,14 +220,15 @@ const Map = ({ basemap, setIsMapLoading }) => {
           return type === 'weather'
             ? addWeatherLayer(map, userId, layer, setError)
             : addLayer(map, userId, layer);
+        } else {
+          const visibility = map.getLayoutProperty(layerId, 'visibility');
+          const newVisibility = active ? 'visible' : 'none';
+          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setIsMapLoading(false);
         }
-
-        const visibility = map.getLayoutProperty(layerId, 'visibility');
-        const newVisibility = active ? 'visible' : 'none';
-        map.setLayoutProperty(layerId, 'visibility', newVisibility);
       }
     });
-  }, [prevLayers, layers, userId, map]);
+  }, [prevLayers, layers, userId, map, setIsMapLoading]);
 
   // Basemap
   useEffect(() => {
