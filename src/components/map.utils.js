@@ -88,15 +88,22 @@ export const addLayer = (map, userId, layer) => {
   });
 };
 
-export const addWeatherLayer = async (map, userId, layer, setError) => {
+export const addWeatherLayer = async (
+  map,
+  userId,
+  layer,
+  setError,
+  setIsMapLoading
+) => {
   const { _id, name, product, config = 'tms' } = layer;
   const sourceId = getSourceId(_id);
   const layerId = getLayerId(_id);
   const tileRequest = `${process.env.API_URL}/api/weather/${product}/${config}`;
 
-  const { data: tileUrl } = await axios(tileRequest).catch(err =>
-    setError(err)
-  );
+  const { data: tileUrl } = await axios(tileRequest).catch(err => {
+    setIsMapLoading(false);
+    setError(err);
+  });
 
   if (map.getLayer(layerId)) return;
 
