@@ -89,21 +89,34 @@ body {
         transition: all .2s ease-out;
 
         background: $navy;
+        // Texture Colors
+
+        $bg-color: rgba($navy, .8);
+        $bg-color-hover: rgba($navy, .75);
+        $dot-color: rgba($white, .25);
+        $dot-color-hover: rgba($white, .375);
+        // Texture Dimensions
+        $dot-size: 3px;
+        $dot-space: 7px;
 
         //"x"
         .iconBtn {
           &.closeBtn {
+            position: relative;
+            top: auto;
+            right: auto;
+
+            width: 1.25rem;
+            height: 1.25rem;
+
             color: $white;
+
+            &:hover {
+              background-color: rgba($white, .25);
+            }
           }
         }
-    
-        &:hover {
-          background: mix($navy, $white, 75%);
-    
-          span {
-            background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQUlEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8+PAhg4mJCVyMESQIU40hCZI4c+YMWAGyLhRjke2CsVEcgK4AryQA3tsWCM9oX6IAAAAASUVORK5CYII=) repeat;
-          }
-        }
+
     
         span {
           display: flex;
@@ -111,28 +124,28 @@ body {
           flex-grow: 1;
           flex-shrink: 1;
 
-          height: .75rem;
-          margin: .25rem .75rem .25rem 1.5rem;
+          height: 1.125rem;
+          margin: .25rem .75rem .25rem .125rem;
 
           cursor: move;
+          transition: all .2s ease-out;
 
           color: mix($white, $navy, 75%);
-          background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAS0lEQVQYV2NkgILXr1//FxUVZYTxQTScA5J8/fo1g5aWFlyMESQIU/3y5UsGHR0dhCRI4tq1a////fuHIoFiLLJdMDaKA9AV4JUEAB6pGQg6FVP6AAAAAElFTkSuQmCC) repeat;          ;
+          border-radius: .5rem;
+          background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) left, linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) top, $dot-color;
+          background-size: $dot-space $dot-space;
+          
           &:active {
             cursor: grab;
           }
-        }
-    
-        button.iconBtn.closeBtn {
-          position: relative;
-          top: auto;
-          right: auto;
 
-          width: 1.25rem;
-          height: 1.25rem;
+          &:hover {
+              background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) left, linear-gradient($bg-color-hover ($dot-space - $dot-size), transparent 1%) top, $dot-color-hover;
+              background-size: $dot-space $dot-space;
 
-          font-size: 1rem;
+          }
         }
+
       }
     
       .content {
