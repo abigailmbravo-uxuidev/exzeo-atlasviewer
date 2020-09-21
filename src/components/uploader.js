@@ -24,6 +24,7 @@ const stripExtension = filename =>
 const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
+  const { isDirty, dirtyFields } = formState;
   const user = useUser();
   const [file, setFile] = useState({});
   const [fileInfo, setFileInfo] = useState({});
@@ -177,8 +178,8 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
               Status
             </label>
             {statuses &&
-              statuses.map(s => (
-                <li key={s.status_name}>
+              statuses.map((s, index) => (
+                <li key={index}>
                   <StatusIcon shape={s.symbol} fill={s.status_color} />
                   {s.status_name}
                 </li>
@@ -193,11 +194,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
           >
             Cancel
           </button>
-          <button
-            className="actionBtn"
-            type="submit"
-            enabled={String(formState.dirty)}
-          >
+          <button className="actionBtn" type="submit" enabled={String(isDirty)}>
             {action === 'Update' ? 'Update' : 'Save'} and Map
           </button>
         </footer>
