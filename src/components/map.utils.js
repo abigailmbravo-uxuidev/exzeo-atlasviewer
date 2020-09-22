@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import axios from 'axios';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 export const mapStyles = [
@@ -83,6 +84,41 @@ export const addLayer = (map, userId, layer) => {
     paint: {
       'line-color': '#c0c0c0',
       'line-width': 3
+    }
+  });
+};
+
+export const addWeatherLayer = async (
+  map,
+  userId,
+  layer,
+  setError,
+  setIsMapLoading
+) => {
+  const { _id, name, product, config = 'tms' } = layer;
+  const sourceId = getSourceId(_id);
+  const layerId = getLayerId(_id);
+  const tileRequest = `${process.env.API_URL}/api/weather/${product}/${config}`;
+
+  const { data: tileUrl } = await axios(tileRequest).catch(err => {
+    setIsMapLoading(false);
+    setError(err);
+  });
+
+  if (map.getLayer(layerId)) return;
+
+  map.addSource(sourceId, {
+    type: 'raster',
+    tiles: [tileUrl],
+    scheme: 'tms'
+  });
+
+  map.addLayer({
+    id: layerId,
+    type: 'raster',
+    source: sourceId,
+    layout: {
+      visibility: 'visible'
     }
   });
 };

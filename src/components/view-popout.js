@@ -19,6 +19,7 @@ const formatAvg = (value, count) => {
   const avg = value / count;
   return Math.round(avg * 10) / 10;
 };
+const numberFormat = new Intl.NumberFormat('en-US');
 
 const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
   const [panelCollapse, setPanelCollapseState] = useState('expanded');
@@ -115,7 +116,9 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                           </span>
                         </div>
                       </th>
-                      <td className="status-count">{status.count}</td>
+                      <td className="status-count">
+                        {numberFormat.format(status.count)}
+                      </td>
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
                           ([key, value]) => {
@@ -125,7 +128,9 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                             return (
                               <Fragment key={key}>
                                 <td className={key}>
-                                  {formatCurrency.format(value)}
+                                  {key.toLowerCase().endsWith('sum')
+                                    ? numberFormat.format(value)
+                                    : formatCurrency.format(Math.floor(value))}
                                 </td>
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
@@ -144,11 +149,17 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                 {/* Start total row - assume the app will calc these rows */}
                 <tr className="total-count">
                   <th>Aggregate Data:</th>
-                  <td className="status-count">{feed.total}</td>
+                  <td className="status-count">
+                    {numberFormat.format(feed.total)}
+                  </td>
                   {aggregateTotals &&
                     Object.entries(aggregateTotals).map(([key, value]) => (
                       <Fragment key={key}>
-                        <td>{formatCurrency.format(Math.floor(value))}</td>
+                        <td>
+                          {key.toLowerCase().endsWith('sum')
+                            ? numberFormat.format(value)
+                            : formatCurrency.format(Math.floor(value))}
+                        </td>
                         {!key.toLowerCase().endsWith('sum') && (
                           <td>{formatCurrency.format(value / feed.total)}</td>
                         )}

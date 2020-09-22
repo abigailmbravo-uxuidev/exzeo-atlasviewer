@@ -11,6 +11,7 @@ import {
   addControls,
   addFeed,
   addLayer,
+  addWeatherLayer,
   getFeedId,
   getSourceId,
   removeLayer
@@ -92,7 +93,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         mapbox.resize();
       });
 
-      mapbox.on('data', data => {
+      mapbox.on('sourcedata', data => {
         if (data.isSourceLoaded) {
           setIsMapLoading(false);
         }
@@ -177,6 +178,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
           const visibility = map.getLayoutProperty(layerId, 'visibility');
           const newVisibility = active ? 'visible' : 'none';
           map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setIsMapLoading(false);
 
           // Zoom to bounds if this is th only layer
           if (active) {
@@ -211,20 +213,23 @@ const Map = ({ basemap, setIsMapLoading }) => {
   useEffect(() => {
     if (!map.getLayer || !layers || !prevLayers) return;
     layers.map(layer => {
-      const { _id, active } = layer;
+      const { _id, active, type } = layer;
       const layerId = `${_id}-layer`;
 
       if (layer.active !== prevLayers.active) {
         if (!map.getLayer(layerId)) {
-          return addLayer(map, userId, layer);
+          return type === 'weather'
+            ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
+            : addLayer(map, userId, layer);
+        } else {
+          const visibility = map.getLayoutProperty(layerId, 'visibility');
+          const newVisibility = active ? 'visible' : 'none';
+          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setIsMapLoading(false);
         }
-
-        const visibility = map.getLayoutProperty(layerId, 'visibility');
-        const newVisibility = active ? 'visible' : 'none';
-        map.setLayoutProperty(layerId, 'visibility', newVisibility);
       }
     });
-  }, [prevLayers, layers, userId, map]);
+  }, [prevLayers, layers, userId, map, setIsMapLoading]);
 
   // Basemap
   useEffect(() => {

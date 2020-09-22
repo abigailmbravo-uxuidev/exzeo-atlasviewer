@@ -11,9 +11,11 @@ const MarkerRow = ({ column, value }) => {
 
   if (
     doNotShow.includes(columnName) ||
+    columnName.toLowerCase().endsWith('-sum') ||
     value === undefined ||
     String(value).toLowerCase() === 'null'
-  ) return null;
+  )
+    return null;
 
   let formattedValue = value;
 
