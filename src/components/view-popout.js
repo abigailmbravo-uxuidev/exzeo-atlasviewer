@@ -130,7 +130,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                                 <td className={key}>
                                   {key.toLowerCase().endsWith('sum')
                                     ? numberFormat.format(value)
-                                    : formatCurrency.format(Math.floor(value))}
+                                    : formatCurrency.format(value)}
                                 </td>
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
@@ -158,7 +158,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                         <td>
                           {key.toLowerCase().endsWith('sum')
                             ? numberFormat.format(value)
-                            : formatCurrency.format(Math.floor(value))}
+                            : formatCurrency.format(value)}
                         </td>
                         {!key.toLowerCase().endsWith('sum') && (
                           <td>{formatCurrency.format(value / feed.total)}</td>
