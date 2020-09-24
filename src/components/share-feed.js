@@ -199,7 +199,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </div>
         </div>
         <footer>
-          <button type="button" onClick={() => handleRevoke()}>
+          <button type="button" disabled={previousShares.length < 1 || selectedRows.length < 1} onClick={() => handleRevoke()}>
             <FontAwesomeIcon icon={faBan} /> Revoke selected
           </button>
         </footer>
