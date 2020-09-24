@@ -165,9 +165,10 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
           map
             .getSource(sourceId)
-            .setData(`${process.env.API_URL}/api/geojson/${_id}/feed`);
+            .setData(`${process.env.API_URL}/api/geojson/${_id}`);
+          
           feed.updated = false;
-          dispatch({ type: 'update', data: feed });
+          return dispatch({ type: 'update', data: feed });
         }
 
         if (active !== prevFeed.active) {
