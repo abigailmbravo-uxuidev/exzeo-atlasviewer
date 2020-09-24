@@ -122,7 +122,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
       mapbox.on('mousemove', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
         const selectedFeatures = features.filter(f =>
-          f.layer.id.includes('dataset')
+          f.layer.id.includes('-feed')
         );
 
         mapbox.getCanvas().style.cursor =
