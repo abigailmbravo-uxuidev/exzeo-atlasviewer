@@ -168,6 +168,10 @@ const Map = ({ basemap, setIsMapLoading }) => {
             .setData(`${process.env.API_URL}/api/geojson/${_id}`);
           
           feed.updated = false;
+          const visibility = map.getLayoutProperty(layerId, 'visibility');
+          const newVisibility = active ? 'visible' : 'none';
+          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          
           return dispatch({ type: 'update', data: feed });
         }
 
