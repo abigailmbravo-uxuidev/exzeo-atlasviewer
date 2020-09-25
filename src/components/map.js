@@ -14,7 +14,8 @@ import {
   addWeatherLayer,
   getFeedId,
   getSourceId,
-  removeLayer
+  removeLayer,
+  setVisibility
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
@@ -168,10 +169,8 @@ const Map = ({ basemap, setIsMapLoading }) => {
             .setData(`${process.env.API_URL}/api/geojson/${_id}`);
           
           feed.updated = false;
-          const visibility = map.getLayoutProperty(layerId, 'visibility');
-          const newVisibility = active ? 'visible' : 'none';
-          map.setLayoutProperty(layerId, 'visibility', newVisibility);
-          
+          setVisibility(map, layerId, active);
+
           return dispatch({ type: 'update', data: feed });
         }
 
@@ -180,9 +179,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
             return addFeed(map, userId, feed);
           }
 
-          const visibility = map.getLayoutProperty(layerId, 'visibility');
-          const newVisibility = active ? 'visible' : 'none';
-          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setVisibility(map, layerId, active);
           setIsMapLoading(false);
 
           // Zoom to bounds if this is th only layer
@@ -227,9 +224,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
             ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
             : addLayer(map, userId, layer);
         } else {
-          const visibility = map.getLayoutProperty(layerId, 'visibility');
-          const newVisibility = active ? 'visible' : 'none';
-          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setVisibility(map, layerId, active);
           setIsMapLoading(false);
         }
       }

@@ -179,3 +179,9 @@ export const deleteDataset = (map, userId, layer) => {
 
   const result = `${process.env.API_URL}/api/deleteFeed/${_id}`;
 };
+
+export const setVisibility = (map, layerId, active) => {
+  const visibility = map.getLayoutProperty(layerId, 'visibility');
+  const newVisibility = active ? 'visible' : 'none';
+  map.setLayoutProperty(layerId, 'visibility', newVisibility);
+};
