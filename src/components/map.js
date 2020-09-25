@@ -8,14 +8,15 @@ import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
+  setVisibility,
+  zoomIfNeeded,
   addControls,
   addFeed,
   addLayer,
   addWeatherLayer,
   getFeedId,
   getSourceId,
-  removeLayer,
-  setVisibility
+  removeLayer
 } from './map.utils.js';
 import { usePrevious } from '../utils/utils';
 import MarkerPopup from './marker-popup';
@@ -170,6 +171,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
           
           feed.updated = false;
           setVisibility(map, layerId, active);
+          zoomIfNeeded(map, layerId, bounds);
 
           return dispatch({ type: 'update', data: feed });
         }

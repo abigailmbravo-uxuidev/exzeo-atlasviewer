@@ -26,6 +26,20 @@ export const getSourceId = id => `${id}-atlas`;
 export const getLayerId = id => `${id}-layer`;
 export const getFeedId = id => `${id}-feed`;
 
+export const setVisibility = (map, layerId, active) => {
+  const visibility = map.getLayoutProperty(layerId, 'visibility');
+  const newVisibility = active ? 'visible' : 'none';
+  map.setLayoutProperty(layerId, 'visibility', newVisibility);
+};
+
+export const zoomIfNeeded = (map, layerId, bounds) => {
+  const layers = map.getStyle().layers;
+  const hasCustomFeed = layers.some(
+    layer => layer.id.endsWith('-feed') && layer.id !== layerId && layer.layout.visibility === 'visible'
+  );
+  if (!hasCustomFeed && bounds) map.fitBounds(bounds);
+};
+
 export const addControls = mapbox => {
   mapbox.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   mapbox.addControl(
@@ -132,11 +146,6 @@ export const addFeed = (map, userId, feed) => {
   if (share && share._id) source = `${source}/${share._id}`;
   if (map.getLayer(feedId)) return;
 
-  const layers = map.getStyle().layers;
-  const hasCustomFeed = layers.some(
-    layer => layer.id.endsWith('-feed') && layer.layout.visibility === 'visible'
-  );
-
   map.addSource(sourceId, {
     type: 'geojson',
     data: source,
@@ -165,7 +174,7 @@ export const addFeed = (map, userId, feed) => {
     }
   });
 
-  if (!hasCustomFeed && bounds) map.fitBounds(bounds);
+  zoomIfNeeded(map, feedId, bounds);
 };
 
 export const deleteDataset = (map, userId, layer) => {
@@ -180,8 +189,3 @@ export const deleteDataset = (map, userId, layer) => {
   const result = `${process.env.API_URL}/api/deleteFeed/${_id}`;
 };
 
-export const setVisibility = (map, layerId, active) => {
-  const visibility = map.getLayoutProperty(layerId, 'visibility');
-  const newVisibility = active ? 'visible' : 'none';
-  map.setLayoutProperty(layerId, 'visibility', newVisibility);
-};
