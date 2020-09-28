@@ -65,7 +65,7 @@ Cypress.Commands.add('loginToApplication', (user) => {
 
 Cypress.Commands.add('logoutFromApplication', () => {
   cy.get('.logoutBtn').click();
-  cy.url().should('eq', 'https://av-678.exzeo.io/');
+  cy.url().should('eq', 'https://www-stage.atlasviewer.com/');
 });
 
 Cypress.on('window:before:load', win => {
