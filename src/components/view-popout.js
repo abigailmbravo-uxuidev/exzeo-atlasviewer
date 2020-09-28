@@ -25,6 +25,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
   const [panelCollapse, setPanelCollapseState] = useState('expanded');
   const { _id } = feed;
   const aggregateTotals = {};
+  const aggregateCounts = {};
 
   return createPortal(
     <Draggable handle=".gripper" defaultPosition={{ x: 600, y: 32 }}>
@@ -125,6 +126,9 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                             aggregateTotals[key] = aggregateTotals[key]
                               ? Number(aggregateTotals[key]) + Number(value)
                               : Number(value);
+                            aggregateCounts[key] = aggregateCounts[key]
+                              ? Number(aggregateCounts[key]) + Number(status.aggregatesCount[key])
+                              : Number(status.aggregatesCount[key]);
                             return (
                               <Fragment key={key}>
                                 <td className={key}>
@@ -135,7 +139,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
                                     {formatCurrency.format(
-                                      formatAvg(value, key.toLowerCase().startsWith('tiv') ? status.count : status.totalpremcount)
+                                      formatAvg(value, aggregateCounts[key])
                                     )}
                                   </td>
                                 )}
@@ -161,8 +165,8 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                             : formatCurrency.format(value)}
                         </td>
                         {!key.toLowerCase().endsWith('sum') && (
-                          <td>{formatCurrency.format(value / (key.toLowerCase().startsWith('tiv') ? feed.total: feed.premcount))}</td>
-                        )}
+                          <td>{formatCurrency.format(value / Number(aggregateCounts[key]))}</td>
+                          )}
                       </Fragment>
                     ))}
                 </tr>
