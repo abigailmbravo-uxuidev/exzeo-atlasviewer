@@ -8,6 +8,8 @@ import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers } from '../context/layer-context';
 import {
   defaultConfig,
+  setVisibility,
+  zoomIfNeeded,
   addControls,
   addFeed,
   addLayer,
@@ -122,7 +124,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
       mapbox.on('mousemove', e => {
         const features = mapbox.queryRenderedFeatures(e.point);
         const selectedFeatures = features.filter(f =>
-          f.layer.id.includes('dataset')
+          f.layer.id.includes('-feed')
         );
 
         mapbox.getCanvas().style.cursor =
@@ -165,9 +167,13 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
           map
             .getSource(sourceId)
-            .setData(`${process.env.API_URL}/api/geojson/${_id}/feed`);
+            .setData(`${process.env.API_URL}/api/geojson/${_id}`);
+          
           feed.updated = false;
-          dispatch({ type: 'update', data: feed });
+          setVisibility(map, layerId, active);
+          zoomIfNeeded(map, layerId, bounds);
+
+          return dispatch({ type: 'update', data: feed });
         }
 
         if (active !== prevFeed.active) {
@@ -175,9 +181,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
             return addFeed(map, userId, feed);
           }
 
-          const visibility = map.getLayoutProperty(layerId, 'visibility');
-          const newVisibility = active ? 'visible' : 'none';
-          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setVisibility(map, layerId, active);
           setIsMapLoading(false);
 
           // Zoom to bounds if this is th only layer
@@ -222,9 +226,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
             ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
             : addLayer(map, userId, layer);
         } else {
-          const visibility = map.getLayoutProperty(layerId, 'visibility');
-          const newVisibility = active ? 'visible' : 'none';
-          map.setLayoutProperty(layerId, 'visibility', newVisibility);
+          setVisibility(map, layerId, active);
           setIsMapLoading(false);
         }
       }

@@ -158,7 +158,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
               id="feed"
               name="feed"
               type="file"
-              accept="text/csv"
+              accept="text/csv,.csv"
               ref={register}
               onChange={handleFile}
             />
