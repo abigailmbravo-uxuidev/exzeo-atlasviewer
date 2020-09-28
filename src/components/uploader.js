@@ -168,6 +168,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
             type="text"
             id="feedname"
             name="feedname"
+            maxlength="255"
             placeholder="Editable feed name"
             ref={register({ required: true })}
             defaultValue={feed.name ? feed.name : stripExtension(file.name)}
