@@ -16,8 +16,7 @@ import { formatCurrency } from '../utils/utils';
 
 const formatKey = value => value.replace(/-dollar|-sum/gi, '');
 const formatAvg = (value, count) => {
-  const avg = value / count;
-  return Math.round(avg * 100) / 100;
+  return (count === 0) ? 0 : Math.round(value / count * 100) / 100;
 };
 const numberFormat = new Intl.NumberFormat('en-US');
 
@@ -139,9 +138,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                                 </td>
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
-                                    {formatCurrency.format(
-                                      formatAvg(value, Number(status.aggregatesCount[key]))
-                                    )}
+                                    {formatCurrency.format(formatAvg(value, Number(status.aggregatesCount[key])))}
                                   </td>
                                 )}
                               </Fragment>
