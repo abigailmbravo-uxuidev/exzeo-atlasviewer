@@ -123,6 +123,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
                           ([key, value]) => {
+                            // Add up Totals and counts for use in Aggregate Data line
                             aggregateTotals[key] = aggregateTotals[key]
                               ? Number(aggregateTotals[key]) + Number(value)
                               : Number(value);
@@ -139,7 +140,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
                                     {formatCurrency.format(
-                                      formatAvg(value, aggregateCounts[key])
+                                      formatAvg(value, Number(status.aggregatesCount[key]))
                                     )}
                                   </td>
                                 )}
