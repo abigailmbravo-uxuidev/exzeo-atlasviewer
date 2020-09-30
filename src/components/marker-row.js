@@ -9,12 +9,8 @@ const MarkerRow = ({ column, value }) => {
   const filter = ['name', 'status_name', 'status_color', 'symbol'];
   const columnName = column.toLowerCase();
 
-  if (
-    doNotShow.includes(columnName) ||
-    columnName.toLowerCase().endsWith('-sum') ||
-    value === undefined ||
-    String(value).toLowerCase() === 'null'
-  )
+  if (doNotShow.includes(columnName) || columnName.toLowerCase().endsWith('-sum') ||
+      value === undefined || String(value).toLowerCase() === 'null')
     return null;
 
   let formattedValue = value;
@@ -49,10 +45,7 @@ const MarkerRow = ({ column, value }) => {
   }
 
   if (columnName.endsWith('-dollar')) {
-    formattedValue =
-      !formattedValue || isNaN(formattedValue)
-        ? ''
-        : formatCurrency.format(formattedValue);
+    formattedValue = isNaN(formattedValue) ? '' : formatCurrency.format(formattedValue);
   }
 
   if (columnName.endsWith('-percent') || columnName.endsWith('-percentage')) {
