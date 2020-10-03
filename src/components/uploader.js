@@ -64,6 +64,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
 
     Papa.parse(selectedFile, {
       header: true,
+      encoding: 'UTF-8',
       dynamicTyping: true,
       skipEmptyLines: 'greedy',
       step,
@@ -168,7 +169,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
             type="text"
             id="feedname"
             name="feedname"
-            maxlength="255"
+            maxLength="255"
             placeholder="Editable feed name"
             ref={register({ required: true })}
             defaultValue={feed.name ? feed.name : stripExtension(file.name)}
