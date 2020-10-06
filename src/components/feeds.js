@@ -6,8 +6,6 @@ import {
   faNetworkWired,
   faShareAlt,
   faEllipsisV,
-  faInfoCircle,
-  faFileExport,
   faFileUpload,
   faShareAltSquare,
   faTrashAlt,
@@ -17,7 +15,6 @@ import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import DeleteFeed from './delete-feed';
 import ShareFeed from './share-feed';
 import FeedManager from './feed-manager';
-import FeedNotification from './feed-notification';
 import Modal from './modal';
 import Uploader from './uploader';
 
@@ -28,8 +25,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState([]);
   const [feedSort, setFeedSort] = useState('name,asc');
+  const [paneActiveNotification, setPaneActiveNotification] = useState(false);
   const [paneActive, setPaneActive] = useState(true);
-  const [feedNotifications, setFeedNotifications] = useState(null);
   const [feeds, setFeeds] = useState([]);
 
   const dispatch = useFeedDispatch();
@@ -38,6 +35,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
+  };
+
+  const toggleAccordionNotification = () => {
+    setPaneActiveNotification(paneActiveNotification ? false : true);
   };
 
   const toggleFeed = (feed, inView) => {
@@ -148,7 +149,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         </button>
       </header>
 
-      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
+      <div
+        className={`pane feeds ${!paneActive ? 'closed' : 'open'}`}
+        ref={content}
+      >
         <div className="feedBtns">
           <select onChange={e => setFeedSort(e.target.value)}>
             <option value="name,asc">Name | A - Z</option>
@@ -161,22 +165,14 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           </select>
         </div>
         <ul className="panel-list scroll">
-          <div className="feed-notification">
-            {feeds &&
-              feeds.map(feed =>
-                feed.share && !feed.share.viewed && !feed.notified ? (
-                  <FeedNotification
-                    feed={feed}
-                    key={feed._id}
-                    close={() => toggleNotification(feed)}
-                  />
-                ) : null
-              )}
-          </div>
-          <div className="notification shared-layer"></div>
           {feeds &&
             feeds.map((feed, index) => (
-              <li key={feed._id}>
+              <li
+                key={feed._id}
+                className={
+                  feed.share && !feed.share.viewed ? 'unviewed' : 'viewed'
+                }
+              >
                 <span className="checkbox-wrapper wrapper">
                   <input
                     type="checkbox"
@@ -189,7 +185,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                   <h5>
                     {feed.share && (
                       <span className="icon shared new">
-                        <FontAwesomeIcon icon={faShareAlt} />
+                        <FontAwesomeIcon
+                          icon={faShareAlt}
+                          title={`Shared by: ${feed.owner.name}`}
+                        />
                       </span>
                     )}
                     <span className="file-name">{feed.name}</span>

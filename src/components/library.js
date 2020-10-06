@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faFilter } from '@fortawesome/free-solid-svg-icons';
 import Feeds from './feeds';
+import NotificationPanel from './notifications';
 import Overlays from './overlays';
 import ReactTooltip from 'react-tooltip';
 
@@ -15,6 +16,9 @@ const Library = ({ setIsMapLoading }) => {
   return (
     <div id="library" className={`panel ${libraryActive ? 'open' : 'closed'}`}>
       <div className="panel-content">
+        <div className="section notifications">
+          <NotificationPanel />
+        </div>
         <div className="section search">
           <div className="icon">
             <Icon />

@@ -6,16 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faImage,
   faEye,
-  faGlobeAmericas,
-  faNetworkWired,
-  faLayerGroup,
   faExternalLinkSquareAlt,
   faEyeSlash,
-  faCircle
+  faMapPin
 } from '@fortawesome/free-solid-svg-icons';
 import ViewPopout from './view-popout';
 import Logo from './logo';
-import Icon from './icon';
 import StatusIcon from './status-icon.js';
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers, useSetLayers } from '../context/layer-context';
@@ -307,7 +303,7 @@ const View = ({ setBasemap }) => {
       </div>
       <div className="panel-tab view-tab">
         <button onClick={() => setViewState(!viewActive)}>
-          <Icon />
+          <FontAwesomeIcon icon={faMapPin} />
         </button>
       </div>
     </div>

@@ -177,7 +177,7 @@ body {
             max-height: calc((100vh - 9rem));
           }
 
-          &.feeds, &.shapes {
+          &.feeds, &.shapes, &.notifications {
             display: flex;
             flex-direction: column;
             flex-grow: 0;
@@ -190,10 +190,26 @@ body {
               .panel-list {
                 align-items: flex-start;
 
-                padding: 1rem .75rem .5rem;
+                padding: 0;
 
                 border-top: 1px solid rgba($navy, .2);
                 background: rgba($navy, .05);
+
+                li {
+                  padding: .5rem .5rem;
+
+
+                  &.unviewed {
+                    background-color: rgba($red, .37);
+
+                    h5 {
+                      .icon.shared {
+                          background-color: $red;
+                        
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -308,6 +324,22 @@ body {
           //set height to 30% of space - should add up to 100 for all panels
           //min-height: calc((100vh - 148px) * .3);
           //max-height: calc((100vh - 148px) * .3);
+        }
+        &.closed {
+          flex-grow: 0;
+          flex-shrink: 0;
+
+          height: 0;
+          min-height: 0;
+        }
+      }
+    }
+    &.notifications {
+      .pane {
+        
+        &.open {
+          flex-grow: 1;
+          flex-shrink: 1;
         }
         &.closed {
           flex-grow: 0;

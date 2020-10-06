@@ -48,7 +48,10 @@ const Overlays = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
+      <div
+        className={`pane overlay-layers ${!paneActive ? 'closed' : 'open'}`}
+        ref={content}
+      >
         <ul className="panel-list scroll">
           {layers &&
             layers.map((layer, index) => (
