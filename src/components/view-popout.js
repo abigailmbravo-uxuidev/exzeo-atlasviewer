@@ -16,8 +16,7 @@ import { formatCurrency } from '../utils/utils';
 
 const formatKey = value => value.replace(/-dollar|-sum/gi, '');
 const formatAvg = (value, count) => {
-  const avg = value / count;
-  return Math.round(avg * 10) / 10;
+  return (count === 0) ? 0 : Math.round(value / count * 100) / 100;
 };
 const numberFormat = new Intl.NumberFormat('en-US');
 
@@ -25,6 +24,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
   const [panelCollapse, setPanelCollapseState] = useState('expanded');
   const { _id } = feed;
   const aggregateTotals = {};
+  const aggregateCounts = {};
 
   return createPortal(
     <Draggable handle=".gripper" defaultPosition={{ x: 600, y: 32 }}>
@@ -122,21 +122,23 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                       {status.aggregates &&
                         Object.entries(status.aggregates).map(
                           ([key, value]) => {
+                            // Add up Totals and counts for use in Aggregate Data line
                             aggregateTotals[key] = aggregateTotals[key]
                               ? Number(aggregateTotals[key]) + Number(value)
                               : Number(value);
+                            aggregateCounts[key] = aggregateCounts[key]
+                              ? Number(aggregateCounts[key]) + Number(status.aggregatesCount[key])
+                              : Number(status.aggregatesCount[key]);
                             return (
                               <Fragment key={key}>
                                 <td className={key}>
                                   {key.toLowerCase().endsWith('sum')
                                     ? numberFormat.format(value)
-                                    : formatCurrency.format(Math.floor(value))}
+                                    : formatCurrency.format(value)}
                                 </td>
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
-                                    {formatCurrency.format(
-                                      formatAvg(value, status.count)
-                                    )}
+                                    {formatCurrency.format(formatAvg(value, Number(status.aggregatesCount[key])))}
                                   </td>
                                 )}
                               </Fragment>
@@ -158,11 +160,11 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                         <td>
                           {key.toLowerCase().endsWith('sum')
                             ? numberFormat.format(value)
-                            : formatCurrency.format(Math.floor(value))}
+                            : formatCurrency.format(value)}
                         </td>
                         {!key.toLowerCase().endsWith('sum') && (
-                          <td>{formatCurrency.format(value / feed.total)}</td>
-                        )}
+                          <td>{formatCurrency.format(value / Number(aggregateCounts[key]))}</td>
+                          )}
                       </Fragment>
                     ))}
                 </tr>
