@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="36.0150" tests="10" failures="0">
+  <testsuite name="Root Suite" timestamp="2020-09-29T16:29:01" tests="0" file="cypress\integration\happy_path.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Happy Path" timestamp="2020-09-29T16:29:01" tests="10" time="36.0150" failures="0">
+    <testcase name="Happy Path Login to the app" time="10.4010" classname="Login to the app">
+    </testcase>
+    <testcase name="Happy Path Delete all previous feeds" time="3.8700" classname="Delete all previous feeds">
+    </testcase>
+    <testcase name="Happy Path Upload Feed and verify it on the Data Feed pane" time="5.7450" classname="Upload Feed and verify it on the Data Feed pane">
+    </testcase>
+    <testcase name="Happy Path Verify feeds on the map" time="12.4640" classname="Verify feeds on the map">
+    </testcase>
+    <testcase name="Happy Path Verify Feed on the current view pane" time="0.1450" classname="Verify Feed on the current view pane">
+    </testcase>
+    <testcase name="Happy Path Verify the legend" time="0.4990" classname="Verify the legend">
+    </testcase>
+    <testcase name="Happy Path Verify Layers Section" time="0.3750" classname="Verify Layers Section">
+    </testcase>
+    <testcase name="Happy Path Verify Base Map selection" time="0.4230" classname="Verify Base Map selection">
+    </testcase>
+    <testcase name="Happy Path Delete the feed" time="1.0570" classname="Delete the feed">
+    </testcase>
+    <testcase name="Happy Path Log out" time="1.0360" classname="Log out">
+    </testcase>
+  </testsuite>
+</testsuites>

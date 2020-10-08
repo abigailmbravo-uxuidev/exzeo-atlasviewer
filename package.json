@@ -6,8 +6,14 @@
   "scripts": {
     "start": "parcel ./src/index.html  --port 8082 --no-source-maps --open",
     "build": "parcel build ./src/index.html --no-source-maps",
+    "cypress": "cypress run",
     "test": "jest --config ./jest.config.json",
-    "lint": "./node_modules/.bin/eslint src --ext .jsx --ext .js"
+    "lint": "./node_modules/.bin/eslint src --ext .jsx --ext .js",
+    "delete:reports": "rm -r cypress/results/* || true",
+    "prereport": "npm run delete:reports",
+    "report": "cypress run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json",
+    "junit:merge": "npx junit-merge -d cypress/results/junit -o cypress/results/junit/result.xml",
+    "mochawesome:merge": "npx mochawesome-merge \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx marge mochawesome.json"
   },
   "author": "",
   "license": "ISC",
@@ -44,9 +50,11 @@
   },
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^1.3.1",
+    "@cypress/mocha-teamcity-reporter": "^1.0.0",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
     "cypress": "^5.1.0",
+    "cypress-multi-reporters": "^1.4.0",
     "cypress-nhover": "^1.0.0",
     "cypress-plugin-snapshots": "^1.4.3",
     "eslint": "^6.8.0",
@@ -58,8 +66,14 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "jest": "^25.1.0",
     "js-base64": "^2.5.2",
+    "junit-merge": "^2.0.0",
+    "mocha-junit-reporter": "^2.0.0",
+    "mochawesome": "^6.1.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.1.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1",
-    "sass": "^1.25.0"
+    "sass": "^1.25.0",
+    "start-server-and-test": "^1.11.4"
   }
 }

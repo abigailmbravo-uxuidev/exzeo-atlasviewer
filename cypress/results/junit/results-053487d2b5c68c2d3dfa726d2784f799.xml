@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="86.3070" tests="14" failures="0">
+  <testsuite name="Root Suite" timestamp="2020-09-29T16:38:13" tests="0" file="cypress\integration\share_feed.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Share feed" timestamp="2020-09-29T16:38:13" tests="14" time="86.3070" failures="0">
+    <testcase name="Share feed Login to the app as User1" time="8.2040" classname="Login to the app as User1">
+    </testcase>
+    <testcase name="Share feed Delete all previous feeds" time="0.9430" classname="Delete all previous feeds">
+    </testcase>
+    <testcase name="Share feed Load 3 feeds" time="22.2330" classname="Load 3 feeds">
+    </testcase>
+    <testcase name="Share feed Sort tasks and verify correctness of sorting" time="0.8970" classname="Sort tasks and verify correctness of sorting">
+    </testcase>
+    <testcase name="Share feed Share 3 feeds with User2" time="5.6040" classname="Share 3 feeds with User2">
+    </testcase>
+    <testcase name="Share feed Login as User2" time="8.3070" classname="Login as User2">
+    </testcase>
+    <testcase name="Share feed Verify new shared feed notifications" time="5.1530" classname="Verify new shared feed notifications">
+    </testcase>
+    <testcase name="Share feed Verify shared feeds" time="2.5680" classname="Verify shared feeds">
+    </testcase>
+    <testcase name="Share feed Verify Feeds on the current view pane" time="0.2240" classname="Verify Feeds on the current view pane">
+    </testcase>
+    <testcase name="Share feed Delete the 1st shared feed" time="0.6280" classname="Delete the 1st shared feed">
+    </testcase>
+    <testcase name="Share feed Login as User 1" time="10.3620" classname="Login as User 1">
+    </testcase>
+    <testcase name="Share feed Verify that the feed No1 deleted by the user 2 still exists for the User 1" time="0.8060" classname="Verify that the feed No1 deleted by the user 2 still exists for the User 1">
+    </testcase>
+    <testcase name="Share feed Delete the 2nd feed and revoke the 3rd feed as User 1 and verify that the feeds were deleted from User2 account" time="18.9050" classname="Delete the 2nd feed and revoke the 3rd feed as User 1 and verify that the feeds were deleted from User2 account">
+    </testcase>
+    <testcase name="Share feed Logout from the App" time="1.4730" classname="Logout from the App">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -18,6 +18,5 @@ import './commands';
 import 'whatwg-fetch';
 require('cypress-nhover');
 
-
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
