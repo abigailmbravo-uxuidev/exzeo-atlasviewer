@@ -74,26 +74,24 @@ export const removeLayer = (map, id) => {
 };
 
 export const addLayer = (map, userId, layer) => {
-  const { _id, source, source_layer, type } = layer;
+  const { _id, source, source_layer, type, layout, paint } = layer;
   const sourceId = getSourceId(_id);
   const layerId = getLayerId(_id);
 
   if (map.getLayer(layerId)) return;
 
+  console.log({
+    id: layerId,
+    type,
+    source,
+    ...type !== 'raster' && { 'source-layer': source_layer, layer, paint }
+  });
+
   map.addLayer({
     id: layerId,
     type,
     source,
-    ...type === 'vector' && { 'source-layer': source_layer },
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-      visibility: 'visible'
-    },
-    paint: {
-      'line-color': '#c0c0c0',
-      'line-width': 3
-    }
+    ...type !== 'raster' && { 'source-layer': source_layer, layer, paint }
   });
 };
 
