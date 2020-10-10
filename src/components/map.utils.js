@@ -80,13 +80,6 @@ export const addLayer = (map, userId, layer) => {
 
   if (map.getLayer(layerId)) return;
 
-  console.log({
-    id: layerId,
-    type,
-    source,
-    ...type !== 'raster' && { 'source-layer': source_layer, layer, paint }
-  });
-
   map.addLayer({
     id: layerId,
     type,
