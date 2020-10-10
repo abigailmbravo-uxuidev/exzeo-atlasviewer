@@ -88,7 +88,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
     if (sortField === 'active') {
       sorted = sortBoolean(feeds, sortField);
-    } else if (sortField === 'author') {
+    } else if (sortField === 'owner') {
       sorted = sortAuthor(feeds, sortField);
     } else {
       sorted = sortString(feeds, sortField);
