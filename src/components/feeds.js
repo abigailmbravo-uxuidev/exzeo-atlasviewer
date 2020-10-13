@@ -65,8 +65,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     
     const sortAuthor = (feeds, sortField) =>
       [...feeds].sort((a, b) => {
-        const aValue = a.share ? a.owner.name.toLowerCase() : 'zzz';
-        const bValue = b.share ? b.owner.name.toLowerCase() : 'zzz';
+        const aValue = a.share ? a.owner.name.toLowerCase() : '';
+        const bValue = b.share ? b.owner.name.toLowerCase() : '';
 
         return !aValue ? 1 : (!bValue ? -1 : (aValue.localeCompare(bValue)));
       });
