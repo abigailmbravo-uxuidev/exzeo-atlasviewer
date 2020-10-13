@@ -65,10 +65,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     
     const sortAuthor = (feeds, sortField) =>
       [...feeds].sort((a, b) => {
-        const aValue = a.share ? a.owner.name.toLowerCase() : '';
-        const bValue = b.share ? b.owner.name.toLowerCase() : '';
+        const aValue = a.share ? a.owner.name.toLowerCase() : 'zzz';
+        const bValue = b.share ? b.owner.name.toLowerCase() : 'zzz';
 
-        return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
+        return !aValue ? 1 : (!bValue ? -1 : (aValue.localeCompare(bValue)));
       });
 
     const sortString = (feeds, sortField) =>
@@ -76,7 +76,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         const aValue = a[sortField].toLowerCase();
         const bValue = b[sortField].toLowerCase();
 
-        return aValue === bValue ? 0 : aValue < bValue ? -1 : 1;
+        return aValue.localeCompare(bValue);
       });
 
     const sortBoolean = (feeds, sortField) =>
