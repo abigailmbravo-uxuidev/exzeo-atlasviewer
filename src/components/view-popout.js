@@ -16,7 +16,7 @@ import { formatCurrency } from '../utils/utils';
 
 const formatKey = value => value.replace(/-dollar|-sum/gi, '');
 const formatAvg = (value, count) => {
-  return (count === 0) ? 0 : Math.round(value / count * 100) / 100;
+  return count === 0 ? 0 : Math.round((value / count) * 100) / 100;
 };
 const numberFormat = new Intl.NumberFormat('en-US');
 
@@ -62,7 +62,11 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                 <tr>
                   <th className="feed-name-wrapper">
                     {/* Name of feed */}
-                    <span data-tip data-for="feedPopOverTooltip">
+                    <span
+                      title={feed.name}
+                      data-tip
+                      data-for="feedPopOverTooltip"
+                    >
                       {feed.name}
                     </span>
                   </th>
@@ -127,7 +131,8 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                               ? Number(aggregateTotals[key]) + Number(value)
                               : Number(value);
                             aggregateCounts[key] = aggregateCounts[key]
-                              ? Number(aggregateCounts[key]) + Number(status.aggregatesCount[key])
+                              ? Number(aggregateCounts[key]) +
+                                Number(status.aggregatesCount[key])
                               : Number(status.aggregatesCount[key]);
                             return (
                               <Fragment key={key}>
@@ -138,7 +143,12 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                                 </td>
                                 {!key.toLowerCase().endsWith('sum') && (
                                   <td className={`average ${key}`}>
-                                    {formatCurrency.format(formatAvg(value, Number(status.aggregatesCount[key])))}
+                                    {formatCurrency.format(
+                                      formatAvg(
+                                        value,
+                                        Number(status.aggregatesCount[key])
+                                      )
+                                    )}
                                   </td>
                                 )}
                               </Fragment>
@@ -163,8 +173,12 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                             : formatCurrency.format(value)}
                         </td>
                         {!key.toLowerCase().endsWith('sum') && (
-                          <td>{formatCurrency.format(value / Number(aggregateCounts[key]))}</td>
-                          )}
+                          <td>
+                            {formatCurrency.format(
+                              value / Number(aggregateCounts[key])
+                            )}
+                          </td>
+                        )}
                       </Fragment>
                     ))}
                 </tr>
@@ -195,7 +209,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
 
 ViewPopout.propTypes = {
   feed: PropTypes.object.isRequired,
-  toggleFeed:PropTypes.func.isRequired,
+  toggleFeed: PropTypes.func.isRequired,
   toggleStatus: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired
 };

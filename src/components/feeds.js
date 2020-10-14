@@ -63,7 +63,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             feed.name.toLowerCase().includes(filter.toLowerCase())
           )
         : allFeeds;
-        
+
     const sortString = (feeds, sortField) =>
       [...feeds].sort((a, b) => {
         const aValue =
@@ -188,7 +188,9 @@ const Feeds = ({ filter, setIsMapLoading }) => {
                         />
                       </span>
                     )}
-                    <span className="file-name">{feed.name}</span>
+                    <span title={feed.name} className="file-name">
+                      {feed.name}
+                    </span>
                     <span className="menuIcon">
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </span>
