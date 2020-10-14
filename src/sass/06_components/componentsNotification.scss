@@ -11,15 +11,17 @@
                         align-items: center;
                         justify-content: center;
 
-                        height: 1rem;
+                        height: 1.5rem;
                         margin-left: 1rem;
-                        padding: 12px 9px;
+                        padding: 10px 8px;
 
                         color: $white;
-                        border-radius: 50%;
+                        border: 2px solid #ffffff;
+                        border-radius: 14px;
                         background-color: $red;
+                        box-shadow: 0px 0px 8px 0px rgba($black, .25);
 
-                        font-size: 12px;
+                        font-size: 10px;
                         line-height: 1;
                     }
                 }
