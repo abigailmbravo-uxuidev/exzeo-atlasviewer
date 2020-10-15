@@ -68,7 +68,7 @@ const ViewPopout = ({ feed, toggleFeed, toggleStatus, close }) => {
                   </th>
                   <th className="status-count">Count</th>
                   {/* Start loop of column titles */}
-                  {feed.statuses &&
+                  {feed.statuses && feed.statuses.length > 0 &&
                     Object.entries(feed.statuses[0].aggregates).map(([key]) => (
                       <Fragment key={key}>
                         <th>{formatKey(key)}</th>

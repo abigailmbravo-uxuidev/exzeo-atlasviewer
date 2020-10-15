@@ -51,8 +51,10 @@ const AuthProvider = ({
         axios.defaults.headers.common.authorization = `Bearer ${token}`;
 
         const userData = await fetchUserData();
-        userData.token = token;
-        setUser(userData);
+        if (userData) {
+          userData.token = token;
+          setUser(userData);
+        }
       }
 
       setLoading(false);
