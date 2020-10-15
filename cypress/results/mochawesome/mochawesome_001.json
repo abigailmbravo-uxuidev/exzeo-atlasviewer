@@ -99,7 +99,7 @@
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "_dataFeedPane.onDataFeedPane.uncheckFeed(_data.feeds[2]);\n_dataFeedPane.onDataFeedPane.sotFeeds('name,asc');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [2, 0, 1]);\n_dataFeedPane.onDataFeedPane.sotFeeds('Mapped Feeds');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [0, 1, 2]);\n_dataFeedPane.onDataFeedPane.sotFeeds('name,desc');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [0, 2, 1]);\n_dataFeedPane.onDataFeedPane.sotFeeds('created_at');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [0, 1, 2]);",
+              "code": "_dataFeedPane.onDataFeedPane.uncheckFeed(_data.feeds[2]);\n_dataFeedPane.onDataFeedPane.sortFeeds('name,asc');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [2, 0, 1]);\n_dataFeedPane.onDataFeedPane.sortFeeds('Mapped Feeds');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [0, 1, 2]);\n_dataFeedPane.onDataFeedPane.sortFeeds('name,desc');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [0, 2, 1]);\n_dataFeedPane.onDataFeedPane.sortFeeds('created_at');\n_dataFeedPane.onDataFeedPane.verifySorting(_data.feeds, [0, 1, 2]);",
               "err": {},
               "uuid": "3a935fef-bdae-4f6d-a8a1-97a1750cacbc",
               "parentUUID": "23e9cca2-d833-4f78-b2d2-aa3b760d398d",

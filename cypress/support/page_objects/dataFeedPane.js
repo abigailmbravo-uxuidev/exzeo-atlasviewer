@@ -54,7 +54,7 @@ export class FeedPane {
       .uncheck()      
   }
 
-  sotFeeds(type) {
+  sortFeeds(type) {
     cy.get('.section.feeds').find('select').select(type)
   }
 

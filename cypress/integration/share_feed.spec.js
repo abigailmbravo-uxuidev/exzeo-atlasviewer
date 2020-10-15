@@ -34,13 +34,13 @@ Cypress.on('window:before:load', win => {
 
     it ('Sort tasks and verify correctness of sorting', () => {
         onDataFeedPane.uncheckFeed(feeds[2]) 
-        onDataFeedPane.sotFeeds('name,asc')
+        onDataFeedPane.sortFeeds('name,asc')
         onDataFeedPane.verifySorting(feeds, [2,0,1])
-        onDataFeedPane.sotFeeds('Mapped Feeds')   
+        onDataFeedPane.sortFeeds('Mapped Feeds')   
         onDataFeedPane.verifySorting(feeds, [0,1,2]) 
-        onDataFeedPane.sotFeeds('name,desc')
+        onDataFeedPane.sortFeeds('name,desc')
         onDataFeedPane.verifySorting(feeds, [0,2,1])
-        onDataFeedPane.sotFeeds('created_at')
+        onDataFeedPane.sortFeeds('created_at')
         onDataFeedPane.verifySorting(feeds, [0,1,2])
            
     } )
