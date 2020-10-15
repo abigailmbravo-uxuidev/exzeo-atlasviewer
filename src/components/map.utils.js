@@ -84,7 +84,7 @@ export const addLayer = (map, userId, layer) => {
     id: layerId,
     type,
     source,
-    ...type !== 'raster' && { 'source-layer': source_layer, layer, paint }
+    ...type !== 'raster' && { 'source-layer': source_layer, layout, paint }
   });
 };
 
