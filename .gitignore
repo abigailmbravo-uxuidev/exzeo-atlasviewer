@@ -13,3 +13,5 @@ npm-debug.log*
 cypress/screenshots
 cypress/videos
 cypress/local
+cypress/results
+debug.log
