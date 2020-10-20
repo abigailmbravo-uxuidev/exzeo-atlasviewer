@@ -59,6 +59,10 @@ body {
 
           border-bottom: $white .5rem solid;
 
+          &.notifications {
+            flex-shrink: 0;
+          }
+
           &:last-of-type {
             border-bottom-width: 0;
           }

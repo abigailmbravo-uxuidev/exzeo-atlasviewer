@@ -4,6 +4,9 @@
     .section {
 
         &.notifications {
+            flex-shrink: 0;
+
+            max-height: 12rem;
             header {
                 h4 {
                     >span {
