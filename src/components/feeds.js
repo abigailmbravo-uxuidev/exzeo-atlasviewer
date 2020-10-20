@@ -38,7 +38,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   };
 
   const toggleAccordionNotification = () => {
-    setPaneActiveNotification(paneActiveNotification ? false : true);
+    setPaneActiveNotification(!paneActiveNotification ? false : true);
   };
 
   const toggleFeed = (feed, inView) => {
