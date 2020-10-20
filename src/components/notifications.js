@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faNetworkWired,
@@ -8,33 +8,17 @@ import {
 import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import FeedNotification from './feed-notification';
 
-const Notifications = ({ filter }) => {
-  const allFeeds = useFeedState([]);
-
-  const [feeds, setFeeds] = useState([]);
-
+const Notifications = () => {
+  const feeds = useFeedState([]);
   const dispatch = useFeedDispatch();
-  const content = useRef(null);
+  const [paneActiveNotification, setPaneActiveNotification] = useState(false);
 
-  const toggleAccordionNotification = () => {
-    setPaneActiveNotification(paneActiveNotification ? false : true);
-  };
+  const toggleAccordionNotification = () =>
+    setPaneActiveNotification(!paneActiveNotification);
 
   const toggleNotification = feed => {
     dispatch({ type: 'update', data: { ...feed, notified: true } });
   };
-
-  useEffect(() => {
-    const feeds =
-      filter && filter.length > 1
-        ? allFeeds.filter(feed =>
-            feed.name.toLowerCase().includes(filter.toLowerCase())
-          )
-        : allFeeds;
-    setFeeds(feeds);
-  }, [allFeeds, filter]);
-
-  const [paneActiveNotification, setPaneActiveNotification] = useState(false);
 
   return (
     <>
@@ -65,7 +49,6 @@ const Notifications = ({ filter }) => {
         className={`pane notifications ${
           !paneActiveNotification ? 'closed' : 'open'
         }`}
-        ref={content}
       >
         <div className="panel-list scroll">
           <div className="feed-notification">

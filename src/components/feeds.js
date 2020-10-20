@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,34 +25,10 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const [feedManagerState, setFeedManagerState] = useState(false);
   const allFeeds = useFeedState([]);
   const [feedSort, setFeedSort] = useState('name,asc');
-  const [paneActiveNotification, setPaneActiveNotification] = useState(false);
   const [paneActive, setPaneActive] = useState(true);
   const [feeds, setFeeds] = useState([]);
-
   const dispatch = useFeedDispatch();
-  const content = useRef(null);
   const [error, setError] = useState('');
-
-  const toggleAccordion = () => {
-    setPaneActive(paneActive ? false : true);
-  };
-
-  const toggleAccordionNotification = () => {
-    setPaneActiveNotification(!paneActiveNotification ? false : true);
-  };
-
-  const toggleFeed = (feed, inView) => {
-    if (inView) setIsMapLoading(true);
-    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
-  };
-
-  const toggleUpdate = feed => {
-    setUploaderState({ action: 'Update', feed });
-  };
-
-  const toggleNotification = feed => {
-    dispatch({ type: 'update', data: { ...feed, notified: true } });
-  };
 
   useEffect(() => {
     const [sortField, direction = 'asc'] = feedSort.split(',');
@@ -98,6 +74,17 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
     setFeeds(sorted);
   }, [feedSort, allFeeds, setFeeds, filter]);
+
+  const toggleAccordion = () => setPaneActive(!paneActive);
+
+  const toggleFeed = (feed, inView) => {
+    if (inView) setIsMapLoading(true);
+    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
+  };
+
+  const toggleUpdate = feed => {
+    setUploaderState({ action: 'Update', feed });
+  };
 
   return (
     <>
@@ -149,10 +136,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
         </button>
       </header>
 
-      <div
-        className={`pane feeds ${!paneActive ? 'closed' : 'open'}`}
-        ref={content}
-      >
+      <div className={`pane feeds ${!paneActive ? 'closed' : 'open'}`}>
         <div className="feedBtns">
           <select onChange={e => setFeedSort(e.target.value)}>
             <option value="name,asc">Name | A - Z</option>
