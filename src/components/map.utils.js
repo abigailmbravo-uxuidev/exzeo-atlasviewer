@@ -74,31 +74,17 @@ export const removeLayer = (map, id) => {
 };
 
 export const addLayer = (map, userId, layer) => {
-  const { _id, source_type, source_layer, type, url } = layer;
+  const { _id, source, source_layer, type, layout, paint } = layer;
   const sourceId = getSourceId(_id);
   const layerId = getLayerId(_id);
 
   if (map.getLayer(layerId)) return;
 
-  map.addSource(sourceId, {
-    type: source_type,
-    url
-  });
-
   map.addLayer({
     id: layerId,
     type,
-    source: sourceId,
-    'source-layer': source_layer,
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-      visibility: 'visible'
-    },
-    paint: {
-      'line-color': '#c0c0c0',
-      'line-width': 3
-    }
+    source,
+    ...type !== 'raster' && { 'source-layer': source_layer, layout, paint }
   });
 };
 

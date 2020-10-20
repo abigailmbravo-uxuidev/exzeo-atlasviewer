@@ -1,0 +1,21 @@
+latitude,longitude,name,loss_type,symbol,status_color,status_name,claim_no,date_of_loss-DATE,coverage_a-DOLLAR,policy_no,website-URL,Address1,City,Ptest-PERCENT,x,y
+27.7682,-82.6534,Bret Wills,MISC,circle,#ff00ff,Misc,845234,4/2/2013,50000,372650,http://tampabay.rays.mlb.com/tb/ballpark/,1 Tropicana Dr,St Petersburg,1,755,313
+27.9628,-82.518,Karl Marvin,THEFT/BURGLARY,circle,green,Theft,845263,6/13/2014,208700,353277,http://www.shopinternationalplaza.com/,2223 N Westshore Blvd,Tampa,0.02,784,281
+27.9514,-82.4638,Ted Martin,MISC - STRUCTURAL,circle,#ff00ff,Misc,845284,7/2/2014,210300,359537,http://www.strazcenter.org,1010 N Macinnes Pl,Tampa,3%,,
+27.3825,-82.5619,John Philips,LIABILITY-INJURY,circle,orange,Liability,845259,7/12/2014,212000,355292,http://www.ringling.org/,5401 Bay Shore Rd,Sarasota,0.004,763,379
+26.1316,-81.8075,Craig Hutch,LIGHTNING,circle,#ff00ff,Misc,845273,7/16/2014,231800,267690,http://www.naplesdowntown.com/naples-pier.htm,25 12th Ave S,Naples,512.35%,895,643
+25.7217,-80.2782,Ronald Smith,HAIL,circle,blue,Hail,845286,7/26/2014,188500,262160,http://www.miami.edu/frost/index.php/frost/facilities/Concert_Halls/gusman_concert_hall/,1314 Miller Dr,Coral Gables,6789,,
+25.7876,-80.1899,Lisa Grant,THEFT/BURGLARY,square,green,Theft,845276,8/4/2014,125800,154985,http://www.arshtcenter.org/,1300 Biscayne Blvd,Miami,7,,
+27.9956,-82.4501,Eric Huse,FIRE-EQUIPMENT MALFUNCTION,square,red,Fire,845221,8/20/2014,261200,315291,http://www.yelp.com/biz/taco-bus-tampa-8,913 E Hillsborough Ave,Tampa,8,796,276
+26.829,-80.141,Kevin Ellis,THEFT/BURGLARY,square,green,Theft,845219,8/25/2014,231800,309155,http://www.pgaresort.com/index,400 Avenue of the Champions,Palm Beach Gardens,9,1238,486
+26.7146,-80.034,Josh Smith,FIRE,square,red,Fire,845301,8/27/2014,86700,198121,http://www.thebreakers.com/,1 South County Road,Palm Beach,10,1264,510
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
