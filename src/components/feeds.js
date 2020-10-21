@@ -86,7 +86,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
 
     let sorted = [];
 
-    if (sortField === 'active') {
+    if (sortField === 'inView') {
       sorted = sortBoolean(feeds, sortField);
     } else if (sortField === 'owner') {
       sorted = sortAuthor(feeds, sortField);
@@ -157,7 +157,7 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             <option value="owner,desc">Author | Z - A</option>
             <option value="created_at">Created Date</option>
             <option value="updated_at">Updated Date</option>
-            <option value="active">Mapped Feeds</option>
+            <option value="inView">Mapped Feeds</option>
           </select>
         </div>
         <ul className="panel-list scroll">
