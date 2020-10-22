@@ -34,6 +34,13 @@ const Canvas = () => {
             closeModal={() => setShowModal(false)}
           >
             <button
+              className="secondaryBtn"
+              type="button"
+              onClick={() => setShowModal(false)}
+            >
+              Cancel
+            </button>
+            <button
               title="Log Out"
               className="logoutBtn"
               type="button"
