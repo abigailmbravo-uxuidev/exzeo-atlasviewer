@@ -92,7 +92,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   };
 
   const handleAdd = ({ recipients }) => {
-    const list = recipients.split(',');
+    const list = recipients.replace(/,\s*$/, '').split(',');
     const allEmails = list
       .map(email => email.trim())
       .filter((email, index) => {
@@ -140,10 +140,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         <div className="body">
           <div className="search-wrapper">
             <input
-              type="text"
+              type="email"
               id="recipients"
               name="recipients"
               defaultValue=""
+              multiple
               ref={register({ required: true })}
             />
             <button
@@ -199,7 +200,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </div>
         </div>
         <footer>
-          <button type="button" disabled={previousShares.length < 1 || selectedRows.length < 1} onClick={() => handleRevoke()}>
+          <button
+            type="button"
+            disabled={previousShares.length < 1 || selectedRows.length < 1}
+            onClick={() => handleRevoke()}
+          >
             <FontAwesomeIcon icon={faBan} /> Revoke selected
           </button>
         </footer>
