@@ -22,7 +22,7 @@ const Canvas = () => {
   const [basemap, setBasemap] = useState('');
   const [isMapLoading, setIsMapLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const logoutMsg = 'Are you sure you want to logout of AtlasViewer?"';
+  const logoutMsg = 'Are you sure you want to logout of AtlasViewer?';
 
   return (
     <FeedProvider>
