@@ -266,6 +266,29 @@
           .modal-message {
             padding: 0 16px;
           }
+          .modalChildren {
+            position: relative;
+
+            display: flex;
+            justify-content: flex-end;
+
+            margin: 1rem .5rem .5rem;
+
+            button {
+              position: relative;
+              top: auto;
+              right: auto;
+
+              width: auto;
+
+              color: $white;
+              background-color: $red;
+            }
+          }
+
+          footer {
+            padding: 0;
+          }
           
         }
 
