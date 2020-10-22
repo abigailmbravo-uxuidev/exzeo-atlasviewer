@@ -29,6 +29,11 @@ const View = ({ setBasemap }) => {
     setViewState(false);
   }, []);
 
+  useEffect(() => {
+    const feedsInView = feeds.some(feed => feed.inView);
+    setViewState(feedsInView);
+  }, [feeds, viewActive]);
+
   const inViewFeeds = feeds.filter(feed => feed.inView);
   inViewFeeds.forEach(
     feed =>
