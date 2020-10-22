@@ -18,7 +18,7 @@ export const defaultConfig = {
   style: mapStyles[0].value,
   center: [-81.5158, 27.6648],
   zoom: 7,
-  pitch: 35,
+  pitch: 0,
   bearing: 0
 };
 
@@ -35,7 +35,10 @@ export const setVisibility = (map, layerId, active) => {
 export const zoomIfNeeded = (map, layerId, bounds) => {
   const layers = map.getStyle().layers;
   const hasCustomFeed = layers.some(
-    layer => layer.id.endsWith('-feed') && layer.id !== layerId && layer.layout.visibility === 'visible'
+    layer =>
+      layer.id.endsWith('-feed') &&
+      layer.id !== layerId &&
+      layer.layout.visibility === 'visible'
   );
   if (!hasCustomFeed && bounds) map.fitBounds(bounds);
 };
@@ -84,7 +87,7 @@ export const addLayer = (map, userId, layer) => {
     id: layerId,
     type,
     source,
-    ...type !== 'raster' && { 'source-layer': source_layer, layout, paint }
+    ...(type !== 'raster' && { 'source-layer': source_layer, layout, paint })
   });
 };
 
@@ -174,4 +177,3 @@ export const deleteDataset = (map, userId, layer) => {
 
   const result = `${process.env.API_URL}/api/deleteFeed/${_id}`;
 };
-
