@@ -85,19 +85,23 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
     setPaneActive(paneActive ? false : true);
   };
 
-  const toggleFeed = (feed, inView) => {
+  const toggleFeed = (currentFeed, inView) => {
     const feedsInView = feeds.some(
-      f => f.inView === true && f._id !== feed._id
+      f => f.inView === true && f._id !== currentFeed._id
     );
-    if (inView) setIsMapLoading(true);
 
     if (inView && !feedsInView) {
       setViewState(true);
+    } else if (!inView && !feedsInView) {
+      setViewState(false);
     }
 
-    if (!inView && !feedsInView) setViewState(false);
+    if (inView) setIsMapLoading(true);
 
-    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
+    dispatch({
+      type: 'update',
+      data: { ...currentFeed, inView, active: inView }
+    });
   };
 
   const toggleUpdate = feed => {
@@ -116,6 +120,7 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
           setUploaderState={setUploaderState}
           setError={setError}
           setIsMapLoading={setIsMapLoading}
+          setViewState={setViewState}
         />
       )}
       {deleteFeed && (
