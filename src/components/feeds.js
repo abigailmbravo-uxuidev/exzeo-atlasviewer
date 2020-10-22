@@ -80,11 +80,17 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
   };
 
   const toggleFeed = (feed, inView) => {
-    if (inView) {
-      setIsMapLoading(true);
+    const feedsInView = feeds.some(
+      f => f.inView === true && f._id !== feed._id
+    );
+    if (inView) setIsMapLoading(true);
+
+    if (inView && !feedsInView) {
       setViewState(true);
     }
-    console.log(feeds);
+
+    if (!inView && !feedsInView) setViewState(false);
+
     dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
