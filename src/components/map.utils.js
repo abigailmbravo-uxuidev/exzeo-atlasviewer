@@ -35,7 +35,10 @@ export const setVisibility = (map, layerId, active) => {
 export const zoomIfNeeded = (map, layerId, bounds) => {
   const layers = map.getStyle().layers;
   const hasCustomFeed = layers.some(
-    layer => layer.id.endsWith('-feed') && layer.id !== layerId && layer.layout.visibility === 'visible'
+    layer =>
+      layer.id.endsWith('-feed') &&
+      layer.id !== layerId &&
+      layer.layout.visibility === 'visible'
   );
   if (!hasCustomFeed && bounds) map.fitBounds(bounds);
 };
@@ -80,12 +83,23 @@ export const addLayer = (map, userId, layer) => {
 
   if (map.getLayer(layerId)) return;
 
-  map.addLayer({
-    id: layerId,
-    type,
-    source,
-    ...type !== 'raster' && { 'source-layer': source_layer, layout, paint }
-  });
+  const layers = map.getStyle().layers;
+
+  const lastIndex = layers
+    .map(layer => layer.id.endsWith('feed'))
+    .lastIndexOf(true);
+
+  const positionId = lastIndex > -1 ? layers[lastIndex].id : null;
+
+  map.addLayer(
+    {
+      id: layerId,
+      type,
+      source,
+      ...(type !== 'raster' && { 'source-layer': source_layer, layout, paint })
+    },
+    positionId
+  );
 };
 
 export const addWeatherLayer = async (
@@ -174,4 +188,3 @@ export const deleteDataset = (map, userId, layer) => {
 
   const result = `${process.env.API_URL}/api/deleteFeed/${_id}`;
 };
-
