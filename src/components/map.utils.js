@@ -83,12 +83,23 @@ export const addLayer = (map, userId, layer) => {
 
   if (map.getLayer(layerId)) return;
 
-  map.addLayer({
-    id: layerId,
-    type,
-    source,
-    ...(type !== 'raster' && { 'source-layer': source_layer, layout, paint })
-  });
+  const layers = map.getStyle().layers;
+
+  const lastIndex = layers
+    .map(layer => layer.id.endsWith('feed'))
+    .lastIndexOf(true);
+
+  const positionId = lastIndex > -1 ? layers[lastIndex].id : null;
+
+  map.addLayer(
+    {
+      id: layerId,
+      type,
+      source,
+      ...(type !== 'raster' && { 'source-layer': source_layer, layout, paint })
+    },
+    positionId
+  );
 };
 
 export const addWeatherLayer = async (
