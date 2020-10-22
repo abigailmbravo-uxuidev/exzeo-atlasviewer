@@ -84,6 +84,8 @@ export const addLayer = (map, userId, layer) => {
   if (map.getLayer(layerId)) return;
 
   const layers = map.getStyle().layers;
+  const lastIndex = layers.findIndex(layer => layer.id.endsWith('feed'));
+  const positionId = lastIndex > -1 ? layers[lastIndex].id : null;
 
   const lastIndex = layers
     .map(layer => layer.id.endsWith('feed'))
