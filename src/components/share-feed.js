@@ -37,7 +37,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     register,
     reset
   } = useForm({
-    mode: 'onChange',
+    mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: { recipient: '' }
   });
@@ -180,6 +180,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           <div className="share-modal-btns">
             <button
               className="reset"
+              type="button"
               disabled={shareList.length < 1}
               onClick={() => setShareList([])}
             >
@@ -188,6 +189,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             <button
               className="actionBtn send"
               type="button"
+              disabled={shareList.length < 1}
               onClick={() => handleShare()}
             >
               Share
