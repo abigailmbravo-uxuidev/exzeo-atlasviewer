@@ -20,7 +20,7 @@ const Modal = ({ children, message, closeModal, title = 'Error' }) => {
           </button>
         </header>
         <div className="modal-message">{message}</div>
-        <div>{children}</div>
+        <div className="modalChildren">{children}</div>
         <footer></footer>
       </div>
     </div>
