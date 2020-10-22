@@ -96,6 +96,7 @@ export const addLayer = (map, userId, layer) => {
   };
 
   map.addLayer(layerConfig, positionId);
+  });
 };
 
 export const addWeatherLayer = async (
