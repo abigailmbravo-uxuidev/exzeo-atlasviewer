@@ -7,7 +7,7 @@ import ReactTooltip from 'react-tooltip';
 
 import Icon from './icon';
 
-const Library = ({ setIsMapLoading }) => {
+const Library = ({ setIsMapLoading, setViewState }) => {
   const [libraryActive, setLibraryState] = useState(true);
   const [filter, setFilter] = useState('');
   const handleFilter = ({ target: { value } }) => setFilter(value);
@@ -36,7 +36,11 @@ const Library = ({ setIsMapLoading }) => {
           </div>
         </div>
         <div className="section feeds">
-          <Feeds filter={filter} setIsMapLoading={setIsMapLoading} />
+          <Feeds
+            filter={filter}
+            setIsMapLoading={setIsMapLoading}
+            setViewState={setViewState}
+          />
         </div>
         <div className="section shapes">
           <Overlays filter={filter} setIsMapLoading={setIsMapLoading} />
