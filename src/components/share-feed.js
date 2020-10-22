@@ -43,6 +43,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   });
   const [selectedRows, setSelectedRows] = useState({});
   const [shareList, setShareList] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [previousShares, setPreviousShare] = useState([]);
   const { user_id, first_name, last_name } = useUser();
 
@@ -70,6 +71,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const handleShare = async () => {
     if (shareList.length < 1) return;
 
+    setIsSubmitting(true);
     const url = `${process.env.API_URL}/api/share`;
     const reqOptions = {
       url,
@@ -88,6 +90,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     } catch (err) {
       setShareFeed();
       return setError(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -189,7 +193,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             <button
               className="actionBtn send"
               type="button"
-              disabled={shareList.length < 1}
+              disabled={shareList.length < 1 || isSubmitting}
               onClick={() => handleShare()}
             >
               Share
