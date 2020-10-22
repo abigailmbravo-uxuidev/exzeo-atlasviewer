@@ -228,7 +228,7 @@
             svg {
               margin-right: .5rem;
 
-              color: red;
+              color: $red;
 
               font-size: 20px;
             }
@@ -250,7 +250,12 @@
           }
 
           .modal-message {
+            margin: 0px 1rem;
             padding: 0 16px;
+            padding: 1rem 0px;
+
+            border-top: 1px solid rgba(34, 29, 64, 0.1);
+            border-bottom: 1px solid rgba(34, 29, 64, 0.1);
           }
           .modalChildren {
             position: relative;
@@ -266,9 +271,16 @@
               right: auto;
 
               width: auto;
+              padding: 8px 16px;
+
+              cursor: pointer;
+              text-transform: uppercase;
 
               color: $white;
-              background-color: $red;
+              border-radius: 6px;
+              background-color: $navy;
+
+              font-size: 0.875rem;
             }
           }
 
