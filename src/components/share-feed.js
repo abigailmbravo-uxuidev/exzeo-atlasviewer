@@ -45,7 +45,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const [shareList, setShareList] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previousShares, setPreviousShare] = useState([]);
-  const { user_id, first_name, last_name } = useUser();
+  const { user_id, email: ownerEmail, first_name, last_name } = useUser();
 
   const columns = useMemo(
     () => [
@@ -101,7 +101,10 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
       .map(email => email.trim())
       .filter((email, index) => {
         const shareExists = previousShares.some(prev => prev.share === email);
-        const addEmail = !shareList.includes(email) && !shareExists;
+        const addEmail =
+          !shareList.includes(email) &&
+          !shareExists &&
+          email.toLowerCase() !== ownerEmail.toLowerCase();
         return addEmail;
       });
     const emails = [...new Set(allEmails)];
