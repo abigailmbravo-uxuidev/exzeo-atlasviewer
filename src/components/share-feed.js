@@ -32,12 +32,12 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     control,
     defaultValues,
     errors,
-    formState: { dirty, isSubmitting },
+    formState,
     handleSubmit,
     register,
     reset
   } = useForm({
-    mode: 'onSubmit',
+    mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: { recipient: '' }
   });
@@ -121,6 +121,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     }
   };
 
+  const { dirtyFields } = formState;
+
   return (
     <div className="modal fade-in">
       <form className="card share" onSubmit={handleSubmit(handleAdd)}>
@@ -150,7 +152,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             <button
               className="secondaryActionBtn inputBtn"
               type="submit"
-              enabled={String(dirty)}
+              disabled={dirtyFields.size < 1}
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
