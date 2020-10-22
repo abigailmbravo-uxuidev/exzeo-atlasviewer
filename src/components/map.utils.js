@@ -18,7 +18,7 @@ export const defaultConfig = {
   style: mapStyles[0].value,
   center: [-81.5158, 27.6648],
   zoom: 7,
-  pitch: 35,
+  pitch: 0,
   bearing: 0
 };
 
