@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Map from './map';
 import Library from './library';
+import Modal from './modal';
 import View from './view';
 import Spinner from './spinner';
 import { FeedProvider } from '../context/feed-context';
@@ -20,10 +21,28 @@ const Canvas = () => {
   const { logout } = useAuth();
   const [basemap, setBasemap] = useState('');
   const [isMapLoading, setIsMapLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const logoutMsg = 'Are you sure you want to logout of AtlasViewer?"';
 
   return (
     <FeedProvider>
       <LayerProvider>
+        {showModal && (
+          <Modal
+            message={logoutMsg}
+            title="Alert"
+            closeModal={() => setShowModal(false)}
+          >
+            <button
+              title="Log Out"
+              className="logoutBtn"
+              type="button"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </Modal>
+        )}
         {isMapLoading && <Spinner />}
         <Library setIsMapLoading={setIsMapLoading} />
         <View setBasemap={setBasemap} />
@@ -31,7 +50,7 @@ const Canvas = () => {
           title="Log Out"
           className="logoutBtn"
           type="button"
-          onClick={logout}
+          onClick={() => setShowModal(true)}
         >
           <FontAwesomeIcon icon={faSignOutAlt} />
         </button>
