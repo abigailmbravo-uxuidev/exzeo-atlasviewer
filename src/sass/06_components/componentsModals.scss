@@ -219,7 +219,8 @@
       .card {
         &.error {
           width: 40vw;
-          min-width: 40vw;
+          min-width:  80vw;
+          max-width: 80vw;
           .error-header {
             display: flex;
             align-items: center;
