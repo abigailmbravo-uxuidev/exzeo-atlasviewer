@@ -218,9 +218,7 @@
     &.fade-in {
       .card {
         &.error {
-          width: 40vw;
-          min-width:  80vw;
-          max-width: 80vw;
+          width:clamp(40vw, 24rem, 80vw);
           .error-header {
             display: flex;
             align-items: center;
