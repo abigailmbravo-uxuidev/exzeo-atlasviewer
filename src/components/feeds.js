@@ -84,12 +84,7 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
       f => f.inView === true && f._id !== currentFeed._id
     );
 
-    if (inView && !feedsInView) {
-      setViewState(true);
-    } else if (!inView && !feedsInView) {
-      setViewState(false);
-    }
-
+    if (inView && !feedsInView) setViewState(true);
     if (inView) setIsMapLoading(true);
 
     dispatch({
@@ -115,6 +110,7 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
           setError={setError}
           setIsMapLoading={setIsMapLoading}
           setViewState={setViewState}
+          shouldViewOpen={!feeds.some(f => f.inView === true)}
         />
       )}
       {deleteFeed && (

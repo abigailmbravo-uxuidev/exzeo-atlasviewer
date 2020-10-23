@@ -26,7 +26,8 @@ const Uploader = ({
   setUploaderState,
   setError,
   setIsMapLoading,
-  setViewState
+  setViewState,
+  shouldViewOpen
 }) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
@@ -122,7 +123,7 @@ const Uploader = ({
 
       dispatch({ type: actionType, data: newFeed });
       setUploaderState(false);
-      setViewState(true);
+      if (shouldViewOpen) setViewState(true);
       if (action === 'Update') setIsMapLoading(false);
     } catch (err) {
       setIsMapLoading(false);
