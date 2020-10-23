@@ -168,7 +168,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
           map
             .getSource(sourceId)
             .setData(`${process.env.API_URL}/api/geojson/${_id}`);
-          
+
           feed.updated = false;
           setVisibility(map, layerId, active);
           zoomIfNeeded(map, layerId, bounds);
@@ -211,7 +211,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
       });
     }
-  }, [prevFeeds, feeds, userId, map, dispatch]);
+  }, [prevFeeds, feeds, userId, map, dispatch, setIsMapLoading]);
 
   // Layers
   useEffect(() => {
