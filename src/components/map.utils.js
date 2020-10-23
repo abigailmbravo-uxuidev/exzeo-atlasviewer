@@ -86,7 +86,7 @@ export const addLayer = (map, userId, layer) => {
   // Find the first feed so the layer can go behind it
   const layers = map.getStyle().layers;
   const lastIndex = layers.findIndex(layer => layer.id.endsWith('feed'));
-  const positionId = lastIndex > -1 ? layers[lastIndex - 1].id : undefined;
+  const positionId = lastIndex > -1 ? layers[lastIndex].id : undefined;
 
   const layerConfig = {
     id: layerId,
