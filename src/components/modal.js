@@ -6,7 +6,7 @@ import {
   faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
 
-const Modal = ({ message, closeModal, title = 'Error' }) => {
+const Modal = ({ children, message, closeModal, title = 'Error' }) => {
   return (
     <div className="modal fade-in">
       <div className="card error">
@@ -20,6 +20,7 @@ const Modal = ({ message, closeModal, title = 'Error' }) => {
           </button>
         </header>
         <div className="modal-message">{message}</div>
+        <div className="modalChildren">{children}</div>
         <footer></footer>
       </div>
     </div>

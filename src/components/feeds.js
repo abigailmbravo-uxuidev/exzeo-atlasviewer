@@ -21,7 +21,7 @@ import FeedNotification from './feed-notification';
 import Modal from './modal';
 import Uploader from './uploader';
 
-const Feeds = ({ filter, setIsMapLoading }) => {
+const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
   const [uploaderState, setUploaderState] = useState({});
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [shareFeed, setShareFeed] = useState(null);
@@ -36,23 +36,6 @@ const Feeds = ({ filter, setIsMapLoading }) => {
   const content = useRef(null);
   const [error, setError] = useState('');
 
-  const toggleAccordion = () => {
-    setPaneActive(paneActive ? false : true);
-  };
-
-  const toggleFeed = (feed, inView) => {
-    if (inView) setIsMapLoading(true);
-    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
-  };
-
-  const toggleUpdate = feed => {
-    setUploaderState({ action: 'Update', feed });
-  };
-
-  const toggleNotification = feed => {
-    dispatch({ type: 'update', data: { ...feed, notified: true } });
-  };
-
   useEffect(() => {
     const [sortField, direction = 'asc'] = feedSort.split(',');
 
@@ -62,13 +45,13 @@ const Feeds = ({ filter, setIsMapLoading }) => {
             feed.name.toLowerCase().includes(filter.toLowerCase())
           )
         : allFeeds;
-    
+
     const sortAuthor = (feeds, sortField) =>
       [...feeds].sort((a, b) => {
         const aValue = a.share ? a.owner.name.toLowerCase() : '';
         const bValue = b.share ? b.owner.name.toLowerCase() : '';
 
-        return !aValue ? 1 : (!bValue ? -1 : (aValue.localeCompare(bValue)));
+        return !aValue ? 1 : !bValue ? -1 : aValue.localeCompare(bValue);
       });
 
     const sortString = (feeds, sortField) =>
@@ -98,6 +81,32 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     setFeeds(sorted);
   }, [feedSort, allFeeds, setFeeds, filter]);
 
+  const toggleAccordion = () => {
+    setPaneActive(paneActive ? false : true);
+  };
+
+  const toggleFeed = (currentFeed, inView) => {
+    const feedsInView = feeds.some(
+      f => f.inView === true && f._id !== currentFeed._id
+    );
+
+    if (inView && !feedsInView) setViewState(true);
+    if (inView) setIsMapLoading(true);
+
+    dispatch({
+      type: 'update',
+      data: { ...currentFeed, inView, active: inView }
+    });
+  };
+
+  const toggleUpdate = feed => {
+    setUploaderState({ action: 'Update', feed });
+  };
+
+  const toggleNotification = feed => {
+    dispatch({ type: 'update', data: { ...feed, notified: true } });
+  };
+
   return (
     <>
       {uploaderState && uploaderState.action && (
@@ -106,6 +115,8 @@ const Feeds = ({ filter, setIsMapLoading }) => {
           setUploaderState={setUploaderState}
           setError={setError}
           setIsMapLoading={setIsMapLoading}
+          setViewState={setViewState}
+          shouldViewOpen={!feeds.some(f => f.inView === true)}
         />
       )}
       {deleteFeed && (

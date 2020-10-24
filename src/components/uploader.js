@@ -21,7 +21,14 @@ const stripExtension = filename =>
         .slice(0, -1)
         .join('.');
 
-const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
+const Uploader = ({
+  data,
+  setUploaderState,
+  setError,
+  setIsMapLoading,
+  setViewState,
+  shouldViewOpen
+}) => {
   const dispatch = useFeedDispatch();
   const { register, handleSubmit, errors, formState } = useForm();
   const { isDirty, dirtyFields } = formState;
@@ -116,6 +123,7 @@ const Uploader = ({ data, setUploaderState, setError, setIsMapLoading }) => {
 
       dispatch({ type: actionType, data: newFeed });
       setUploaderState(false);
+      if (shouldViewOpen) setViewState(true);
       if (action === 'Update') setIsMapLoading(false);
     } catch (err) {
       setIsMapLoading(false);

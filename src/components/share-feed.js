@@ -32,7 +32,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     control,
     defaultValues,
     errors,
-    formState: { dirty, isSubmitting },
+    formState,
     handleSubmit,
     register,
     reset
@@ -43,8 +43,9 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   });
   const [selectedRows, setSelectedRows] = useState({});
   const [shareList, setShareList] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [previousShares, setPreviousShare] = useState([]);
-  const { user_id, first_name, last_name } = useUser();
+  const { user_id, email: ownerEmail, first_name, last_name } = useUser();
 
   const columns = useMemo(
     () => [
@@ -70,6 +71,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
   const handleShare = async () => {
     if (shareList.length < 1) return;
 
+    setIsSubmitting(true);
     const url = `${process.env.API_URL}/api/share`;
     const reqOptions = {
       url,
@@ -88,16 +90,21 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     } catch (err) {
       setShareFeed();
       return setError(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleAdd = ({ recipients }) => {
-    const list = recipients.split(',');
+    const list = recipients.replace(/,\s*$/, '').split(',');
     const allEmails = list
       .map(email => email.trim())
       .filter((email, index) => {
         const shareExists = previousShares.some(prev => prev.share === email);
-        const addEmail = !shareList.includes(email) && !shareExists;
+        const addEmail =
+          !shareList.includes(email) &&
+          !shareExists &&
+          email.toLowerCase() !== ownerEmail.toLowerCase();
         return addEmail;
       });
     const emails = [...new Set(allEmails)];
@@ -121,6 +128,8 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
     }
   };
 
+  const { dirtyFields } = formState;
+
   return (
     <div className="modal fade-in">
       <form className="card share" onSubmit={handleSubmit(handleAdd)}>
@@ -140,16 +149,17 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
         <div className="body">
           <div className="search-wrapper">
             <input
-              type="text"
+              type="email"
               id="recipients"
               name="recipients"
               defaultValue=""
+              multiple
               ref={register({ required: true })}
             />
             <button
               className="secondaryActionBtn inputBtn"
               type="submit"
-              enabled={String(dirty)}
+              disabled={dirtyFields.size < 1}
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
@@ -177,6 +187,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           <div className="share-modal-btns">
             <button
               className="reset"
+              type="button"
               disabled={shareList.length < 1}
               onClick={() => setShareList([])}
             >
@@ -185,6 +196,7 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
             <button
               className="actionBtn send"
               type="button"
+              disabled={shareList.length < 1 || isSubmitting}
               onClick={() => handleShare()}
             >
               Share
@@ -199,7 +211,11 @@ const ShareFeed = ({ feed, setShareFeed, setError }) => {
           </div>
         </div>
         <footer>
-          <button type="button" disabled={previousShares.length < 1 || selectedRows.length < 1} onClick={() => handleRevoke()}>
+          <button
+            type="button"
+            disabled={previousShares.length < 1 || selectedRows.length < 1}
+            onClick={() => handleRevoke()}
+          >
             <FontAwesomeIcon icon={faBan} /> Revoke selected
           </button>
         </footer>

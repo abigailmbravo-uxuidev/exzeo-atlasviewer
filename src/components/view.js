@@ -21,17 +21,16 @@ import { useFeedState, useFeedDispatch } from '../context/feed-context';
 import { useLayers, useSetLayers } from '../context/layer-context';
 import { mapStyles } from './map.utils';
 
-const View = ({ setBasemap }) => {
+const View = ({ setBasemap, viewActive, setViewState }) => {
   const feeds = useFeedState();
   const dispatch = useFeedDispatch();
   const layers = useLayers();
   const setLayers = useSetLayers();
-  const [viewActive, setViewState] = useState(true);
   const [popouts, setPopouts] = useState([]);
 
   useEffect(() => {
     setViewState(false);
-  }, []);
+  }, [setViewState]);
 
   const inViewFeeds = feeds.filter(feed => feed.inView);
   inViewFeeds.forEach(

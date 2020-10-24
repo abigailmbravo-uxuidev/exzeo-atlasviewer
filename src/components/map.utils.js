@@ -18,7 +18,7 @@ export const defaultConfig = {
   style: mapStyles[0].value,
   center: [-81.5158, 27.6648],
   zoom: 7,
-  pitch: 35,
+  pitch: 0,
   bearing: 0
 };
 
@@ -83,19 +83,19 @@ export const addLayer = (map, userId, layer) => {
 
   if (map.getLayer(layerId)) return;
 
-  // Find the first feed so the layer can go behind it
   const layers = map.getStyle().layers;
   const lastIndex = layers.findIndex(layer => layer.id.endsWith('feed'));
-  const positionId = lastIndex > -1 ? layers[lastIndex].id : undefined;
+  const positionId = lastIndex > -1 ? layers[lastIndex].id : null;
 
-  const layerConfig = {
-    id: layerId,
-    type,
-    source,
-    ...(type !== 'raster' && { 'source-layer': source_layer, layout, paint })
-  };
-
-  map.addLayer(layerConfig, positionId);
+  map.addLayer(
+    {
+      id: layerId,
+      type,
+      source,
+      ...(type !== 'raster' && { 'source-layer': source_layer, layout, paint })
+    },
+    positionId
+  );
 };
 
 export const addWeatherLayer = async (
