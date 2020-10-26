@@ -70,7 +70,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
   const [error, setError] = useState('');
   const userId = user.user_id;
   const { token } = user;
-  const hoveredStateId = useRef(null);
+  const prevBasemap = usePrevious(basemap);
 
   // Load the map
   useLayoutEffect(() => {
@@ -238,35 +238,37 @@ const Map = ({ basemap, setIsMapLoading }) => {
   useEffect(() => {
     if (!map.getLayer || !basemap) return;
     let isReset = false;
-    map.setStyle(basemap);
-    setIsMapLoading(true);
 
-    map.once('styledata', async () => {
-      if (!isReset) {
-        await loadIcons(map);
-        feeds
-          .filter(feed => feed.active)
-          .forEach(feed => {
-            addFeed(map, userId, feed);
-            const { _id, filter } = feed;
-            const layerId = getFeedId(_id);
+    if (basemap !== prevBasemap) {
+      setIsMapLoading(true);
+      map.setStyle(basemap);
+      map.once('styledata', async () => {
+        if (!isReset) {
+          await loadIcons(map);
+          feeds
+            .filter(feed => feed.active)
+            .forEach(feed => {
+              addFeed(map, userId, feed);
+              const { _id, filter } = feed;
+              const layerId = getFeedId(_id);
 
-            if (!filter || filter.length === 0) {
-              map.setFilter(layerId, null);
-            } else {
-              map.setFilter(layerId, [
-                '!',
-                ['in', ['get', 'status_name'], ['literal', filter]]
-              ]);
-            }
-          });
-        layers
-          .filter(layer => layer.active)
-          .forEach(layer => addLayer(map, userId, layer));
-        isReset = true;
-      }
-    });
-  }, [basemap, map, userId, feeds, layers, setIsMapLoading]);
+              if (!filter || filter.length === 0) {
+                map.setFilter(layerId, null);
+              } else {
+                map.setFilter(layerId, [
+                  '!',
+                  ['in', ['get', 'status_name'], ['literal', filter]]
+                ]);
+              }
+            });
+          layers
+            .filter(layer => layer.active)
+            .forEach(layer => addLayer(map, userId, layer));
+          isReset = true;
+        }
+      });
+    }
+  }, [basemap, map, userId, feeds, layers, setIsMapLoading, prevBasemap]);
 
   return (
     <>
