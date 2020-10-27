@@ -117,17 +117,15 @@ export const addWeatherLayer = async (
     setError(err);
   });
 
-  map.addSource(sourceId, {
-    type: 'raster',
-    tiles: [tileUrl],
-    scheme: 'tms',
-    tileSize: 256
-  });
-
   map.addLayer({
     id: layerId,
     type: 'raster',
-    source: sourceId,
+    source: {
+      type: 'raster',
+      tiles: [tileUrl],
+      scheme: 'tms',
+      tileSize: 256
+    },
     layout: {
       visibility: 'visible'
     }
