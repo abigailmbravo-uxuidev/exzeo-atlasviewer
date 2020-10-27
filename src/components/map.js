@@ -252,6 +252,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
       let layersAdded = 0;
 
       map.once('styledata', async () => {
+        console.log('styledata');
         if (!isReset) {
           await loadIcons(map);
           activeFeeds.forEach(feed => {
@@ -259,7 +260,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
             const { _id, filter } = feed;
             const layerId = getFeedId(_id);
             layersAdded = layersAdded + 1;
-            console.log(layersAdded, totalLayers);
+
             if (layersAdded >= totalLayers) waitForBasemap = false;
 
             if (!filter || filter.length === 0) {
