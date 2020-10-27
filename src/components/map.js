@@ -225,9 +225,11 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
       if (layer.active !== prevLayers.active) {
         if (!map.getLayer(layerId)) {
-          return type === 'weather'
-            ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
-            : addLayer(map, userId, layer);
+          if (type === 'weather') {
+            addWeatherLayer(map, userId, layer, setError, setIsMapLoading);
+          } else {
+            addLayer(map, userId, layer);
+          }
         } else {
           setVisibility(map, layerId, active);
           setIsMapLoading(false);
