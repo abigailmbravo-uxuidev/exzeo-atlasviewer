@@ -57,6 +57,8 @@ const renderPopup = (properties, feedName) =>
     <MarkerPopup properties={properties} feedName={feedName} />
   );
 
+let waitForBasemap = false;
+
 const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
   const dispatch = useFeedDispatch();
@@ -97,7 +99,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
       mapbox.on('sourcedata', data => {
         if (data.isSourceLoaded) {
-          setIsMapLoading(false);
+          if (!waitForBasemap) setIsMapLoading(false);
         }
       });
 
@@ -242,28 +244,40 @@ const Map = ({ basemap, setIsMapLoading }) => {
     if (basemap !== prevBasemap) {
       setIsMapLoading(true);
       map.setStyle(basemap);
+
+      waitForBasemap = true;
+      const activeFeeds = feeds.filter(feed => feed.active);
+      const activeLayers = layers.filter(layer => layer.active);
+      const totalLayers = activeFeeds.length + activeLayers.length;
+      let layersAdded = 0;
+
       map.once('styledata', async () => {
         if (!isReset) {
           await loadIcons(map);
-          feeds
-            .filter(feed => feed.active)
-            .forEach(feed => {
-              addFeed(map, userId, feed);
-              const { _id, filter } = feed;
-              const layerId = getFeedId(_id);
+          activeFeeds.forEach(feed => {
+            addFeed(map, userId, feed);
+            const { _id, filter } = feed;
+            const layerId = getFeedId(_id);
+            layersAdded = layersAdded + 1;
+            console.log(layersAdded, totalLayers);
+            if (layersAdded >= totalLayers) waitForBasemap = false;
 
-              if (!filter || filter.length === 0) {
-                map.setFilter(layerId, null);
-              } else {
-                map.setFilter(layerId, [
-                  '!',
-                  ['in', ['get', 'status_name'], ['literal', filter]]
-                ]);
-              }
-            });
-          layers
-            .filter(layer => layer.active)
-            .forEach(layer => addLayer(map, userId, layer));
+            if (!filter || filter.length === 0) {
+              map.setFilter(layerId, null);
+            } else {
+              map.setFilter(layerId, [
+                '!',
+                ['in', ['get', 'status_name'], ['literal', filter]]
+              ]);
+            }
+          });
+          activeLayers.forEach(layer => {
+            layersAdded = layersAdded + 1;
+            if (layersAdded >= totalLayers) waitForBasemap = false;
+            return layer.type === 'weather'
+              ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
+              : addLayer(map, userId, layer);
+          });
           isReset = true;
         }
       });

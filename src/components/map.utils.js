@@ -110,17 +110,18 @@ export const addWeatherLayer = async (
   const layerId = getLayerId(_id);
   const tileRequest = `${process.env.API_URL}/api/weather/${product}/${config}`;
 
+  if (map.getLayer(layerId)) return;
+
   const { data: tileUrl } = await axios(tileRequest).catch(err => {
     setIsMapLoading(false);
     setError(err);
   });
 
-  if (map.getLayer(layerId)) return;
-
   map.addSource(sourceId, {
     type: 'raster',
     tiles: [tileUrl],
-    scheme: 'tms'
+    scheme: 'tms',
+    tileSize: 256
   });
 
   map.addLayer({
