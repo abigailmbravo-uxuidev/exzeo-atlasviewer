@@ -220,10 +220,10 @@ const Map = ({ basemap, setIsMapLoading }) => {
   useEffect(() => {
     if (!map.getLayer || !layers || !prevLayers) return;
     layers.map(layer => {
-      const { _id, active, type } = layer;
-      const layerId = `${_id}-layer`;
-
       if (layer.active !== prevLayers.active) {
+        const { _id, active, type } = layer;
+        const layerId = `${_id}-layer`;
+
         if (!map.getLayer(layerId)) {
           if (type === 'weather') {
             addWeatherLayer(map, userId, layer, setError, setIsMapLoading);
