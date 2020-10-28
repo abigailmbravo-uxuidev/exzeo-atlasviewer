@@ -256,7 +256,6 @@ const Map = ({ basemap, setIsMapLoading }) => {
       let layersAdded = 0;
 
       map.once('styledata', async () => {
-        console.log('styledata');
         if (!isReset) {
           await loadIcons(map);
           activeFeeds.forEach(feed => {
