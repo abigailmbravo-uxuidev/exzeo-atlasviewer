@@ -91,7 +91,6 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
     );
 
     if (inView && !feedsInView) setViewState(true);
-    if (inView) setIsMapLoading(true);
 
     dispatch({
       type: 'update',

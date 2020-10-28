@@ -57,6 +57,8 @@ const renderPopup = (properties, feedName) =>
     <MarkerPopup properties={properties} feedName={feedName} />
   );
 
+let waitForBasemap = false;
+
 const Map = ({ basemap, setIsMapLoading }) => {
   const feeds = useFeedState();
   const dispatch = useFeedDispatch();
@@ -70,7 +72,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
   const [error, setError] = useState('');
   const userId = user.user_id;
   const { token } = user;
-  const hoveredStateId = useRef(null);
+  const prevBasemap = usePrevious(basemap);
 
   // Load the map
   useLayoutEffect(() => {
@@ -97,7 +99,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
       mapbox.on('sourcedata', data => {
         if (data.isSourceLoaded) {
-          setIsMapLoading(false);
+          if (!waitForBasemap) setIsMapLoading(false);
         }
       });
 
@@ -177,12 +179,13 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
 
         if (active !== prevFeed.active) {
+          setIsMapLoading(true);
+
           if (!map.getLayer(layerId)) {
             return addFeed(map, userId, feed);
           }
 
           setVisibility(map, layerId, active);
-          setIsMapLoading(false);
 
           // Zoom to bounds if this is th only layer
           if (active) {
@@ -215,16 +218,20 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
   // Layers
   useEffect(() => {
-    if (!map.getLayer || !layers || !prevLayers) return;
+    if (!map.getLayer || !layers || !prevLayers || layers === prevLayers)
+      return;
     layers.map(layer => {
-      const { _id, active, type } = layer;
-      const layerId = `${_id}-layer`;
-
       if (layer.active !== prevLayers.active) {
+        const { _id, active, type } = layer;
+        const layerId = `${_id}-layer`;
+
         if (!map.getLayer(layerId)) {
-          return type === 'weather'
-            ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
-            : addLayer(map, userId, layer);
+          if (type === 'weather') {
+            setIsMapLoading(false);
+            addWeatherLayer(map, userId, layer, setError, setIsMapLoading);
+          } else {
+            addLayer(map, userId, layer);
+          }
         } else {
           setVisibility(map, layerId, active);
           setIsMapLoading(false);
@@ -237,17 +244,27 @@ const Map = ({ basemap, setIsMapLoading }) => {
   useEffect(() => {
     if (!map.getLayer || !basemap) return;
     let isReset = false;
-    map.setStyle(basemap);
 
-    map.once('styledata', async () => {
-      if (!isReset) {
-        await loadIcons(map);
-        feeds
-          .filter(feed => feed.active)
-          .forEach(feed => {
+    if (basemap !== prevBasemap) {
+      setIsMapLoading(true);
+      map.setStyle(basemap);
+
+      waitForBasemap = true;
+      const activeFeeds = feeds.filter(feed => feed.active);
+      const activeLayers = layers.filter(layer => layer.active);
+      const totalLayers = activeFeeds.length + activeLayers.length;
+      let layersAdded = 0;
+
+      map.once('styledata', async () => {
+        if (!isReset) {
+          await loadIcons(map);
+          activeFeeds.forEach(feed => {
             addFeed(map, userId, feed);
             const { _id, filter } = feed;
             const layerId = getFeedId(_id);
+            layersAdded = layersAdded + 1;
+
+            if (layersAdded >= totalLayers) waitForBasemap = false;
 
             if (!filter || filter.length === 0) {
               map.setFilter(layerId, null);
@@ -258,13 +275,18 @@ const Map = ({ basemap, setIsMapLoading }) => {
               ]);
             }
           });
-        layers
-          .filter(layer => layer.active)
-          .forEach(layer => addLayer(map, userId, layer));
-        isReset = true;
-      }
-    });
-  }, [basemap, map, userId, feeds, layers]);
+          activeLayers.forEach(layer => {
+            layersAdded = layersAdded + 1;
+            if (layersAdded >= totalLayers) waitForBasemap = false;
+            return layer.type === 'weather'
+              ? addWeatherLayer(map, userId, layer, setError, setIsMapLoading)
+              : addLayer(map, userId, layer);
+          });
+          isReset = true;
+        }
+      });
+    }
+  }, [basemap, map, userId, feeds, layers, setIsMapLoading, prevBasemap]);
 
   return (
     <>

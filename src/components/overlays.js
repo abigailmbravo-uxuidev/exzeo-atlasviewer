@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +9,6 @@ const Overlays = ({ filter, setIsMapLoading }) => {
   const allLayers = useLayers();
   const setLayers = useSetLayers();
   const [paneActive, setPaneActive] = useState(true);
-
-  const content = useRef(null);
 
   const toggleAccordion = () => {
     setPaneActive(paneActive ? false : true);
@@ -48,7 +46,7 @@ const Overlays = ({ filter, setIsMapLoading }) => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </header>
-      <div className={`pane ${!paneActive ? 'closed' : 'open'}`} ref={content}>
+      <div className={`pane ${!paneActive ? 'closed' : 'open'}`}>
         <ul className="panel-list scroll">
           {layers &&
             layers.map((layer, index) => (
