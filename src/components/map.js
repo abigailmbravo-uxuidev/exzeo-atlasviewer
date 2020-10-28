@@ -218,7 +218,8 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
   // Layers
   useEffect(() => {
-    if (!map.getLayer || !layers || !prevLayers) return;
+    if (!map.getLayer || !layers || !prevLayers || layers === prevLayers)
+      return;
     layers.map(layer => {
       if (layer.active !== prevLayers.active) {
         const { _id, active, type } = layer;
@@ -226,6 +227,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
 
         if (!map.getLayer(layerId)) {
           if (type === 'weather') {
+            setIsMapLoading(false);
             addWeatherLayer(map, userId, layer, setError, setIsMapLoading);
           } else {
             addLayer(map, userId, layer);
