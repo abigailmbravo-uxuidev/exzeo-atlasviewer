@@ -10,6 +10,12 @@ const LayerProvider = ({ children }) => {
 
   useEffect(() => {
     if (userLayers && userLayers.length > 0) {
+      userLayers.sort((a, b) => {
+        const aValue = a.name.toLowerCase();
+        const bValue = b.name.toLowerCase();
+        return aValue.localeCompare(bValue);
+      });
+
       setLayers(userLayers);
     }
   }, [userLayers]);
