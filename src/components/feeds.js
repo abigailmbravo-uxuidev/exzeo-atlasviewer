@@ -79,18 +79,13 @@ const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
     setPaneActive(paneActive ? false : true);
   };
 
-  const toggleFeed = (currentFeed, inView) => {
-    const feedsInView = feeds.some(
-      f => f.inView === true && f._id !== currentFeed._id
-    );
-
-    if (inView && !feedsInView) setViewState(true);
-    if (inView) setIsMapLoading(true);
-
-    dispatch({
-      type: 'update',
-      data: { ...currentFeed, inView, active: inView }
-    });
+  const toggleFeed = (feed, inView) => {
+    if (inView) {
+      setIsMapLoading(true);
+      setViewState(true);
+    }
+    console.log(feeds);
+    dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
   const toggleUpdate = feed => {
