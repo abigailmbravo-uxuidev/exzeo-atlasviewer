@@ -1,5 +1,34 @@
-//feed notifications 
+//feed notifications
 
+#library {
+    .section {
+
+        &.notifications {
+            flex-shrink: 0;
+
+            max-height: 12rem;
+            header {
+                h4 {
+                    >span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        height: 1.5rem;
+                        margin-left: 1rem;
+                        padding: 10px 8px;
+
+                        color: $white;
+                        border: 2px solid #ffffff;
+                        border-radius: 14px;
+                        background-color: $red;
+                        box-shadow: 0px 0px 8px 0px rgba($black, .25);
+
+                        font-size: 10px;
+                        line-height: 1;
+                    }
+                }
+            }
 .feed-notification {
     display: flex;
     flex-direction: column;
@@ -12,7 +41,9 @@
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        flex-shrink: 1;  margin: 0 0 1rem 0;
+        flex-shrink: 1;
+
+        margin: .5rem;
 
         color: $white;
         border-radius: 6px;
@@ -24,25 +55,47 @@
             display: flex;
             justify-content: space-between;
 
-            padding: 4px 16px;
+            padding: 4px 8px;
 
             .notification-content {
-                font-size: 14px;
+                font-size: .75rem;
 
                 header {
-                    font-size: 10px;
+                    h5 {
+                        margin: .25rem 0;
+
+                        font-size: .75rem;
+                    }
                 }
 
                 .feed-name {
                     display: flex;
                     overflow: hidden;
+                    align-items: center;
                     flex-grow: 1;
                     flex-shrink: 1;
                     flex-wrap: wrap;
 
                     text-transform: capitalize;
+                    .icon.shared {
+                        display: flex;
+                        align-items: center;
+                        flex-grow: 0;
+                        flex-shrink: 0;
+                        justify-content: center;
 
-                    font-weight: bold;
+                        width: .75rem;
+                        height: .75rem;
+                        margin: 0 .25rem 0 0;
+
+                        color: $white;
+                        border: 1px solid $white;
+                        border-radius: 50%;
+                        background-color: $red;
+                        box-shadow: 0px 0px 2px 0px rgba($black, 0.75);
+
+                        font-size: 54%;
+                    }
                     
                 }
             }
@@ -62,4 +115,7 @@
             }
             }
     }
+}
+}
+}
 }

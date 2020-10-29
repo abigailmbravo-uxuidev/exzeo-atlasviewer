@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileExport, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faShareAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const FeedNotification = ({ feed, close }) => {
   if (!feed) return null;
@@ -10,9 +10,14 @@ const FeedNotification = ({ feed, close }) => {
       <div className="notification-bar">
         <div className="notification-content">
           <header>
-            <FontAwesomeIcon icon={faFileExport} /> New Shared Feed
+            <h5>You Have A New Shared Feed:</h5>
           </header>
-          <div className="feed-name">{feed.name}</div>
+          <div className="feed-name">
+            <span className="icon shared new">
+              <FontAwesomeIcon icon={faShareAlt} />
+            </span>
+            {feed.name}
+          </div>
         </div>
         <button className="actionBtn" type="button" onClick={close}>
           <FontAwesomeIcon icon={faTimes} />

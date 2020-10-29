@@ -183,10 +183,10 @@ const Uploader = ({
             defaultValue={feed.name ? feed.name : stripExtension(file.name)}
           />
           {errors.feedname && 'Feed Name is required.'}
+          <label htmlFor="status" className="statusLabal">
+            Status
+          </label>
           <ul id="status" className="statusWrapper">
-            <label htmlFor="status" className="statusLabal">
-              Status
-            </label>
             {statuses &&
               statuses.map((s, index) => (
                 <li key={index}>
