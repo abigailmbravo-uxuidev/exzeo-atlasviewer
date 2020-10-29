@@ -177,12 +177,13 @@ const Map = ({ basemap, setIsMapLoading }) => {
         }
 
         if (active !== prevFeed.active) {
+          setIsMapLoading(true);
+
           if (!map.getLayer(layerId)) {
             return addFeed(map, userId, feed);
           }
 
           setVisibility(map, layerId, active);
-          setIsMapLoading(false);
 
           // Zoom to bounds if this is th only layer
           if (active) {
@@ -238,6 +239,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
     if (!map.getLayer || !basemap) return;
     let isReset = false;
     map.setStyle(basemap);
+    setIsMapLoading(true);
 
     map.once('styledata', async () => {
       if (!isReset) {
@@ -264,7 +266,7 @@ const Map = ({ basemap, setIsMapLoading }) => {
         isReset = true;
       }
     });
-  }, [basemap, map, userId, feeds, layers]);
+  }, [basemap, map, userId, feeds, layers, setIsMapLoading]);
 
   return (
     <>
