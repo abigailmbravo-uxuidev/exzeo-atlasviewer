@@ -18,7 +18,7 @@ import FeedManager from './feed-manager';
 import Modal from './modal';
 import Uploader from './uploader';
 
-const Feeds = ({ filter, setIsMapLoading }) => {
+const Feeds = ({ filter, setIsMapLoading, setViewState }) => {
   const [uploaderState, setUploaderState] = useState({});
   const [deleteFeed, setDeleteFeed] = useState(null);
   const [shareFeed, setShareFeed] = useState(null);
@@ -75,15 +75,25 @@ const Feeds = ({ filter, setIsMapLoading }) => {
     setFeeds(sorted);
   }, [feedSort, allFeeds, setFeeds, filter]);
 
-  const toggleAccordion = () => setPaneActive(!paneActive);
+  const toggleAccordion = () => {
+    setPaneActive(paneActive ? false : true);
+  };
 
   const toggleFeed = (feed, inView) => {
-    if (inView) setIsMapLoading(true);
+    if (inView) {
+      setIsMapLoading(true);
+      setViewState(true);
+    }
+    console.log(feeds);
     dispatch({ type: 'update', data: { ...feed, inView, active: inView } });
   };
 
   const toggleUpdate = feed => {
     setUploaderState({ action: 'Update', feed });
+  };
+
+  const toggleNotification = feed => {
+    dispatch({ type: 'update', data: { ...feed, notified: true } });
   };
 
   return (

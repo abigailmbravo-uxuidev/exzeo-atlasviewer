@@ -21,6 +21,7 @@ const Canvas = () => {
   const { logout } = useAuth();
   const [basemap, setBasemap] = useState('');
   const [isMapLoading, setIsMapLoading] = useState(true);
+  const [viewActive, setViewState] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const logoutMsg = 'Are you sure you want to logout of AtlasViewer?';
 
@@ -51,8 +52,15 @@ const Canvas = () => {
           </Modal>
         )}
         {isMapLoading && <Spinner />}
-        <Library setIsMapLoading={setIsMapLoading} />
-        <View setBasemap={setBasemap} />
+        <Library
+          setIsMapLoading={setIsMapLoading}
+          setViewState={setViewState}
+        />
+        <View
+          setBasemap={setBasemap}
+          viewActive={viewActive}
+          setViewState={setViewState}
+        />
         <button
           title="Log Out"
           className="logoutBtn"
