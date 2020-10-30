@@ -1,7 +1,6 @@
 .PHONY: start
 start:
-	npm run build
-	npm run serve -- -H 0.0.0.0
+	npm run start
 
 .PHONY: test
 test:
