@@ -3,6 +3,7 @@ default:
 
   deployment:
     app:
+      command: "npm run start"
       image:
         name: "${PROJECT_NAME}"
         pullPolicy: Always
