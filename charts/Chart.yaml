@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for Kubernetes
+name: atlas-web
+version: 1.0.0
+dependencies: # A list of the chart requirements (optional)
+  - name: default-chart
+    version: "~1.0.0"
+    repository: "@exzeo-charts"
+    # repository: "file://../../exzeo-charts/common/default-chart"
+    alias: default
