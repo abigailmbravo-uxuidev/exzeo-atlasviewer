@@ -6,21 +6,20 @@ default:
       image:
         name: "${PROJECT_NAME}"
         pullPolicy: Always
-      
       port: 
         number: 8082
- 
       resources:
         requests:
           memory: "75Mi"
         limits:
           memory: "300Mi"     
-
       health:
         readinessProbe:
           path: /build
         livenessProbe:
           path: /build
+    security:
+      enabled: false
 
   service:
     type: NodePort
