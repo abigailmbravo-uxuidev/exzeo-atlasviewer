@@ -12,4 +12,3 @@ test:
 build:
 	npm install
 	npm run build
-	mv ./public ./build
