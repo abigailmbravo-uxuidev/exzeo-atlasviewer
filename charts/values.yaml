@@ -1,6 +1,6 @@
 default: 
+  name: "${PROJECT_NAME}"
   version: "${VERSION}"  
-
   branch: "${COMMIT_BRANCH}"
 
   deployment:
