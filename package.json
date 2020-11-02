@@ -4,7 +4,7 @@
   "description": "Atlas Viewer",
   "main": "./src/index.html",
   "scripts": {
-    "start": "parcel ./src/index.html  --port 8082 --no-source-maps --open",
+    "start": "parcel ./src/index.html --no-source-maps",
     "build": "parcel build ./src/index.html --no-source-maps",
     "cypress": "cypress run",
     "test": "jest --config ./jest.config.json",
