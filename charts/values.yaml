@@ -1,48 +1,8 @@
 default: 
-  name: "${PROJECT_NAME}"
-  version: "${VERSION}"  
-  branch: "${COMMIT_BRANCH}"
-
   deployment:
     app:
-      # command: "npm run start"
-      # image:
-      #   name: "${PROJECT_NAME}"
-        # pullPolicy: Always
-      # port: 
-      #   number: 8082
-
-      resources:
-        requests:
-          memory: "75Mi"
-        limits:
-          memory: "300Mi"     
-
       health:
         readinessProbe:
           path: /build
         livenessProbe:
           path: /build
-    # security:
-    #   enabled: false
-
-  # service:
-    # type: NodePort
-    # port: 8082
-
-  # ingress:
-  #   enabled: true
-  #   hosts:
-  #   - domain: "${COMMIT_BRANCH}.exzeo.io"
-  #     annotations:
-  #       external-dns.alpha.kubernetes.io/hostname: ''
-
-  config:
-    values: 
-      # url: http://localhost:8082
-      # api_url: http://localhost:8787/api
-      auth0_domain: atlas-viewer.auth0.com
-      auth0_client_id: Uv6hcKLG7pr0lTVYU64DHkLr1CpG3B3C
-      auth0_audience: atlas-api
-      mapbox_key: pk.eyJ1IjoiZXh6ZW8iLCJhIjoidHFyZi01VSJ9.p8Dy3U9rVv7XkE2VNGUB8g
-      
